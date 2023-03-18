@@ -184,7 +184,7 @@ public float Speed;
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "BalaEnemigo")
+      /*  if (collision.gameObject.tag == "BalaEnemigo")
         {
             // Destroy(gameObject);
             collision.SendMessage("EliminarBala");
@@ -209,6 +209,11 @@ public float Speed;
         {
             TocandoPared = true;
         }
+
+         if(collision.transform.tag == "Platform")
+            {
+                TocandoPiso = true;
+            }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -220,25 +225,25 @@ public float Speed;
     }
 
 
+
     void ComprobarSuelo()
     {
-        RaycastHit2D colision = Physics2D.Raycast(new Vector2(Pies.transform.position.x, Pies.transform.position.y), new Vector2(0, -1), 0.05f);
-        if(colision != null && colision.collider != null)
-        {
+        /*RaycastHit2D colision = Physics2D.Raycast(new Vector2(Pies.transform.position.x, Pies.transform.position.y), new Vector2(0, -1), 0.05f);*/
+      //  if(/*colision != null && colision.collider != null*/ ) {
 
-            if(colision.transform.tag == "Platform")
+            if(rb2d.transform.tag == "Platform")
             {
                 TocandoPiso = true;
             }
 
-            if (colision.transform.tag == "Plataforma Movil")
+           /* if (rb2d.transform.tag == "Plataforma Movil")
             {
                 rb2d.velocity = new Vector3(0f, 0f, 0f);
                 transform.parent = colision.transform;
                 TocandoPiso = true;
-            }
+            }*/
 
-        }
+       // }
         else
         {
             TocandoPiso = false;
@@ -246,7 +251,7 @@ public float Speed;
         }
     }
 
-    public void EnemyJump()
+   /* public void EnemyJump()
     {
         Saltar = true;
     }
@@ -270,5 +275,5 @@ public float Speed;
         movimiento = true;
         
         spr.color = Color.white;
-    }
+    }*/
 }
