@@ -7,9 +7,10 @@ public class PlayerController : MonoBehaviour
 {
     public float speed;
     public float maxSpeed;
-    public bool isJumping;
+    public bool canJump;
     public float forceJump;
     public bool isOnGround;
+    public bool isOnFloatingGround;
 
     public GameObject raycast2D;
 
@@ -22,9 +23,9 @@ public class PlayerController : MonoBehaviour
         rigidBody2D = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        speed = 7;
-        forceJump = 15;
-        isJumping = false;
+        //speed = 75;
+        // forceJump = 15;
+        canJump = false;
     }
 
     private void FixedUpdate()
@@ -54,20 +55,23 @@ public class PlayerController : MonoBehaviour
             spriteRenderer.flipX = true;
         }
 
-        if (Input.GetKeyDown("Jump") && !isJumping)
+        if (canJump)
         {
             // rigidBody2D.AddForce(Vector2.up * forceJump);
 
             rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, 0);
             rigidBody2D.AddForce(Vector2.up * forceJump, ForceMode2D.Impulse);
-            isJumping = true;
+            canJump = false;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetButtonDown("Jump") && isOnGround)
+        {
+            canJump = true;
+        }
     }
 
     /*private void OnCollisionEnter2D(Collision2D collision)
@@ -87,7 +91,12 @@ public class PlayerController : MonoBehaviour
             if (colision.transform.tag == "Ground")
             {
                 isOnGround = true;
-                isJumping = false;
+            }
+
+            if (colision.transform.tag == "Floating Ground")
+            {
+                isOnGround = true;
+                isOnFloatingGround = true;
             }
         }
         else
