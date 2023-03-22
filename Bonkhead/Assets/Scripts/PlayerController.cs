@@ -7,8 +7,9 @@ public class PlayerController : MonoBehaviour
 {
     public float speed;
     public float maxSpeed;
-    public bool canJump;
     public float forceJump;
+
+    public bool canJump;
     public bool isOnGround;
     public bool isOnFloatingGround;
 
@@ -23,8 +24,6 @@ public class PlayerController : MonoBehaviour
         rigidBody2D = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        //speed = 75;
-        // forceJump = 15;
         canJump = false;
     }
 
@@ -57,8 +56,6 @@ public class PlayerController : MonoBehaviour
 
         if (canJump)
         {
-            // rigidBody2D.AddForce(Vector2.up * forceJump);
-
             rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, 0);
             rigidBody2D.AddForce(Vector2.up * forceJump, ForceMode2D.Impulse);
             canJump = false;
@@ -74,14 +71,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /*private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.tag == "Ground")
         {
-            isJumping = false;
             rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, 0);
         }
-    }*/
+    }
 
     private void checkGround()
     {
