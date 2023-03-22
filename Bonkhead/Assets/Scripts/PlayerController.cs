@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -13,7 +14,7 @@ public class PlayerController : MonoBehaviour
     public bool isOnGround;
     public bool isOnFloatingGround;
 
-    public GameObject raycast2D;
+    public GameObject groundCast2D;
 
     private Rigidbody2D rigidBody2D;
     private SpriteRenderer spriteRenderer;
@@ -42,8 +43,8 @@ public class PlayerController : MonoBehaviour
         float moveH = Input.GetAxis("Horizontal");
         rigidBody2D.AddForce(Vector2.right * moveH * speed);
 
-        float LimitSpeed = Mathf.Clamp(rigidBody2D.velocity.x, -maxSpeed, maxSpeed);
-        rigidBody2D.velocity = new Vector2(LimitSpeed, rigidBody2D.velocity.y);
+        float limitSpeed = Mathf.Clamp(rigidBody2D.velocity.x, -maxSpeed, maxSpeed);
+        rigidBody2D.velocity = new Vector2(limitSpeed, rigidBody2D.velocity.y);
 
         if (moveH > 0.01f)
         {
@@ -61,6 +62,8 @@ public class PlayerController : MonoBehaviour
             canJump = false;
         }
     }
+
+
 
     // Update is called once per frame
     void Update()
@@ -81,7 +84,8 @@ public class PlayerController : MonoBehaviour
 
     private void checkGround()
     {
-        RaycastHit2D colision = Physics2D.Raycast(new Vector2(raycast2D.transform.position.x, raycast2D.transform.position.y), new Vector2(0, -1), 0.05f);
+        RaycastHit2D colision = Physics2D.Raycast(new Vector2(groundCast2D.transform.position.x, groundCast2D.transform.position.y), new Vector2(0, -1), 0.05f);
+
         if (colision.collider != null)
         {
             if (colision.transform.tag == "Ground")
@@ -96,7 +100,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         else
-        {
+        { 
             isOnGround = false;
         }
     }
