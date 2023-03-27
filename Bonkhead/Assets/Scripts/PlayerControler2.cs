@@ -2,66 +2,38 @@ using UnityEngine;
 
 public class PlayerControler2 : MonoBehaviour
 {
-    public float moveSpeed = 5f;   // Velocidad de movimiento del personaje
-    public float jumpForce = 10f;  // Fuerza de salto del personaje
+    // Variables de movimiento
+    public float moveSpeed = 5f;
+    private Vector2 moveDirection = Vector2.zero;
 
-    private Rigidbody2D rb;
-    public bool isGrounded = false;
-    private bool facingRight = true;
+    // Componente CharacterController
+    private CharacterController characterController;
 
-    public GameObject groundCast2D;
-
-    void Start()
+    // Método que se llama al inicio
+    private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        // Obtener el componente CharacterController
+        characterController = GetComponent<CharacterController>();
     }
 
-    void FixedUpdate()
+    // Método que se llama cada frame
+    private void Update()
     {
-        // Movimiento horizontal
-        float moveX = Input.GetAxisRaw("Horizontal");
-        rb.velocity = new Vector2(moveX * moveSpeed, rb.velocity.y);
+        // Obtener el input del jugador
+        moveDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
-        // Comprobar si el personaje está en el suelo
-        RaycastHit2D hit = Physics2D.Raycast(groundCast2D.transform.position, Vector2.down, 1f);
-        if (hit.collider == null)
+        // Normalizar la dirección de movimiento
+        if (moveDirection.magnitude > 1)
         {
-            if (hit.transform.tag == "Ground")
-            {
-                isGrounded = true;
-            }
-            else
-            {
-                isGrounded = false;
-            }
-        }
-       
-
-
-        if (moveX > 0.1f && !facingRight)
-        {
-            flip();
-        }
-
-        if (moveX < -0.1f && facingRight)
-        {
-            flip();
-        }
-
-
-        // Salto
-        if (Input.GetButtonDown("Jump") && isGrounded)
-        {
-            rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-            isGrounded = false;
+            moveDirection = moveDirection.normalized;
         }
     }
 
-    void flip()
+    // Método que se llama cada fixed frame
+    private void FixedUpdate()
     {
-        facingRight = !facingRight;
-        Vector3 scale = transform.localScale;
-        scale.x *= -1;
-        transform.localScale = scale;
+        // Mover el personaje
+        characterController.Move(moveDirection * moveSpeed * Time.fixedDeltaTime);
     }
+
 }
