@@ -19,6 +19,10 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigidBody2D;
     private SpriteRenderer spriteRenderer;
 
+    [SerializeField] private float slopeLimit = 45f; // Ángulo máximo de la pendiente en grados
+    [SerializeField] private float checkDistance = 1f; // Distancia a la que se comprueba si el objeto está en una pendiente
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +35,38 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         checkGround();
+
+/*
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down);
+        if (hit.collider != null && hit.normal.y < -0.5f)
+        {
+            float angle = Vector2.Angle(hit.normal, Vector2.up);
+            if (angle < pendienteAnguloMax && hit.distance < pendienteDistancia)
+            {
+                Debug.Log("Personaje está en una pendiente.");
+
+            }
+        }
+*/
+        RaycastHit2D hit = Physics2D.Raycast(groundCast2D.transform.position, Vector2.down, checkDistance);
+       if (hit.collider != null && Vector2.Angle(hit.normal, Vector2.up) > slopeLimit)
+       {
+            if (hit.transform.tag == "Slope")
+            {
+                // Si está en una pendiente, anular la gravedad
+                rigidBody2D.gravityScale = 0f;
+                rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, 0);
+            }
+            else
+            {
+                // Si no está en una pendiente, restaurar la gravedad
+                rigidBody2D.gravityScale = 1f;
+                rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, rigidBody2D.velocity.y);
+
+            }
+       }
+               
+
 
         Vector2 fixedVelocity = rigidBody2D.velocity;
         fixedVelocity.x *= 0.75f;
@@ -84,7 +120,8 @@ public class PlayerController : MonoBehaviour
 
     private void checkGround()
     {
-        RaycastHit2D colision = Physics2D.Raycast(new Vector2(groundCast2D.transform.position.x, groundCast2D.transform.position.y), new Vector2(0, -1), 0.05f);
+        RaycastHit2D colision = Physics2D.Raycast(groundCast2D.transform.position, Vector2.down, 1f);
+        //Physics2D.Raycast(new Vector2(groundCast2D.transform.position.x, groundCast2D.transform.position.y), new Vector2(0, -1), 0.05f);
 
         if (colision.collider != null)
         {
