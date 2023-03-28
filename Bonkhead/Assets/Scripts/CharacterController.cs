@@ -2,18 +2,21 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    public float speed;
-    public float maxSpeed;
-    public float forceJump;
+
+    public float speed;     // 75
+    public float maxSpeed;  // 4
+    public float forceJump; // 8
+
+    private float moveH;
 
     private bool canJump;
     public bool isOnSlope;
     public bool isOnGround;
     private bool facingRight;
 
-    public GameObject groundCast2D;
+    //public GameObject groundCast2D;
     private Rigidbody2D rigidBody2D;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +28,7 @@ public class CharacterController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        checkGround();
+        //checkGround();
 
         Vector2 fixedVelocity = rigidBody2D.velocity;
         fixedVelocity.x *= 0.75f;
@@ -35,19 +38,18 @@ public class CharacterController : MonoBehaviour
             rigidBody2D.velocity = fixedVelocity;
         }
 
-        float moveH = Input.GetAxis("Horizontal");
         rigidBody2D.AddForce(Vector2.right * moveH * speed);
 
         float limitSpeed = Mathf.Clamp(rigidBody2D.velocity.x, -maxSpeed, maxSpeed);
-        rigidBody2D.velocity = new Vector2(limitSpeed, rigidBody2D.velocity.y);
+        
 
-        if (moveH > 0.01f && !facingRight)
+        if (rigidBody2D.velocity.y < 0.001f)
         {
-            flip();
+            rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x , rigidBody2D.velocity.y * 1.2f);
         }
-        else if (moveH < -0.01f && facingRight)
+        else
         {
-            flip();
+            rigidBody2D.velocity = new Vector2(limitSpeed, rigidBody2D.velocity.y);
         }
 
         if (canJump)
@@ -61,34 +63,47 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        moveH = Input.GetAxis("Horizontal");
+
+        if (moveH > 0.01f && !facingRight)
+        {
+            flip();
+        }
+        else if (moveH < -0.01f && facingRight)
+        {
+            flip();
+        }
+
         if (Input.GetButtonDown("Jump") && isOnGround)
         {
             canJump = true;
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.tag == "Ground")
+        if (collision.gameObject.tag == "Ground")
         {
-            rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, 0);
+            isOnGround = true;
+        }
+
+        if (collision.gameObject.tag == "Slope")
+        {
+            isOnSlope = true;
         }
     }
 
-    private void checkGround()
-    {
-        RaycastHit2D colision = Physics2D.Raycast(groundCast2D.transform.position, Vector2.down, 1f);
 
-        if (colision.collider != null)
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Ground")
         {
-            if (colision.transform.tag == "Ground")
-            {
-                isOnGround = true;
-            }
-            else
-            {
-                isOnGround = false;
-            }
+            isOnGround = false;
+        }
+
+        if (collision.gameObject.tag == "Slope")
+        {
+            isOnSlope = false;
         }
     }
 
