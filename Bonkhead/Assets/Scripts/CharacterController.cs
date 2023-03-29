@@ -10,12 +10,21 @@ public class CharacterController : MonoBehaviour
     private float moveH;
 
     private bool canJump;
-    public bool isOnSlope;
+    public bool isOnFloatingGround;
     public bool isOnGround;
     private bool facingRight;
 
-    //public GameObject groundCast2D;
     private Rigidbody2D rigidBody2D;
+
+
+
+
+    public float jumpForce = 5f; // Fuerza del salto
+    public float fallMultiplier = 2.5f; // Multiplicador de velocidad de caída
+    public float lowJumpMultiplier = 2f; // Multiplicador de velocidad de caída cuando se salta ligeramente
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +38,7 @@ public class CharacterController : MonoBehaviour
     private void FixedUpdate()
     {
         //checkGround();
-
+/*
         Vector2 fixedVelocity = rigidBody2D.velocity;
         fixedVelocity.x *= 0.75f;
 
@@ -50,20 +59,25 @@ public class CharacterController : MonoBehaviour
         else
         {
             rigidBody2D.velocity = new Vector2(limitSpeed, rigidBody2D.velocity.y);
-        }
+        }*/
 
-        if (canJump)
+       /* if (canJump)
         {
             rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, 0);
             rigidBody2D.AddForce(Vector2.up * forceJump, ForceMode2D.Impulse);
             canJump = false;
-        }
+        }*/
+
+
+
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        moveH = Input.GetAxis("Horizontal");
+        /*moveH = Input.GetAxis("Horizontal");
 
         if (moveH > 0.01f && !facingRight)
         {
@@ -72,12 +86,58 @@ public class CharacterController : MonoBehaviour
         else if (moveH < -0.01f && facingRight)
         {
             flip();
+        }*/
+
+        /* if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
+         {
+             canJump = true;
+         }
+
+         */
+        if (isOnFloatingGround)
+        {
+           // rigidBody2D.velocity.y
         }
 
-        if (Input.GetButtonDown("Jump") && isOnGround)
+        if (Input.GetKey("a") || Input.GetKey("left"))
         {
-            canJump = true;
+            rigidBody2D.velocity = new Vector2(-speed, rigidBody2D.velocity.y);
+
+            if (facingRight)
+            {
+                flip();
+            }
+
         }
+        else if (Input.GetKey("d") || Input.GetKey("right"))
+        {
+            rigidBody2D.velocity = new Vector2(speed, rigidBody2D.velocity.y);
+
+            if (!facingRight)
+            {
+                flip();
+            }
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
+        {
+            // Salto
+            rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, jumpForce);
+
+        }
+
+        // Acelerar la caída del personaje si está cayendo
+        if (rigidBody2D.velocity.y < 0)
+        {
+            rigidBody2D.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+        }
+        // Acelerar la caída del personaje ligeramente si está saltando pero no mantiene presionado el botón de salto
+        else if (rigidBody2D.velocity.y > 0 && !Input.GetKey(KeyCode.Space))
+        {
+            rigidBody2D.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
+        }
+
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -87,9 +147,9 @@ public class CharacterController : MonoBehaviour
             isOnGround = true;
         }
 
-        if (collision.gameObject.tag == "Slope")
+        if (collision.gameObject.tag == "Floating Ground")
         {
-            isOnSlope = true;
+            isOnFloatingGround = true;
         }
     }
 
@@ -101,9 +161,9 @@ public class CharacterController : MonoBehaviour
             isOnGround = false;
         }
 
-        if (collision.gameObject.tag == "Slope")
+        if (collision.gameObject.tag == "Floating Ground")
         {
-            isOnSlope = false;
+            isOnFloatingGround = false;
         }
     }
 
