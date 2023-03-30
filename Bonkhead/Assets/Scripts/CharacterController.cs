@@ -4,19 +4,19 @@ public class CharacterController : MonoBehaviour
 {
 
     public float speed;     // 75
-    public float maxSpeed;  // 4
-    public float forceJump; // 8
+   // public float maxSpeed;  // 4
+    //public float forceJump; // 8
 
-    private float moveH;
+    //private float moveH;
 
-    private bool canJump;
+    //private bool canJump;
     public bool isOnFloatingGround;
     public bool isOnGround;
     private bool facingRight;
 
     private Rigidbody2D rigidBody2D;
 
-
+    public bool doubleJump;
 
 
     public float jumpForce = 5f; // Fuerza del salto
@@ -31,8 +31,9 @@ public class CharacterController : MonoBehaviour
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
 
-        canJump = false;
+       // canJump = false;
         facingRight = true;
+        doubleJump = false;
     }
 
     private void FixedUpdate()
@@ -94,10 +95,7 @@ public class CharacterController : MonoBehaviour
          }
 
          */
-        if (isOnFloatingGround)
-        {
-           // rigidBody2D.velocity.y
-        }
+
 
         if (Input.GetKey("a") || Input.GetKey("left"))
         {
@@ -120,11 +118,18 @@ public class CharacterController : MonoBehaviour
 
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
-        {
-            // Salto
-            rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, jumpForce);
+        if (Input.GetKeyDown(KeyCode.Space) && !Input.GetKey("down"))
+        { 
 
+            if (isOnGround || isOnFloatingGround)
+            {
+                // Salto
+                rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, jumpForce);
+            }else if (doubleJump)
+            {
+                rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, jumpForce);
+                doubleJump = false;
+            }
         }
 
         // Acelerar la caída del personaje si está cayendo
@@ -145,11 +150,13 @@ public class CharacterController : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             isOnGround = true;
+            doubleJump = true;
         }
 
         if (collision.gameObject.tag == "Floating Ground")
         {
             isOnFloatingGround = true;
+            doubleJump = true;
         }
     }
 
