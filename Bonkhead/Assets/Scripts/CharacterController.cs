@@ -1,101 +1,55 @@
+using System.Collections;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharacterController : MonoBehaviour
 {
+    private float speed; // Velocidad de movimiento 75
+    private float jumpForce; // Fuerza del salto
+    private float dashingTime;
+    private float dashingPower;
+    private float fallMultiplier; // Multiplicador de velocidad de caída
+    private float dashingCoolDown;
+    private float lowJumpMultiplier; // Multiplicador de velocidad de caída cuando se salta ligeramente
 
-    public float speed;     // 75
-   // public float maxSpeed;  // 4
-    //public float forceJump; // 8
-
-    //private float moveH;
-
-    //private bool canJump;
-    public bool isOnFloatingGround;
-    public bool isOnGround;
+    private bool canDash;
+    private bool isDashing;
+    private bool isOnGround;
+    private bool doubleJump;
     private bool facingRight;
+    private bool isOnFloatingGround;
 
     private Rigidbody2D rigidBody2D;
 
-    public bool doubleJump;
-
-
-    public float jumpForce = 5f; // Fuerza del salto
-    public float fallMultiplier = 2.5f; // Multiplicador de velocidad de caída
-    public float lowJumpMultiplier = 2f; // Multiplicador de velocidad de caída cuando se salta ligeramente
-
-
-
+    private TrailRenderer trailRenderer;
 
     // Start is called before the first frame update
     void Start()
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
+        trailRenderer = GetComponent<TrailRenderer>();
 
-       // canJump = false;
+        canDash = true;
         facingRight = true;
         doubleJump = false;
-    }
 
-    private void FixedUpdate()
-    {
-        //checkGround();
-/*
-        Vector2 fixedVelocity = rigidBody2D.velocity;
-        fixedVelocity.x *= 0.75f;
-
-        if (isOnGround)
-        {
-            rigidBody2D.velocity = fixedVelocity;
-        }
-
-        rigidBody2D.AddForce(Vector2.right * moveH * speed);
-
-        float limitSpeed = Mathf.Clamp(rigidBody2D.velocity.x, -maxSpeed, maxSpeed);
-        
-
-        if (rigidBody2D.velocity.y < 0.001f)
-        {
-            rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x , rigidBody2D.velocity.y * 1.2f);
-        }
-        else
-        {
-            rigidBody2D.velocity = new Vector2(limitSpeed, rigidBody2D.velocity.y);
-        }*/
-
-       /* if (canJump)
-        {
-            rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, 0);
-            rigidBody2D.AddForce(Vector2.up * forceJump, ForceMode2D.Impulse);
-            canJump = false;
-        }*/
-
-
-
-
-
+        speed = 8f;
+        jumpForce = 25f;
+        dashingPower = 24f;
+        dashingTime = 0.2f;
+        dashingCoolDown = 1f;
+        fallMultiplier = 15f;
+        lowJumpMultiplier = 8f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*moveH = Input.GetAxis("Horizontal");
-
-        if (moveH > 0.01f && !facingRight)
+        if (isDashing)
         {
-            flip();
+            return;
         }
-        else if (moveH < -0.01f && facingRight)
-        {
-            flip();
-        }*/
-
-        /* if (Input.GetKeyDown(KeyCode.Space) && isOnGround)
-         {
-             canJump = true;
-         }
-
-         */
-
 
         if (Input.GetKey("a") || Input.GetKey("left"))
         {
@@ -118,14 +72,20 @@ public class CharacterController : MonoBehaviour
 
         }
 
+        if (Input.GetKeyDown(KeyCode.LeftAlt) && canDash)
+        {
+            StartCoroutine(Dash());
+        }
+
         if (Input.GetKeyDown(KeyCode.Space) && !Input.GetKey("down"))
-        { 
+        {
 
             if (isOnGround || isOnFloatingGround)
             {
                 // Salto
                 rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, jumpForce);
-            }else if (doubleJump)
+            }
+            else if (doubleJump)
             {
                 rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, jumpForce);
                 doubleJump = false;
@@ -145,6 +105,15 @@ public class CharacterController : MonoBehaviour
 
     }
 
+    void FixedUpdate()
+    {
+        if (isDashing)
+        {
+            return;
+        }
+
+    }
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Ground")
@@ -157,6 +126,11 @@ public class CharacterController : MonoBehaviour
         {
             isOnFloatingGround = true;
             doubleJump = true;
+        }
+
+        if (collision.gameObject.tag == "Finish")
+        {
+            SceneManager.LoadScene("Level_2");
         }
     }
 
@@ -180,5 +154,27 @@ public class CharacterController : MonoBehaviour
         Vector3 scale = transform.localScale;
         scale.x *= -1;
         transform.localScale = scale;
+    }
+
+    private IEnumerator Dash()
+    {
+        canDash = false;
+        isDashing = true;
+
+        float originalGravity = rigidBody2D.gravityScale;
+        rigidBody2D.gravityScale = 0f;
+
+        rigidBody2D.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        trailRenderer.emitting = true;
+
+        yield return new WaitForSeconds(dashingTime);
+
+        trailRenderer.emitting = false;
+        rigidBody2D.gravityScale = originalGravity;
+
+        isDashing = false;
+
+        yield return new WaitForSeconds(dashingCoolDown);
+        canDash = true;
     }
 }
