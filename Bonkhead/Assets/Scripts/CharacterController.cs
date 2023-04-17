@@ -18,6 +18,7 @@ public class CharacterController : MonoBehaviour
     private bool isOnGround;
     private bool doubleJump;
     private bool facingRight;
+    private bool isNotOnGround;
     private bool isOnFloatingGround;
 
     private Rigidbody2D rigidBody2D;
@@ -46,9 +47,16 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        
         if (isDashing)
         {
             return;
+        }
+       
+        if ((isOnGround || isOnFloatingGround) && !isNotOnGround /*(rigidBody2D.velocity.y < 0.001 && rigidBody2D.velocity.y > -0.001)**/)
+        {
+            doubleJump = true;
         }
 
         if (Input.GetKey("a") || Input.GetKey("left"))
@@ -119,18 +127,23 @@ public class CharacterController : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             isOnGround = true;
-            doubleJump = true;
+            //doubleJump = true;
         }
 
         if (collision.gameObject.tag == "Floating Ground")
         {
             isOnFloatingGround = true;
-            doubleJump = true;
+           // doubleJump = true;
         }
 
         if (collision.gameObject.tag == "Finish")
         {
             SceneManager.LoadScene("Level_2");
+        }
+
+        if(collision.gameObject.tag == "GroundCheck")
+        {
+            isNotOnGround = false;
         }
     }
 
@@ -145,6 +158,11 @@ public class CharacterController : MonoBehaviour
         if (collision.gameObject.tag == "Floating Ground")
         {
             isOnFloatingGround = false;
+        }
+
+        if(collision.gameObject.tag == "GroundCheck")
+        {
+            isNotOnGround = true;
         }
     }
 
