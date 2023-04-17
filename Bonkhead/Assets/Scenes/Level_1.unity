@@ -3252,6 +3252,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 347493486455351869, guid: 971a1fbe8730809429c3ee453134a8cb, type: 3}
+      propertyPath: m_Name
+      value: GroundCheck
+      objectReference: {fileID: 0}
     - target: {fileID: 2049384334332554230, guid: 971a1fbe8730809429c3ee453134a8cb, type: 3}
       propertyPath: m_Name
       value: Player
