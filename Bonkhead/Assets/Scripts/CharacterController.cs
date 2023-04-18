@@ -1,28 +1,27 @@
 using System.Collections;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CharacterController : MonoBehaviour
 {
-    private float speed; // Velocidad de movimiento 75
-    private float jumpForce; // Fuerza del salto
+    private float speed;                // Velocidad de movimiento 75
+    private float jumpForce;            // Fuerza del salto
     private float dashingTime;
     private float dashingPower;
-    private float fallMultiplier; // Multiplicador de velocidad de caída
+    private float fallMultiplier;       // Multiplicador de velocidad de caída
     private float dashingCoolDown;
-    private float lowJumpMultiplier; // Multiplicador de velocidad de caída cuando se salta ligeramente
+    private float lowJumpMultiplier;    // Multiplicador de velocidad de caída cuando se salta ligeramente
 
+    private bool canJump;
     private bool canDash;
     private bool isDashing;
     private bool isOnGround;
     private bool doubleJump;
     private bool facingRight;
-    private bool isNotOnGround;
     private bool isOnFloatingGround;
+    private bool isCrossingFloatingGround;
 
     private Rigidbody2D rigidBody2D;
-
     private TrailRenderer trailRenderer;
 
     // Start is called before the first frame update
@@ -32,8 +31,10 @@ public class CharacterController : MonoBehaviour
         trailRenderer = GetComponent<TrailRenderer>();
 
         canDash = true;
+        canJump = true;
         facingRight = true;
         doubleJump = false;
+        isCrossingFloatingGround = false;
 
         speed = 8f;
         jumpForce = 25f;
@@ -47,15 +48,14 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        
         if (isDashing)
         {
             return;
         }
-       
-        if ((isOnGround || isOnFloatingGround) && !isNotOnGround /*(rigidBody2D.velocity.y < 0.001 && rigidBody2D.velocity.y > -0.001)**/)
+
+        if (!isCrossingFloatingGround && (isOnFloatingGround || isOnGround))
         {
+            canJump = true;
             doubleJump = true;
         }
 
@@ -67,7 +67,6 @@ public class CharacterController : MonoBehaviour
             {
                 flip();
             }
-
         }
         else if (Input.GetKey("d") || Input.GetKey("right"))
         {
@@ -77,7 +76,6 @@ public class CharacterController : MonoBehaviour
             {
                 flip();
             }
-
         }
 
         if (Input.GetKeyDown(KeyCode.LeftAlt) && canDash)
@@ -87,8 +85,7 @@ public class CharacterController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && !Input.GetKey("down"))
         {
-
-            if (isOnGround || isOnFloatingGround)
+            if ((isOnGround || isOnFloatingGround) && canJump)
             {
                 // Salto
                 rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, jumpForce);
@@ -97,6 +94,7 @@ public class CharacterController : MonoBehaviour
             {
                 rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, jumpForce);
                 doubleJump = false;
+                canJump = false;
             }
         }
 
@@ -110,7 +108,6 @@ public class CharacterController : MonoBehaviour
         {
             rigidBody2D.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
-
     }
 
     void FixedUpdate()
@@ -119,36 +116,23 @@ public class CharacterController : MonoBehaviour
         {
             return;
         }
-
     }
-
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
             isOnGround = true;
-            //doubleJump = true;
         }
 
         if (collision.gameObject.tag == "Floating Ground")
         {
             isOnFloatingGround = true;
-           // doubleJump = true;
         }
 
-        if (collision.gameObject.tag == "Finish")
-        {
-            SceneManager.LoadScene("Level_2");
-        }
-
-        if(collision.gameObject.tag == "GroundCheck")
-        {
-            isNotOnGround = false;
-        }
+       
     }
 
-
-    void OnTriggerExit2D(Collider2D collision)
+    void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
@@ -159,10 +143,27 @@ public class CharacterController : MonoBehaviour
         {
             isOnFloatingGround = false;
         }
+    }
 
-        if(collision.gameObject.tag == "GroundCheck")
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Floating Ground")
         {
-            isNotOnGround = true;
+            isCrossingFloatingGround = true;
+        }
+
+        if (collision.gameObject.tag == "Finish")
+        {
+            SceneManager.LoadScene("Level_2");
+        }
+    }
+
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Floating Ground")
+        {
+            isCrossingFloatingGround = false;
         }
     }
 
