@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class CharacterController : MonoBehaviour
 {
+    public float life;
+
     private float speed;                // Velocidad de movimiento 75
     private float jumpForce;            // Fuerza del salto
     private float dashingTime;
@@ -29,6 +31,8 @@ public class CharacterController : MonoBehaviour
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
         trailRenderer = GetComponent<TrailRenderer>();
+        
+        life = 5;
 
         canDash = true;
         canJump = true;
@@ -129,7 +133,10 @@ public class CharacterController : MonoBehaviour
             isOnFloatingGround = true;
         }
 
-       
+        if (collision.gameObject.tag == "Enemy")
+        {
+            lifeController();
+        }
     }
 
     void OnCollisionExit2D(Collision2D collision)
@@ -154,8 +161,11 @@ public class CharacterController : MonoBehaviour
 
         if (collision.gameObject.tag == "Finish")
         {
+
             SceneManager.LoadScene("Level_2");
         }
+
+        
     }
 
 
@@ -195,5 +205,15 @@ public class CharacterController : MonoBehaviour
 
         yield return new WaitForSeconds(dashingCoolDown);
         canDash = true;
+    }
+
+    private void lifeController()
+    {
+        life--;
+
+        if (life == 0)
+        {
+            SceneManager.LoadScene("Level_1");
+        }
     }
 }
