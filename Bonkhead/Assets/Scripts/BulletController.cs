@@ -14,13 +14,25 @@ public class BulletController : MonoBehaviour
        // rb.velocity = transform.right * speed;
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.CompareTag("Player"))
+        if (collision.gameObject.tag == "Player")
         {
-           // other.GetComponent<PlayerController>().TakeDamage(damage);
+            Destroy(gameObject);
+            collision.GetComponent<CharacterController>().TakeDamage();
+            //Debug.Log("ENTRO DESDE BULLET");
+            
+        }
+
+        if (collision.gameObject.tag == "Ground")
+        {
             Destroy(gameObject);
         }
+    }
+
+    void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 }
 

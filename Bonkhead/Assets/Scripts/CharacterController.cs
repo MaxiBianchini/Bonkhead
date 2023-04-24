@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +14,8 @@ public class CharacterController : MonoBehaviour
     private float fallMultiplier;       // Multiplicador de velocidad de caída
     private float dashingCoolDown;
     private float lowJumpMultiplier;    // Multiplicador de velocidad de caída cuando se salta ligeramente
+
+    private float lifeTimer;
 
     private bool canJump;
     private bool canDash;
@@ -33,6 +36,7 @@ public class CharacterController : MonoBehaviour
         trailRenderer = GetComponent<TrailRenderer>();
         
         life = 5;
+        lifeTimer = 0;
 
         canDash = true;
         canJump = true;
@@ -52,6 +56,8 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
         if (isDashing)
         {
             return;
@@ -112,6 +118,8 @@ public class CharacterController : MonoBehaviour
         {
             rigidBody2D.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
+
+        lifeTimer += Time.deltaTime;
     }
 
     void FixedUpdate()
@@ -135,7 +143,9 @@ public class CharacterController : MonoBehaviour
 
         if (collision.gameObject.tag == "Enemy")
         {
-            lifeController();
+            TakeDamage();
+
+           // Debug.Log("ENTRO DESDE CONTACTO CON ENEMY");
         }
     }
 
@@ -207,9 +217,16 @@ public class CharacterController : MonoBehaviour
         canDash = true;
     }
 
-    private void lifeController()
+    public void TakeDamage()
     {
-        life--;
+        if (lifeTimer >= 0.5)
+        {
+            life--;
+            Debug.Log("Vidas: "); Debug.Log(life);
+            lifeTimer = 0;
+
+        }
+       
 
         if (life == 0)
         {
