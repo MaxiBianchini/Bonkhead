@@ -11,7 +11,6 @@ public class BulletController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-       // rb.velocity = transform.right * speed;
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -20,8 +19,6 @@ public class BulletController : MonoBehaviour
         {
             Destroy(gameObject);
             collision.GetComponent<CharacterController>().TakeDamage();
-            //Debug.Log("ENTRO DESDE BULLET");
-            
         }
 
         if (collision.gameObject.tag == "Ground")
