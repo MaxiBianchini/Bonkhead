@@ -36,7 +36,6 @@ public class EnemyController_1 : MonoBehaviour
         // Shoot if we see the player and the shoot timer is up
         if (CanSeePlayer() && !isShooting && shootTimer <= 0f)
         {
-            
             Shoot();
         }
 
