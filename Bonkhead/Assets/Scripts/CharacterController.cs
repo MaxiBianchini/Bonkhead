@@ -56,8 +56,6 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-
         if (isDashing)
         {
             return;
@@ -144,8 +142,6 @@ public class CharacterController : MonoBehaviour
         if (collision.gameObject.tag == "Enemy")
         {
             TakeDamage();
-
-           // Debug.Log("ENTRO DESDE CONTACTO CON ENEMY");
         }
     }
 
@@ -171,11 +167,8 @@ public class CharacterController : MonoBehaviour
 
         if (collision.gameObject.tag == "Finish")
         {
-
             SceneManager.LoadScene("Level_2");
-        }
-
-        
+        } 
     }
 
 
@@ -224,9 +217,7 @@ public class CharacterController : MonoBehaviour
             life--;
             Debug.Log("Vidas: "); Debug.Log(life);
             lifeTimer = 0;
-
         }
-       
 
         if (life == 0)
         {
