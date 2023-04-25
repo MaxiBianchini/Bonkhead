@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class EnemyController_1 : MonoBehaviour
 {
@@ -48,6 +48,7 @@ public class EnemyController_1 : MonoBehaviour
                 isShooting = false;
             }
         }
+
     }
 
     void FixedUpdate()
@@ -64,6 +65,7 @@ public class EnemyController_1 : MonoBehaviour
 
         // Rotate the enemy 180 degrees
         transform.Rotate(new Vector3(0, 180, 0));
+        // transform.Rotate(new Vector3(0, 180, 0));
     }
 
     bool IsNearWall()
@@ -79,7 +81,7 @@ public class EnemyController_1 : MonoBehaviour
     {
         // Check if we can see the player
         Vector2 rayDirection = isFacingRight ? Vector2.right : Vector2.left;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, 15, LayerMask.GetMask("Player")); // 15 DEJAR EN UNA VARIABLE DEPEDIENDO DEL TAMAÑO DE PANTALLA
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, 15, LayerMask.GetMask("Player")); // 15 DEJAR EN UNA VARIABLE DEPEDIENDO DEL TAMAï¿½O DE PANTALLA
         return hit.collider != null;
     }
 
@@ -91,4 +93,5 @@ public class EnemyController_1 : MonoBehaviour
         isShooting = true;
         shootTimer = shootCooldown;
     }
+
 }
