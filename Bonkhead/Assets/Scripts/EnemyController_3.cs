@@ -1,62 +1,67 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyController_3 : MonoBehaviour
 {
-    public float moveSpeed = 2f;
-    public Transform groundCheck;
     public LayerMask groundLayer;
+
+    public Transform groundCheck;
     private Rigidbody2D rb;
-    private bool isFacingRight = true;
-    private bool isGrounded = false;
+
+    private bool isGrounded;
+    private bool seePlayer;
+
+    private float moveSpeed;
+    private float moveDir;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        isGrounded = false;
+        seePlayer = false;
+
+        moveSpeed = 5f;
+        moveDir = 0;
     }
 
     void Update()
     {
-        // Check if we're on the ground
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
 
-        // Check if we should change direction
-        if (IsNearWall())
+        if (CanSeePlayerOnRight())
         {
-            Flip();
+           moveDir = 1;
+           seePlayer = true;
         }
-
-        // Shoot if we see the player and the shoot timer is up
-
+        else if (CanSeePlayerOnLeft())
+        {
+           moveDir = -1;
+           seePlayer = true;
+        }
+        else 
+        {  
+           moveDir = 0;
+           seePlayer = false;
+        }
     }
 
     void FixedUpdate()
     {
-        // Move in the current direction
-        if (isGrounded)
+        if (isGrounded && seePlayer)
         {
-            float moveDir = isFacingRight ? 1f : -1f;
             rb.velocity = new Vector2(moveDir * moveSpeed, rb.velocity.y);
         }
-        
     }
 
-    void Flip()
+    bool CanSeePlayerOnRight()
     {
-        // Switch the direction we're facing
-        isFacingRight = !isFacingRight;
-
-        // Rotate the enemy 180 degrees
-        // transform.Rotate(new Vector3(0, 180, 0));
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, 15, LayerMask.GetMask("Player")); // 15 DEJAR EN UNA VARIABLE DEPEDIENDO DEL TAMA�O DE PANTALLA
+        return hit.collider != null;
     }
 
-    bool IsNearWall()
+    bool CanSeePlayerOnLeft()
     {
-        // Check if we're near a wall in the current direction
-        float rayDistance = 0.5f;
-        Vector2 rayDirection = isFacingRight ? Vector2.right : Vector2.left;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, rayDistance, groundLayer);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left, 15, LayerMask.GetMask("Player")); // 15 DEJAR EN UNA VARIABLE DEPEDIENDO DEL TAMA�O DE PANTALLA
         return hit.collider != null;
     }
 }

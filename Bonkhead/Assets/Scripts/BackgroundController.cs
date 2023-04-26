@@ -4,18 +4,17 @@ public class BackgroundController : MonoBehaviour
 {
     [SerializeField] private Vector2 speedMovement;
 
-    private Vector2 offset;
-    private Material material;
     private Rigidbody2D rigidbodyPlayer;
+    private Material material;
 
-    // Start is called before the first frame update
+    private Vector2 offset;
+    
     void Start()
     {
         material = GetComponent<SpriteRenderer>().material;
         rigidbodyPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         offset = (rigidbodyPlayer.velocity.x * 0.1f) * speedMovement * Time.deltaTime;

@@ -6,13 +6,11 @@ public class PlatformController : MonoBehaviour
 
     public bool isOnFloatingGround;
 
-    // Start is called before the first frame update
     void Start()
     {
         platformEff2D = GetComponent<PlatformEffector2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKey("down") && Input.GetKey(KeyCode.Space) && isOnFloatingGround)

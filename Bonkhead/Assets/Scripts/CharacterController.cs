@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,13 +8,12 @@ public class CharacterController : MonoBehaviour
 
     private float speed;                // Velocidad de movimiento 75
     private float jumpForce;            // Fuerza del salto
+    private float lifeTimer;
     private float dashingTime;
     private float dashingPower;
     private float fallMultiplier;       // Multiplicador de velocidad de caída
     private float dashingCoolDown;
     private float lowJumpMultiplier;    // Multiplicador de velocidad de caída cuando se salta ligeramente
-
-    private float lifeTimer;
 
     private bool canJump;
     private bool canDash;
@@ -29,7 +27,6 @@ public class CharacterController : MonoBehaviour
     private Rigidbody2D rigidBody2D;
     private TrailRenderer trailRenderer;
 
-    // Start is called before the first frame update
     void Start()
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
@@ -53,7 +50,6 @@ public class CharacterController : MonoBehaviour
         lowJumpMultiplier = 8f;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isDashing)
@@ -127,6 +123,7 @@ public class CharacterController : MonoBehaviour
             return;
         }
     }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground")
@@ -170,7 +167,6 @@ public class CharacterController : MonoBehaviour
             SceneManager.LoadScene("Level_2");
         } 
     }
-
 
     void OnTriggerExit2D(Collider2D collision)
     {

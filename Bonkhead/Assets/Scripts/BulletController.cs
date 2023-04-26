@@ -2,15 +2,11 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-  
-    //public float speed = 10f;
     public int damage = 10;
-
-    private Rigidbody2D rb;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -32,9 +28,3 @@ public class BulletController : MonoBehaviour
         Destroy(gameObject);
     }
 }
-
-
-
-
-
-
