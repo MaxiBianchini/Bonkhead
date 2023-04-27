@@ -2,37 +2,41 @@ using UnityEngine;
 
 public class PlatformController : MonoBehaviour
 {
-    PlatformEffector2D platformEff2D;
+    private PlatformEffector2D platformEffector; // Componente PlatformEffector2D de la plataforma
+    private bool isOnFloatingGround; // Indica si el jugador está en una superficie flotante
 
-    public bool isOnFloatingGround;
-
-    void Start()
+    private void Start()
     {
-        platformEff2D = GetComponent<PlatformEffector2D>();
+        // Obtener el componente PlatformEffector2D de la plataforma
+        platformEffector = GetComponent<PlatformEffector2D>();
     }
 
-    void Update()
+    private void Update()
     {
-        if (Input.GetKey("down") && Input.GetKey(KeyCode.Space) && isOnFloatingGround)
+        // Si el jugador presiona la tecla "abajo" y "espacio" y está sobre una superficie flotante, girar la plataforma 180 grados
+        if (Input.GetKey(KeyCode.DownArrow) && Input.GetKey(KeyCode.Space) && isOnFloatingGround)
         {
-            platformEff2D.rotationalOffset = 180;
+            platformEffector.rotationalOffset = 180;
         }
     }
 
-    void OnCollisionExit2D(Collision2D collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        // Si el objeto que sale de la colisión es el jugador, reiniciar el ángulo de la plataforma y establecer que no está en una superficie flotante
+        if (collision.gameObject.CompareTag("Player"))
         {
-            platformEff2D.rotationalOffset = 0;
+            platformEffector.rotationalOffset = 0;
             isOnFloatingGround = false;
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        // Si el objeto que entra en la colisión es el jugador, establecer que está en una superficie flotante
+        if (collision.gameObject.CompareTag("Player"))
         {
             isOnFloatingGround = true;
         }
     }
 }
+
