@@ -2,22 +2,17 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour
 {
-    public int damage = 10;
-
-    void Start()
-    {
-
-    }
+    private int damage = 10;
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject);
             collision.GetComponent<CharacterController>().TakeDamage();
         }
 
-        if (collision.gameObject.tag == "Ground")
+        if (collision.gameObject.CompareTag("Ground"))
         {
             Destroy(gameObject);
         }
