@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 6726711846971048692}
   m_Layer: 0
   m_Name: Enemy3
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65,7 +65,7 @@ Transform:
   m_Children:
   - {fileID: 7199629017591329477}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8971312425826732792
 SpriteRenderer:
@@ -193,8 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40ebc27f7f29e1443ab75924378951c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  groundCheck: {fileID: 7199629017591329477}
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  groundCheck: {fileID: 7199629017591329477}
