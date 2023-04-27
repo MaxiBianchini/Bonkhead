@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class EnemyController_4 : MonoBehaviour
@@ -15,6 +16,12 @@ public class EnemyController_4 : MonoBehaviour
     private float shootTimer;
     private float speed;
 
+    private float areaRadius;
+
+    private Vector3 targetPosition;
+    private Vector3 startingPosition;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +32,13 @@ public class EnemyController_4 : MonoBehaviour
         shootCooldown = 2f;
         bulletSpeed = 10f;
         shootTimer = 0f;
-        speed = 5.0f;
+        speed = 2.5f;
+
+        areaRadius = 2.5f;
+
+        startingPosition = transform.position;
+        targetPosition = transform.position;
+        //OnDrawGizmos();
     }
 
     // Update is called once per frame
@@ -67,6 +80,7 @@ public class EnemyController_4 : MonoBehaviour
                 {
                     Vector2 direction = (transform.position - player.position).normalized;
                     transform.position = (Vector2)transform.position - direction * speed * Time.deltaTime;
+                    transform.position = new Vector3(transform.position.x, transform.position.y, -0.5f);
                 } 
             }
             else
@@ -86,7 +100,19 @@ public class EnemyController_4 : MonoBehaviour
                 {
                     Vector2 direction = (transform.position - player.position).normalized;
                     transform.position = (Vector2)transform.position + direction * speed * Time.deltaTime;
+                    transform.position = new Vector3(transform.position.x, transform.position.y, -0.5f);
                 }
+            }
+        }else
+        {
+            if (Vector3.Distance(transform.position, targetPosition) < 0.6f)
+            {
+                SetRandomTargetPosition();
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+                transform.position = new Vector3(transform.position.x, transform.position.y, -0.5f);
             }
         }
     }
@@ -96,6 +122,7 @@ public class EnemyController_4 : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             goNearToPlayer = true;
+            speed = 5f;
         }
     }
 
@@ -104,6 +131,7 @@ public class EnemyController_4 : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             goNearToPlayer = false;
+            speed = 2.5f;
         }
     }
 
@@ -113,5 +141,18 @@ public class EnemyController_4 : MonoBehaviour
         bullet.GetComponent<Rigidbody2D>().velocity = isFacingRight ? Vector2.right * bulletSpeed : Vector2.left * bulletSpeed;
         isShooting = true;
         shootTimer = shootCooldown;
+    }
+
+    private void SetRandomTargetPosition()
+    {
+        Vector3 randomDirection = Random.insideUnitCircle * areaRadius;
+        Debug.Log(randomDirection);
+        targetPosition = startingPosition + new Vector3(randomDirection.x, randomDirection.y, -0.5f);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(startingPosition, areaRadius);
     }
 }
