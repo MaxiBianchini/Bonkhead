@@ -2,107 +2,54 @@
 
 public class EnemyController_3 : MonoBehaviour
 {
-    public LayerMask groundLayer;
-
-    public Transform groundCheck;
-    private Rigidbody2D rb;
-
-    bool CanSeePlayer = false;
-    public Transform player;
-
-    private bool isGrounded;
-    private bool seePlayer;
-
-    private float moveSpeed;
-    private float moveDir;
+    public LayerMask groundLayer; // Capa del suelo para la detección de colisiones
+    public Transform groundCheck; // Punto de comprobación para detectar si el personaje está en el suelo
+    public Transform player; // Referencia al objeto del jugador
+    
+    private Rigidbody2D rb; // Referencia al componente Rigidbody2D del enemigo
+    private bool CanSeePlayer; // Indica si el enemigo puede ver al jugador
+    private float moveSpeed; // Velocidad de movimiento del enemigo
+    private float moveDir; // Dirección de movimiento del enemigo
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>(); // Obtiene la referencia al componente Rigidbody2D del enemigo
 
-        isGrounded = false;
-        seePlayer = false;
-
-        moveSpeed = 5f;
-        moveDir = 0;
+        CanSeePlayer = false; // Indica que el enemigo no esta viendo al jugador
+        moveSpeed = 5f; // Inicializa la velocidad de movimiento del enemigo
+        moveDir = 0; // Inicializa la dirección de movimiento del enemigo
     }
 
     void Update()
     {
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
-
-        if (CanSeePlayer)
+        if (CanSeePlayer) // Si el enemigo puede ver al jugador
         {
-            if (transform.position.x < player.position.x /*&& !isFacingRight*/)
+            if (transform.position.x < player.position.x) // Si el enemigo está a la izquierda del jugador
             {
-                // El objeto está a la izquierda del personaje
-                // Flip();
-                moveDir = 1;
-                rb.velocity = new Vector2(moveDir * moveSpeed, rb.velocity.y);
-
+                moveDir = 1; // Establece la dirección de movimiento hacia la derecha
+                rb.velocity = new Vector2(moveDir * moveSpeed, rb.velocity.y); // Establece la velocidad de movimiento hacia la derecha
             }
-            else if (transform.position.x > player.position.x /*&& isFacingRight*/)
+            else if (transform.position.x > player.position.x) // Si el enemigo está a la derecha del jugador
             {
-                // El objeto está a la derecha del personaje
-               // Flip();
-                moveDir = -1;
-                rb.velocity = new Vector2(moveDir * moveSpeed, rb.velocity.y);
-
+                moveDir = -1; // Establece la dirección de movimiento hacia la izquierda
+                rb.velocity = new Vector2(moveDir * moveSpeed, rb.velocity.y); // Establece la velocidad de movimiento hacia la izquierda
             }
         }
-
-        /*     if (CanSeePlayerOnRight())
-             {
-                moveDir = 1;
-                seePlayer = true;
-             }
-             else if (CanSeePlayerOnLeft())
-             {
-                moveDir = -1;
-                seePlayer = true;
-             }
-             else 
-             {  
-                moveDir = 0;
-                seePlayer = false;
-             }*/
-    }
-
-    void FixedUpdate()
-    {
-        /*if (isGrounded && seePlayer)
-        {
-            rb.velocity = new Vector2(moveDir * moveSpeed, rb.velocity.y);
-        }*/
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.CompareTag("Player")) // Si el objeto que entra en contacto es el jugador
         {
-            CanSeePlayer = true;
-            Debug.Log("ESTA EN CONTACTO");
+            CanSeePlayer = true; // El enemigo puede ver al jugador
         }
     }
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.CompareTag("Player")) // Si el objeto que sale del contacto es el jugador
         {
-            Debug.Log("NO ESTA EN CONTACTO");
-            CanSeePlayer = false;
+            CanSeePlayer = false; // El enemigo no puede ver al jugador
         }
     }
-
-   /* bool CanSeePlayerOnRight()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, 15, LayerMask.GetMask("Player")); // 15 DEJAR EN UNA VARIABLE DEPEDIENDO DEL TAMA�O DE PANTALLA
-        return hit.collider != null;
-    }
-
-    bool CanSeePlayerOnLeft()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left, 15, LayerMask.GetMask("Player")); // 15 DEJAR EN UNA VARIABLE DEPEDIENDO DEL TAMA�O DE PANTALLA
-        return hit.collider != null;
-    }*/
 }

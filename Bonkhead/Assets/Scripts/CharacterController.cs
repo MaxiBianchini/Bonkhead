@@ -3,8 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CharacterController : MonoBehaviour
-{
-
+{ 
     // Declaración de variables públicas
     public float life; // Vida del personaje
 
@@ -29,7 +28,6 @@ public class CharacterController : MonoBehaviour
 
     private Rigidbody2D rigidBody2D; // Componente Rigidbody2D del personaje
     private TrailRenderer trailRenderer; // Componente TrailRenderer del personaje
-
 
     void Start()
     {
@@ -97,30 +95,33 @@ public class CharacterController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && !Input.GetKey("down"))
         {
+            // Si se presionó la tecla de salto y no se está presionando hacia abajo:
             if ((isOnGround || isOnFloatingGround) && canJump)
             {
-                // Salto
+                // Si el jugador está en el suelo o en una plataforma flotante y puede saltar:
                 rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, jumpForce);
             }
             else if (doubleJump)
             {
+                // Si el jugador tiene habilitado el doble salto:
                 rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, jumpForce);
                 doubleJump = false;
                 canJump = false;
             }
         }
 
-        // Acelerar la caída del personaje si está cayendo
         if (rigidBody2D.velocity.y < 0)
         {
+            // Si el jugador está cayendo:
             rigidBody2D.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
         }
-        // Acelerar la caída del personaje ligeramente si está saltando pero no mantiene presionado el botón de salto
         else if (rigidBody2D.velocity.y > 0 && !Input.GetKey(KeyCode.Space))
         {
+            // Si el jugador está subiendo pero no está presionando la tecla de salto:
             rigidBody2D.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
 
+        // Incrementar el temporizador de vida
         lifeTimer += Time.deltaTime;
     }
 
@@ -128,22 +129,25 @@ public class CharacterController : MonoBehaviour
     {
         if (isDashing)
         {
-            return;
+            return; // Si se está ejecutando un dash, salir del FixedUpdate
         }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        // Si el jugador colisiona con una plataforma "Ground":
         if (collision.gameObject.tag == "Ground")
         {
             isOnGround = true;
         }
 
+        // Si el jugador colisiona con una plataforma "Floating Ground":
         if (collision.gameObject.tag == "Floating Ground")
         {
             isOnFloatingGround = true;
         }
 
+        // Si el jugador colisiona con un enemigo:
         if (collision.gameObject.tag == "Enemy")
         {
             TakeDamage();
@@ -152,11 +156,13 @@ public class CharacterController : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D collision)
     {
+        // Si el jugador deja de colisionar con una plataforma "Ground":
         if (collision.gameObject.tag == "Ground")
         {
             isOnGround = false;
         }
 
+        // Si el jugador deja de colisionar con una plataforma "Floating Ground":
         if (collision.gameObject.tag == "Floating Ground")
         {
             isOnFloatingGround = false;
@@ -165,19 +171,22 @@ public class CharacterController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        // Si el jugador entra en contacto con una plataforma "Floating Ground":
         if (collision.gameObject.tag == "Floating Ground")
         {
             isCrossingFloatingGround = true;
         }
 
+        // Si el jugador llega al final del nivel:
         if (collision.gameObject.tag == "Finish")
         {
             SceneManager.LoadScene("Level_2");
-        } 
+        }
     }
 
     void OnTriggerExit2D(Collider2D collision)
     {
+        // Si el jugador deja de estar en contacto con una plataforma "Floating Ground":
         if (collision.gameObject.tag == "Floating Ground")
         {
             isCrossingFloatingGround = false;
@@ -186,6 +195,7 @@ public class CharacterController : MonoBehaviour
 
     void flip()
     {
+        // Función que invierte la dirección del sprite del jugador
         facingRight = !facingRight;
         Vector3 scale = transform.localScale;
         scale.x *= -1;
@@ -197,32 +207,43 @@ public class CharacterController : MonoBehaviour
         canDash = false;
         isDashing = true;
 
+        // Se guarda la gravedad original para restaurarla luego del dash.
         float originalGravity = rigidBody2D.gravityScale;
         rigidBody2D.gravityScale = 0f;
 
+        // Se establece la velocidad de la Rigidbody en función de la dirección del personaje y la fuerza del dash.
         rigidBody2D.velocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+
+        // Se activa el efecto de partículas de la estela.
         trailRenderer.emitting = true;
 
+        // Se espera el tiempo de duración del dash.
         yield return new WaitForSeconds(dashingTime);
 
+        // Se desactiva el efecto de partículas de la estela y se restaura la gravedad original.
         trailRenderer.emitting = false;
         rigidBody2D.gravityScale = originalGravity;
 
         isDashing = false;
 
+        // Se espera el tiempo de enfriamiento del dash para poder volver a usarlo.
         yield return new WaitForSeconds(dashingCoolDown);
         canDash = true;
     }
 
     public void TakeDamage()
     {
+        // Se verifica que haya pasado al menos 0.5 segundos desde el último golpe recibido.
         if (lifeTimer >= 0.5)
         {
             life--;
             Debug.Log("Vidas: "); Debug.Log(life);
+
+            // Se reinicia el temporizador de vida.
             lifeTimer = 0;
         }
 
+        // Si se queda sin vidas, se carga el nivel 1.
         if (life == 0)
         {
             SceneManager.LoadScene("Level_1");

@@ -9,17 +9,13 @@ public class BackgroundController : MonoBehaviour
 
     private Vector2 offset; // Offset para mover el fondo
 
-    // Esta función se llama cuando se inicia el juego
     void Start()
     {
-        // Se obtiene el componente Renderer del fondo
-        backgroundRenderer = GetComponent<Renderer>();
+        backgroundRenderer = GetComponent<Renderer>();  // Se obtiene el componente Renderer del fondo
 
-        // Se busca y se obtiene el componente Rigidbody2D del jugador
-        rigidbodyPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
+        rigidbodyPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>(); // Se busca y se obtiene el componente Rigidbody2D del jugador
     }
 
-    // Esta función se llama una vez por cuadro y se utiliza para actualizar la posición del fondo
     void Update()
     {
         // Se calcula el offset para mover el fondo en función de la velocidad horizontal del jugador, la velocidad de movimiento del fondo y el tiempo transcurrido desde el último cuadro
