@@ -4,34 +4,40 @@ using UnityEngine.SceneManagement;
 
 public class CharacterController : MonoBehaviour
 {
-    public float life;
 
-    private float speed;                // Velocidad de movimiento 75
-    private float jumpForce;            // Fuerza del salto
-    private float lifeTimer;
-    private float dashingTime;
-    private float dashingPower;
-    private float fallMultiplier;       // Multiplicador de velocidad de caída
-    private float dashingCoolDown;
-    private float lowJumpMultiplier;    // Multiplicador de velocidad de caída cuando se salta ligeramente
+    // Declaración de variables públicas
+    public float life; // Vida del personaje
 
-    private bool canJump;
-    private bool canDash;
-    private bool isDashing;
-    private bool isOnGround;
-    private bool doubleJump;
-    private bool facingRight;
-    private bool isOnFloatingGround;
-    private bool isCrossingFloatingGround;
+    // Declaración de variables privadas
+    private float speed; // Velocidad del personaje
+    private float jumpForce; // Fuerza del salto del personaje
+    private float lifeTimer; // Tiempo que ha pasado desde el inicio del juego
+    private float dashingTime; // Duración del dash
+    private float dashingPower; // Potencia del dash
+    private float fallMultiplier; // Multiplicador de la caída del personaje
+    private float dashingCoolDown; // Tiempo de enfriamiento del dash
+    private float lowJumpMultiplier; // Multiplicador de la caída lenta del personaje
 
-    private Rigidbody2D rigidBody2D;
-    private TrailRenderer trailRenderer;
+    private bool canJump; // Indica si el personaje puede saltar
+    private bool canDash; // Indica si el personaje puede hacer un dash
+    private bool isDashing; // Indica si el personaje está haciendo un dash
+    private bool isOnGround; // Indica si el personaje está tocando el suelo
+    private bool doubleJump; // Indica si el personaje puede hacer doble salto
+    private bool facingRight; // Indica si el personaje está mirando hacia la derecha
+    private bool isOnFloatingGround; // Indica si el personaje está tocando una plataforma flotante
+    private bool isCrossingFloatingGround; // Indica si el personaje está cruzando una plataforma flotante
+
+    private Rigidbody2D rigidBody2D; // Componente Rigidbody2D del personaje
+    private TrailRenderer trailRenderer; // Componente TrailRenderer del personaje
+
 
     void Start()
     {
+        // Obtener componentes del objeto
         rigidBody2D = GetComponent<Rigidbody2D>();
         trailRenderer = GetComponent<TrailRenderer>();
-        
+
+        // Inicialización de variables
         life = 5;
         lifeTimer = 0;
 
@@ -54,37 +60,39 @@ public class CharacterController : MonoBehaviour
     {
         if (isDashing)
         {
-            return;
+            return; // Si el personaje está haciendo un dash, salir del método Update para evitar interacciones no deseadas
         }
 
         if (!isCrossingFloatingGround && (isOnFloatingGround || isOnGround))
         {
-            canJump = true;
-            doubleJump = true;
+            canJump = true; // Si el personaje está tocando suelo o una plataforma flotante, habilitar el salto
+            doubleJump = true; // Si el personaje está tocando suelo o una plataforma flotante, habilitar el doble salto
         }
 
         if (Input.GetKey("a") || Input.GetKey("left"))
         {
+            // Mover hacia la izquierda
             rigidBody2D.velocity = new Vector2(-speed, rigidBody2D.velocity.y);
 
             if (facingRight)
             {
-                flip();
+                flip(); // Si el personaje está mirando a la derecha, invertir su dirección
             }
         }
         else if (Input.GetKey("d") || Input.GetKey("right"))
         {
+            // Mover hacia la derecha
             rigidBody2D.velocity = new Vector2(speed, rigidBody2D.velocity.y);
 
             if (!facingRight)
             {
-                flip();
+                flip(); // Si el personaje está mirando a la izquierda, invertir su dirección
             }
         }
 
         if (Input.GetKeyDown(KeyCode.LeftAlt) && canDash)
         {
-            StartCoroutine(Dash());
+            StartCoroutine(Dash()); // Si se presiona la tecla de dash y el personaje puede hacer un dash, iniciar la corrutina del dash
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && !Input.GetKey("down"))
