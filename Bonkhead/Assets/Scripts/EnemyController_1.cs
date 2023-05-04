@@ -8,6 +8,9 @@ public class EnemyController_1 : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform groundCheck;
 
+    bool CanSeePlayer = false;
+    public Transform player;
+
     private Rigidbody2D rb;
 
     private bool isFacingRight;
@@ -41,8 +44,25 @@ public class EnemyController_1 : MonoBehaviour
         {
             Flip();
         }
+
+        if(CanSeePlayer)
+        {
+            if (transform.position.x < player.position.x && !isFacingRight)
+            {
+                // El objeto está a la izquierda del personaje
+                Flip();
+
+            }
+            else if (transform.position.x > player.position.x && isFacingRight)
+            {
+                // El objeto está a la derecha del personaje
+                Flip();
+
+            }
+        }
         
-        if (CanSeePlayer() && !isShooting && shootTimer <= 0f)
+
+        if (CanSeePlayer && !isShooting && shootTimer <= 0f)
         {
             Shoot();
         }
@@ -77,11 +97,22 @@ public class EnemyController_1 : MonoBehaviour
         return hit.collider != null;
     }
 
-    bool CanSeePlayer()
-    { 
-        Vector2 rayDirection = isFacingRight ? Vector2.right : Vector2.left;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, 15, LayerMask.GetMask("Player")); // 15 DEJAR EN UNA VARIABLE DEPEDIENDO DEL TAMA�O DE PANTALLA
-        return hit.collider != null;
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            CanSeePlayer = true;
+            Debug.Log("ESTA EN CONTACTO");
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            Debug.Log("NO ESTA EN CONTACTO");
+            CanSeePlayer = false;
+        }
     }
 
     void Shoot()
