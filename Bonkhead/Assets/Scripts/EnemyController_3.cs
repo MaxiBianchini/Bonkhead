@@ -7,6 +7,9 @@ public class EnemyController_3 : MonoBehaviour
     public Transform groundCheck;
     private Rigidbody2D rb;
 
+    bool CanSeePlayer = false;
+    public Transform player;
+
     private bool isGrounded;
     private bool seePlayer;
 
@@ -28,32 +31,70 @@ public class EnemyController_3 : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
 
-        if (CanSeePlayerOnRight())
+        if (CanSeePlayer)
         {
-           moveDir = 1;
-           seePlayer = true;
+            if (transform.position.x < player.position.x /*&& !isFacingRight*/)
+            {
+                // El objeto está a la izquierda del personaje
+                // Flip();
+                moveDir = 1;
+                rb.velocity = new Vector2(moveDir * moveSpeed, rb.velocity.y);
+
+            }
+            else if (transform.position.x > player.position.x /*&& isFacingRight*/)
+            {
+                // El objeto está a la derecha del personaje
+               // Flip();
+                moveDir = -1;
+                rb.velocity = new Vector2(moveDir * moveSpeed, rb.velocity.y);
+
+            }
         }
-        else if (CanSeePlayerOnLeft())
-        {
-           moveDir = -1;
-           seePlayer = true;
-        }
-        else 
-        {  
-           moveDir = 0;
-           seePlayer = false;
-        }
+
+        /*     if (CanSeePlayerOnRight())
+             {
+                moveDir = 1;
+                seePlayer = true;
+             }
+             else if (CanSeePlayerOnLeft())
+             {
+                moveDir = -1;
+                seePlayer = true;
+             }
+             else 
+             {  
+                moveDir = 0;
+                seePlayer = false;
+             }*/
     }
 
     void FixedUpdate()
     {
-        if (isGrounded && seePlayer)
+        /*if (isGrounded && seePlayer)
         {
             rb.velocity = new Vector2(moveDir * moveSpeed, rb.velocity.y);
+        }*/
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            CanSeePlayer = true;
+            Debug.Log("ESTA EN CONTACTO");
         }
     }
 
-    bool CanSeePlayerOnRight()
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            Debug.Log("NO ESTA EN CONTACTO");
+            CanSeePlayer = false;
+        }
+    }
+
+   /* bool CanSeePlayerOnRight()
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, 15, LayerMask.GetMask("Player")); // 15 DEJAR EN UNA VARIABLE DEPEDIENDO DEL TAMA�O DE PANTALLA
         return hit.collider != null;
@@ -63,5 +104,5 @@ public class EnemyController_3 : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left, 15, LayerMask.GetMask("Player")); // 15 DEJAR EN UNA VARIABLE DEPEDIENDO DEL TAMA�O DE PANTALLA
         return hit.collider != null;
-    }
+    }*/
 }
