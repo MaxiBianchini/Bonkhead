@@ -17,13 +17,13 @@ public class CharacterController : MonoBehaviour
     private float dashingCoolDown; // Tiempo de enfriamiento del dash
     private float lowJumpMultiplier; // Multiplicador de la caída lenta del personaje
 
-    private bool canJump; // Indica si el personaje puede saltar
+    public bool canJump; // Indica si el personaje puede saltar
     private bool canDash; // Indica si el personaje puede hacer un dash
     private bool isDashing; // Indica si el personaje está haciendo un dash
-    private bool isOnGround; // Indica si el personaje está tocando el suelo
-    private bool doubleJump; // Indica si el personaje puede hacer doble salto
+    public bool isOnGround; // Indica si el personaje está tocando el suelo
+    public bool doubleJump; // Indica si el personaje puede hacer doble salto
     private bool facingRight; // Indica si el personaje está mirando hacia la derecha
-    private bool isOnFloatingGround; // Indica si el personaje está tocando una plataforma flotante
+    public bool isOnFloatingGround; // Indica si el personaje está tocando una plataforma flotante
     private bool isCrossingFloatingGround; // Indica si el personaje está cruzando una plataforma flotante
 
     private Rigidbody2D rigidBody2D; // Componente Rigidbody2D del personaje
@@ -132,64 +132,68 @@ public class CharacterController : MonoBehaviour
             return; // Si se está ejecutando un dash, salir del FixedUpdate
         }
     }
-
+      
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // Si el jugador colisiona con una plataforma "Ground":
-        if (collision.gameObject.tag == "Ground")
+       
+    } 
+
+    void OnCollisionExit2D(Collision2D collision) 
+    { 
+       
+    }
+
+    void OnTriggerEnter2D(Collider2D collision) 
+    { 
+        // Si el jugador entra en contacto con una plataforma "Floating Ground":
+        if (collision.gameObject.CompareTag("Floating Ground"))
         {
-            isOnGround = true;
+            isCrossingFloatingGround = true;
         }
 
         // Si el jugador colisiona con una plataforma "Floating Ground":
-        if (collision.gameObject.tag == "Floating Ground")
+        if (collision.gameObject.CompareTag("Floating Ground"))
         {
             isOnFloatingGround = true;
         }
 
+        // Si el jugador colisiona con una plataforma "Ground":
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isOnGround = true;
+        }
+
+        // Si el jugador llega al final del nivel:
+        if (collision.gameObject.CompareTag("Finish"))
+        {
+            SceneManager.LoadScene("Level_2");
+        }
+
         // Si el jugador colisiona con un enemigo:
-        if (collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.CompareTag("Enemy"))
         {
             TakeDamage();
         }
     }
 
-    void OnCollisionExit2D(Collision2D collision)
-    {
+    void OnTriggerExit2D(Collider2D collision) { 
+
+        // Si el jugador deja de estar en contacto con una plataforma "Floating Ground":
+        if (collision.gameObject.CompareTag("Floating Ground"))
+        {
+            isCrossingFloatingGround = false;
+        }
+
         // Si el jugador deja de colisionar con una plataforma "Ground":
-        if (collision.gameObject.tag == "Ground")
+        if (collision.gameObject.CompareTag("Ground"))
         {
             isOnGround = false;
         }
 
         // Si el jugador deja de colisionar con una plataforma "Floating Ground":
-        if (collision.gameObject.tag == "Floating Ground")
+        if (collision.gameObject.CompareTag("Floating Ground"))
         {
             isOnFloatingGround = false;
-        }
-    }
-
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        // Si el jugador entra en contacto con una plataforma "Floating Ground":
-        if (collision.gameObject.tag == "Floating Ground")
-        {
-            isCrossingFloatingGround = true;
-        }
-
-        // Si el jugador llega al final del nivel:
-        if (collision.gameObject.tag == "Finish")
-        {
-            SceneManager.LoadScene("Level_2");
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        // Si el jugador deja de estar en contacto con una plataforma "Floating Ground":
-        if (collision.gameObject.tag == "Floating Ground")
-        {
-            isCrossingFloatingGround = false;
         }
     }
 
