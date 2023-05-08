@@ -23,11 +23,14 @@ public class CharacterController : MonoBehaviour
     public bool isOnGround; // Indica si el personaje está tocando el suelo
     public bool doubleJump; // Indica si el personaje puede hacer doble salto
     private bool facingRight; // Indica si el personaje está mirando hacia la derecha
-    public bool isOnFloatingGround; // Indica si el personaje está tocando una plataforma flotante
-    private bool isCrossingFloatingGround; // Indica si el personaje está cruzando una plataforma flotante
+    //public bool isOnFloatingGround; // Indica si el personaje está tocando una plataforma flotante
+    public bool isCrossingFloatingGround; // Indica si el personaje está cruzando una plataforma flotante
 
     private Rigidbody2D rigidBody2D; // Componente Rigidbody2D del personaje
     private TrailRenderer trailRenderer; // Componente TrailRenderer del personaje
+    public Transform groundCheck;  // Punto donde comprobamos si el enemigo está en el suelo
+
+    public LayerMask groundLayer;  // Máscara de capa que indica qué objetos son suelo
 
     void Start()
     {
@@ -56,12 +59,14 @@ public class CharacterController : MonoBehaviour
 
     void Update()
     {
+        isOnGround = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
+
         if (isDashing)
         {
             return; // Si el personaje está haciendo un dash, salir del método Update para evitar interacciones no deseadas
         }
 
-        if (!isCrossingFloatingGround && (isOnFloatingGround || isOnGround))
+        if (!isCrossingFloatingGround && isOnGround)
         {
             canJump = true; // Si el personaje está tocando suelo o una plataforma flotante, habilitar el salto
             doubleJump = true; // Si el personaje está tocando suelo o una plataforma flotante, habilitar el doble salto
@@ -96,7 +101,7 @@ public class CharacterController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && !Input.GetKey("down"))
         {
             // Si se presionó la tecla de salto y no se está presionando hacia abajo:
-            if ((isOnGround || isOnFloatingGround) && canJump)
+            if (isOnGround && canJump)
             {
                 // Si el jugador está en el suelo o en una plataforma flotante y puede saltar:
                 rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, jumpForce);
@@ -135,34 +140,6 @@ public class CharacterController : MonoBehaviour
       
     void OnCollisionEnter2D(Collision2D collision)
     {
-       
-    } 
-
-    void OnCollisionExit2D(Collision2D collision) 
-    { 
-       
-    }
-
-    void OnTriggerEnter2D(Collider2D collision) 
-    { 
-        // Si el jugador entra en contacto con una plataforma "Floating Ground":
-        if (collision.gameObject.CompareTag("Floating Ground"))
-        {
-            isCrossingFloatingGround = true;
-        }
-
-        // Si el jugador colisiona con una plataforma "Floating Ground":
-        if (collision.gameObject.CompareTag("Floating Ground"))
-        {
-            isOnFloatingGround = true;
-        }
-
-        // Si el jugador colisiona con una plataforma "Ground":
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isOnGround = true;
-        }
-
         // Si el jugador llega al final del nivel:
         if (collision.gameObject.CompareTag("Finish"))
         {
@@ -176,24 +153,21 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    void OnTriggerExit2D(Collider2D collision) { 
+    void OnTriggerEnter2D(Collider2D collision) 
+    {
+        // Si el jugador entra en contacto con una plataforma "Floating Ground":
+        if (collision.gameObject.CompareTag("Floating Ground"))
+        {
+            isCrossingFloatingGround = true;
+        }
+    }
 
+    void OnTriggerExit2D(Collider2D collision) 
+    {
         // Si el jugador deja de estar en contacto con una plataforma "Floating Ground":
         if (collision.gameObject.CompareTag("Floating Ground"))
         {
             isCrossingFloatingGround = false;
-        }
-
-        // Si el jugador deja de colisionar con una plataforma "Ground":
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isOnGround = false;
-        }
-
-        // Si el jugador deja de colisionar con una plataforma "Floating Ground":
-        if (collision.gameObject.CompareTag("Floating Ground"))
-        {
-            isOnFloatingGround = false;
         }
     }
 
