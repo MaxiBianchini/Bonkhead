@@ -3,11 +3,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CharacterController : MonoBehaviour
-{ 
-    // Declaración de variables públicas
-    public float life; // Vida del personaje
-
+{
     // Declaración de variables privadas
+    private float life; // Vida del personaje
     private float speed; // Velocidad del personaje
     private float jumpForce; // Fuerza del salto del personaje
     private float lifeTimer; // Tiempo que ha pasado desde el inicio del juego
@@ -17,14 +15,13 @@ public class CharacterController : MonoBehaviour
     private float dashingCoolDown; // Tiempo de enfriamiento del dash
     private float lowJumpMultiplier; // Multiplicador de la caída lenta del personaje
 
-    public bool canJump; // Indica si el personaje puede saltar
+    private bool canJump; // Indica si el personaje puede saltar
     private bool canDash; // Indica si el personaje puede hacer un dash
     private bool isDashing; // Indica si el personaje está haciendo un dash
-    public bool isOnGround; // Indica si el personaje está tocando el suelo
-    public bool doubleJump; // Indica si el personaje puede hacer doble salto
+    private bool isOnGround; // Indica si el personaje está tocando el suelo
+    private bool doubleJump; // Indica si el personaje puede hacer doble salto
     private bool facingRight; // Indica si el personaje está mirando hacia la derecha
-    //public bool isOnFloatingGround; // Indica si el personaje está tocando una plataforma flotante
-    public bool isCrossingFloatingGround; // Indica si el personaje está cruzando una plataforma flotante
+    private bool isCrossingFloatingGround; // Indica si el personaje está cruzando una plataforma flotante
 
     private Rigidbody2D rigidBody2D; // Componente Rigidbody2D del personaje
     private TrailRenderer trailRenderer; // Componente TrailRenderer del personaje
@@ -140,12 +137,6 @@ public class CharacterController : MonoBehaviour
       
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // Si el jugador llega al final del nivel:
-        if (collision.gameObject.CompareTag("Finish"))
-        {
-            SceneManager.LoadScene("Level_2");
-        }
-
         // Si el jugador colisiona con un enemigo:
         if (collision.gameObject.CompareTag("Enemy"))
         {
@@ -159,6 +150,12 @@ public class CharacterController : MonoBehaviour
         if (collision.gameObject.CompareTag("Floating Ground"))
         {
             isCrossingFloatingGround = true;
+        }
+
+        // Si el jugador llega al final del nivel:
+        if (collision.gameObject.CompareTag("Finish"))
+        {
+            SceneManager.LoadScene("Level_2");
         }
     }
 
