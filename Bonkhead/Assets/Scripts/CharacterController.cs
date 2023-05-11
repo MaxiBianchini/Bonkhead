@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 public class CharacterController : MonoBehaviour
 {
     // Declaración de variables privadas
+
+    private bool doubleJumpIsActivated;
+
     private float life; // Vida del personaje
     private float speed; // Velocidad del personaje
     private float jumpForce; // Fuerza del salto del personaje
@@ -39,11 +42,12 @@ public class CharacterController : MonoBehaviour
         life = 5;
         lifeTimer = 0;
 
-        canDash = true;
+        canDash = false;
         canJump = true;
         facingRight = true;
         doubleJump = false;
         isCrossingFloatingGround = false;
+        doubleJumpIsActivated=false;
 
         speed = 8f;
         jumpForce = 25f;
@@ -65,8 +69,8 @@ public class CharacterController : MonoBehaviour
 
         if (!isCrossingFloatingGround && isOnGround)
         {
-            canJump = true; // Si el personaje está tocando suelo o una plataforma flotante, habilitar el salto
-            doubleJump = true; // Si el personaje está tocando suelo o una plataforma flotante, habilitar el doble salto
+           canJump = true; // Si el personaje está tocando suelo o una plataforma flotante, habilitar el salto
+           doubleJump = true; // Si el personaje está tocando suelo o una plataforma flotante, habilitar el doble salto
         }
 
         if (Input.GetKey("a") || Input.GetKey("left"))
@@ -103,7 +107,7 @@ public class CharacterController : MonoBehaviour
                 // Si el jugador está en el suelo o en una plataforma flotante y puede saltar:
                 rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, jumpForce);
             }
-            else if (doubleJump)
+            else if (doubleJump && doubleJumpIsActivated)
             {
                 // Si el jugador tiene habilitado el doble salto:
                 rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, jumpForce);
@@ -222,6 +226,21 @@ public class CharacterController : MonoBehaviour
         if (life == 0)
         {
             SceneManager.LoadScene("Level_1");
+        }
+    }
+
+    public void ActivateNewPower(float powerID)
+    {
+        switch (powerID)
+        {
+            case 0://doble salto
+                doubleJumpIsActivated = true;
+                break;
+            case 1://dash
+                canDash = true;
+                break;
+            default:
+                break;
         }
     }
 }
