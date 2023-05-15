@@ -7,7 +7,11 @@ public class GameDataController : MonoBehaviour
 {
     public GameObject Player;
     public string fileSave;
-    public GameData gameData = new GameData();
+    public PlayerData playerData = new PlayerData();
+   // public Enemy enemyData = new Enemy();
+
+
+   // private GameData playerGameData = new GameData.Playero;
 
     private void Awake()
     {
@@ -36,11 +40,15 @@ public class GameDataController : MonoBehaviour
         if (File.Exists(fileSave))
         {
             string content = File.ReadAllText(fileSave);
-            gameData = JsonUtility.FromJson<GameData>(content);
+            playerData = JsonUtility.FromJson<PlayerData>(content);
 
-            Debug.Log("Pos Jugador: " + gameDat);
+            Debug.Log("Pos Jugador: " + playerData.position);
 
-            //Player.transform.position = gameData.playerPosition;
+            Player.transform.position = playerData.position;
+            Player.GetComponent<CharacterController>().SetDashState(playerData.canDash);
+            Player.GetComponent<CharacterController>().SetDoubleJumpState(playerData.canDoubleJump);
+            Player.GetComponent<CharacterController>().SetLifeState(playerData.life);
+
         }
         else
         {
@@ -50,9 +58,12 @@ public class GameDataController : MonoBehaviour
 
     private void saveData()
     {
-        GameData newData = new GameData()
+        PlayerData newData = new PlayerData()
         {
-            playerPosition = Player.transform.position,
+            position = Player.transform.position,
+            life = Player.GetComponent<CharacterController>().GetLifeState(),
+            canDash = Player.GetComponentInChildren<CharacterController>().GetDashState(),
+            canDoubleJump = Player.GetComponent<CharacterController>().GetDoubleJumpState(),
 
         };
 
