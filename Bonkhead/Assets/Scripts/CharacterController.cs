@@ -42,12 +42,12 @@ public class CharacterController : MonoBehaviour
         life = 5;
         lifeTimer = 0;
 
-        canDash = false;
+        //canDash = false;
         canJump = true;
         facingRight = true;
         doubleJump = false;
         isCrossingFloatingGround = false;
-        doubleJumpIsActivated=false;
+        //doubleJumpIsActivated=false;
 
         speed = 8f;
         jumpForce = 25f;
@@ -243,4 +243,12 @@ public class CharacterController : MonoBehaviour
                 break;
         }
     }
+
+    public bool GetDoubleJumpState() { return doubleJumpIsActivated; }
+    public bool GetDashState() { return canDash; }
+    public float GetLifeState() { return life; }  
+
+    public void SetDoubleJumpState(bool value) {  doubleJumpIsActivated = value; }
+    public void SetDashState(bool value) {  canDash = value; }
+    public void SetLifeState(float value) {  life = value; }
 }
