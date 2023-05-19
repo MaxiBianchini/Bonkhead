@@ -13,7 +13,9 @@ using UnityEngine;
 
     }
 
-    public struct Enemy
+    public struct EnemyData
     {
+        public int id;
         public Vector3 position;
+        public int life;
     }
