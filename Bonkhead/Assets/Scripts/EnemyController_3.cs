@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-public class EnemyController_3 : MonoBehaviour
+public class EnemyController_3 : EnemyControllerBase
 {
     public LayerMask groundLayer; // Capa del suelo para la detección de colisiones
     public Transform groundCheck; // Punto de comprobación para detectar si el personaje está en el suelo
-    public Transform player; // Referencia al objeto del jugador
+    public GameObject player; // Referencia al objeto del jugador
     
     private Rigidbody2D rb; // Referencia al componente Rigidbody2D del enemigo
     private bool CanSeePlayer; // Indica si el enemigo puede ver al jugador
@@ -14,22 +14,24 @@ public class EnemyController_3 : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>(); // Obtiene la referencia al componente Rigidbody2D del enemigo
-
+        player = GameObject.FindGameObjectWithTag("Player");
         CanSeePlayer = false; // Indica que el enemigo no esta viendo al jugador
         moveSpeed = 5f; // Inicializa la velocidad de movimiento del enemigo
         moveDir = 0; // Inicializa la dirección de movimiento del enemigo
+
+        this.id = 3;
     }
 
     void Update()
     {
         if (CanSeePlayer) // Si el enemigo puede ver al jugador
         {
-            if (transform.position.x < player.position.x) // Si el enemigo está a la izquierda del jugador
+            if (transform.position.x < player.transform.position.x) // Si el enemigo está a la izquierda del jugador
             {
                 moveDir = 1; // Establece la dirección de movimiento hacia la derecha
                 rb.velocity = new Vector2(moveDir * moveSpeed, rb.velocity.y); // Establece la velocidad de movimiento hacia la derecha
             }
-            else if (transform.position.x > player.position.x) // Si el enemigo está a la derecha del jugador
+            else if (transform.position.x > player.transform.position.x) // Si el enemigo está a la derecha del jugador
             {
                 moveDir = -1; // Establece la dirección de movimiento hacia la izquierda
                 rb.velocity = new Vector2(moveDir * moveSpeed, rb.velocity.y); // Establece la velocidad de movimiento hacia la izquierda

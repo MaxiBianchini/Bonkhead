@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class EnemyController_4 : MonoBehaviour
+public class EnemyController_4 : EnemyControllerBase
 {
     public Transform bulletSpawnPoint; // Transform del punto de spawn de las balas
     public GameObject bulletPrefab; // Prefab de la bala
-    public Transform player; // Transform del jugador
+    public GameObject player; // Transform del jugador
                              
     private bool goNearToPlayer; // Booleano que indica si el enemigo debe acercarse al jugador
     private bool isFacingRight; // Booleano que indica si el enemigo está mirando hacia la derecha
@@ -35,6 +35,10 @@ public class EnemyController_4 : MonoBehaviour
 
         startingPosition = transform.position;
         targetPosition = transform.position;
+
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        this.id = 4;
     }
 
     // Se llama una vez por cada frame
@@ -54,7 +58,7 @@ public class EnemyController_4 : MonoBehaviour
         if (goNearToPlayer)
         {
             // Comprobamos si el jugador está lo suficientemente cerca y en la misma altura que el enemigo
-            if (3f >= (Mathf.Abs(transform.position.x - player.position.x)) && transform.position.y == player.position.y)
+            if (3f >= (Mathf.Abs(transform.position.x - player.transform.position.x)) && transform.position.y == player.transform.position.y)
             {
                 // Si el enemigo no está disparando y ha pasado suficiente tiempo desde el último disparo
                 if (!isShooting && shootTimer <= 0f)
@@ -65,14 +69,14 @@ public class EnemyController_4 : MonoBehaviour
             }
 
             // Si el enemigo está a la izquierda del jugador
-            if (transform.position.x < player.position.x)
+            if (transform.position.x < player.transform.position.x)
             {
                 // El objeto está a la izquierda del personaje
                 isFacingRight = true;
 
                 // Calculamos la posición a la que debemos mover el enemigo para que esté a 3 unidades a la izquierda del jugador
-                Vector2 targetPosition = new Vector2(player.position.x - 3f, player.position.y);
-                float distance = Vector2.Distance(transform.position, player.position);
+                Vector2 targetPosition = new Vector2(player.transform.position.x - 3f, player.transform.position.y);
+                float distance = Vector2.Distance(transform.position, player.transform.position);
 
                 // Si la distancia entre el enemigo y el jugador es menor que 3 unidades, movemos al enemigo hacia el jugador
                 if (distance < 3f)
@@ -83,7 +87,7 @@ public class EnemyController_4 : MonoBehaviour
                 // Si la distancia entre el enemigo y el jugador es mayor que 3 unidades, movemos al enemigo en dirección opuesta al jugador
                 else
                 {
-                    Vector2 direction = (transform.position - player.position).normalized;
+                    Vector2 direction = (transform.position - player.transform.position).normalized;
                     transform.position = (Vector2)transform.position - direction * speed * Time.deltaTime;
                     transform.position = new Vector3(transform.position.x, transform.position.y, -0.5f);
                 }
@@ -94,8 +98,8 @@ public class EnemyController_4 : MonoBehaviour
                 isFacingRight = false;
 
                 // Calculamos la posición a la que debemos mover el enemigo para que esté a 3 unidades a la derecha del jugador
-                Vector2 targetPosition = new Vector2(player.position.x + 3f, player.position.y);
-                float distance = Vector2.Distance(transform.position, player.position);
+                Vector2 targetPosition = new Vector2(player.transform.position.x + 3f, player.transform.position.y);
+                float distance = Vector2.Distance(transform.position, player.transform.position);
 
                 // Si la distancia entre el enemigo y el jugador es mayor que 3 unidades, movemos al enemigo hacia el jugador
                 if (distance > 3f)
@@ -106,7 +110,7 @@ public class EnemyController_4 : MonoBehaviour
                 // Si la distancia entre el enemigo y el jugador es menor que 3 unidades, movemos al enemigo en dirección opuesta al jugador
                 else
                 {
-                    Vector2 direction = (transform.position - player.position).normalized;
+                    Vector2 direction = (transform.position - player.transform.position).normalized;
                     transform.position = (Vector2)transform.position + direction * speed * Time.deltaTime;
                     transform.position = new Vector3(transform.position.x, transform.position.y, -0.5f);
                 }

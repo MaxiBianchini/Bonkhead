@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-public class EnemyController_1 : MonoBehaviour
+public class EnemyController_1 : EnemyControllerBase
 {
     public LayerMask groundLayer;  // Máscara de capa que indica qué objetos son suelo
 
     public Transform bulletSpawnPoint;  // Punto de spawn de la bala
     public GameObject bulletPrefab;  // Prefab de la bala
     public Transform groundCheck;  // Punto donde comprobamos si el enemigo está en el suelo
-    public Transform player;  // Referencia al jugador
+    public GameObject player;  // Referencia al jugador
 
     // Variables que se utilizarán para determinar el estado y comportamiento del enemigo
     private Rigidbody2D rb;  // Componente Rigidbody2D del enemigo
@@ -22,11 +22,11 @@ public class EnemyController_1 : MonoBehaviour
     private float shootTimer;  // Temporizador para controlar el tiempo entre disparos
     private float moveSpeed;  // Velocidad de movimiento del enemigo
 
-
     void Start()
     {
         // Obtiene el componente Rigidbody2D del objeto al que se le asigna este script
         rb = GetComponent<Rigidbody2D>();
+        player = GameObject.FindGameObjectWithTag("Player");
 
         // Inicializa variables de estado y comportamiento del enemigo
         isFacingRight = true;
@@ -38,6 +38,8 @@ public class EnemyController_1 : MonoBehaviour
         bulletSpeed = 10f;
         shootTimer = 0f;
         moveSpeed = 2f;
+
+        this.id = 1;
     }
 
     void Update()
@@ -54,12 +56,12 @@ public class EnemyController_1 : MonoBehaviour
         // Si el objeto puede ver al jugador, invierte su dirección si es necesario
         if (CanSeePlayer)
         {
-            if (transform.position.x < player.position.x && !isFacingRight)
+            if (transform.position.x < player.transform.position.x && !isFacingRight)
             {
                 // El objeto está a la izquierda del personaje
                 Flip();
             }
-            else if (transform.position.x > player.position.x && isFacingRight)
+            else if (transform.position.x > player.transform.position.x && isFacingRight)
             {
                 // El objeto está a la derecha del personaje
                 Flip();

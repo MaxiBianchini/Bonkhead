@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class EnemyController_2 : MonoBehaviour
+public class EnemyController_2 : EnemyControllerBase
 {
     public GameObject bulletPrefab; // Prefab del proyectil
     public Transform bulletSpawnPoint; // Punto de spawneo del proyectil
 
-    public Transform player; // Referencia al jugador
+    public GameObject player; // Referencia al jugador
 
     private bool isFacingRight; // Variable que indica si el enemigo está mirando hacia la derecha
     private bool isShooting; // Variable que indica si el enemigo está disparando
@@ -16,6 +16,8 @@ public class EnemyController_2 : MonoBehaviour
 
     void Start()
     {
+
+        player = GameObject.FindGameObjectWithTag("Player");
         isFacingRight = false; // Al inicio, el enemigo está mirando hacia la izquierda
         isShooting = false; // Al inicio, el enemigo no está disparando
 
@@ -23,16 +25,18 @@ public class EnemyController_2 : MonoBehaviour
         bulletSpeed = 10f; // La velocidad del proyectil es de 10 unidades por segundo
         shootTimer = 0f; // El temporizador comienza en 0
         CanSeePlayer = false; // Al inicio, el enemigo no puede ver al jugador
+
+        this.id = 2;
     }
 
     void Update()
     {
-        if (transform.position.x < player.position.x && !isFacingRight)
+        if (transform.position.x < player.transform.position.x && !isFacingRight)
         {
             // Si el enemigo está a la izquierda del jugador y no está mirando hacia la derecha, lo voltea
             Flip();
         }
-        else if (transform.position.x > player.position.x && isFacingRight)
+        else if (transform.position.x > player.transform.position.x && isFacingRight)
         {
             // Si el enemigo está a la derecha del jugador y está mirando hacia la derecha, lo voltea
             Flip();
