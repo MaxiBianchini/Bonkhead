@@ -1,0 +1,82 @@
+[gd_scene load_steps=4 format=3 uid="uid://mwhbup6tnnqo"]
+
+[ext_resource type="Texture2D" uid="uid://xhih1cl5p4cm" path="res://Graphics/Tileset.png" id="1_cpyfm"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jy1gx"]
+resource_name = "PowerStation"
+texture = ExtResource("1_cpyfm")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+6:4/0 = 0
+7:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+6:5/0 = 0
+7:5/0 = 0
+0:6/0 = 0
+1:6/0 = 0
+2:6/0 = 0
+3:6/0 = 0
+4:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+7:6/0 = 0
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+3:7/0 = 0
+4:7/0 = 0
+5:7/0 = 0
+6:7/0 = 0
+7:7/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_uent5"]
+sources/0 = SubResource("TileSetAtlasSource_jy1gx")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_uent5")
+format = 2
+layer_0/tile_data = PackedInt32Array(65533, 0, 0, 65535, 65536, 0, 1, 65536, 0, 3, 65536, 0, 5, 65536, 0, 7, 65536, 0, 9, 65536, 0, 11, 65536, 0, 15, 131072, 0, 13, 393216, 0)
