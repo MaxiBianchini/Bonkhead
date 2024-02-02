@@ -19,20 +19,38 @@ func _physics_process(delta):
 		if is_on_floor():
 			primer_salto = true
 			velocity.y = fuerza_salto
+			$AnimatedSprite2D.stop()
+			$AnimatedSprite2D.play("Jump")
 		else: 
 			if primer_salto:
 				primer_salto = false
 				velocity.y = fuerza_salto
-				
+				$AnimatedSprite2D.stop()
+				$AnimatedSprite2D.play("Double_Jump")
 	else:
 		velocity.y += gravedad * delta
 	velocity.x = input_vector.x * velocidad_movimiento
+	
+	if velocity.x < 0:
+		$AnimatedSprite2D.flip_h = true
+	if velocity.x > 0:
+		$AnimatedSprite2D.flip_h = false
+	if velocity.y > 0 && !is_on_floor():
+		$AnimatedSprite2D.play("Fall")
+	
 	move_and_slide()
 	
 	if velocity.x == 0 && velocity.y == 0:
-		$AnimationPlayer.play("Idle")
-	else: 
-		$AnimationPlayer.stop()
-		$Sprite2D.frame = 0
+		$AnimatedSprite2D.play("Idle")
 	
-	
+	if (Input.get_action_strength("ui_right") && velocity.y == 0):
+		$AnimatedSprite2D.play("Walk")
+		$AnimatedSprite2D.position = Vector2(10,0)
+		$CollisionShape2D.position = Vector2(10,0)
+	else:
+		if (Input.get_action_strength("ui_left") && velocity.y == 0):
+			$AnimatedSprite2D.play("Walk")
+			$AnimatedSprite2D.position = Vector2(-10,0)
+			$CollisionShape2D.position = Vector2(10,0)
+
+
