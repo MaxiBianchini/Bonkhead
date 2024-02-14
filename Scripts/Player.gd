@@ -27,7 +27,6 @@ func _physics_process(delta):
 				primer_salto = false
 				velocity.y = fuerza_salto
 				animatedSprite2D.play("Double_Jump")
-				
 	else:
 		velocity.y += gravedad * delta
 	velocity.x = input_vector.x * velocidad_movimiento
