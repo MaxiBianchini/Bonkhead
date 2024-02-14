@@ -161,7 +161,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sro4f"]
-size = Vector2(11, 31.5)
+size = Vector2(15, 31.5)
 
 [node name="Player" type="CharacterBody2D"]
 floor_max_angle = 0.872665
@@ -177,6 +177,7 @@ metadata/_edit_lock_ = true
 position = Vector2(0.5, 0.25)
 shape = SubResource("RectangleShape2D_sro4f")
 metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.5, 1.5)
