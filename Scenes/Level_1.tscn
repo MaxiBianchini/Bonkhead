@@ -1,7 +1,48 @@
-[gd_scene load_steps=3 format=3 uid="uid://mwhbup6tnnqo"]
+[gd_scene load_steps=11 format=3 uid="uid://mwhbup6tnnqo"]
 
 [ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://Scenes/PowerStationTileSet.tres" id="1_c1dvb"]
 [ext_resource type="PackedScene" uid="uid://cdqlmgh2vxout" path="res://Prefabs/Player.tscn" id="2_72p7r"]
+[ext_resource type="Script" path="res://Scenes/Enemy_1.gd" id="3_fa7n5"]
+[ext_resource type="Texture2D" uid="uid://bo7xyr3ix0lrr" path="res://Graphics/Cyberpunk Characters/2 Punk/Punk_idle.png" id="4_1nv0y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rg83"]
+atlas = ExtResource("4_1nv0y")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rulmp"]
+atlas = ExtResource("4_1nv0y")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qkyfu"]
+atlas = ExtResource("4_1nv0y")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2yix"]
+atlas = ExtResource("4_1nv0y")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d4cnq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8rg83")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rulmp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qkyfu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j2yix")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3jxnh"]
+size = Vector2(13, 32)
 
 [node name="Node2D" type="Node2D"]
 metadata/_edit_lock_ = true
@@ -15,4 +56,19 @@ metadata/_edit_lock_ = true
 
 [node name="Player" parent="." instance=ExtResource("2_72p7r")]
 position = Vector2(-414, 109)
+metadata/_edit_lock_ = true
+
+[node name="Enemy_1" type="CharacterBody2D" parent="."]
+position = Vector2(-276, 41)
+script = ExtResource("3_fa7n5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemy_1"]
+sprite_frames = SubResource("SpriteFrames_d4cnq")
+animation = &"Idle"
+offset = Vector2(10, -7)
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy_1"]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_3jxnh")
 metadata/_edit_lock_ = true
