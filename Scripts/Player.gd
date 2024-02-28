@@ -13,13 +13,13 @@ var velocidad_dash: int
 
 func _ready():
 	gravedad = 2000
-	fuerza_salto = -600
-	velocidad_movimiento = 400
+	fuerza_salto = -550
+	velocidad_movimiento = 200
 	primer_salto = false
 	
 	puede_dashear = true
 	esta_dasheando = false
-	velocidad_dash = 700
+	velocidad_dash = 400
 
 func _physics_process(delta):
 	var input_vector = Vector2.ZERO
@@ -45,6 +45,7 @@ func _physics_process(delta):
 		animatedSprite2D.play("Dash")
 		$DashTimer.start()
 		$PuedeDashear.start()
+		
 	
 	if esta_dasheando:
 		velocity.x = input_vector.x * velocidad_dash

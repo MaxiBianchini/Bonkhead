@@ -106,22 +106,22 @@ region = Rect2(240, 0, 48, 48)
 [sub_resource type="SpriteFrames" id="SpriteFrames_l1tm1"]
 animations = [{
 "frames": [{
-"duration": 1.0,
+"duration": 0.1,
 "texture": SubResource("AtlasTexture_isv8g")
 }, {
-"duration": 1.0,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_m7n8o")
 }, {
-"duration": 1.0,
+"duration": 0.4,
 "texture": SubResource("AtlasTexture_t6uwc")
 }, {
-"duration": 1.0,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_3h5nd")
 }, {
-"duration": 1.0,
+"duration": 0.1,
 "texture": SubResource("AtlasTexture_tcqdm")
 }, {
-"duration": 1.0,
+"duration": 0.1,
 "texture": SubResource("AtlasTexture_avit5")
 }],
 "loop": false,
@@ -218,19 +218,24 @@ script = ExtResource("1_y8i6y")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = -1
 sprite_frames = SubResource("SpriteFrames_l1tm1")
-animation = &"Walk"
+animation = &"Dash"
 offset = Vector2(10, -7)
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 0.25)
 shape = SubResource("RectangleShape2D_sro4f")
 metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.5, 1.5)
+zoom = Vector2(2, 2)
+limit_left = -280
+limit_bottom = 160
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(16, 0)
+metadata/_edit_lock_ = true
 
 [node name="DashTimer" type="Timer" parent="."]
 wait_time = 0.2
