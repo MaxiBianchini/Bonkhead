@@ -220,9 +220,7 @@ rayCast2D = NodePath("RayCast2D")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = -1
 sprite_frames = SubResource("SpriteFrames_l1tm1")
-animation = &"Double_Jump"
-frame = 3
-frame_progress = 1.0
+animation = &"Idle"
 offset = Vector2(10, -7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
