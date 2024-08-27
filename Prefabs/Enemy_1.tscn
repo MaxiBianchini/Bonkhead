@@ -1,8 +1,34 @@
-[gd_scene load_steps=16 format=3 uid="uid://d0lv1t50yhwap"]
+[gd_scene load_steps=28 format=3 uid="uid://d0lv1t50yhwap"]
 
-[ext_resource type="Script" path="res://Scenes/Enemy_1.gd" id="1_xnerr"]
+[ext_resource type="Script" path="res://Scripts/Enemy_1.gd" id="1_xnerr"]
+[ext_resource type="Texture2D" uid="uid://bsrpvg7b3h605" path="res://Graphics/Cyberpunk Characters/2 Punk/Angry.png" id="2_vjile"]
 [ext_resource type="Texture2D" uid="uid://bo7xyr3ix0lrr" path="res://Graphics/Cyberpunk Characters/2 Punk/Punk_idle.png" id="2_xj8j7"]
 [ext_resource type="Texture2D" uid="uid://cl46eu0j0e5pq" path="res://Graphics/Cyberpunk Characters/2 Punk/Walk.png" id="3_3ngs0"]
+[ext_resource type="Texture2D" uid="uid://dcok6k4ubrjuw" path="res://Graphics/Cyberpunk Characters/2 Punk/Punk_attack3.png" id="4_2u03s"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8rspd"]
+atlas = ExtResource("2_vjile")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4w5sk"]
+atlas = ExtResource("2_vjile")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g10k3"]
+atlas = ExtResource("2_vjile")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tlrp3"]
+atlas = ExtResource("2_vjile")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4eb3t"]
+atlas = ExtResource("2_vjile")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ow0ou"]
+atlas = ExtResource("2_vjile")
+region = Rect2(240, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8rg83"]
 atlas = ExtResource("2_xj8j7")
@@ -20,9 +46,21 @@ region = Rect2(96, 0, 48, 48)
 atlas = ExtResource("2_xj8j7")
 region = Rect2(144, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_nwsjs"]
-atlas = ExtResource("3_3ngs0")
-region = Rect2(0, 0, 48, 48)
+[sub_resource type="AtlasTexture" id="AtlasTexture_437ib"]
+atlas = ExtResource("4_2u03s")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o81wb"]
+atlas = ExtResource("4_2u03s")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hdtin"]
+atlas = ExtResource("4_2u03s")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b5oxn"]
+atlas = ExtResource("4_2u03s")
+region = Rect2(336, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_44jh8"]
 atlas = ExtResource("3_3ngs0")
@@ -44,8 +82,35 @@ region = Rect2(192, 0, 48, 48)
 atlas = ExtResource("3_3ngs0")
 region = Rect2(240, 0, 48, 48)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_nwsjs"]
+atlas = ExtResource("3_3ngs0")
+region = Rect2(0, 0, 48, 48)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_d4cnq"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8rspd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4w5sk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g10k3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tlrp3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4eb3t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ow0ou")
+}],
+"loop": true,
+"name": &"Angry",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8rg83")
@@ -65,8 +130,22 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_nwsjs")
+"texture": SubResource("AtlasTexture_437ib")
 }, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o81wb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hdtin")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b5oxn")
+}],
+"loop": true,
+"name": &"Shot",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_44jh8")
 }, {
@@ -81,6 +160,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_rvoqd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nwsjs")
 }],
 "loop": true,
 "name": &"Walk",
@@ -95,7 +177,7 @@ script = ExtResource("1_xnerr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_d4cnq")
-animation = &"Walk"
+animation = &"Angry"
 offset = Vector2(10, -7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
