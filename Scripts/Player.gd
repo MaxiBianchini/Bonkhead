@@ -1,45 +1,45 @@
 extends CharacterBody2D
 
-var gravedad: int
-var fuerza_salto: float
-var velocidad_movimiento: int
+# Variables para controlar física y movimiento
+var gravedad: int = 2000
+var fuerza_salto: float = -550.0
+var velocidad_movimiento: int = 200
+var velocidad_dash: int = 400
 
-var primer_salto_realizado: bool
-var doble_salto_habilitado:bool
+var primer_salto_realizado: bool = false
+var doble_salto_habilitado: bool = false
+var puede_dashear: bool = true
+var esta_dasheando: bool = false
 
-var puede_dashear: bool
-var esta_dasheando: bool
-var velocidad_dash: int
-
-@export var animatedSprite2D:AnimatedSprite2D
-@export var rayCast2D:RayCast2D
+@export var animatedSprite2D: AnimatedSprite2D
+@export var rayCast2D: RayCast2D
 
 func _ready():
-	gravedad = 2000
-	fuerza_salto = -550
-	velocidad_movimiento = 200
+	# Inicialización de variables
 	primer_salto_realizado = false
-	
 	puede_dashear = true
 	esta_dasheando = false
-	velocidad_dash = 400
 
 func _physics_process(delta):
+	# Obtener la entrada del jugador
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	
+	# Manejar el salto
 	if Input.is_action_just_pressed("ui_jump"):
 		if is_on_floor():
 			primer_salto_realizado = true
 			velocity.y = fuerza_salto
 			animatedSprite2D.play("Jump")
-		elif doble_salto_habilitado && primer_salto_realizado:
-				primer_salto_realizado = false
-				velocity.y = fuerza_salto
-				animatedSprite2D.play("Double_Jump")
+		elif doble_salto_habilitado and primer_salto_realizado:
+			primer_salto_realizado = false
+			velocity.y = fuerza_salto
+			animatedSprite2D.play("Double_Jump")
 	else:
+		# Aplicar gravedad
 		velocity.y += gravedad * delta
-	
+
+	# Manejar el dash
 	if Input.is_action_just_pressed("Dash") and puede_dashear:
 		puede_dashear = false
 		esta_dasheando = true
@@ -47,41 +47,49 @@ func _physics_process(delta):
 		animatedSprite2D.play("Dash")
 		$DashTimer.start()
 		$PuedeDashear.start()
-		
-	
-	if esta_dasheando:
-		velocity.x = input_vector.x * velocidad_dash
-	else:
-		velocity.x = input_vector.x * velocidad_movimiento
+
+	# Actualizar la velocidad según el estado del dash
+	velocity.x = input_vector.x * (velocidad_dash if esta_dasheando else velocidad_movimiento)
 	move_and_slide()
-	
+
+	# Actualizar la dirección del sprite y otros elementos según la velocidad
+	update_sprite_direction()
+
+	# Cambiar animaciones según la velocidad
+	update_animation()
+
+	# Manejar el estado del doble salto
+	handle_double_jump()
+
+func update_sprite_direction():
+	var offset = 10
 	if velocity.x < 0:
 		animatedSprite2D.flip_h = true
-		rayCast2D.position.x = 10
-		rayCast2D.target_position.x = -10
-		animatedSprite2D.position = Vector2(-10,0)
-		$CollisionShape2D.position = Vector2(10,0)
+		rayCast2D.position.x = offset
+		rayCast2D.target_position.x = -offset
+		animatedSprite2D.position.x = -offset
+		$CollisionShape2D.position.x = offset
 	elif velocity.x > 0:
 		animatedSprite2D.flip_h = false
-		rayCast2D.position.x = 10
-		rayCast2D.target_position.x = 10
-		animatedSprite2D.position = Vector2(10,0)
-		$CollisionShape2D.position = Vector2(10,0)
-		
-	if velocity.y > 350 && !is_on_floor():
+		rayCast2D.position.x = offset
+		rayCast2D.target_position.x = offset
+		animatedSprite2D.position.x = offset
+		$CollisionShape2D.position.x = offset
+
+func update_animation():
+	if velocity.y > 350 and not is_on_floor():
 		animatedSprite2D.play("Fall")
-	
-	if velocity.x == 0 && velocity.y == 0:
+	elif velocity.x == 0 and velocity.y == 0:
 		animatedSprite2D.play("Idle")
-	
-	if ((Input.get_action_strength("ui_left") || Input.get_action_strength("ui_right")) && is_on_floor()) && !esta_dasheando:
+	elif (Input.get_action_strength("ui_left") or Input.get_action_strength("ui_right")) and is_on_floor() and not esta_dasheando:
 		animatedSprite2D.play("Walk")
-	
+
+func handle_double_jump():
 	if rayCast2D.is_colliding():
-		var col =  rayCast2D.get_collider()
-		if col.is_in_group("Wall"):
+		var collider = rayCast2D.get_collider()
+		if collider.is_in_group("Wall"):
 			doble_salto_habilitado = true
-		if col.is_in_group("Floor"):
+		if collider.is_in_group("Floor"):
 			doble_salto_habilitado = false
 	else:
 		doble_salto_habilitado = false

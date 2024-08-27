@@ -1,10 +1,11 @@
-[gd_scene load_steps=33 format=3 uid="uid://cdqlmgh2vxout"]
+[gd_scene load_steps=42 format=3 uid="uid://cdqlmgh2vxout"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_y8i6y"]
 [ext_resource type="Texture2D" uid="uid://62ay6d3dcw1m" path="res://Graphics/Cyberpunk Characters/1 Biker/Biker_doublejump.png" id="2_3kxgr"]
 [ext_resource type="Texture2D" uid="uid://cwq7agaql4nb" path="res://Graphics/Cyberpunk Characters/1 Biker/Biker_idle.png" id="2_8f7ng"]
 [ext_resource type="Texture2D" uid="uid://7pv1d2jn3gv5" path="res://Graphics/Cyberpunk Characters/1 Biker/Dash.png" id="2_a22uy"]
 [ext_resource type="Texture2D" uid="uid://ptvdabcifwxd" path="res://Graphics/Cyberpunk Characters/1 Biker/Biker_jump.png" id="3_iao51"]
+[ext_resource type="Texture2D" uid="uid://niapb2jvxhyp" path="res://Graphics/Cyberpunk Characters/1 Biker/Biker_death.png" id="3_jmmxa"]
 [ext_resource type="Texture2D" uid="uid://bn3pbemcqk0am" path="res://Graphics/Cyberpunk Characters/1 Biker/Walk.png" id="4_jxf22"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_isv8g"]
@@ -29,6 +30,30 @@ region = Rect2(192, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_avit5"]
 atlas = ExtResource("2_a22uy")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6pcp3"]
+atlas = ExtResource("3_jmmxa")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d6glj"]
+atlas = ExtResource("3_jmmxa")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fnf11"]
+atlas = ExtResource("3_jmmxa")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g5jgq"]
+atlas = ExtResource("3_jmmxa")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ge7d5"]
+atlas = ExtResource("3_jmmxa")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pcegp"]
+atlas = ExtResource("3_jmmxa")
 region = Rect2(240, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f2qg1"]
@@ -71,17 +96,21 @@ region = Rect2(96, 0, 48, 48)
 atlas = ExtResource("2_8f7ng")
 region = Rect2(144, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_u1bgx"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_eprus"]
 atlas = ExtResource("3_iao51")
 region = Rect2(0, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ovkay"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_1nq0t"]
 atlas = ExtResource("3_iao51")
 region = Rect2(48, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_uu333"]
-atlas = ExtResource("4_jxf22")
-region = Rect2(0, 0, 48, 48)
+[sub_resource type="AtlasTexture" id="AtlasTexture_wjr2h"]
+atlas = ExtResource("3_iao51")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fbgd6"]
+atlas = ExtResource("3_iao51")
+region = Rect2(144, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fn8bx"]
 atlas = ExtResource("4_jxf22")
@@ -102,6 +131,10 @@ region = Rect2(192, 0, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_fo1jn"]
 atlas = ExtResource("4_jxf22")
 region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uu333"]
+atlas = ExtResource("4_jxf22")
+region = Rect2(0, 0, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_l1tm1"]
 animations = [{
@@ -127,6 +160,29 @@ animations = [{
 "loop": false,
 "name": &"Dash",
 "speed": 6.0
+}, {
+"frames": [{
+"duration": 0.3,
+"texture": SubResource("AtlasTexture_6pcp3")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_d6glj")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_fnf11")
+}, {
+"duration": 0.5,
+"texture": SubResource("AtlasTexture_g5jgq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ge7d5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pcegp")
+}],
+"loop": true,
+"name": &"Death",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -175,19 +231,22 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_u1bgx")
+"texture": SubResource("AtlasTexture_eprus")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ovkay")
+"texture": SubResource("AtlasTexture_1nq0t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wjr2h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fbgd6")
 }],
-"loop": false,
+"loop": true,
 "name": &"Jump",
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_uu333")
-}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fn8bx")
 }, {
@@ -202,6 +261,9 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_fo1jn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uu333")
 }],
 "loop": true,
 "name": &"Walk",
