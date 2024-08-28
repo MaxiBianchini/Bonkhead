@@ -107,7 +107,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ow0ou")
 }],
-"loop": true,
+"loop": false,
 "name": &"Angry",
 "speed": 5.0
 }, {
@@ -174,12 +174,19 @@ size = Vector2(13, 32)
 
 [node name="Enemy_1" type="CharacterBody2D" groups=["Enemigos"]]
 script = ExtResource("1_xnerr")
+metadata/_edit_lock_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_d4cnq")
 animation = &"Angry"
 offset = Vector2(10, -7)
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_3jxnh")
+metadata/_edit_lock_ = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(14, 9)
+target_position = Vector2(0, 12)
