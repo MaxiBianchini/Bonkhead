@@ -273,11 +273,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sro4f"]
 size = Vector2(15, 31.5)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animatedSprite2D", "rayCast2D")]
+[node name="Player" type="CharacterBody2D"]
 floor_max_angle = 0.872665
 script = ExtResource("1_y8i6y")
-animatedSprite2D = NodePath("AnimatedSprite2D")
-rayCast2D = NodePath("RayCast2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = -1
@@ -297,11 +295,14 @@ limit_bottom = 160
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(15, 0)
 
+[node name="RayCast2D2" type="RayCast2D" parent="."]
+target_position = Vector2(0, 20)
+
 [node name="DashTimer" type="Timer" parent="."]
 wait_time = 0.2
 
-[node name="PuedeDashear" type="Timer" parent="."]
+[node name="CanDash" type="Timer" parent="."]
 wait_time = 5.0
 
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
-[connection signal="timeout" from="PuedeDashear" to="." method="_on_puede_dashear_timeout"]
+[connection signal="timeout" from="CanDash" to="." method="_on_can_dash_timeout"]
