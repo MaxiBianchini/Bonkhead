@@ -178,7 +178,9 @@ metadata/_edit_lock_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_d4cnq")
-animation = &"Angry"
+animation = &"Shot"
+frame = 3
+frame_progress = 0.15777
 offset = Vector2(10, -7)
 metadata/_edit_lock_ = true
 

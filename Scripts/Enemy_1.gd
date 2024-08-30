@@ -5,21 +5,21 @@ var detection_width = 200.0  # Ancho del área de detección
 var detection_height = 180.0  # Altura del área de detección
 
 # Variables para controlar el movimiento y la física
-const VELOCIDAD = 60.0
-const GRAVEDAD = 2000.0
-var direccion = 1.0
+const movement_velocity = 60.0
+const gravity = 2000.0
+var direction = 1.0
 var is_stay_angry = false
 
 # Referencias a nodos
 var animated_sprite
 var collision_shape
-var raycast_suelo
+var raycast_floor
 var player
 
 func _ready():
 	# Inicializa las referencias a los nodos
 	collision_shape = $CollisionShape2D
-	raycast_suelo = $RayCast2D
+	raycast_floor = $RayCast2D
 	
 	animated_sprite = $AnimatedSprite2D
 	animated_sprite.connect("animation_finished", Callable(self, "_on_animation_finished"))
@@ -47,15 +47,15 @@ func _physics_process(delta):
 		
 	# Aplica la gravedad si no está en el suelo
 	if not is_on_floor():
-		velocity.y += GRAVEDAD * delta
+		velocity.y += gravity * delta
 	
 	# Invierte la dirección si está en la pared o no está en el suelo
-	if is_on_wall() or not raycast_suelo.is_colliding():
-		direccion *= -1
+	if is_on_wall() or not raycast_floor.is_colliding():
+		direction *= -1
 		
 	# Controla el movimiento del enemigo
 	if animated_sprite.animation != "Angry":
-		velocity.x = direccion * VELOCIDAD
+		velocity.x = direction * movement_velocity
 		move_and_slide()
 		
 	# Verifica la proximidad del jugador y cambia la animación y el comportamiento
@@ -77,14 +77,14 @@ func _physics_process(delta):
 			
 			# Actualiza la dirección y posición del enemigo según la posición del jugador
 			if player_position.x < enemy_position.x:
-				if direccion > 0:
-					direccion *= -1
+				if direction > 0:
+					direction *= -1
 				animated_sprite.flip_h = true
 				animated_sprite.position = Vector2(-10, 0)
 				collision_shape.position = Vector2(10, 0)
 			else:
-				if direccion < 0:
-					direccion *= -1
+				if direction < 0:
+					direction *= -1
 				animated_sprite.flip_h = false
 				animated_sprite.position = Vector2(10, 0)
 				collision_shape.position = Vector2(10, 0)
