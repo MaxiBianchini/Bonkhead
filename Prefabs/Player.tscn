@@ -139,27 +139,27 @@ region = Rect2(0, 0, 48, 48)
 [sub_resource type="SpriteFrames" id="SpriteFrames_l1tm1"]
 animations = [{
 "frames": [{
-"duration": 0.1,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_isv8g")
 }, {
 "duration": 0.2,
 "texture": SubResource("AtlasTexture_m7n8o")
 }, {
-"duration": 0.4,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_t6uwc")
 }, {
 "duration": 0.2,
 "texture": SubResource("AtlasTexture_3h5nd")
 }, {
-"duration": 0.1,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_tcqdm")
 }, {
-"duration": 0.1,
+"duration": 0.2,
 "texture": SubResource("AtlasTexture_avit5")
 }],
 "loop": false,
 "name": &"Dash",
-"speed": 6.0
+"speed": 4.0
 }, {
 "frames": [{
 "duration": 0.3,
@@ -280,7 +280,7 @@ script = ExtResource("1_y8i6y")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = -1
 sprite_frames = SubResource("SpriteFrames_l1tm1")
-animation = &"Idle"
+animation = &"Dash"
 offset = Vector2(10, -7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -300,6 +300,7 @@ target_position = Vector2(0, 20)
 
 [node name="DashTimer" type="Timer" parent="."]
 wait_time = 0.2
+one_shot = true
 
 [node name="CanDash" type="Timer" parent="."]
 wait_time = 5.0

@@ -5,28 +5,17 @@ var gravity: int = 2000
 var jump_force: float = -550.0
 var movement_velocity: int = 200
 var dash_velocity: int = 400
-var fall_through_time: float = 0.8  # Tiempo durante el cual se desactiva la colisión
+var fall_through_time: float = 0.05  # Tiempo durante el cual se desactiva la colisión
 
 var first_jump_completed: bool = false
 var double_jump_enabled: bool = false
 var can_dash: bool = true
 var is_dashing: bool = false
 
-var animatedSprite2D
-var collisionshape2D
-var raycast_wall
-var raycast_floor
-
-func _ready():
-	animatedSprite2D = $AnimatedSprite2D
-	collisionshape2D = $CollisionShape2D
-	raycast_wall = $RayCast2D
-	raycast_floor = $RayCast2D2
-	
-	# Inicialización de variables
-	first_jump_completed = false
-	can_dash = true
-	is_dashing = false
+@onready var animatedSprite2D = $AnimatedSprite2D
+@onready var collisionshape2D = $CollisionShape2D
+@onready var raycast_wall = $RayCast2D
+@onready var raycast_floor = $RayCast2D2
 
 func _physics_process(delta):
 	# Obtener la entrada del jugador
@@ -35,10 +24,10 @@ func _physics_process(delta):
 	
 	# Manejar el salto
 	if Input.is_action_just_pressed("ui_jump"):
-		if Input.is_action_pressed("ui_down"):
-			print("LLEGA AL DOWN")
-			ignore_platform_collision()
-			
+		if Input.is_action_pressed("ui_down") && raycast_floor.is_colliding():
+			var collider = raycast_floor.get_collider()
+			if collider.is_in_group("Platform"):
+				ignore_platform_collision()
 		elif is_on_floor():
 			first_jump_completed = true
 			velocity.y = jump_force
@@ -50,6 +39,7 @@ func _physics_process(delta):
 	
 	if !is_on_floor():
 		velocity.y += gravity * delta
+	
 	# Manejar el dash
 	if Input.is_action_just_pressed("Dash") and can_dash:
 		can_dash = false
@@ -58,17 +48,14 @@ func _physics_process(delta):
 		animatedSprite2D.play("Dash")
 		$DashTimer.start()
 		$CanDash.start()
-
+	
 	# Actualizar la velocidad según el estado del dash
 	velocity.x = input_vector.x * (dash_velocity if is_dashing else movement_velocity)
 	move_and_slide()
-
 	# Actualizar la dirección del sprite y otros elementos según la velocidad
 	update_sprite_direction()
-
 	# Cambiar animaciones según la velocidad
 	update_animation()
-
 	# Manejar el estado del doble salto
 	handle_double_jump()
 
@@ -108,10 +95,9 @@ func handle_double_jump():
 func ignore_platform_collision():
 	collisionshape2D.disabled = true
 	velocity.y = jump_force * -1.5
-	print ("INGORA")
-	await (get_tree().create_timer(fall_through_time))
-	#collisionshape2D.disabled = false
-	print("NO IGNORA")
+	await (get_tree().create_timer(fall_through_time).timeout)
+	collisionshape2D.disabled = false
+
 func _on_dash_timer_timeout():
 	is_dashing = false
 
