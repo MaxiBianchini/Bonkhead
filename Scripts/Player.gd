@@ -7,6 +7,8 @@ var movement_velocity: int = 200
 var dash_velocity: int = 400
 var fall_through_time: float = 0.05  # Tiempo durante el cual se desactiva la colisión
 
+var lives: int = 3 
+
 var first_jump_completed: bool = false
 var double_jump_enabled: bool = false
 var can_dash: bool = true
@@ -16,6 +18,11 @@ var is_dashing: bool = false
 @onready var collisionshape2D = $CollisionShape2D
 @onready var raycast_wall = $RayCast2D
 @onready var raycast_floor = $RayCast2D2
+@onready var area2D = $Area2D
+
+func _ready():
+	area2D.connect("body_entered", Callable(self, "_on_body_entered"))
+	
 
 func _physics_process(delta):
 	# Obtener la entrada del jugador
@@ -66,13 +73,13 @@ func update_sprite_direction():
 		raycast_wall.position.x = offset
 		raycast_wall.target_position.x = -offset
 		animatedSprite2D.position.x = -offset
-		$CollisionShape2D.position.x = offset
+		collisionshape2D.position.x = offset
 	elif velocity.x > 0:
 		animatedSprite2D.flip_h = false
 		raycast_wall.position.x = offset
 		raycast_wall.target_position.x = offset
 		animatedSprite2D.position.x = offset
-		$CollisionShape2D.position.x = offset
+		collisionshape2D.position.x = offset
 
 func update_animation():
 	if velocity.y > 350 and not is_on_floor():
@@ -103,3 +110,8 @@ func _on_dash_timer_timeout():
 
 func _on_can_dash_timeout():
 	can_dash = true
+
+func _on_body_entered(body):
+	if body.is_in_group("Enemies"):  # Asegúrate de que el enemigo esté en el grupo "Enemy"
+		lives -= 1
+		print("SACO VIDA")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://cdqlmgh2vxout"]
+[gd_scene load_steps=43 format=3 uid="uid://cdqlmgh2vxout"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_y8i6y"]
 [ext_resource type="Texture2D" uid="uid://62ay6d3dcw1m" path="res://Graphics/Cyberpunk Characters/1 Biker/Biker_doublejump.png" id="2_3kxgr"]
@@ -273,6 +273,10 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sro4f"]
 size = Vector2(15, 31.5)
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m4vyk"]
+radius = 9.0
+height = 32.0
+
 [node name="Player" type="CharacterBody2D"]
 floor_max_angle = 0.872665
 script = ExtResource("1_y8i6y")
@@ -286,6 +290,11 @@ offset = Vector2(10, -7)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 0.25)
 shape = SubResource("RectangleShape2D_sro4f")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CapsuleShape2D_m4vyk")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
