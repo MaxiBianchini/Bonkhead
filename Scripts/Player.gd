@@ -112,6 +112,6 @@ func _on_can_dash_timeout():
 	can_dash = true
 
 func _on_body_entered(body):
-	if body.is_in_group("Enemies"):  # Asegúrate de que el enemigo esté en el grupo "Enemy"
+	if body.is_in_group("Enemy"):  # Asegúrate de que el enemigo esté en el grupo "Enemy"
 		lives -= 1
 		print("SACO VIDA")

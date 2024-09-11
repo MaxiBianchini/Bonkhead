@@ -172,10 +172,10 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3jxnh"]
 size = Vector2(13, 32)
 
-[node name="Enemy_1" type="CharacterBody2D" groups=["Enemies"]]
+[node name="Enemy_1" type="CharacterBody2D"]
 script = ExtResource("1_xnerr")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Enemy"]]
 sprite_frames = SubResource("SpriteFrames_d4cnq")
 animation = &"Idle"
 offset = Vector2(10, -7)
