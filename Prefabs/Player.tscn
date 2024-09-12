@@ -277,7 +277,7 @@ size = Vector2(15, 31.5)
 radius = 9.0
 height = 32.0
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
 floor_max_angle = 0.872665
 script = ExtResource("1_y8i6y")
 

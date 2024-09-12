@@ -70,7 +70,7 @@ tile_set = ExtResource("1_c1dvb")
 [node name="Player" parent="." instance=ExtResource("2_72p7r")]
 position = Vector2(102, 109)
 
-[node name="Enemy_1" parent="." groups=["Enemy"] instance=ExtResource("3_y6x3v")]
+[node name="Enemy_1" parent="." instance=ExtResource("3_y6x3v")]
 position = Vector2(-111, 111)
 
 [node name="Enemy_2" parent="." instance=ExtResource("9_sny07")]
