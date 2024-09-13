@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://mwhbup6tnnqo"]
+[gd_scene load_steps=11 format=4 uid="uid://mwhbup6tnnqo"]
 
 [ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://Scenes/PowerStationTileSet.tres" id="1_c1dvb"]
 [ext_resource type="PackedScene" uid="uid://cdqlmgh2vxout" path="res://Prefabs/Player.tscn" id="2_72p7r"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://pvop2ore58ps" path="res://Graphics/Industrial Zone/2 Background/4.png" id="5_i146e"]
 [ext_resource type="Texture2D" uid="uid://e74rnmo605ww" path="res://Graphics/Industrial Zone/2 Background/5.png" id="6_7tx38"]
 [ext_resource type="PackedScene" uid="uid://cp6k1o6rfgevf" path="res://Prefabs/Enemy_2.tscn" id="9_sny07"]
+[ext_resource type="PackedScene" uid="uid://bswo0jt5cdkqw" path="res://Prefabs/Eenemy_3.tscn" id="10_hplti"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -76,3 +77,6 @@ position = Vector2(-111, 111)
 [node name="Enemy_2" parent="." instance=ExtResource("9_sny07")]
 position = Vector2(43, -64)
 floor_block_on_wall = false
+
+[node name="Enemy_3" parent="." instance=ExtResource("10_hplti")]
+position = Vector2(345, 95)
