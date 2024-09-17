@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=4 uid="uid://mwhbup6tnnqo"]
 
-[ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://Scenes/PowerStationTileSet.tres" id="1_c1dvb"]
+[ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://Recursos/PowerStationTileSet.tres" id="1_c1dvb"]
 [ext_resource type="PackedScene" uid="uid://cdqlmgh2vxout" path="res://Prefabs/Player.tscn" id="2_72p7r"]
 [ext_resource type="PackedScene" uid="uid://d0lv1t50yhwap" path="res://Prefabs/Enemy_1.tscn" id="3_y6x3v"]
 [ext_resource type="Texture2D" uid="uid://ca62wvqrospf" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/1.png" id="7_tfqb0"]
