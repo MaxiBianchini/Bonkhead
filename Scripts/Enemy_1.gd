@@ -53,19 +53,21 @@ func _physics_process(delta):
 			if not is_stay_angry:
 				animated_sprite.play("Angry")
 				is_stay_angry = true
+				
 			# Actualiza la dirección y posición del enemigo según la posición del jugador
+			var offset = Vector2(10, 0)
 			if player_position.x < enemy_position.x:
 				if direction > 0:
 					direction *= -1
 				animated_sprite.flip_h = true
-				animated_sprite.position = Vector2(-10, 0)
-				collision_shape.position = Vector2(10, 0)
+				animated_sprite.position = -offset
+				collision_shape.position = offset
 			else:
 				if direction < 0:
 					direction *= -1
 				animated_sprite.flip_h = false
-				animated_sprite.position = Vector2(10, 0)
-				collision_shape.position = Vector2(10, 0)
+				animated_sprite.position = offset
+				collision_shape.position = offset
 		else:
 			is_stay_angry = false
 	

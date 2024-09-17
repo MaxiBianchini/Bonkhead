@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://bswo0jt5cdkqw"]
+[gd_scene load_steps=24 format=3 uid="uid://bswo0jt5cdkqw"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy_3.gd" id="1_qjnuo"]
 [ext_resource type="Texture2D" uid="uid://dvdjcbbm8xlq6" path="res://Graphics/Enemies/Bosses/1/Death.png" id="2_trnwk"]
@@ -142,12 +142,11 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_igoet"]
-size = Vector2(65, 43)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rqkd6"]
-size = Vector2(70, 49)
+size = Vector2(65.5, 41.8333)
 
 [node name="Enemy_3" type="CharacterBody2D" groups=["Enemy"]]
+scale = Vector2(1.2, 1.2)
+collision_layer = 2
 script = ExtResource("1_qjnuo")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -155,14 +154,10 @@ sprite_frames = SubResource("SpriteFrames_gujn7")
 animation = &"Walk"
 frame_progress = 0.759663
 
+[node name="RayCast2D" type="RayCast2D" parent="AnimatedSprite2D"]
+position = Vector2(0, 15)
+target_position = Vector2(275, 0)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 14.5)
+position = Vector2(0.25, 15.0833)
 shape = SubResource("RectangleShape2D_igoet")
-
-[node name="Area2D" type="Area2D" parent="."]
-visible = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-visible = false
-position = Vector2(0, 11.5)
-shape = SubResource("RectangleShape2D_rqkd6")
