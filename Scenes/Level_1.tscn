@@ -2,14 +2,14 @@
 
 [ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://Scenes/PowerStationTileSet.tres" id="1_c1dvb"]
 [ext_resource type="PackedScene" uid="uid://cdqlmgh2vxout" path="res://Prefabs/Player.tscn" id="2_72p7r"]
-[ext_resource type="Texture2D" uid="uid://b48lryqkoe5ew" path="res://Graphics/Industrial Zone/2 Background/1.png" id="2_ry2du"]
-[ext_resource type="Texture2D" uid="uid://b142tow88k040" path="res://Graphics/Industrial Zone/2 Background/2.png" id="3_5coav"]
 [ext_resource type="PackedScene" uid="uid://d0lv1t50yhwap" path="res://Prefabs/Enemy_1.tscn" id="3_y6x3v"]
-[ext_resource type="Texture2D" uid="uid://jloaejwurueh" path="res://Graphics/Industrial Zone/2 Background/3.png" id="4_8ikp5"]
-[ext_resource type="Texture2D" uid="uid://pvop2ore58ps" path="res://Graphics/Industrial Zone/2 Background/4.png" id="5_i146e"]
-[ext_resource type="Texture2D" uid="uid://e74rnmo605ww" path="res://Graphics/Industrial Zone/2 Background/5.png" id="6_7tx38"]
+[ext_resource type="Texture2D" uid="uid://ca62wvqrospf" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/1.png" id="7_tfqb0"]
+[ext_resource type="Texture2D" uid="uid://dtmsyhl6e0ouc" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/2.png" id="8_eciw5"]
+[ext_resource type="Texture2D" uid="uid://c1rvi4oi7ic00" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/3.png" id="9_8du4a"]
 [ext_resource type="PackedScene" uid="uid://cp6k1o6rfgevf" path="res://Prefabs/Enemy_2.tscn" id="9_sny07"]
-[ext_resource type="PackedScene" uid="uid://bswo0jt5cdkqw" path="res://Prefabs/Eenemy_3.tscn" id="10_hplti"]
+[ext_resource type="PackedScene" uid="uid://bswo0jt5cdkqw" path="res://Prefabs/Enemy_3.tscn" id="10_hplti"]
+[ext_resource type="Texture2D" uid="uid://p0r0o0glpxm" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/4.png" id="10_ld244"]
+[ext_resource type="Texture2D" uid="uid://1pqtno8vs2u8" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/5.png" id="11_ne8gg"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -29,35 +29,30 @@ scroll_ignore_camera_zoom = true
 [node name="ParallaxLayer" type="ParallaxLayer" parent="TileMaps/Terrain/ParallaxBackground"]
 motion_mirroring = Vector2(1150, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="TileMaps/Terrain/ParallaxBackground/ParallaxLayer"]
+[node name="Background1" type="Sprite2D" parent="TileMaps/Terrain/ParallaxBackground/ParallaxLayer"]
 position = Vector2(475, -100)
 scale = Vector2(2, 2)
-texture = ExtResource("2_ry2du")
-metadata/_edit_lock_ = true
+texture = ExtResource("7_tfqb0")
 
-[node name="Sprite2D2" type="Sprite2D" parent="TileMaps/Terrain/ParallaxBackground/ParallaxLayer"]
+[node name="Background2" type="Sprite2D" parent="TileMaps/Terrain/ParallaxBackground/ParallaxLayer"]
 position = Vector2(475, -100)
 scale = Vector2(2, 2)
-texture = ExtResource("3_5coav")
-metadata/_edit_lock_ = true
+texture = ExtResource("8_eciw5")
 
-[node name="Sprite2D3" type="Sprite2D" parent="TileMaps/Terrain/ParallaxBackground/ParallaxLayer"]
+[node name="Background3" type="Sprite2D" parent="TileMaps/Terrain/ParallaxBackground/ParallaxLayer"]
 position = Vector2(475, -100)
 scale = Vector2(2, 2)
-texture = ExtResource("4_8ikp5")
-metadata/_edit_lock_ = true
+texture = ExtResource("9_8du4a")
 
-[node name="Sprite2D4" type="Sprite2D" parent="TileMaps/Terrain/ParallaxBackground/ParallaxLayer"]
+[node name="Background4" type="Sprite2D" parent="TileMaps/Terrain/ParallaxBackground/ParallaxLayer"]
 position = Vector2(475, -100)
 scale = Vector2(2, 2)
-texture = ExtResource("5_i146e")
-metadata/_edit_lock_ = true
+texture = ExtResource("10_ld244")
 
-[node name="Sprite2D5" type="Sprite2D" parent="TileMaps/Terrain/ParallaxBackground/ParallaxLayer"]
+[node name="Background5" type="Sprite2D" parent="TileMaps/Terrain/ParallaxBackground/ParallaxLayer"]
 position = Vector2(475, -100)
 scale = Vector2(2, 2)
-texture = ExtResource("6_7tx38")
-metadata/_edit_lock_ = true
+texture = ExtResource("11_ne8gg")
 
 [node name="Sticky Wall" type="TileMapLayer" parent="TileMaps" groups=["Wall"]]
 tile_map_data = PackedByteArray("AAD3/wIAAgAAAAAAAAD3/wEAAgAAAAAAAAD3/wAAAgAAAAAAAAA=")
@@ -75,8 +70,8 @@ position = Vector2(102, 109)
 position = Vector2(-111, 111)
 
 [node name="Enemy_2" parent="." instance=ExtResource("9_sny07")]
-position = Vector2(43, -64)
+position = Vector2(68, -78)
 floor_block_on_wall = false
 
 [node name="Enemy_3" parent="." instance=ExtResource("10_hplti")]
-position = Vector2(345, 95)
+position = Vector2(345, 92)
