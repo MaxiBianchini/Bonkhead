@@ -74,4 +74,4 @@ position = Vector2(68, -78)
 floor_block_on_wall = false
 
 [node name="Enemy_3" parent="." instance=ExtResource("10_hplti")]
-position = Vector2(345, 92)
+position = Vector2(343, 85)
