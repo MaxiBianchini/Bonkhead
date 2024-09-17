@@ -246,12 +246,13 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_07eti"]
-radius = 14.0
+radius = 15.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_eka17"]
 radius = 205.039
 
 [node name="Enemy_2" type="CharacterBody2D" groups=["Enemy"]]
+collision_layer = 2
 script = ExtResource("1_3nub3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

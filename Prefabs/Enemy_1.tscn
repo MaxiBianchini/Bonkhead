@@ -173,6 +173,7 @@ animations = [{
 size = Vector2(13, 32)
 
 [node name="Enemy_1" type="CharacterBody2D" groups=["Enemy"]]
+collision_layer = 2
 script = ExtResource("1_xnerr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Enemy"]]

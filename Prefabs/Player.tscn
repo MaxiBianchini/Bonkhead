@@ -274,10 +274,10 @@ animations = [{
 size = Vector2(15, 31.5)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m4vyk"]
-radius = 9.0
-height = 32.0
+height = 38.0
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
+collision_mask = 3
 floor_max_angle = 0.872665
 script = ExtResource("1_y8i6y")
 
