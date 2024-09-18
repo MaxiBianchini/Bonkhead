@@ -25,6 +25,9 @@ func _ready():
 	
 
 func _physics_process(delta):
+	if lives == 0:
+		return
+	
 	# Obtener la entrada del jugador
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
@@ -74,20 +77,24 @@ func update_sprite_direction():
 		raycast_wall.target_position.x = -offset
 		animatedSprite2D.position.x = -offset
 		collisionshape2D.position.x = offset
+		area2D.position.x = offset
 	elif velocity.x > 0:
 		animatedSprite2D.flip_h = false
 		raycast_wall.position.x = offset
 		raycast_wall.target_position.x = offset
 		animatedSprite2D.position.x = offset
 		collisionshape2D.position.x = offset
+		area2D.position.x = offset
 
 func update_animation():
-	if velocity.y > 350 and not is_on_floor():
-		animatedSprite2D.play("Fall")
-	elif velocity.x == 0 and velocity.y == 0:
-		animatedSprite2D.play("Idle")
-	elif (Input.get_action_strength("ui_left") or Input.get_action_strength("ui_right")) and is_on_floor() and not is_dashing:
-		animatedSprite2D.play("Walk")
+	if animatedSprite2D.animation != "Hurt" and lives !=0:
+		if velocity.y > 350 and not is_on_floor():
+			animatedSprite2D.play("Fall")
+		elif velocity.x == 0 and velocity.y == 0:
+			animatedSprite2D.play("Idle")
+		elif (Input.get_action_strength("ui_left") or Input.get_action_strength("ui_right")) and is_on_floor() and not is_dashing:
+			animatedSprite2D.play("Walk")
+		
 
 func handle_double_jump():
 	if raycast_wall.is_colliding():
@@ -112,6 +119,26 @@ func _on_can_dash_timeout():
 	can_dash = true
 
 func _on_body_entered(body):
-	if body.is_in_group("Enemy"):  # Asegúrate de que el enemigo esté en el grupo "Enemy"
+	if body.is_in_group("Enemy"): # Asegúrate de que el enemigo esté en el grupo "Enemy"
 		lives -= 1
 		print("SACO VIDA")
+		print("VIDAS: ",lives)
+		if lives == 0:
+			animatedSprite2D.play("Death")
+			call_deferred("disable_player_collision")
+		else:
+			#animatedSprite2D.play("Hurt")
+			$AnimationPlayer.play("Hurt")
+			call_deferred("disable_player_collision")
+			await (get_tree().create_timer(3.0).timeout)
+			call_deferred("enable_player_collision")
+			
+func disable_player_collision():
+	area2D.set_collision_mask_value(3,false)
+	area2D.set_collision_mask_value(4,false)
+	area2D.set_collision_mask_value(5,false)
+	
+func enable_player_collision():
+	area2D.set_collision_mask_value(3,true)
+	area2D.set_collision_mask_value(4,true)
+	area2D.set_collision_mask_value(5,true)
