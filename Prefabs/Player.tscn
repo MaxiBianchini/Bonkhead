@@ -1,12 +1,18 @@
-[gd_scene load_steps=43 format=3 uid="uid://cdqlmgh2vxout"]
+[gd_scene load_steps=48 format=3 uid="uid://cdqlmgh2vxout"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_y8i6y"]
 [ext_resource type="Texture2D" uid="uid://62ay6d3dcw1m" path="res://Graphics/Cyberpunk Characters/1 Biker/Biker_doublejump.png" id="2_3kxgr"]
 [ext_resource type="Texture2D" uid="uid://cwq7agaql4nb" path="res://Graphics/Cyberpunk Characters/1 Biker/Biker_idle.png" id="2_8f7ng"]
 [ext_resource type="Texture2D" uid="uid://7pv1d2jn3gv5" path="res://Graphics/Cyberpunk Characters/1 Biker/Dash.png" id="2_a22uy"]
+[ext_resource type="Shader" uid="uid://3eyyqpjc4awp" path="res://Recursos/Player_Hurt.tres" id="2_b3bx2"]
 [ext_resource type="Texture2D" uid="uid://ptvdabcifwxd" path="res://Graphics/Cyberpunk Characters/1 Biker/Biker_jump.png" id="3_iao51"]
 [ext_resource type="Texture2D" uid="uid://niapb2jvxhyp" path="res://Graphics/Cyberpunk Characters/1 Biker/Biker_death.png" id="3_jmmxa"]
 [ext_resource type="Texture2D" uid="uid://bn3pbemcqk0am" path="res://Graphics/Cyberpunk Characters/1 Biker/Walk.png" id="4_jxf22"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c5nj1"]
+shader = ExtResource("2_b3bx2")
+shader_parameter/Enabled = false
+shader_parameter/Tint = Color(0.984314, 0.015686, 0.294118, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_isv8g"]
 atlas = ExtResource("2_a22uy")
@@ -180,7 +186,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_pcegp")
 }],
-"loop": true,
+"loop": false,
 "name": &"Death",
 "speed": 5.0
 }, {
@@ -274,15 +280,53 @@ animations = [{
 size = Vector2(15, 31.5)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m4vyk"]
-height = 38.0
+height = 36.0
+
+[sub_resource type="Animation" id="Animation_5finp"]
+resource_name = "Hurt"
+length = 2.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/Enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false, true, false, true, false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_ymlft"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/Enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tuivb"]
+_data = {
+"Hurt": SubResource("Animation_5finp"),
+"RESET": SubResource("Animation_ymlft")
+}
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]
-collision_mask = 3
+collision_layer = 2
 floor_max_angle = 0.872665
 script = ExtResource("1_y8i6y")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = -1
+material = SubResource("ShaderMaterial_c5nj1")
 sprite_frames = SubResource("SpriteFrames_l1tm1")
 animation = &"Dash"
 offset = Vector2(10, -7)
@@ -292,6 +336,8 @@ position = Vector2(0.5, 0.25)
 shape = SubResource("RectangleShape2D_sro4f")
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 28
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CapsuleShape2D_m4vyk")
@@ -313,6 +359,11 @@ one_shot = true
 
 [node name="CanDash" type="Timer" parent="."]
 wait_time = 5.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tuivb")
+}
 
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
 [connection signal="timeout" from="CanDash" to="." method="_on_can_dash_timeout"]

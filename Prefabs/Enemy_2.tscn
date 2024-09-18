@@ -252,7 +252,7 @@ radius = 15.0
 radius = 205.039
 
 [node name="Enemy_2" type="CharacterBody2D" groups=["Enemy"]]
-collision_layer = 2
+collision_layer = 4
 script = ExtResource("1_3nub3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -263,6 +263,8 @@ animation = &"Death"
 shape = SubResource("CircleShape2D_07eti")
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_eka17")

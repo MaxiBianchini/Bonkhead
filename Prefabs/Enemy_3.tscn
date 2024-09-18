@@ -146,7 +146,7 @@ size = Vector2(65.5, 41.8333)
 
 [node name="Enemy_3" type="CharacterBody2D" groups=["Enemy"]]
 scale = Vector2(1.2, 1.2)
-collision_layer = 2
+collision_layer = 4
 script = ExtResource("1_qjnuo")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -157,6 +157,7 @@ frame_progress = 0.759663
 [node name="RayCast2D" type="RayCast2D" parent="AnimatedSprite2D"]
 position = Vector2(0, 15)
 target_position = Vector2(275, 0)
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.25, 15.0833)
