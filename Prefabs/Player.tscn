@@ -280,7 +280,8 @@ animations = [{
 size = Vector2(15, 31.5)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m4vyk"]
-height = 36.0
+radius = 8.0
+height = 34.0
 
 [sub_resource type="Animation" id="Animation_5finp"]
 resource_name = "Hurt"

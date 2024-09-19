@@ -75,13 +75,16 @@ func update_sprite_direction():
 		animatedSprite2D.flip_h = true
 		raycast_wall.position.x = offset
 		raycast_wall.target_position.x = -offset
+		raycast_floor.position.x = offset
 		animatedSprite2D.position.x = -offset
 		collisionshape2D.position.x = offset
 		area2D.position.x = offset
 	elif velocity.x > 0:
+		
 		animatedSprite2D.flip_h = false
 		raycast_wall.position.x = offset
 		raycast_wall.target_position.x = offset
+		raycast_floor.position.x = offset
 		animatedSprite2D.position.x = offset
 		collisionshape2D.position.x = offset
 		area2D.position.x = offset
