@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddp3853jy15qh"
-path="res://.godot/imported/Attack1.png-e8b176fdb27b6df914bfe5ef64c5e17a.ctex"
+uid="uid://d0ifagidhjr8d"
+path="res://.godot/imported/Death.png-d3e9a4149b79c63e32816bbc226da812.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Graphics/Enemies/Lanza Misiles/Attack1.png"
-dest_files=["res://.godot/imported/Attack1.png-e8b176fdb27b6df914bfe5ef64c5e17a.ctex"]
+source_file="res://Graphics/Enemies/Lanza Misiles/Death.png"
+dest_files=["res://.godot/imported/Death.png-d3e9a4149b79c63e32816bbc226da812.ctex"]
 
 [params]
 

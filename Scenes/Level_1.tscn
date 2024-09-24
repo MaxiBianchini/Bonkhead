@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://1pqtno8vs2u8" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/5.png" id="11_ne8gg"]
 
 [node name="Node2D" type="Node2D"]
+position = Vector2(2, 0)
 
 [node name="TileMaps" type="Node" parent="."]
 
@@ -78,4 +79,4 @@ floor_block_on_wall = false
 position = Vector2(343, 85)
 
 [node name="Enemy_4" parent="." instance=ExtResource("11_7r4bh")]
-position = Vector2(-46, 129)
+position = Vector2(-33, 105)
