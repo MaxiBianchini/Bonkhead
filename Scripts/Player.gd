@@ -25,7 +25,7 @@ func _ready():
 	
 
 func _physics_process(delta):
-	if lives == 0:
+	if lives == 0 and is_on_floor():
 		return
 	
 	# Obtener la entrada del jugador
@@ -59,6 +59,8 @@ func _physics_process(delta):
 		$DashTimer.start()
 		$CanDash.start()
 	
+	if lives == 0:
+		return
 	# Actualizar la velocidad según el estado del dash
 	velocity.x = input_vector.x * (dash_velocity if is_dashing else movement_velocity)
 	move_and_slide()
@@ -130,7 +132,6 @@ func _on_body_entered(body):
 			animatedSprite2D.play("Death")
 			call_deferred("disable_player_collision")
 		else:
-			#animatedSprite2D.play("Hurt")
 			$AnimationPlayer.play("Hurt")
 			call_deferred("disable_player_collision")
 			await (get_tree().create_timer(3.0).timeout)
