@@ -1,23 +1,29 @@
-[gd_scene load_steps=20 format=3 uid="uid://ce5qnuwutjn77"]
+[gd_scene load_steps=25 format=3 uid="uid://ce5qnuwutjn77"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy_4.gd" id="1_4mohw"]
 [ext_resource type="Texture2D" uid="uid://blpde0ijbk78v" path="res://Graphics/Enemies/Lanza Misiles/Attack.png" id="2_r2l08"]
+[ext_resource type="Shader" uid="uid://cfchphdpemaxm" path="res://Shaders/Enemy4_Hurt.tres" id="2_swis6"]
 [ext_resource type="Texture2D" uid="uid://d0ifagidhjr8d" path="res://Graphics/Enemies/Lanza Misiles/Death.png" id="3_iyddk"]
 [ext_resource type="Texture2D" uid="uid://oc63an2ej45a" path="res://Graphics/Enemies/Lanza Misiles/Idle.png" id="4_x1jtm"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_a0hfo"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b8mix"]
+shader = ExtResource("2_swis6")
+shader_parameter/Enabled = false
+shader_parameter/Tint = Color(0.984314, 0.015686, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bc3im"]
 atlas = ExtResource("2_r2l08")
 region = Rect2(0, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_aylxr"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_gcjq4"]
 atlas = ExtResource("2_r2l08")
 region = Rect2(48, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0p4kd"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_bt3i5"]
 atlas = ExtResource("2_r2l08")
 region = Rect2(96, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_c760p"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ojqif"]
 atlas = ExtResource("2_r2l08")
 region = Rect2(144, 0, 48, 48)
 
@@ -57,16 +63,16 @@ region = Rect2(144, 0, 48, 48)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_a0hfo")
+"texture": SubResource("AtlasTexture_bc3im")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_aylxr")
+"texture": SubResource("AtlasTexture_gcjq4")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0p4kd")
+"texture": SubResource("AtlasTexture_bt3i5")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_c760p")
+"texture": SubResource("AtlasTexture_ojqif")
 }],
 "loop": true,
 "name": &"Atack",
@@ -109,28 +115,74 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3id1h"]
 radius = 12.0
-height = 33.0
+height = 38.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqu3y"]
 size = Vector2(222, 46)
+
+[sub_resource type="Animation" id="Animation_61qno"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/Enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_d2qdg"]
+resource_name = "new_animation"
+length = 2.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/Enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false, true, false, true, false, true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iejw6"]
+_data = {
+"Hurt": SubResource("Animation_d2qdg"),
+"RESET": SubResource("Animation_61qno")
+}
 
 [node name="Enemy_4" type="CharacterBody2D" groups=["Enemy"]]
 collision_layer = 4
 script = ExtResource("1_4mohw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_b8mix")
+position = Vector2(7, 0)
 sprite_frames = SubResource("SpriteFrames_cr3ql")
-animation = &"Idle"
-frame_progress = 0.158992
+animation = &"Death"
+frame_progress = 0.127255
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-7, 7)
+position = Vector2(0, 6)
 shape = SubResource("CapsuleShape2D_3id1h")
 
 [node name="Area2D" type="Area2D" parent="."]
+visible = false
 collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
 position = Vector2(-7, 8)
 shape = SubResource("RectangleShape2D_hqu3y")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_iejw6")
+}
