@@ -154,11 +154,11 @@ sprite_frames = SubResource("SpriteFrames_gujn7")
 animation = &"Walk"
 frame_progress = 0.759663
 
-[node name="RayCast2D" type="RayCast2D" parent="AnimatedSprite2D"]
-position = Vector2(0, 15)
-target_position = Vector2(275, 0)
-collision_mask = 2
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.25, 15.0833)
 shape = SubResource("RectangleShape2D_igoet")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(0, 15)
+target_position = Vector2(275, 0)
+collision_mask = 2

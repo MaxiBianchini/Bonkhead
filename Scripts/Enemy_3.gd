@@ -3,7 +3,7 @@ extends CharacterBody2D
 # Referencias a nodos
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var collision_shape = $CollisionShape2D
-@onready var raycast2D = $AnimatedSprite2D/RayCast2D
+@onready var raycast2D = $RayCast2D
 
 # Variables para controlar el movimiento del dron
 var movement_velocity: float = 250.0
