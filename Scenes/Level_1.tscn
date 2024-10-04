@@ -66,17 +66,17 @@ tile_map_data = PackedByteArray("AAD6/wEAAQAAAAAAAAD7/wEAAQAAAAAAAAD8/wEAAQAAAAA
 tile_set = ExtResource("1_c1dvb")
 
 [node name="Player" parent="." instance=ExtResource("2_72p7r")]
-position = Vector2(102, 109)
+position = Vector2(-200, 104)
 
 [node name="Enemy_1" parent="." instance=ExtResource("3_y6x3v")]
-position = Vector2(-111, 111)
+position = Vector2(234, 105)
 
 [node name="Enemy_2" parent="." instance=ExtResource("9_sny07")]
-position = Vector2(68, -78)
+position = Vector2(26, -77)
 floor_block_on_wall = false
 
 [node name="Enemy_3" parent="." instance=ExtResource("10_hplti")]
 position = Vector2(343, 85)
 
 [node name="Enemy_4" parent="." instance=ExtResource("11_7r4bh")]
-position = Vector2(-33, 105)
+position = Vector2(-81, 104)
