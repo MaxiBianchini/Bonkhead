@@ -4,8 +4,8 @@ extends CharacterBody2D
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var player = get_node("../Player") # Encuentra al jugador en la escena
 
-var detection_width = 200
-var detection_height = 400
+var detection_width = 400
+var detection_height = 180
 var entered_area = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -28,10 +28,8 @@ func _physics_process(delta):
 		
 		# Verificar si el jugador está dentro del área de detección
 		if player_position.x > left_bound and player_position.x < right_bound and player_position.y > top_bound and player_position.y < bottom_bound:
-			print("ENTRRO")
 			entered_area = true
-			$AnimationPlayer.play("Hurt")
-			#animated_sprite.play("Atack")
+			animated_sprite.play("Atack")
 			if player_position.x < enemy_position.x:
 				animated_sprite.flip_h = true
 				animated_sprite.position = Vector2(-8, 0)
@@ -40,19 +38,16 @@ func _physics_process(delta):
 				animated_sprite.position = Vector2(7, 0)
 		elif entered_area:
 			entered_area = false
-			print("SALIO")
 			animated_sprite.play("Idle")
 			
 	
 
 func _on_body_entered(body):
 	if body.is_in_group("Player"):
-		print("ENTRRO")
 		animated_sprite.play("Atack")
 	
 
 func _on_body_exited(body):
 	if body.is_in_group("Player"):
-		print("SALIO")
 		animated_sprite.play("Idle")
 	
