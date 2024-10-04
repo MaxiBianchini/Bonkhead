@@ -19,6 +19,7 @@ var is_stay_angry = false
 func _ready():
 	animated_sprite.connect("animation_finished", Callable(self, "_on_animation_finished"))
 	animated_sprite.play("Walk") # Reproduce la animación de caminar por defecto
+	
 
 func _physics_process(delta):
 	# Actualiza las posiciones de los nodos según la dirección
@@ -38,7 +39,7 @@ func _physics_process(delta):
 		move_and_slide()
 	
 	# Verifica la proximidad del jugador y cambia la animación y el comportamiento
-	if player:
+	if player and player.lives() != 0:
 		var enemy_position = position
 		var player_position = player.position
 		
