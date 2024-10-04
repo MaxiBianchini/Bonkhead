@@ -25,44 +25,47 @@ func _ready():
 	
 
 func _physics_process(delta):
-	if lives == 0 and is_on_floor():
-		return
+	# Verificar si el jugador tiene vidas antes de procesar la lógica del movimiento
+	if lives != 0:
+		# Obtener la entrada del jugador
+		var input_vector = Vector2.ZERO
+		input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+		
+		# Manejar el salto
+		if Input.is_action_just_pressed("ui_jump"):
+			if Input.is_action_pressed("ui_down") && raycast_floor.is_colliding():
+				var collider = raycast_floor.get_collider()
+				if collider.is_in_group("Platform"):
+					ignore_platform_collision()
+			elif is_on_floor():
+				first_jump_completed = true
+				velocity.y = jump_force
+				animatedSprite2D.play("Jump")
+			elif double_jump_enabled and first_jump_completed:
+				first_jump_completed = false
+				velocity.y = jump_force
+				animatedSprite2D.play("Double_Jump")
+		
+		# Manejar el dash
+		if Input.is_action_just_pressed("Dash") and can_dash:
+			can_dash = false
+			is_dashing = true
+			animatedSprite2D.stop()
+			animatedSprite2D.play("Dash")
+			$DashTimer.start()
+			$CanDash.start()
+		
+		# Actualizar la velocidad según el estado del dash
+		velocity.x = input_vector.x * (dash_velocity if is_dashing else movement_velocity)
 	
-	# Obtener la entrada del jugador
-	var input_vector = Vector2.ZERO
-	input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+	else:
+		# Si no tiene vidas, se detiene el movimiento horizontal
+		velocity.x = 0
 	
-	# Manejar el salto
-	if Input.is_action_just_pressed("ui_jump"):
-		if Input.is_action_pressed("ui_down") && raycast_floor.is_colliding():
-			var collider = raycast_floor.get_collider()
-			if collider.is_in_group("Platform"):
-				ignore_platform_collision()
-		elif is_on_floor():
-			first_jump_completed = true
-			velocity.y = jump_force
-			animatedSprite2D.play("Jump")
-		elif double_jump_enabled and first_jump_completed:
-			first_jump_completed = false
-			velocity.y = jump_force
-			animatedSprite2D.play("Double_Jump")
+	# Siempre aplica la gravedad
+	velocity.y += gravity * delta
 	
-	if !is_on_floor():
-		velocity.y += gravity * delta
-	
-	# Manejar el dash
-	if Input.is_action_just_pressed("Dash") and can_dash:
-		can_dash = false
-		is_dashing = true
-		animatedSprite2D.stop()
-		animatedSprite2D.play("Dash")
-		$DashTimer.start()
-		$CanDash.start()
-	
-	if lives == 0:
-		return
-	# Actualizar la velocidad según el estado del dash
-	velocity.x = input_vector.x * (dash_velocity if is_dashing else movement_velocity)
+	# Mover el personaje
 	move_and_slide()
 	# Actualizar la dirección del sprite y otros elementos según la velocidad
 	update_sprite_direction()
@@ -70,6 +73,7 @@ func _physics_process(delta):
 	update_animation()
 	# Manejar el estado del doble salto
 	handle_double_jump()
+	
 
 func update_sprite_direction():
 	var offset = 10
@@ -146,3 +150,6 @@ func enable_player_collision():
 	area2D.set_collision_mask_value(3,true)
 	area2D.set_collision_mask_value(4,true)
 	area2D.set_collision_mask_value(5,true)
+
+func see_lives():
+	return lives
