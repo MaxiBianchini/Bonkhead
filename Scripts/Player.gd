@@ -8,6 +8,7 @@ var dash_velocity: int = 400
 var fall_through_time: float = 0.05  # Tiempo durante el cual se desactiva la colisión
 
 var lives: int = 3 
+var is_alive: bool
 
 var first_jump_completed: bool = false
 var double_jump_enabled: bool = false
@@ -22,7 +23,7 @@ var is_dashing: bool = false
 
 func _ready():
 	area2D.connect("body_entered", Callable(self, "_on_body_entered"))
-	
+	is_alive = true
 
 func _physics_process(delta):
 	# Verificar si el jugador tiene vidas antes de procesar la lógica del movimiento
@@ -130,17 +131,8 @@ func _on_can_dash_timeout():
 func _on_body_entered(body):
 	if body.is_in_group("Enemy"): # Asegúrate de que el enemigo esté en el grupo "Enemy"
 		lives -= 1
-		print("SACO VIDA")
-		print("VIDAS: ",lives)
-		if lives == 0:
-			animatedSprite2D.play("Death")
-			call_deferred("disable_player_collision")
-		else:
-			$AnimationPlayer.play("Hurt")
-			call_deferred("disable_player_collision")
-			await (get_tree().create_timer(3.0).timeout)
-			call_deferred("enable_player_collision")
-			
+		check_death()
+		
 func disable_player_collision():
 	area2D.set_collision_mask_value(3,false)
 	area2D.set_collision_mask_value(4,false)
@@ -151,5 +143,13 @@ func enable_player_collision():
 	area2D.set_collision_mask_value(4,true)
 	area2D.set_collision_mask_value(5,true)
 
-func see_lives():
-	return lives
+func check_death():
+	if lives == 0:
+		is_alive = false
+		animatedSprite2D.play("Death")
+		call_deferred("disable_player_collision")
+	else:
+		$AnimationPlayer.play("Hurt")
+		call_deferred("disable_player_collision")
+		await (get_tree().create_timer(3.0).timeout)
+		call_deferred("enable_player_collision")
