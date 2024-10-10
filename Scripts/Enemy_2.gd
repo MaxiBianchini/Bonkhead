@@ -24,15 +24,10 @@ func _ready():
 	initial_height = position.y
 
 func _physics_process(delta):
-	if follow_player and player.see_lives() != 0:
-		
-		if player.position.x > position.x:
-			# Si el dron está siguiendo al jugador, se mueve hacia él
-			target_position = Vector2((player.position.x - position.x - 95), (player.position.y - position.y - 15)).normalized()
-		else:
-			# Si el dron está siguiendo al jugador, se mueve hacia él
-			target_position = Vector2((player.position.x - position.x + 115), (player.position.y - position.y - 15)).normalized()
-		position += target_position * 100 * delta
+	if follow_player and player.is_alive:
+		if (player.position - position).length() > 2.0:
+			var target_position = (player.position - position).normalized()
+			position += target_position * 100 * delta
 
 	else:
 		# Si el dron ha dejado de seguir al jugador, vuelve a su altura inicial
