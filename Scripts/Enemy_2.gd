@@ -26,7 +26,13 @@ func _ready():
 func _physics_process(delta):
 	if follow_player and player.is_alive:
 		if (player.position - position).length() > 2.0:
-			var target_position = (player.position - position).normalized()
+			target_position = (player.position - position).normalized()
+			
+			if target_position.x < 0:
+				animated_sprite.flip_h = true
+			elif target_position.x > 0:
+				animated_sprite.flip_h = false
+			
 			position += target_position * 100 * delta
 
 	else:
@@ -43,18 +49,17 @@ func _physics_process(delta):
 
 		position.x += movement_velocity * delta  # Movimiento horizontal
 		
-	update_sprite_direction()
+		update_sprite_direction()
 
 func update_sprite_direction():
-	if movement_velocity < 0:
+	if movement_velocity < 0: 
 		animated_sprite.flip_h = true
-		
 	elif movement_velocity > 0:
 		animated_sprite.flip_h = false
 
 func _on_body_entered(body):
 	if body.is_in_group("Player"):
-		animated_sprite.play("Attack")
+		animated_sprite.play("Walk")
 		follow_player = true
 
 
