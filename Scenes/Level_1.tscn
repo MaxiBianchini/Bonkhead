@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://mwhbup6tnnqo"]
+[gd_scene load_steps=13 format=4 uid="uid://mwhbup6tnnqo"]
 
 [ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://Recursos/PowerStationTileSet.tres" id="1_c1dvb"]
 [ext_resource type="PackedScene" uid="uid://cdqlmgh2vxout" path="res://Prefabs/Player.tscn" id="2_72p7r"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://p0r0o0glpxm" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/4.png" id="10_ld244"]
 [ext_resource type="PackedScene" uid="uid://ce5qnuwutjn77" path="res://Prefabs/Enemy_4.tscn" id="11_7r4bh"]
 [ext_resource type="Texture2D" uid="uid://1pqtno8vs2u8" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/5.png" id="11_ne8gg"]
+[ext_resource type="PackedScene" uid="uid://dyxdcycua33ik" path="res://Prefabs/Bullet_1.tscn" id="12_7e0vc"]
 
 [node name="Node2D" type="Node2D"]
 position = Vector2(2, 0)
@@ -80,3 +81,8 @@ position = Vector2(343, 85)
 
 [node name="Enemy_4" parent="." instance=ExtResource("11_7r4bh")]
 position = Vector2(-81, 104)
+
+[node name="Bullet_1" parent="." instance=ExtResource("12_7e0vc")]
+
+[node name="Bullet_2" parent="." instance=ExtResource("12_7e0vc")]
+position = Vector2(-168, 107)
