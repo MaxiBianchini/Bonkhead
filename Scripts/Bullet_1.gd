@@ -1,8 +1,8 @@
 extends Area2D
 
 # Variables para la velocidad y dirección de la bala
-var bullet_speed: float = 400
-var direction: Vector2
+var bullet_speed: float = 50
+var direction = Vector2(1, 0)
 
 func _ready():
 	# Conectar la señal de colisión
@@ -18,6 +18,6 @@ func _physics_process(delta):
 
 # Manejar la colisión con un cuerpo
 func _on_body_entered(body):
-	if body.is_in_group("Enemy"):  # Verificar si colisionó con un enemigo
+	if body.is_in_group("Enemy") or body.is_in_group("Player"):  # Verificar si colisionó con un enemigo
 		body.take_damage()  # Función de daño en el enemigo
 		queue_free()  # Eliminar la bala
