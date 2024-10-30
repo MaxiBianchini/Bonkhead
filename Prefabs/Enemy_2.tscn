@@ -1,11 +1,17 @@
-[gd_scene load_steps=40 format=3 uid="uid://cp6k1o6rfgevf"]
+[gd_scene load_steps=45 format=3 uid="uid://cp6k1o6rfgevf"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy_2.gd" id="1_3nub3"]
+[ext_resource type="Shader" uid="uid://cfchphdpemaxm" path="res://Shaders/Enemy_Hurt.tres" id="1_igodb"]
 [ext_resource type="Texture2D" uid="uid://b74g7x87p8xwx" path="res://Graphics/Enemies/Drone/1 Drones/1/Death.png" id="1_wwflq"]
 [ext_resource type="Texture2D" uid="uid://bn7gpjmkr2grm" path="res://Graphics/Enemies/Drone/1 Drones/1/Idle.png" id="2_q31nm"]
 [ext_resource type="Texture2D" uid="uid://ci2ltketr4q06" path="res://Graphics/Enemies/Drone/1 Drones/1/Scan.png" id="3_44nhp"]
 [ext_resource type="Texture2D" uid="uid://bl2uk1i4ikm1n" path="res://Graphics/Enemies/Drone/1 Drones/1/Walk.png" id="4_g12fp"]
 [ext_resource type="Texture2D" uid="uid://beofh7aopy8ni" path="res://Graphics/Enemies/Drone/1 Drones/1/Walk_scan.png" id="5_k8d27"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xixlf"]
+shader = ExtResource("1_igodb")
+shader_parameter/Enabled = false
+shader_parameter/Tint = Color(0.984314, 0.015686, 0, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o6o20"]
 atlas = ExtResource("2_q31nm")
@@ -165,7 +171,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1i23k")
 }],
-"loop": true,
+"loop": false,
 "name": &"Death",
 "speed": 5.0
 }, {
@@ -251,20 +257,65 @@ radius = 15.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_eka17"]
 radius = 205.039
 
+[sub_resource type="Animation" id="Animation_5finp"]
+resource_name = "Hurt"
+length = 2.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/Enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false, true, false, true, false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_ymlft"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/Enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tuivb"]
+_data = {
+"Hurt": SubResource("Animation_5finp"),
+"RESET": SubResource("Animation_ymlft")
+}
+
 [node name="Enemy_2" type="CharacterBody2D" groups=["Enemy"]]
 collision_layer = 4
 script = ExtResource("1_3nub3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_xixlf")
 sprite_frames = SubResource("SpriteFrames_21ncv")
-animation = &"Walk"
+animation = &"Scan"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_07eti")
 
 [node name="Area2D" type="Area2D" parent="."]
+visible = false
 collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
 shape = SubResource("CircleShape2D_eka17")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tuivb")
+}

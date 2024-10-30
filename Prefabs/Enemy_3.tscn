@@ -1,10 +1,15 @@
-[gd_scene load_steps=24 format=3 uid="uid://bswo0jt5cdkqw"]
+[gd_scene load_steps=26 format=3 uid="uid://bswo0jt5cdkqw"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy_3.gd" id="1_qjnuo"]
+[ext_resource type="Shader" uid="uid://cfchphdpemaxm" path="res://Shaders/Enemy_Hurt.tres" id="2_1ughv"]
 [ext_resource type="Texture2D" uid="uid://dvdjcbbm8xlq6" path="res://Graphics/Enemies/Bosses/1/Death.png" id="2_trnwk"]
-[ext_resource type="Texture2D" uid="uid://bv4fldii8b78c" path="res://Graphics/Enemies/Bosses/1/Hurt.png" id="3_3205v"]
 [ext_resource type="Texture2D" uid="uid://cv1nk102hla6q" path="res://Graphics/Enemies/Bosses/1/Idle.png" id="4_iwa6x"]
 [ext_resource type="Texture2D" uid="uid://biwh46k5l2j5" path="res://Graphics/Enemies/Bosses/1/Walk.png" id="5_xe5py"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w4d1f"]
+shader = ExtResource("2_1ughv")
+shader_parameter/Enabled = false
+shader_parameter/Tint = Color(0.984314, 0.015686, 0, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6114k"]
 atlas = ExtResource("2_trnwk")
@@ -29,14 +34,6 @@ region = Rect2(288, 0, 72, 72)
 [sub_resource type="AtlasTexture" id="AtlasTexture_407b7"]
 atlas = ExtResource("2_trnwk")
 region = Rect2(360, 0, 72, 72)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qmynq"]
-atlas = ExtResource("3_3205v")
-region = Rect2(0, 0, 72, 72)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4daui"]
-atlas = ExtResource("3_3205v")
-region = Rect2(72, 0, 72, 72)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_waj0g"]
 atlas = ExtResource("4_iwa6x")
@@ -97,17 +94,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qmynq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4daui")
-}],
-"loop": true,
-"name": &"Hurt",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_waj0g")
 }, {
 "duration": 1.0,
@@ -144,14 +130,52 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_igoet"]
 size = Vector2(65.5, 41.8333)
 
+[sub_resource type="Animation" id="Animation_5finp"]
+resource_name = "Hurt"
+length = 2.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/Enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false, true, false, true, false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_ymlft"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/Enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tuivb"]
+_data = {
+"Hurt": SubResource("Animation_5finp"),
+"RESET": SubResource("Animation_ymlft")
+}
+
 [node name="Enemy_3" type="CharacterBody2D" groups=["Enemy"]]
 scale = Vector2(1.2, 1.2)
 collision_layer = 4
 script = ExtResource("1_qjnuo")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_w4d1f")
 sprite_frames = SubResource("SpriteFrames_gujn7")
-animation = &"Death"
+animation = &"Idle"
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -168,3 +192,8 @@ metadata/_edit_lock_ = true
 [node name="RayCast2D2" type="RayCast2D" parent="."]
 position = Vector2(40, 27.5)
 target_position = Vector2(0, 15)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tuivb")
+}

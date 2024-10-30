@@ -1,10 +1,17 @@
-[gd_scene load_steps=28 format=3 uid="uid://d0lv1t50yhwap"]
+[gd_scene load_steps=40 format=3 uid="uid://d0lv1t50yhwap"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy_1.gd" id="1_xnerr"]
+[ext_resource type="Shader" uid="uid://cfchphdpemaxm" path="res://Shaders/Enemy_Hurt.tres" id="2_hhrri"]
 [ext_resource type="Texture2D" uid="uid://bsrpvg7b3h605" path="res://Graphics/Cyberpunk Characters/2 Punk/Angry.png" id="2_vjile"]
 [ext_resource type="Texture2D" uid="uid://bo7xyr3ix0lrr" path="res://Graphics/Cyberpunk Characters/2 Punk/Punk_idle.png" id="2_xj8j7"]
 [ext_resource type="Texture2D" uid="uid://cl46eu0j0e5pq" path="res://Graphics/Cyberpunk Characters/2 Punk/Walk.png" id="3_3ngs0"]
+[ext_resource type="Texture2D" uid="uid://d250ybb54pqde" path="res://Graphics/Cyberpunk Characters/2 Punk/Punk_death.png" id="3_yvwoq"]
 [ext_resource type="Texture2D" uid="uid://dcok6k4ubrjuw" path="res://Graphics/Cyberpunk Characters/2 Punk/Punk_attack3.png" id="4_2u03s"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eln1y"]
+shader = ExtResource("2_hhrri")
+shader_parameter/Enabled = false
+shader_parameter/Tint = Color(0.984314, 0.015686, 0, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8rspd"]
 atlas = ExtResource("2_vjile")
@@ -28,6 +35,30 @@ region = Rect2(192, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ow0ou"]
 atlas = ExtResource("2_vjile")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6h66n"]
+atlas = ExtResource("3_yvwoq")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8pk01"]
+atlas = ExtResource("3_yvwoq")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hvwdx"]
+atlas = ExtResource("3_yvwoq")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6lghr"]
+atlas = ExtResource("3_yvwoq")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hlgbl"]
+atlas = ExtResource("3_yvwoq")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_27n8i"]
+atlas = ExtResource("3_yvwoq")
 region = Rect2(240, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8rg83"]
@@ -113,6 +144,29 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_6h66n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8pk01")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hvwdx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6lghr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hlgbl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_27n8i")
+}],
+"loop": false,
+"name": &"Death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_8rg83")
 }, {
 "duration": 1.0,
@@ -142,7 +196,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_b5oxn")
 }],
 "loop": true,
-"name": &"Shot",
+"name": &"Shoot",
 "speed": 5.0
 }, {
 "frames": [{
@@ -172,13 +226,52 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3jxnh"]
 size = Vector2(13, 32)
 
+[sub_resource type="Animation" id="Animation_5finp"]
+resource_name = "Hurt"
+length = 2.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/Enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false, true, false, true, false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_ymlft"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/Enabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tuivb"]
+_data = {
+"Hurt": SubResource("Animation_5finp"),
+"RESET": SubResource("Animation_ymlft")
+}
+
 [node name="Enemy_1" type="CharacterBody2D" groups=["Enemy"]]
 collision_layer = 4
 script = ExtResource("1_xnerr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Enemy"]]
+material = SubResource("ShaderMaterial_eln1y")
 sprite_frames = SubResource("SpriteFrames_d4cnq")
-animation = &"Angry"
+animation = &"Idle"
+frame_progress = 0.0178156
 offset = Vector2(10, -7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -188,3 +281,8 @@ shape = SubResource("RectangleShape2D_3jxnh")
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(11, 9)
 target_position = Vector2(0, 12)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tuivb")
+}

@@ -1,22 +1,30 @@
 extends CharacterBody2D
 
+# Referencias a nodos
 @onready var  area2D = $Area2D
 @onready var animated_sprite = $AnimatedSprite2D
+
 @onready var player = get_node("../Player") # Encuentra al jugador en la escena
 
-var detection_width = 400
-var detection_height = 180
-var entered_area = false
-# Called when the node enters the scene tree for the first time.
+var detection_width: int = 400
+var detection_height: int = 180
+var entered_area: bool = false
+
+var lives: int = 3
+var is_alive: bool = true
+
+
 func _ready():
 	animated_sprite.play("Idle")
 	
+	animated_sprite.connect("animation_finished", Callable(self, "_on_animation_finished"))
+	
 	area2D.connect("body_entered", Callable(self,"_on_body_entered"))
 	area2D.connect("body_exited", Callable(self,"_on_body_exited"))
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+
+
 func _physics_process(delta):
-	if player:
+	if player and is_alive:
 		var enemy_position = position
 		var player_position = player.position
 		
@@ -39,15 +47,29 @@ func _physics_process(delta):
 		elif entered_area:
 			entered_area = false
 			animated_sprite.play("Idle")
-			
-	
+
+
+# Controlador del Daño
+func take_damage():
+	lives -= 1
+	if lives == 0:
+		is_alive = false
+		animated_sprite.play("Death")
+	else:
+		$AnimationPlayer.play("Hurt")
+		await (get_tree().create_timer(3.0).timeout)
+
 
 func _on_body_entered(body):
 	if body.is_in_group("Player"):
 		animated_sprite.play("Atack")
-	
+
 
 func _on_body_exited(body):
 	if body.is_in_group("Player"):
 		animated_sprite.play("Idle")
-	
+
+
+func _on_animation_finished():
+	if animated_sprite.animation == "Death":
+		queue_free()

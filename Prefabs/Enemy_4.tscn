@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Enemy_4.gd" id="1_4mohw"]
 [ext_resource type="Texture2D" uid="uid://blpde0ijbk78v" path="res://Graphics/Enemies/Lanza Misiles/Attack.png" id="2_r2l08"]
-[ext_resource type="Shader" uid="uid://cfchphdpemaxm" path="res://Shaders/Enemy4_Hurt.tres" id="2_swis6"]
+[ext_resource type="Shader" uid="uid://cfchphdpemaxm" path="res://Shaders/Enemy_Hurt.tres" id="2_swis6"]
 [ext_resource type="Texture2D" uid="uid://d0ifagidhjr8d" path="res://Graphics/Enemies/Lanza Misiles/Death.png" id="3_iyddk"]
 [ext_resource type="Texture2D" uid="uid://oc63an2ej45a" path="res://Graphics/Enemies/Lanza Misiles/Idle.png" id="4_x1jtm"]
 
@@ -91,7 +91,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jyk32")
 }],
-"loop": true,
+"loop": false,
 "name": &"Death",
 "speed": 5.0
 }, {
@@ -165,20 +165,17 @@ script = ExtResource("1_4mohw")
 material = SubResource("ShaderMaterial_b8mix")
 position = Vector2(7, 0)
 sprite_frames = SubResource("SpriteFrames_cr3ql")
-animation = &"Death"
-frame_progress = 0.127255
+animation = &"Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 6)
 shape = SubResource("CapsuleShape2D_3id1h")
 
 [node name="Area2D" type="Area2D" parent="."]
-visible = false
 collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-visible = false
 position = Vector2(-7, 8)
 shape = SubResource("RectangleShape2D_hqu3y")
 

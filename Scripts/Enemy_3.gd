@@ -7,16 +7,21 @@ extends CharacterBody2D
 @onready var raycast_floor = $RayCast2D2
 
 # Variables para controlar el movimiento del dron
-var movement_velocity: float = 250.0
+var movement_velocity: float = 250
 var start_driving: bool = false
 
+# Variables para controlar la vida
+var lives = 3
+var is_alive = true
+
 func _ready():
+	animated_sprite.connect("animation_finished", Callable(self, "_on_animation_finished"))
 	animated_sprite.play("Idle") # Reproduce la animación de caminar por defecto
 
 func _physics_process(delta):
 	if is_on_wall() or not raycast_floor.is_colliding():
 		movement_velocity *= -1
-		update_sprite_direction()
+		update_sprite_direction() # Actualizar la dirección del sprite
 	
 	if raycast_detection.is_colliding():
 		var collider = raycast_detection.get_collider()
@@ -28,6 +33,8 @@ func _physics_process(delta):
 		# Movimiento horizontal del dron
 		position.x += movement_velocity  * delta
 
+
+# Controlador de la direccion del Sprite
 func update_sprite_direction():
 	if movement_velocity < 0:
 		animated_sprite.flip_h = true
@@ -37,3 +44,20 @@ func update_sprite_direction():
 		animated_sprite.flip_h = false
 		raycast_floor.position = Vector2(40,27.5)
 		raycast_detection.rotate(3.14159)
+
+
+# Controlador del Daño
+func take_damage():
+	lives -= 1
+	if lives == 0:
+		is_alive = false
+		animated_sprite.play("Death")
+	else:
+		$AnimationPlayer.play("Hurt")
+		await (get_tree().create_timer(3.0).timeout)
+		animated_sprite.play("Idle")
+
+
+func _on_animation_finished():
+	if animated_sprite.animation == "Death":
+		queue_free()
