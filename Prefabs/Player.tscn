@@ -329,7 +329,7 @@ script = ExtResource("1_y8i6y")
 z_index = -1
 material = SubResource("ShaderMaterial_c5nj1")
 sprite_frames = SubResource("SpriteFrames_l1tm1")
-animation = &"Dash"
+animation = &"Idle"
 offset = Vector2(10, -7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
