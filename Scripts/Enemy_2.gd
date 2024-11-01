@@ -5,7 +5,6 @@ extends CharacterBody2D
 @onready var collision_shape = $CollisionShape2D
 @onready var area2D = $Area2D
 
-
 @onready var player = get_node("../Player") # Encuentra al jugador en la escena
 
 # Variables para controlar el movimiento del dron
@@ -20,7 +19,7 @@ var target_position: Vector2
 
 # Variables para controlar la vida
 var lives: int = 3
-var is_alive = true
+var is_alive: bool = true
 
 func _ready():
 	animated_sprite.connect("animation_finished", Callable(self, "_on_animation_finished"))

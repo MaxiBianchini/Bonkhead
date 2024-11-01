@@ -10,6 +10,7 @@ var detection_width: int = 400
 var detection_height: int = 180
 var entered_area: bool = false
 
+# Variables para controlar la vida
 var lives: int = 3
 var is_alive: bool = true
 

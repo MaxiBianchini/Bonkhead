@@ -11,8 +11,8 @@ var movement_velocity: float = 250
 var start_driving: bool = false
 
 # Variables para controlar la vida
-var lives = 3
-var is_alive = true
+var lives: int = 3
+var is_alive: bool = true
 
 func _ready():
 	animated_sprite.connect("animation_finished", Callable(self, "_on_animation_finished"))

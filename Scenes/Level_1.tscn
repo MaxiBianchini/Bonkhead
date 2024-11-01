@@ -1,17 +1,13 @@
-[gd_scene load_steps=13 format=4 uid="uid://mwhbup6tnnqo"]
+[gd_scene load_steps=9 format=4 uid="uid://mwhbup6tnnqo"]
 
 [ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://Recursos/PowerStationTileSet.tres" id="1_c1dvb"]
 [ext_resource type="PackedScene" uid="uid://cdqlmgh2vxout" path="res://Prefabs/Player.tscn" id="2_72p7r"]
-[ext_resource type="PackedScene" uid="uid://d0lv1t50yhwap" path="res://Prefabs/Enemy_1.tscn" id="3_y6x3v"]
 [ext_resource type="Texture2D" uid="uid://ca62wvqrospf" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/1.png" id="7_tfqb0"]
 [ext_resource type="Texture2D" uid="uid://dtmsyhl6e0ouc" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/2.png" id="8_eciw5"]
 [ext_resource type="Texture2D" uid="uid://c1rvi4oi7ic00" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/3.png" id="9_8du4a"]
 [ext_resource type="PackedScene" uid="uid://cp6k1o6rfgevf" path="res://Prefabs/Enemy_2.tscn" id="9_sny07"]
-[ext_resource type="PackedScene" uid="uid://bswo0jt5cdkqw" path="res://Prefabs/Enemy_3.tscn" id="10_hplti"]
 [ext_resource type="Texture2D" uid="uid://p0r0o0glpxm" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/4.png" id="10_ld244"]
-[ext_resource type="PackedScene" uid="uid://ce5qnuwutjn77" path="res://Prefabs/Enemy_4.tscn" id="11_7r4bh"]
 [ext_resource type="Texture2D" uid="uid://1pqtno8vs2u8" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/5.png" id="11_ne8gg"]
-[ext_resource type="PackedScene" uid="uid://dyxdcycua33ik" path="res://Prefabs/Bullet_1.tscn" id="12_7e0vc"]
 
 [node name="Node2D" type="Node2D"]
 position = Vector2(2, 0)
@@ -19,7 +15,7 @@ position = Vector2(2, 0)
 [node name="TileMaps" type="Node" parent="."]
 
 [node name="Terrain" type="TileMapLayer" parent="TileMaps" groups=["Floor"]]
-tile_map_data = PackedByteArray("AAD//wQAAAABAAAAAAAAAAQAAAABAAAAAAABAAQAAAABAAAAAAACAAQAAAABAAAAAAADAAQAAAABAAAAAAAEAAQAAAABAAAAAAAFAAQAAAABAAAAAAAGAAQAAAABAAAAAAAHAAQAAAABAAAAAAAIAAQAAAABAAAAAAAJAAQAAAABAAAAAAAKAAQAAAABAAAAAAD+/wQAAAABAAAAAAD9/wQAAAABAAAAAAD8/wQAAAABAAAAAAD7/wQAAAABAAAAAAD6/wQAAAABAAAAAAD5/wQAAAABAAAAAAD4/wQAAAABAAAAAAD3////AAACAAEAAAD3//7/AAACAAEAAAD3//3/AAACAAEAAAD3//z/AAACAAEAAAD3//v/AAACAAEAAAD3/wMAAAACAAEAAAD3/wQAAAAEAAEAAAALAAQAAAABAAAAAAAMAAQAAAABAAAAAAANAAQAAAABAAAAAAAOAAQAAAABAAAAAAAPAAQAAAABAAAAAAAQAAQAAAABAAAAAAA=")
+tile_map_data = PackedByteArray("AAD//wQAAAABAAAAAAAAAAQAAAABAAAAAAABAAQAAAABAAAAAAACAAQAAAABAAAAAAADAAQAAAABAAAAAAAEAAQAAAABAAAAAAAFAAQAAAABAAAAAAAGAAQAAAABAAAAAAAHAAQAAAABAAAAAAAIAAQAAAABAAAAAAAJAAQAAAABAAAAAAAKAAQAAAABAAAAAAD+/wQAAAABAAAAAAD9/wQAAAABAAAAAAD8/wQAAAABAAAAAAD7/wQAAAABAAAAAAD6/wQAAAABAAAAAAD5/wQAAAABAAAAAAD4/wQAAAABAAAAAAD3////AAACAAEAAAD3//7/AAACAAEAAAD3//3/AAACAAEAAAD3//z/AAACAAEAAAD3//v/AAACAAEAAAD3/wMAAAACAAEAAAD3/wQAAAAEAAEAAAALAAQAAAABAAAAAAAMAAQAAAABAAAAAAANAAQAAAABAAAAAAAOAAQAAAABAAAAAAAPAAQAAAABAAAAAAAQAAQAAAABAAAAAAARAAMAAAAAAAAAAAASAAIAAAAAAAAAAAATAAIAAAAAAAAAAAAUAAIAAAAAAAAAAAAVAAIAAAAAAAAAAAAWAAIAAAAAAAAAAAAXAAIAAAAAAAAAAAAYAAIAAAAAAAAAAAAZAAIAAAAAAAAAAAAaAAIAAAAAAAAAAAA=")
 tile_set = ExtResource("1_c1dvb")
 rendering_quadrant_size = 32
 
@@ -67,22 +63,7 @@ tile_map_data = PackedByteArray("AAD6/wEAAQAAAAAAAAD7/wEAAQAAAAAAAAD8/wEAAQAAAAA
 tile_set = ExtResource("1_c1dvb")
 
 [node name="Player" parent="." instance=ExtResource("2_72p7r")]
-position = Vector2(-200, 104)
-
-[node name="Enemy_1" parent="." instance=ExtResource("3_y6x3v")]
-position = Vector2(158, 111)
+position = Vector2(-47, 10)
 
 [node name="Enemy_2" parent="." instance=ExtResource("9_sny07")]
-position = Vector2(26, -77)
-floor_block_on_wall = false
-
-[node name="Enemy_3" parent="." instance=ExtResource("10_hplti")]
-position = Vector2(343, 85)
-
-[node name="Enemy_4" parent="." instance=ExtResource("11_7r4bh")]
-position = Vector2(-81, 104)
-
-[node name="Bullet_1" parent="." instance=ExtResource("12_7e0vc")]
-
-[node name="Bullet_2" parent="." instance=ExtResource("12_7e0vc")]
-position = Vector2(-168, 107)
+position = Vector2(142, 11)
