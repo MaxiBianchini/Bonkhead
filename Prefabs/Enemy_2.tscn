@@ -1,15 +1,15 @@
 [gd_scene load_steps=45 format=3 uid="uid://cp6k1o6rfgevf"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy_2.gd" id="1_3nub3"]
-[ext_resource type="Shader" uid="uid://cfchphdpemaxm" path="res://Shaders/Enemy_Hurt.tres" id="1_igodb"]
 [ext_resource type="Texture2D" uid="uid://b74g7x87p8xwx" path="res://Graphics/Enemies/Drone/1 Drones/1/Death.png" id="1_wwflq"]
+[ext_resource type="Shader" uid="uid://3eyyqpjc4awp" path="res://Shaders/Hurts_effect.tres" id="2_ie02j"]
 [ext_resource type="Texture2D" uid="uid://bn7gpjmkr2grm" path="res://Graphics/Enemies/Drone/1 Drones/1/Idle.png" id="2_q31nm"]
 [ext_resource type="Texture2D" uid="uid://ci2ltketr4q06" path="res://Graphics/Enemies/Drone/1 Drones/1/Scan.png" id="3_44nhp"]
 [ext_resource type="Texture2D" uid="uid://bl2uk1i4ikm1n" path="res://Graphics/Enemies/Drone/1 Drones/1/Walk.png" id="4_g12fp"]
 [ext_resource type="Texture2D" uid="uid://beofh7aopy8ni" path="res://Graphics/Enemies/Drone/1 Drones/1/Walk_scan.png" id="5_k8d27"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xixlf"]
-shader = ExtResource("1_igodb")
+shader = ExtResource("2_ie02j")
 shader_parameter/Enabled = false
 shader_parameter/Tint = Color(0.984314, 0.015686, 0, 1)
 
@@ -307,12 +307,10 @@ animation = &"Scan"
 shape = SubResource("CircleShape2D_07eti")
 
 [node name="Area2D" type="Area2D" parent="."]
-visible = false
 collision_layer = 4
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-visible = false
 shape = SubResource("CircleShape2D_eka17")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

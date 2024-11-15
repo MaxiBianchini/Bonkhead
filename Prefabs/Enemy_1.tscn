@@ -1,7 +1,7 @@
 [gd_scene load_steps=40 format=3 uid="uid://d0lv1t50yhwap"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy_1.gd" id="1_xnerr"]
-[ext_resource type="Shader" uid="uid://cfchphdpemaxm" path="res://Shaders/Enemy_Hurt.tres" id="2_hhrri"]
+[ext_resource type="Shader" uid="uid://3eyyqpjc4awp" path="res://Shaders/Hurts_effect.tres" id="2_5735i"]
 [ext_resource type="Texture2D" uid="uid://bsrpvg7b3h605" path="res://Graphics/Cyberpunk Characters/2 Punk/Angry.png" id="2_vjile"]
 [ext_resource type="Texture2D" uid="uid://bo7xyr3ix0lrr" path="res://Graphics/Cyberpunk Characters/2 Punk/Punk_idle.png" id="2_xj8j7"]
 [ext_resource type="Texture2D" uid="uid://cl46eu0j0e5pq" path="res://Graphics/Cyberpunk Characters/2 Punk/Walk.png" id="3_3ngs0"]
@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dcok6k4ubrjuw" path="res://Graphics/Cyberpunk Characters/2 Punk/Punk_attack3.png" id="4_2u03s"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eln1y"]
-shader = ExtResource("2_hhrri")
+shader = ExtResource("2_5735i")
 shader_parameter/Enabled = false
 shader_parameter/Tint = Color(0.984314, 0.015686, 0, 1)
 
@@ -270,8 +270,7 @@ script = ExtResource("1_xnerr")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Enemy"]]
 material = SubResource("ShaderMaterial_eln1y")
 sprite_frames = SubResource("SpriteFrames_d4cnq")
-animation = &"Idle"
-frame_progress = 0.0178156
+animation = &"Death"
 offset = Vector2(10, -7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

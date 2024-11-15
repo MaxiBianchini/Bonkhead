@@ -6,7 +6,7 @@ extends CharacterBody2D
 @onready var raycast_floor = $RayCast2D
 
 @onready var player = get_node("../Player") # Encuentra al jugador en la escena
-
+ 
 # Variables para definir el área de detección rectangular
 var detection_width: int = 100  # Ancho del área de detección
 var detection_height: int = 90  # Altura del área de detección
@@ -21,6 +21,9 @@ var is_stay_angry: bool = false
 # Variables para controlar la vida
 var lives: int = 3
 var is_alive: bool = true
+
+# Carga la escena de la bala
+var bullet_scene = preload("res://Prefabs/Bullet_1.tscn")
 
 func _ready():
 	animated_sprite.connect("animation_finished", Callable(self, "_on_animation_finished"))
@@ -41,7 +44,7 @@ func _physics_process(delta):
 			direction *= -1
 		
 		# Controla el movimiento del enemigo
-		if animated_sprite.animation != "Shot":
+		if animated_sprite.animation != "Shoot":
 			velocity.x = direction * movement_velocity
 			move_and_slide()
 		
@@ -59,6 +62,9 @@ func _physics_process(delta):
 					update_sprite_direction(true) # Actualizar la dirección del sprite
 				else:
 					update_sprite_direction(false) # Actualizar la dirección del sprite
+				
+				await (get_tree().create_timer(3.0).timeout)
+				shoot_bullet()
 			
 			else:
 				if is_stay_angry:
@@ -78,6 +84,14 @@ func update_sprite_direction(value):
 		animated_sprite.flip_h = false
 		animated_sprite.position.x = offset
 		collision_shape.position.x = offset
+
+
+func shoot_bullet():
+	var bullet_instance = bullet_scene.instantiate() # Instancia la bala
+	
+	# Posiciona la bala en la posición del player + una distancia
+	bullet_instance.position = position + Vector2(30, 0)
+	get_tree().current_scene.add_child(bullet_instance) # Añade la bala a la escena actual
 
 
 # Controlador del Daño
