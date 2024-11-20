@@ -1,7 +1,7 @@
 [gd_scene load_steps=26 format=3 uid="uid://bswo0jt5cdkqw"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy_3.gd" id="1_qjnuo"]
-[ext_resource type="Shader" uid="uid://cfchphdpemaxm" path="res://Shaders/Enemy_Hurt.tres" id="2_1ughv"]
+[ext_resource type="Shader" uid="uid://3eyyqpjc4awp" path="res://Shaders/Hurts_effect.tres" id="2_1ughv"]
 [ext_resource type="Texture2D" uid="uid://dvdjcbbm8xlq6" path="res://Graphics/Enemies/Bosses/1/Death.png" id="2_trnwk"]
 [ext_resource type="Texture2D" uid="uid://cv1nk102hla6q" path="res://Graphics/Enemies/Bosses/1/Idle.png" id="4_iwa6x"]
 [ext_resource type="Texture2D" uid="uid://biwh46k5l2j5" path="res://Graphics/Enemies/Bosses/1/Walk.png" id="5_xe5py"]
