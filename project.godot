@@ -15,16 +15,25 @@ run/main_scene="res://Scenes/Main_Menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
+
 [display]
 
 window/size/viewport_width=1980
 window/size/viewport_height=1080
 window/size/mode=3
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/phantom_camera/plugin.cfg")
+
 [global_group]
 
 Enemy=""
 Player=""
+Fondo=""
 
 [input]
 
@@ -68,6 +77,7 @@ Shoot={
 
 2d_render/layer_1="Environment"
 2d_render/layer_2="Enemies"
+2d_render/layer_3="Fondo"
 2d_physics/layer_1="Environment"
 2d_physics/layer_2="Player"
 2d_physics/layer_3="Enemies"
