@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b61e2qh88myfb"]
+[gd_scene load_steps=13 format=3 uid="uid://b61e2qh88myfb"]
 
 [ext_resource type="Texture2D" uid="uid://cn16ddildslab" path="res://Graphics/Zonas/Exclusion-zone/2 Background/Day/Fondo.png" id="1_i5kqb"]
 [ext_resource type="Script" path="res://Scripts/Main_Menu.gd" id="1_qsqme"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://ldfj3ji81p0w" path="res://Graphics/New GUI/UI Package/Frames/1-4.png" id="3_m7lsa"]
 [ext_resource type="Texture2D" uid="uid://bdn1sk233bncw" path="res://Graphics/New GUI/UI Package/Elements/7-3.png" id="4_ftf8w"]
 [ext_resource type="Texture2D" uid="uid://b3degqy5uf8ea" path="res://Graphics/New GUI/UI Package/Elements/7-1.png" id="5_fo8ij"]
+[ext_resource type="Texture2D" uid="uid://cecrno5ffpubr" path="res://Graphics/New GUI/UI Package/Elements/1-1.png" id="8_1slrm"]
+[ext_resource type="Texture2D" uid="uid://l4htlbip8c4h" path="res://Graphics/New GUI/UI Package/Elements/1-3.png" id="9_iua7b"]
+[ext_resource type="Texture2D" uid="uid://c41884kfdl8mq" path="res://Graphics/New GUI/UI Package/Elements/1-2.png" id="10_wnoiy"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_8rfh8"]
 font = ExtResource("2_n46cw")
@@ -17,6 +20,7 @@ font = ExtResource("2_n46cw")
 font_size = 30
 
 [node name="MainMenu" type="Control"]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,6 +32,8 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_qsqme")
+metadata/_edit_vertical_guides_ = [960.0, 1920.0, -71.0]
+metadata/_edit_horizontal_guides_ = [-824.0, 655.0]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -45,9 +51,9 @@ texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 685.0
+offset_left = 690.0
 offset_top = 305.0
-offset_right = -695.0
+offset_right = -690.0
 offset_bottom = -75.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -55,7 +61,6 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 localize_numeral_system = false
 texture = ExtResource("3_m7lsa")
-metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="CanvasLayer"]
 anchors_preset = 10
@@ -67,7 +72,6 @@ text = "Bonkhead"
 label_settings = SubResource("LabelSettings_8rfh8")
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_lock_ = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
 anchors_preset = -1
@@ -76,14 +80,13 @@ anchor_top = 0.611
 anchor_right = 0.5
 anchor_bottom = 0.611
 offset_left = -125.0
-offset_top = -187.88
+offset_top = -191.88
 offset_right = 125.0
-offset_bottom = 188.12
+offset_bottom = 184.12
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 35
 alignment = 1
-metadata/_edit_lock_ = true
 
 [node name="PlayButton" type="TextureButton" parent="CanvasLayer/VBoxContainer"]
 texture_filter = 1
@@ -168,6 +171,97 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "CREDITS"
+label_settings = SubResource("LabelSettings_oayd6")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="ExitButton" type="TextureButton" parent="CanvasLayer"]
+anchors_preset = -1
+anchor_left = 0.929
+anchor_top = 0.046
+anchor_right = 0.973
+anchor_bottom = 0.124
+offset_left = 0.579956
+offset_top = 0.319996
+offset_right = -0.540039
+offset_bottom = 0.0799866
+texture_normal = ExtResource("8_1slrm")
+texture_pressed = ExtResource("9_iua7b")
+texture_hover = ExtResource("10_wnoiy")
+stretch_mode = 0
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer/ExitButton"]
+layout_mode = 0
+offset_right = 91.0
+offset_bottom = 84.0
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 50
+text = "X"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ButtonBackground" type="TextureRect" parent="CanvasLayer2"]
+texture_filter = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -715.0
+offset_top = -540.0
+offset_right = 715.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+localize_numeral_system = false
+texture = ExtResource("3_m7lsa")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.611
+anchor_right = 0.5
+anchor_bottom = 0.611
+offset_left = -124.0
+offset_top = 176.12
+offset_right = 125.0
+offset_bottom = 271.12
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 35
+alignment = 1
+
+[node name="BackButton" type="TextureButton" parent="CanvasLayer2/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("5_fo8ij")
+texture_pressed = ExtResource("4_ftf8w")
+texture_hover = ExtResource("3_17nee")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="CanvasLayer2/VBoxContainer/BackButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -11.5
+offset_right = 32.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "BACK"
 label_settings = SubResource("LabelSettings_oayd6")
 horizontal_alignment = 1
 vertical_alignment = 1
