@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://mwhbup6tnnqo"]
+[gd_scene load_steps=16 format=4 uid="uid://mwhbup6tnnqo"]
 
 [ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://Recursos/PowerStationTileSet.tres" id="1_c1dvb"]
 [ext_resource type="Script" path="res://Scripts/GameController.gd" id="1_jm8e1"]
@@ -6,12 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://ca62wvqrospf" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/1.png" id="7_tfqb0"]
 [ext_resource type="Texture2D" uid="uid://dtmsyhl6e0ouc" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/2.png" id="8_eciw5"]
 [ext_resource type="Texture2D" uid="uid://c1rvi4oi7ic00" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/3.png" id="9_8du4a"]
-[ext_resource type="Texture2D" uid="uid://b4uqsouang22f" path="res://Graphics/New GUI/UI Package/Frames/3-6.png" id="9_dsweh"]
-[ext_resource type="Texture2D" uid="uid://cxvuqrgtnoguo" path="res://Graphics/New GUI/UI Package/Elements/5-1.png" id="10_gw53p"]
+[ext_resource type="Script" path="res://Scripts/Pause_Menu.gd" id="9_u3rdq"]
 [ext_resource type="Texture2D" uid="uid://p0r0o0glpxm" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/4.png" id="10_ld244"]
 [ext_resource type="Texture2D" uid="uid://1pqtno8vs2u8" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/5.png" id="11_ne8gg"]
-[ext_resource type="Texture2D" uid="uid://1vg4kgua8dx5" path="res://Graphics/New GUI/UI Package/Elements/5-3.png" id="11_wgrdm"]
-[ext_resource type="Texture2D" uid="uid://67v8fhw2etgi" path="res://Graphics/New GUI/UI Package/Elements/5-2.png" id="12_p408b"]
 [ext_resource type="Texture2D" uid="uid://ldfj3ji81p0w" path="res://Graphics/New GUI/UI Package/Frames/1-4.png" id="13_ofuis"]
 [ext_resource type="Texture2D" uid="uid://b3degqy5uf8ea" path="res://Graphics/New GUI/UI Package/Elements/7-1.png" id="14_j2dh8"]
 [ext_resource type="Texture2D" uid="uid://bdn1sk233bncw" path="res://Graphics/New GUI/UI Package/Elements/7-3.png" id="15_o3a80"]
@@ -94,46 +91,8 @@ tile_set = ExtResource("1_c1dvb")
 [node name="Player" parent="." instance=ExtResource("2_72p7r")]
 position = Vector2(123, 704)
 
-[node name="PopupMenu" type="PopupMenu" parent="."]
-mode = 3
-initial_position = 1
-size = Vector2i(250, 250)
-
-[node name="TextureRect" type="TextureRect" parent="PopupMenu"]
-texture_filter = 1
-offset_right = 250.0
-offset_bottom = 250.0
-texture = ExtResource("9_dsweh")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PopupMenu"]
-texture_filter = 1
-anchors_preset = 13
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -54.0
-offset_right = 54.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureButton" type="TextureButton" parent="PopupMenu/VBoxContainer"]
-texture_filter = 1
-layout_mode = 2
-size_flags_horizontal = 4
-texture_normal = ExtResource("10_gw53p")
-texture_pressed = ExtResource("11_wgrdm")
-texture_hover = ExtResource("12_p408b")
-
-[node name="TextureButton2" type="TextureButton" parent="PopupMenu/VBoxContainer"]
-texture_filter = 1
-layout_mode = 2
-size_flags_horizontal = 4
-texture_normal = ExtResource("10_gw53p")
-texture_pressed = ExtResource("11_wgrdm")
-texture_hover = ExtResource("12_p408b")
-
 [node name="PauseMenu" type="CanvasLayer" parent="."]
-visible = false
+script = ExtResource("9_u3rdq")
 
 [node name="ButtonBackground" type="TextureRect" parent="PauseMenu"]
 texture_filter = 1
@@ -225,7 +184,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="CreditButton" type="TextureButton" parent="PauseMenu/VBoxContainer"]
+[node name="MenuButton" type="TextureButton" parent="PauseMenu/VBoxContainer"]
 texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 3
@@ -235,7 +194,7 @@ texture_hover = ExtResource("16_g1y04")
 stretch_mode = 0
 metadata/_edit_lock_ = true
 
-[node name="Label" type="Label" parent="PauseMenu/VBoxContainer/CreditButton"]
+[node name="Label" type="Label" parent="PauseMenu/VBoxContainer/MenuButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

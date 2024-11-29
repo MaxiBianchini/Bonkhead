@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b61e2qh88myfb"]
+[gd_scene load_steps=17 format=3 uid="uid://b61e2qh88myfb"]
 
 [ext_resource type="Texture2D" uid="uid://cn16ddildslab" path="res://Graphics/Zonas/Exclusion-zone/2 Background/Day/Fondo.png" id="1_i5kqb"]
 [ext_resource type="Script" path="res://Scripts/Main_Menu.gd" id="1_qsqme"]
@@ -10,6 +10,10 @@
 [ext_resource type="Texture2D" uid="uid://cecrno5ffpubr" path="res://Graphics/New GUI/UI Package/Elements/1-1.png" id="8_1slrm"]
 [ext_resource type="Texture2D" uid="uid://l4htlbip8c4h" path="res://Graphics/New GUI/UI Package/Elements/1-3.png" id="9_iua7b"]
 [ext_resource type="Texture2D" uid="uid://c41884kfdl8mq" path="res://Graphics/New GUI/UI Package/Elements/1-2.png" id="10_wnoiy"]
+[ext_resource type="Texture2D" uid="uid://uivhim05lh6f" path="res://Graphics/New GUI/UI Package/Elements/11-1.png" id="11_dolc3"]
+[ext_resource type="Texture2D" uid="uid://duy6x83y07ptt" path="res://Graphics/New GUI/UI Package/Elements/11-2.png" id="12_nbpdv"]
+[ext_resource type="Texture2D" uid="uid://b50anxboht7j5" path="res://Graphics/New GUI/UI Package/Elements/11-3.png" id="13_y5em3"]
+[ext_resource type="Texture2D" uid="uid://ed5uxg1b538m" path="res://Graphics/New GUI/Godot Logo (1).png" id="14_e6vgq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_8rfh8"]
 font = ExtResource("2_n46cw")
@@ -65,8 +69,9 @@ texture = ExtResource("3_m7lsa")
 [node name="Label" type="Label" parent="CanvasLayer"]
 anchors_preset = 10
 anchor_right = 1.0
+offset_top = 1.0
 offset_right = -0.0959473
-offset_bottom = 430.0
+offset_bottom = 431.0
 grow_horizontal = 2
 text = "Bonkhead"
 label_settings = SubResource("LabelSettings_8rfh8")
@@ -203,12 +208,23 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+[node name="OthersMenu" type="CanvasLayer" parent="."]
 visible = false
 
-[node name="ButtonBackground" type="TextureRect" parent="CanvasLayer2"]
+[node name="ColorRect" type="ColorRect" parent="OthersMenu"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.843137)
+metadata/_edit_lock_ = true
+
+[node name="ButtonBackground" type="TextureRect" parent="OthersMenu"]
+visible = false
 texture_filter = 1
-anchors_preset = -1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -223,8 +239,189 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 localize_numeral_system = false
 texture = ExtResource("3_m7lsa")
+metadata/_edit_lock_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2"]
+[node name="Options" type="VBoxContainer" parent="OthersMenu"]
+visible = false
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -656.0
+offset_top = 70.0
+offset_right = 656.0
+offset_bottom = -70.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="OthersMenu/Options"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 50
+text = "
+Options"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="OthersMenu/Options"]
+layout_mode = 2
+
+[node name="Volumen" type="VBoxContainer" parent="OthersMenu/Options/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+
+[node name="Label2" type="Label" parent="OthersMenu/Options/HBoxContainer/Volumen"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 25
+text = "
+
+
+
+       Volumen"
+
+[node name="HSlider" type="HSlider" parent="OthersMenu/Options/HBoxContainer/Volumen/Label2"]
+custom_minimum_size = Vector2(200, 25)
+layout_mode = 2
+offset_left = 161.0
+offset_top = 156.0
+offset_right = 361.0
+offset_bottom = 195.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_icons/grabber = ExtResource("11_dolc3")
+theme_override_icons/grabber_highlight = ExtResource("12_nbpdv")
+theme_override_icons/tick = ExtResource("13_y5em3")
+step = 2.0
+allow_lesser = true
+
+[node name="Mute" type="VBoxContainer" parent="OthersMenu/Options/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="OthersMenu/Options/HBoxContainer/Mute"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 25
+text = "
+
+
+
+         Mute"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CheckBox" type="CheckBox" parent="OthersMenu/Options/HBoxContainer/Mute/Label"]
+layout_mode = 0
+offset_left = 223.0
+offset_top = 148.0
+offset_right = 331.0
+offset_bottom = 179.0
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 10
+text = "Sound On"
+flat = true
+alignment = 1
+
+[node name="FullScreen" type="VBoxContainer" parent="OthersMenu/Options/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="OthersMenu/Options/HBoxContainer/FullScreen"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 25
+text = "
+
+
+
+         Graphics"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CheckButton" type="CheckButton" parent="OthersMenu/Options/HBoxContainer/FullScreen/Label"]
+layout_mode = 0
+offset_left = 231.0
+offset_top = 149.0
+offset_right = 420.0
+offset_bottom = 180.0
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 10
+button_pressed = true
+text = "Full Screen On"
+alignment = 1
+
+[node name="Credits" type="VBoxContainer" parent="OthersMenu"]
+visible = false
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -656.0
+offset_top = 70.0
+offset_right = 656.0
+offset_bottom = -70.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="OthersMenu/Credits"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 50
+text = "
+Credits"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="OthersMenu/Credits"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 25
+text = "                
+                Maximiliano Bianchini  
+             Responsible for everything:  
+
+        - Art  
+        - Programming  
+        - Music  
+        - Animation  
+        - Design  
+        - Testing"
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="OthersMenu/Credits"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Label2" type="Label" parent="OthersMenu/Credits/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 25
+text = "Developed with Godot Engine "
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="OthersMenu/Credits/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("14_e6vgq")
+
+[node name="Label2" type="Label" parent="OthersMenu/Credits"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n46cw")
+text = "I hope you enjoy playing it as much as I enjoyed developing it."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BackButtonContainer" type="VBoxContainer" parent="OthersMenu"]
 anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.611
@@ -239,7 +436,7 @@ grow_vertical = 2
 theme_override_constants/separation = 35
 alignment = 1
 
-[node name="BackButton" type="TextureButton" parent="CanvasLayer2/VBoxContainer"]
+[node name="BackButton" type="TextureButton" parent="OthersMenu/BackButtonContainer"]
 texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 3
@@ -248,7 +445,7 @@ texture_pressed = ExtResource("4_ftf8w")
 texture_hover = ExtResource("3_17nee")
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="CanvasLayer2/VBoxContainer/BackButton"]
+[node name="Label" type="Label" parent="OthersMenu/BackButtonContainer/BackButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -266,3 +463,5 @@ label_settings = SubResource("LabelSettings_oayd6")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
+
+[connection signal="toggled" from="OthersMenu/Options/HBoxContainer/FullScreen/Label/CheckButton" to="." method="_on_fullscreen_checkbutton_toggled"]
