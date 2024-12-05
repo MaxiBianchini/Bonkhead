@@ -1,0 +1,212 @@
+[gd_scene load_steps=16 format=4 uid="uid://mwhbup6tnnqo"]
+
+[ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://Recursos/PowerStationTileSet.tres" id="1_c1dvb"]
+[ext_resource type="Script" path="res://Scripts/GameController.gd" id="1_jm8e1"]
+[ext_resource type="PackedScene" uid="uid://cdqlmgh2vxout" path="res://Prefabs/Player.tscn" id="2_72p7r"]
+[ext_resource type="Texture2D" uid="uid://ca62wvqrospf" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/1.png" id="7_tfqb0"]
+[ext_resource type="Texture2D" uid="uid://dtmsyhl6e0ouc" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/2.png" id="8_eciw5"]
+[ext_resource type="Texture2D" uid="uid://c1rvi4oi7ic00" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/3.png" id="9_8du4a"]
+[ext_resource type="Script" path="res://Scripts/Pause_Menu.gd" id="9_u3rdq"]
+[ext_resource type="Texture2D" uid="uid://p0r0o0glpxm" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/4.png" id="10_ld244"]
+[ext_resource type="Texture2D" uid="uid://1pqtno8vs2u8" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/5.png" id="11_ne8gg"]
+[ext_resource type="Texture2D" uid="uid://ldfj3ji81p0w" path="res://Graphics/New GUI/UI Package/Frames/1-4.png" id="13_ofuis"]
+[ext_resource type="Texture2D" uid="uid://b3degqy5uf8ea" path="res://Graphics/New GUI/UI Package/Elements/7-1.png" id="14_j2dh8"]
+[ext_resource type="Texture2D" uid="uid://bdn1sk233bncw" path="res://Graphics/New GUI/UI Package/Elements/7-3.png" id="15_o3a80"]
+[ext_resource type="Texture2D" uid="uid://b2bod7ibmudmv" path="res://Graphics/New GUI/UI Package/Elements/7-2.png" id="16_g1y04"]
+[ext_resource type="FontFile" uid="uid://6mkqmhipyb1j" path="res://Recursos/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="17_3bvd6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_m8v84"]
+font = ExtResource("17_3bvd6")
+font_size = 30
+
+[node name="Node2D" type="Node2D"]
+position = Vector2(1, 6)
+script = ExtResource("1_jm8e1")
+metadata/_edit_horizontal_guides_ = [785.0]
+metadata/_edit_vertical_guides_ = [1921.0, 960.0]
+
+[node name="TileMaps" type="Node" parent="."]
+
+[node name="Terrain" type="TileMapLayer" parent="TileMaps" groups=["Floor"]]
+tile_map_data = PackedByteArray("AAAAABcAAAABAAAAAAABABcAAAABAAAAAAACABcAAAABAAAAAAADABcAAAABAAAAAAAEABcAAAABAAAAAAAFABcAAAABAAAAAAAGABcAAAABAAAAAAAHABcAAAABAAAAAAAIABcAAAABAAAAAAAJABcAAAABAAAAAAAKABcAAAABAAAAAAALABcAAAABAAAAAAAMABcAAAABAAAAAAANABcAAAABAAAAAAAOABcAAAABAAAAAAAPABcAAAABAAAAAAAQABcAAAABAAAAAAARABcAAAABAAAAAAASABcAAAABAAAAAAATABcAAAABAAAAAAAUABcAAAABAAAAAAAVABcAAAABAAAAAAAWABcAAAABAAAAAAAXABcAAAABAAAAAAAYABcAAAABAAAAAAAZABcAAAABAAAAAAAaABcAAAABAAAAAAAbABcAAAABAAAAAAAcABcAAAABAAAAAAAdABcAAAABAAAAAAAeABcAAAABAAAAAAAfABcAAAABAAAAAAAgABcAAAABAAAAAAD//xcAAAAEAAEAAAD//xYAAAACAAEAAAD//xUAAAACAAEAAAD//xQAAAACAAEAAAD//xMAAAACAAEAAAD//xIAAAACAAEAAAD//xEAAAACAAEAAAD//xAAAAACAAEAAAD//w8AAAACAAEAAAD//w4AAAACAAEAAAD//w0AAAACAAEAAAAhABcAAAABAAAAAAAiABcAAAABAAAAAAAjABcAAAABAAAAAAAkABcAAAABAAAAAAAlABcAAAABAAAAAAAmABcAAAABAAAAAAAnABcAAAABAAAAAAAoABcAAAABAAAAAAApABcAAAABAAAAAAAqABcAAAABAAAAAABBABcAAAABAAAAAABCABcAAAABAAAAAABDABcAAAABAAAAAABEABcAAAABAAAAAABFABcAAAABAAAAAABGABcAAAABAAAAAABHABcAAAABAAAAAABIABcAAAABAAAAAABJABcAAAABAAAAAABKABcAAAABAAAAAABLABcAAAABAAAAAABMABcAAAABAAAAAABNABcAAAABAAAAAABOABcAAAABAAAAAABPABcAAAABAAAAAABQABcAAAABAAAAAAArABcAAAABAAAAAAAsABcAAAABAAAAAAAtABcAAAABAAAAAAAuABcAAAABAAAAAAAvABcAAAABAAAAAAAwABcAAAABAAAAAAAxABcAAAABAAAAAAAyABcAAAABAAAAAAAzABcAAAABAAAAAAA0ABcAAAABAAAAAAA1ABcAAAABAAAAAAA2ABcAAAABAAAAAAA3ABcAAAABAAAAAAA4ABcAAAABAAAAAAA5ABcAAAABAAAAAAA6ABcAAAABAAAAAAA7ABcAAAABAAAAAAA8ABcAAAABAAAAAAA9ABcAAAABAAAAAAA+ABcAAAABAAAAAAA/ABcAAAABAAAAAABAABcAAAABAAAAAAD//wwAAAACAAEAAAD//wsAAAACAAEAAAD//woAAAACAAEAAAD//wkAAAACAAEAAAD//wgAAAACAAEAAAD//wYAAAACAAEAAAD//wUAAAACAAEAAAD//wQAAAACAAEAAAD//wMAAAACAAEAAAD//wIAAAACAAEAAAD//wEAAAACAAEAAAD//wAAAAACAAEAAAD//wcAAAACAAEAAAA=")
+tile_set = ExtResource("1_c1dvb")
+rendering_quadrant_size = 32
+metadata/_edit_lock_ = true
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="TileMaps/Terrain"]
+offset = Vector2(100, -70)
+scale = Vector2(1.2, 1.2)
+transform = Transform2D(1.2, 0, 0, 1.2, 100, -70)
+scroll_ignore_camera_zoom = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="TileMaps/Terrain/ParallaxBackground"]
+motion_mirroring = Vector2(1650, 0)
+metadata/_edit_lock_ = true
+
+[node name="Background1" type="Sprite2D" parent="TileMaps/Terrain/ParallaxBackground/ParallaxLayer"]
+texture_filter = 1
+position = Vector2(741.667, 508.333)
+scale = Vector2(2.86458, 2.77778)
+texture = ExtResource("7_tfqb0")
+metadata/_edit_lock_ = true
+
+[node name="Background2" type="Sprite2D" parent="TileMaps/Terrain/ParallaxBackground/ParallaxLayer"]
+texture_filter = 1
+position = Vector2(741.667, 508.333)
+scale = Vector2(2.86458, 2.77778)
+texture = ExtResource("8_eciw5")
+metadata/_edit_lock_ = true
+
+[node name="Background3" type="Sprite2D" parent="TileMaps/Terrain/ParallaxBackground/ParallaxLayer"]
+texture_filter = 1
+position = Vector2(741.667, 508.333)
+scale = Vector2(2.86458, 2.77778)
+texture = ExtResource("9_8du4a")
+metadata/_edit_lock_ = true
+
+[node name="Background4" type="Sprite2D" parent="TileMaps/Terrain/ParallaxBackground/ParallaxLayer"]
+texture_filter = 1
+position = Vector2(741.667, 508.333)
+scale = Vector2(2.86458, 2.77778)
+texture = ExtResource("10_ld244")
+metadata/_edit_lock_ = true
+
+[node name="Background5" type="Sprite2D" parent="TileMaps/Terrain/ParallaxBackground/ParallaxLayer"]
+texture_filter = 1
+position = Vector2(741.667, 508.333)
+scale = Vector2(2.86458, 2.77778)
+texture = ExtResource("11_ne8gg")
+metadata/_edit_lock_ = true
+
+[node name="Sticky Wall" type="TileMapLayer" parent="TileMaps" groups=["Wall"]]
+tile_set = ExtResource("1_c1dvb")
+rendering_quadrant_size = 32
+
+[node name="Bidirectional Platform" type="TileMapLayer" parent="TileMaps" groups=["Platform"]]
+tile_set = ExtResource("1_c1dvb")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="TileMaps" groups=["Fondo"]]
+light_mask = 4
+visibility_layer = 32
+tile_set = ExtResource("1_c1dvb")
+
+[node name="Player" parent="." instance=ExtResource("2_72p7r")]
+position = Vector2(123, 704)
+
+[node name="PauseMenu" type="CanvasLayer" parent="."]
+visible = false
+script = ExtResource("9_u3rdq")
+
+[node name="ButtonBackground" type="TextureRect" parent="PauseMenu"]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 690.0
+offset_top = 305.0
+offset_right = -690.0
+offset_bottom = -75.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+localize_numeral_system = false
+texture = ExtResource("13_ofuis")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.611
+anchor_right = 0.5
+anchor_bottom = 0.611
+offset_left = -125.0
+offset_top = -191.88
+offset_right = 125.0
+offset_bottom = 184.12
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 35
+alignment = 1
+
+[node name="PlayButton" type="TextureButton" parent="PauseMenu/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("14_j2dh8")
+texture_pressed = ExtResource("15_o3a80")
+texture_hover = ExtResource("16_g1y04")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="PauseMenu/VBoxContainer/PlayButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -11.5
+offset_right = 32.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "RESUME"
+label_settings = SubResource("LabelSettings_m8v84")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionButton" type="TextureButton" parent="PauseMenu/VBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("14_j2dh8")
+texture_pressed = ExtResource("15_o3a80")
+texture_hover = ExtResource("16_g1y04")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="PauseMenu/VBoxContainer/OptionButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -11.5
+offset_right = 32.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "OPTIONS"
+label_settings = SubResource("LabelSettings_m8v84")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuButton" type="TextureButton" parent="PauseMenu/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("14_j2dh8")
+texture_pressed = ExtResource("15_o3a80")
+texture_hover = ExtResource("16_g1y04")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="PauseMenu/VBoxContainer/MenuButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -37.0
+offset_right = 60.0
+offset_bottom = 26.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "MAIN 
+MENU"
+label_settings = SubResource("LabelSettings_m8v84")
+horizontal_alignment = 1
+vertical_alignment = 1
