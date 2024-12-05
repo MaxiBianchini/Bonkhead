@@ -40,6 +40,7 @@ metadata/_edit_vertical_guides_ = [960.0, 1920.0, -71.0]
 metadata/_edit_horizontal_guides_ = [-824.0, 655.0]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
 
 [node name="Background" type="TextureRect" parent="CanvasLayer"]
 anchors_preset = 15
@@ -78,7 +79,7 @@ label_settings = SubResource("LabelSettings_8rfh8")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+[node name="ButtonsContainer" type="VBoxContainer" parent="CanvasLayer"]
 anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.611
@@ -93,7 +94,7 @@ grow_vertical = 2
 theme_override_constants/separation = 35
 alignment = 1
 
-[node name="PlayButton" type="TextureButton" parent="CanvasLayer/VBoxContainer"]
+[node name="PlayButton" type="TextureButton" parent="CanvasLayer/ButtonsContainer"]
 texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 3
@@ -103,7 +104,7 @@ texture_hover = ExtResource("3_17nee")
 stretch_mode = 0
 metadata/_edit_lock_ = true
 
-[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/PlayButton"]
+[node name="Label" type="Label" parent="CanvasLayer/ButtonsContainer/PlayButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -122,7 +123,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="OptionButton" type="TextureButton" parent="CanvasLayer/VBoxContainer"]
+[node name="OptionButton" type="TextureButton" parent="CanvasLayer/ButtonsContainer"]
 texture_filter = 1
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
@@ -133,7 +134,7 @@ texture_hover = ExtResource("3_17nee")
 stretch_mode = 0
 metadata/_edit_lock_ = true
 
-[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/OptionButton"]
+[node name="Label" type="Label" parent="CanvasLayer/ButtonsContainer/OptionButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -152,7 +153,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="CreditButton" type="TextureButton" parent="CanvasLayer/VBoxContainer"]
+[node name="CreditButton" type="TextureButton" parent="CanvasLayer/ButtonsContainer"]
 texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 3
@@ -162,7 +163,7 @@ texture_hover = ExtResource("3_17nee")
 stretch_mode = 0
 metadata/_edit_lock_ = true
 
-[node name="Label" type="Label" parent="CanvasLayer/VBoxContainer/CreditButton"]
+[node name="Label" type="Label" parent="CanvasLayer/ButtonsContainer/CreditButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -209,6 +210,7 @@ vertical_alignment = 1
 metadata/_edit_lock_ = true
 
 [node name="OthersMenu" type="CanvasLayer" parent="."]
+process_mode = 3
 visible = false
 
 [node name="ColorRect" type="ColorRect" parent="OthersMenu"]
@@ -222,7 +224,6 @@ color = Color(0, 0, 0, 0.843137)
 metadata/_edit_lock_ = true
 
 [node name="ButtonBackground" type="TextureRect" parent="OthersMenu"]
-visible = false
 texture_filter = 1
 anchors_preset = 8
 anchor_left = 0.5

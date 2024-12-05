@@ -1,17 +1,19 @@
-[gd_scene load_steps=16 format=4 uid="uid://mwhbup6tnnqo"]
+[gd_scene load_steps=19 format=4 uid="uid://mwhbup6tnnqo"]
 
 [ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://Recursos/PowerStationTileSet.tres" id="1_c1dvb"]
-[ext_resource type="Script" path="res://Scripts/GameController.gd" id="1_jm8e1"]
+[ext_resource type="Script" path="res://Scripts/Pause_Menu.gd" id="1_jm8e1"]
 [ext_resource type="PackedScene" uid="uid://cdqlmgh2vxout" path="res://Prefabs/Player.tscn" id="2_72p7r"]
 [ext_resource type="Texture2D" uid="uid://ca62wvqrospf" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/1.png" id="7_tfqb0"]
 [ext_resource type="Texture2D" uid="uid://dtmsyhl6e0ouc" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/2.png" id="8_eciw5"]
 [ext_resource type="Texture2D" uid="uid://c1rvi4oi7ic00" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/3.png" id="9_8du4a"]
-[ext_resource type="Script" path="res://Scripts/Pause_Menu.gd" id="9_u3rdq"]
 [ext_resource type="Texture2D" uid="uid://p0r0o0glpxm" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/4.png" id="10_ld244"]
 [ext_resource type="Texture2D" uid="uid://1pqtno8vs2u8" path="res://Graphics/Zonas/Power-station-zone/2 Background/Day/5.png" id="11_ne8gg"]
 [ext_resource type="Texture2D" uid="uid://ldfj3ji81p0w" path="res://Graphics/New GUI/UI Package/Frames/1-4.png" id="13_ofuis"]
+[ext_resource type="Texture2D" uid="uid://uivhim05lh6f" path="res://Graphics/New GUI/UI Package/Elements/11-1.png" id="14_gth2r"]
 [ext_resource type="Texture2D" uid="uid://b3degqy5uf8ea" path="res://Graphics/New GUI/UI Package/Elements/7-1.png" id="14_j2dh8"]
+[ext_resource type="Texture2D" uid="uid://duy6x83y07ptt" path="res://Graphics/New GUI/UI Package/Elements/11-2.png" id="15_bk1x5"]
 [ext_resource type="Texture2D" uid="uid://bdn1sk233bncw" path="res://Graphics/New GUI/UI Package/Elements/7-3.png" id="15_o3a80"]
+[ext_resource type="Texture2D" uid="uid://b50anxboht7j5" path="res://Graphics/New GUI/UI Package/Elements/11-3.png" id="16_45g05"]
 [ext_resource type="Texture2D" uid="uid://b2bod7ibmudmv" path="res://Graphics/New GUI/UI Package/Elements/7-2.png" id="16_g1y04"]
 [ext_resource type="FontFile" uid="uid://6mkqmhipyb1j" path="res://Recursos/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="17_3bvd6"]
 
@@ -19,9 +21,15 @@
 font = ExtResource("17_3bvd6")
 font_size = 30
 
+[sub_resource type="LabelSettings" id="LabelSettings_jgdwt"]
+font = ExtResource("17_3bvd6")
+font_size = 30
+
 [node name="Node2D" type="Node2D"]
 position = Vector2(1, 6)
 script = ExtResource("1_jm8e1")
+metadata/_edit_horizontal_guides_ = [540.0, 1080.0]
+metadata/_edit_vertical_guides_ = [960.0, 1920.0]
 
 [node name="TileMaps" type="Node" parent="."]
 
@@ -92,7 +100,8 @@ tile_set = ExtResource("1_c1dvb")
 position = Vector2(123, 704)
 
 [node name="PauseMenu" type="CanvasLayer" parent="."]
-script = ExtResource("9_u3rdq")
+process_mode = 3
+visible = false
 
 [node name="ButtonBackground" type="TextureRect" parent="PauseMenu"]
 texture_filter = 1
@@ -100,9 +109,9 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 690.0
-offset_top = 305.0
+offset_top = 190.0
 offset_right = -690.0
-offset_bottom = -75.0
+offset_bottom = -190.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -117,15 +126,15 @@ anchor_top = 0.611
 anchor_right = 0.5
 anchor_bottom = 0.611
 offset_left = -125.0
-offset_top = -191.88
+offset_top = -307.88
 offset_right = 125.0
-offset_bottom = 184.12
+offset_bottom = 68.12
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 35
 alignment = 1
 
-[node name="PlayButton" type="TextureButton" parent="PauseMenu/VBoxContainer"]
+[node name="ResumeButtom" type="TextureButton" parent="PauseMenu/VBoxContainer"]
 texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 3
@@ -133,9 +142,8 @@ texture_normal = ExtResource("14_j2dh8")
 texture_pressed = ExtResource("15_o3a80")
 texture_hover = ExtResource("16_g1y04")
 stretch_mode = 0
-metadata/_edit_lock_ = true
 
-[node name="Label" type="Label" parent="PauseMenu/VBoxContainer/PlayButton"]
+[node name="Label" type="Label" parent="PauseMenu/VBoxContainer/ResumeButtom"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -148,11 +156,10 @@ offset_right = 32.0
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "RETURN"
+text = "RESUME"
 label_settings = SubResource("LabelSettings_m8v84")
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_lock_ = true
 
 [node name="OptionButton" type="TextureButton" parent="PauseMenu/VBoxContainer"]
 texture_filter = 1
@@ -163,7 +170,6 @@ texture_normal = ExtResource("14_j2dh8")
 texture_pressed = ExtResource("15_o3a80")
 texture_hover = ExtResource("16_g1y04")
 stretch_mode = 0
-metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="PauseMenu/VBoxContainer/OptionButton"]
 layout_mode = 1
@@ -182,9 +188,8 @@ text = "OPTIONS"
 label_settings = SubResource("LabelSettings_m8v84")
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_lock_ = true
 
-[node name="MenuButton" type="TextureButton" parent="PauseMenu/VBoxContainer"]
+[node name="MainMenuButton" type="TextureButton" parent="PauseMenu/VBoxContainer"]
 texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 3
@@ -192,9 +197,199 @@ texture_normal = ExtResource("14_j2dh8")
 texture_pressed = ExtResource("15_o3a80")
 texture_hover = ExtResource("16_g1y04")
 stretch_mode = 0
+
+[node name="Label" type="Label" parent="PauseMenu/VBoxContainer/MainMenuButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -37.0
+offset_right = 60.0
+offset_bottom = 26.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "MAIN 
+MENU"
+label_settings = SubResource("LabelSettings_m8v84")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionsMenu" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="OptionsMenu"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.843137)
 metadata/_edit_lock_ = true
 
-[node name="Label" type="Label" parent="PauseMenu/VBoxContainer/MenuButton"]
+[node name="ButtonBackground" type="TextureRect" parent="OptionsMenu"]
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -715.0
+offset_top = -540.0
+offset_right = 715.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+localize_numeral_system = false
+texture = ExtResource("13_ofuis")
+metadata/_edit_lock_ = true
+
+[node name="Options" type="VBoxContainer" parent="OptionsMenu"]
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -656.0
+offset_top = 70.0
+offset_right = 656.0
+offset_bottom = -70.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="OptionsMenu/Options"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("17_3bvd6")
+theme_override_font_sizes/font_size = 50
+text = "
+Options"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="OptionsMenu/Options"]
+layout_mode = 2
+
+[node name="Volumen" type="VBoxContainer" parent="OptionsMenu/Options/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+
+[node name="Label2" type="Label" parent="OptionsMenu/Options/HBoxContainer/Volumen"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("17_3bvd6")
+theme_override_font_sizes/font_size = 25
+text = "
+
+
+
+       Volumen"
+
+[node name="HSlider" type="HSlider" parent="OptionsMenu/Options/HBoxContainer/Volumen/Label2"]
+custom_minimum_size = Vector2(200, 25)
+layout_mode = 2
+offset_left = 161.0
+offset_top = 156.0
+offset_right = 361.0
+offset_bottom = 195.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_icons/grabber = ExtResource("14_gth2r")
+theme_override_icons/grabber_highlight = ExtResource("15_bk1x5")
+theme_override_icons/tick = ExtResource("16_45g05")
+step = 2.0
+allow_lesser = true
+
+[node name="Mute" type="VBoxContainer" parent="OptionsMenu/Options/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="OptionsMenu/Options/HBoxContainer/Mute"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("17_3bvd6")
+theme_override_font_sizes/font_size = 25
+text = "
+
+
+
+         Mute"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CheckBox" type="CheckBox" parent="OptionsMenu/Options/HBoxContainer/Mute/Label"]
+layout_mode = 0
+offset_left = 223.0
+offset_top = 148.0
+offset_right = 331.0
+offset_bottom = 179.0
+theme_override_fonts/font = ExtResource("17_3bvd6")
+theme_override_font_sizes/font_size = 10
+text = "Sound On"
+flat = true
+alignment = 1
+
+[node name="FullScreen" type="VBoxContainer" parent="OptionsMenu/Options/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="OptionsMenu/Options/HBoxContainer/FullScreen"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("17_3bvd6")
+theme_override_font_sizes/font_size = 25
+text = "
+
+
+
+         Graphics"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CheckButton" type="CheckButton" parent="OptionsMenu/Options/HBoxContainer/FullScreen/Label"]
+layout_mode = 0
+offset_left = 231.0
+offset_top = 149.0
+offset_right = 420.0
+offset_bottom = 180.0
+theme_override_fonts/font = ExtResource("17_3bvd6")
+theme_override_font_sizes/font_size = 10
+button_pressed = true
+text = "Full Screen On"
+alignment = 1
+
+[node name="BackButtonContainer" type="VBoxContainer" parent="OptionsMenu"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.611
+anchor_right = 0.5
+anchor_bottom = 0.611
+offset_left = -124.0
+offset_top = 176.12
+offset_right = 125.0
+offset_bottom = 271.12
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 35
+alignment = 1
+
+[node name="BackButton" type="TextureButton" parent="OptionsMenu/BackButtonContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("14_j2dh8")
+texture_pressed = ExtResource("15_o3a80")
+texture_hover = ExtResource("16_g1y04")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="OptionsMenu/BackButtonContainer/BackButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -207,8 +402,8 @@ offset_right = 32.0
 offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "MENU"
-label_settings = SubResource("LabelSettings_m8v84")
+text = "BACK"
+label_settings = SubResource("LabelSettings_jgdwt")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
