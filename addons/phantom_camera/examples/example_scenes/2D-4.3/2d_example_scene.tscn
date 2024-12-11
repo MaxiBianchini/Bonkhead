@@ -218,6 +218,7 @@ text = "[WASD] to move
 physics_interpolation_mode = 1
 position = Vector2(227, -28)
 zoom = Vector2(1.5, 1.5)
+process_callback = 0
 editor_draw_limits = true
 
 [node name="PhantomCameraHost" type="Node" parent="Camera2D"]
@@ -230,6 +231,7 @@ script = ExtResource("5_gcww2")
 [node name="PlayerPhantomCamera2D" type="Node2D" parent="Player" node_paths=PackedStringArray("follow_target")]
 unique_name_in_owner = true
 process_priority = -1
+top_level = true
 position = Vector2(227, -28)
 script = ExtResource("6_i3g4f")
 priority = 10
