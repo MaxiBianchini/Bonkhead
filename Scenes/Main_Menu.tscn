@@ -36,8 +36,8 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 script = ExtResource("1_qsqme")
-metadata/_edit_vertical_guides_ = [960.0, 1920.0, -71.0]
-metadata/_edit_horizontal_guides_ = [-824.0, 655.0]
+metadata/_edit_vertical_guides_ = [960.0, 1920.0, 0.0]
+metadata/_edit_horizontal_guides_ = [-824.0, 650.0, 1080.0]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 process_mode = 3

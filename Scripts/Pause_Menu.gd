@@ -48,9 +48,15 @@ func toggle_pause_menu():
 
 # Ir al menú principal (cambiar escena)
 func _on_return_to_menu_pressed():
-	get_tree().paused = false  # Asegúrate de despausar antes de cambiar escena
+	get_tree().paused = false  # Reanuda el juego
 
 # Continuar el juego (ocultar el menú)
 func _on_continue_pressed():
 	toggle_pause_menu()
 	
+
+func _on_fullscreen_checkbutton_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN) # Activa pantalla completa
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED) # Cambia a modo ventana

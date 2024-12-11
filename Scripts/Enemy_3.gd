@@ -33,7 +33,6 @@ func _physics_process(delta):
 		# Movimiento horizontal del dron
 		position.x += movement_velocity  * delta
 
-
 # Controlador de la direccion del Sprite
 func update_sprite_direction():
 	if movement_velocity < 0:
@@ -44,7 +43,6 @@ func update_sprite_direction():
 		animated_sprite.flip_h = false
 		raycast_floor.position = Vector2(40,27.5)
 		raycast_detection.rotate(3.14159)
-
 
 # Controlador del Daño
 func take_damage():
