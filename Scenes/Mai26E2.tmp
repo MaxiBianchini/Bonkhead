@@ -214,6 +214,36 @@ metadata/_edit_lock_ = true
 process_mode = 3
 visible = false
 
+[node name="ColorRect" type="ColorRect" parent="OthersMenu"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.843137)
+metadata/_edit_lock_ = true
+
+[node name="ButtonBackground" type="TextureRect" parent="OthersMenu"]
+visible = false
+texture_filter = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -715.0
+offset_top = -540.0
+offset_right = 715.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+localize_numeral_system = false
+texture = ExtResource("3_m7lsa")
+metadata/_edit_lock_ = true
+
 [node name="Options" type="VBoxContainer" parent="OthersMenu"]
 visible = false
 anchors_preset = 13
