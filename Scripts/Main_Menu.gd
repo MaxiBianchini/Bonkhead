@@ -67,6 +67,7 @@ func show_main_menu(enter: bool):
 	if enter:
 		Exit_Button.show()
 		$CanvasLayer/ButtonsContainer.show()
+		$CanvasLayer/Label.show()
 	else:
 		$CanvasLayer/Label.hide()
 		$CanvasLayer/ExitButton.hide()

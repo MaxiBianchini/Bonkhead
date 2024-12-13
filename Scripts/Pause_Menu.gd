@@ -2,13 +2,13 @@ extends Node
 
 # Referencias a nodos importantes
 @onready var pause_menu = $PauseMenu
+@onready var button_background = $PauseMenu/ButtonBackground
 
 # Conectamos las señales de los botones al script
 @onready var MainMenu_Button = $PauseMenu/VBoxContainer/MainMenuButton
 @onready var Option_Button = $PauseMenu/VBoxContainer/OptionButton
 @onready var Resume_Button = $PauseMenu/VBoxContainer/ResumeButtom
 @onready var Back_Button = $OptionsMenu/BackButtonContainer/BackButton
-@onready var button_background = $PauseMenu/ButtonBackground
 
 func _ready() -> void:#Play_Button.pressed.connect(_on_start_game_pressed)
 	MainMenu_Button.pressed.connect(_on_mainmenu_pressed)

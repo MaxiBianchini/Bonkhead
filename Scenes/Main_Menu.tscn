@@ -356,7 +356,9 @@ vertical_alignment = 1
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_n46cw")
 theme_override_font_sizes/font_size = 25
-text = "                
+text = "
+                     FICH - UNL
+       
                 Maximiliano Bianchini  
              Responsible for everything:  
 
@@ -376,21 +378,31 @@ size_flags_horizontal = 4
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_n46cw")
 theme_override_font_sizes/font_size = 25
-text = "Developed with Godot Engine "
+text = "
+
+
+
+
+
+
+Developed with Godot Engine
+
+"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="OthersMenu/Credits/HBoxContainer"]
 texture_filter = 1
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+size_flags_horizontal = 8
+size_flags_vertical = 8
 texture = ExtResource("14_e6vgq")
 
 [node name="Label2" type="Label" parent="OthersMenu/Credits"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_n46cw")
-text = "I hope you enjoy playing it as much as I enjoyed developing it."
+text = "
+I hope you enjoy playing it as much as I enjoyed developing it."
 horizontal_alignment = 1
 vertical_alignment = 1
 
