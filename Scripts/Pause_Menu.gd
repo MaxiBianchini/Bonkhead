@@ -44,7 +44,7 @@ func _on_back_pressed():
 	await animate_menu(false)
 	$PauseMenu/VBoxContainer.show()
 
-# Método para manejar la pausa
+# Método para manejar la pausa 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):  # Detecta la tecla "Esc"
 		toggle_pause_menu()
@@ -53,6 +53,7 @@ func _input(event):
 func toggle_pause_menu():
 	if pause_menu.visible:
 		pause_menu.hide()
+		_on_back_pressed()
 		get_tree().paused = false  # Reanuda el juego
 	else:
 		pause_menu.show()
