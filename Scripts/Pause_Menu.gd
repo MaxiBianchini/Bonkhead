@@ -4,6 +4,9 @@ extends Node
 @onready var pause_menu = $PauseMenu
 @onready var button_background = $PauseMenu/ButtonBackground
 
+var option_is_pressed
+var option_is_now_visible
+
 # Conectamos las señales de los botones al script
 @onready var MainMenu_Button = $PauseMenu/VBoxContainer/MainMenuButton
 @onready var Option_Button = $PauseMenu/VBoxContainer/OptionButton
@@ -31,9 +34,12 @@ func animate_menu(enter: bool):
 	await tween.finished
 
 func _on_options_pressed():
+	option_is_pressed = true
 	$PauseMenu/VBoxContainer.hide()
 	await animate_menu(true)
 	$OptionsMenu.show()
+	option_is_now_visible = true
+	
 
 func _on_resume_pressed():
 	pause_menu.hide()
@@ -43,6 +49,8 @@ func _on_back_pressed():
 	$OptionsMenu.hide()
 	await animate_menu(false)
 	$PauseMenu/VBoxContainer.show()
+	option_is_pressed = false
+	option_is_now_visible = false
 
 # Método para manejar la pausa
 func _input(event):
@@ -51,12 +59,19 @@ func _input(event):
 
 # Mostrar u ocultar el menú de pausa
 func toggle_pause_menu():
-	if pause_menu.visible:
-		pause_menu.hide()
-		get_tree().paused = false  # Reanuda el juego
+	if option_is_pressed:
+		if !option_is_now_visible:
+			# Si se presionó el botón de opciones y el menú de opciones aún no es visible,
+			# esperamos a que termine de mostrarse
+			return
+		else:
+			# Si el menú de opciones ya es visible, volvemos al menú de pausa
+			_on_back_pressed()
 	else:
-		pause_menu.show()
-		get_tree().paused = true   # Pausa el juego
+		# Si no se ha presionado el botón de opciones, manejamos el menú de pausa
+		pause_menu.visible = !pause_menu.visible
+		get_tree().paused = pause_menu.visible
+
 
 # Ir al menú principal (cambiar escena)
 func _on_return_to_menu_pressed():
