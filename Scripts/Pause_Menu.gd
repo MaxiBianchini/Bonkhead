@@ -4,8 +4,10 @@ extends Node
 @onready var pause_menu = $PauseMenu
 @onready var button_background = $PauseMenu/ButtonBackground
 
+# Variables varias
 var option_is_pressed
 var option_is_now_visible
+var esc_activated
 
 # Conectamos las señales de los botones al script
 @onready var MainMenu_Button = $PauseMenu/VBoxContainer/MainMenuButton
@@ -18,6 +20,8 @@ func _ready() -> void:#Play_Button.pressed.connect(_on_start_game_pressed)
 	Option_Button.pressed.connect(_on_options_pressed)
 	Resume_Button.pressed.connect(_on_resume_pressed)
 	Back_Button.pressed.connect(_on_back_pressed)
+	
+	esc_activated = false
 
 func _on_mainmenu_pressed():
 	get_tree().paused = false  # Reanuda el juego
@@ -39,7 +43,7 @@ func _on_options_pressed():
 	await animate_menu(true)
 	$OptionsMenu.show()
 	option_is_now_visible = true
-	
+	esc_activated = false
 
 func _on_resume_pressed():
 	pause_menu.hide()
@@ -51,14 +55,16 @@ func _on_back_pressed():
 	$PauseMenu/VBoxContainer.show()
 	option_is_pressed = false
 	option_is_now_visible = false
+	esc_activated = false
 
 # Método para manejar la pausa
 func _input(event):
-	if event.is_action_pressed("ui_cancel"):  # Detecta la tecla "Esc"
+	if event.is_action_pressed("ui_cancel") and !esc_activated:  # Detecta la tecla "Esc"
 		toggle_pause_menu()
 
 # Mostrar u ocultar el menú de pausa
 func toggle_pause_menu():
+	esc_activated = true
 	if option_is_pressed:
 		if !option_is_now_visible:
 			# Si se presionó el botón de opciones y el menú de opciones aún no es visible,
@@ -71,7 +77,7 @@ func toggle_pause_menu():
 		# Si no se ha presionado el botón de opciones, manejamos el menú de pausa
 		pause_menu.visible = !pause_menu.visible
 		get_tree().paused = pause_menu.visible
-
+		esc_activated = false
 
 # Ir al menú principal (cambiar escena)
 func _on_return_to_menu_pressed():
