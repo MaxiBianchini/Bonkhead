@@ -11,10 +11,11 @@ height = 6.0
 collision_layer = 16
 collision_mask = 7
 script = ExtResource("1_tfrpg")
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_uo877")
 
 [node name="41" type="Sprite2D" parent="."]
 texture = ExtResource("1_nfbkh")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

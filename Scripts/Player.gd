@@ -127,11 +127,16 @@ func handle_double_jump():
 
 # Controlador del Disparo
 func shoot_bullet():
-	var bullet_instance = bullet_scene.instantiate() # Instancia la bala
+	var bullet = bullet_scene.instantiate() # Instancia la bala
 	
+	# Configura la posición de la bala (ajustar el offset para que salga separada)
+	var offset = Vector2(30, 0)  # Ajusta la distancia
+	bullet.position = position +  offset
+	 # Configura la dirección en la que se moverá la bala
+	bullet.direction = Vector2(velocity.x,0)
 	# Posiciona la bala en la posición del player + una distancia
-	bullet_instance.position = position + Vector2(30, 0)
-	get_tree().current_scene.add_child(bullet_instance) # Añade la bala a la escena actual
+	#bullet.position = position + offset
+	get_tree().current_scene.add_child(bullet) # Añade la bala a la escena actual
 
 
 # Controlador de Colision con Plataforma

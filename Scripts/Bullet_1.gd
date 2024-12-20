@@ -1,20 +1,24 @@
 extends Area2D
 
-# Variables para la velocidad y dirección de la bala
-var bullet_speed: float = 50
-var direction = Vector2(1, 0)
+# Variables para velocidad y dirección
+var speed: float = 170
+var acceleration: float = 175  # Velocidad adicional por segundo
+var direction: Vector2 = Vector2.RIGHT  # Valor predeterminado (derecha)
+
+# Timer para autodestruir la bala
+var life_time: float = 4.0
 
 func _ready():
-	# Conectar la señal de colisión
-	connect("body_entered", Callable (self, "_on_body_entered"))
+	# Configura el timer para autodestruir la bala
+	await get_tree().create_timer(life_time).timeout
+	queue_free()
 
 func _physics_process(delta):
-	# Movimiento de la bala
-	position += direction * bullet_speed * delta
-
-	# Limitar el área donde la bala puede existir
-	if position.x > 500 or position.x < -500 or position.y > 500 or position.y < -500:
-		queue_free()  # Eliminar la bala si sale del área visible
+	# Aumenta gradualmente la velocidad de la bala
+	speed += acceleration * delta
+	
+	# Mueve la bala en la dirección indicada
+	position += Vector2.RIGHT * speed * delta
 
 # Manejar la colisión con un cuerpo
 func _on_body_entered(body):
