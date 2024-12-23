@@ -133,7 +133,7 @@ func shoot_bullet():
 	var offset = Vector2(30, 0)  # Ajusta la distancia
 	bullet.position = position +  offset
 	 # Configura la dirección en la que se moverá la bala
-	bullet.direction = Vector2(velocity.x,0)
+	bullet.direction = Vector2.RIGHT
 	# Posiciona la bala en la posición del player + una distancia
 	#bullet.position = position + offset
 	get_tree().current_scene.add_child(bullet) # Añade la bala a la escena actual

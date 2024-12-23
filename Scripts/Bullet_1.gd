@@ -3,10 +3,10 @@ extends Area2D
 # Variables para velocidad y dirección
 var speed: float = 170
 var acceleration: float = 175  # Velocidad adicional por segundo
-var direction: Vector2 = Vector2.RIGHT  # Valor predeterminado (derecha)
+var direction: Vector2   # Direccion
 
 # Timer para autodestruir la bala
-var life_time: float = 4.0
+var life_time: float = 1.5
 
 func _ready():
 	# Configura el timer para autodestruir la bala
@@ -18,7 +18,7 @@ func _physics_process(delta):
 	speed += acceleration * delta
 	
 	# Mueve la bala en la dirección indicada
-	position += Vector2.RIGHT * speed * delta
+	position += direction * speed * delta
 
 # Manejar la colisión con un cuerpo
 func _on_body_entered(body):
