@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 # Referencias a nodos
 @onready var animated_sprite = $AnimatedSprite2D
+@onready var animated_sprite2 = $AnimatedSprite2D2
+
 @onready var collision_shape = $CollisionShape2D
 @onready var raycast_floor = $RayCast2D2
 @onready var raycast_wall = $RayCast2D
@@ -28,6 +30,8 @@ var bullet_scene = preload("res://Prefabs/Bullet_1.tscn")
 
 func _ready():
 	area2D.connect("body_entered", Callable(self, "_on_body_entered"))
+	
+	animated_sprite2.visible = false
 
 func _physics_process(delta):
 	# Verificar si el jugador tiene vidas antes de procesar la lógica del movimiento
@@ -60,6 +64,7 @@ func _physics_process(delta):
 			can_dash = false
 			is_dashing = true
 			animated_sprite.stop()
+			animated_sprite2.stop()
 			animated_sprite.play("Dash")
 			$DashTimer.start()
 			$CanDash.start()
@@ -85,19 +90,23 @@ func update_sprite_direction():
 	var offset = 10
 	if velocity.x < 0:
 		animated_sprite.flip_h = true
+		animated_sprite2.flip_h = true
 		raycast_wall.position.x = offset
 		raycast_wall.target_position.x = -offset
 		raycast_floor.position.x = offset
 		animated_sprite.position.x = -offset
+		animated_sprite2.position.x = -offset
 		collision_shape.position.x = offset
 		area2D.position.x = offset
 	
 	elif velocity.x > 0:
 		animated_sprite.flip_h = false
+		animated_sprite2.flip_h = false
 		raycast_wall.position.x = offset
 		raycast_wall.target_position.x = offset
 		raycast_floor.position.x = offset
 		animated_sprite.position.x = offset
+		animated_sprite2.position.x = offset
 		collision_shape.position.x = offset
 		area2D.position.x = offset
 
@@ -108,9 +117,20 @@ func update_animation():
 		if velocity.y > 350 and not is_on_floor():
 			animated_sprite.play("Fall")
 		elif velocity.x == 0 and velocity.y == 0:
-			animated_sprite.play("Idle")
+			animated_sprite.play("Idle with Gun")
+			animated_sprite2.play("Idle Shooting Rect")
+			
+			if Input.is_action_just_pressed("Shoot"):
+				animated_sprite2.visible = true
+				animated_sprite.visible = false
+			
 		elif (Input.get_action_strength("ui_left") or Input.get_action_strength("ui_right")) and is_on_floor() and not is_dashing:
-			animated_sprite.play("Walk")
+			animated_sprite.play("Walk with Gun")
+			animated_sprite2.play("Walk Shooting Rect")
+			
+			if Input.is_action_just_pressed("Shoot"):
+				animated_sprite2.visible = true
+				animated_sprite.visible = false
 
 
 # Controlador del Doble Salto

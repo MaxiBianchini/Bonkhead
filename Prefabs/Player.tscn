@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://cdqlmgh2vxout"]
+[gd_scene load_steps=84 format=3 uid="uid://cdqlmgh2vxout"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_y8i6y"]
 [ext_resource type="Texture2D" uid="uid://62ay6d3dcw1m" path="res://Graphics/Cyberpunk Characters/1 Biker/Biker_doublejump.png" id="2_3kxgr"]
@@ -8,8 +8,11 @@
 [ext_resource type="Texture2D" uid="uid://ptvdabcifwxd" path="res://Graphics/Cyberpunk Characters/1 Biker/Biker_jump.png" id="3_iao51"]
 [ext_resource type="Texture2D" uid="uid://niapb2jvxhyp" path="res://Graphics/Cyberpunk Characters/1 Biker/Biker_death.png" id="3_jmmxa"]
 [ext_resource type="Texture2D" uid="uid://bn3pbemcqk0am" path="res://Graphics/Cyberpunk Characters/1 Biker/Walk.png" id="4_jxf22"]
-[ext_resource type="Texture2D" uid="uid://n6npvknaca33" path="res://Test/Walk Shooting 1.png" id="9_na65c"]
-[ext_resource type="Texture2D" uid="uid://cshx0k31i8x7f" path="res://Test/Walk Shooting 2.png" id="10_arm2v"]
+[ext_resource type="Texture2D" path="res://Test/Idle Shooting 1.png" id="7_3m0s1"]
+[ext_resource type="Texture2D" uid="uid://ctuc25vecuknu" path="res://Test/Idle with Gun.png" id="7_boak6"]
+[ext_resource type="Texture2D" uid="uid://r60idkaccqhp" path="res://Test/Idle Shooting Up.png" id="8_a16a1"]
+[ext_resource type="Texture2D" path="res://Test/Walk Shooting 1.png" id="9_na65c"]
+[ext_resource type="Texture2D" path="res://Test/Walk Shooting 2.png" id="10_arm2v"]
 [ext_resource type="Texture2D" uid="uid://2yuhsi55kdte" path="res://Test/Walk with Gun.png" id="11_ohoct"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c5nj1"]
@@ -103,6 +106,54 @@ region = Rect2(96, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_htgcf"]
 atlas = ExtResource("2_8f7ng")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0euv6"]
+atlas = ExtResource("7_3m0s1")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rodkv"]
+atlas = ExtResource("7_3m0s1")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_02m22"]
+atlas = ExtResource("7_3m0s1")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bfg8v"]
+atlas = ExtResource("7_3m0s1")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g0wsf"]
+atlas = ExtResource("8_a16a1")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nntp7"]
+atlas = ExtResource("8_a16a1")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_udef4"]
+atlas = ExtResource("8_a16a1")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_awpit"]
+atlas = ExtResource("8_a16a1")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f3okf"]
+atlas = ExtResource("7_boak6")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4y68"]
+atlas = ExtResource("7_boak6")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fj82a"]
+atlas = ExtResource("7_boak6")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ttjx1"]
+atlas = ExtResource("7_boak6")
 region = Rect2(144, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eprus"]
@@ -312,6 +363,57 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_0euv6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rodkv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_02m22")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bfg8v")
+}],
+"loop": true,
+"name": &"Idle Shooting Rect",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g0wsf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nntp7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_udef4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_awpit")
+}],
+"loop": true,
+"name": &"Idle Shooting Up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f3okf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r4y68")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fj82a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ttjx1")
+}],
+"loop": true,
+"name": &"Idle with Gun",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_eprus")
 }, {
 "duration": 1.0,
@@ -473,8 +575,8 @@ script = ExtResource("1_y8i6y")
 z_index = -1
 material = SubResource("ShaderMaterial_c5nj1")
 sprite_frames = SubResource("SpriteFrames_l1tm1")
-animation = &"Walk with Gun"
-frame_progress = 0.485167
+animation = &"Idle Shooting Up"
+frame_progress = 0.518976
 offset = Vector2(10, -7)
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
