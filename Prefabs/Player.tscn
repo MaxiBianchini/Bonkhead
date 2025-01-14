@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://cdqlmgh2vxout"]
+[gd_scene load_steps=69 format=3 uid="uid://cdqlmgh2vxout"]
 
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_y8i6y"]
 [ext_resource type="Texture2D" uid="uid://62ay6d3dcw1m" path="res://Graphics/Cyberpunk Characters/1 Biker/Biker_doublejump.png" id="2_3kxgr"]
@@ -8,7 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://ptvdabcifwxd" path="res://Graphics/Cyberpunk Characters/1 Biker/Biker_jump.png" id="3_iao51"]
 [ext_resource type="Texture2D" uid="uid://niapb2jvxhyp" path="res://Graphics/Cyberpunk Characters/1 Biker/Biker_death.png" id="3_jmmxa"]
 [ext_resource type="Texture2D" uid="uid://bn3pbemcqk0am" path="res://Graphics/Cyberpunk Characters/1 Biker/Walk.png" id="4_jxf22"]
-[ext_resource type="Texture2D" uid="uid://3fi5ijiit34b" path="res://Test/Walk arma.png" id="8_4tfh1"]
+[ext_resource type="Texture2D" uid="uid://n6npvknaca33" path="res://Test/Walk Shooting 1.png" id="9_na65c"]
+[ext_resource type="Texture2D" uid="uid://cshx0k31i8x7f" path="res://Test/Walk Shooting 2.png" id="10_arm2v"]
+[ext_resource type="Texture2D" uid="uid://2yuhsi55kdte" path="res://Test/Walk with Gun.png" id="11_ohoct"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c5nj1"]
 shader = ExtResource("2_b3bx2")
@@ -119,30 +121,6 @@ region = Rect2(96, 0, 48, 48)
 atlas = ExtResource("3_iao51")
 region = Rect2(144, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_rlb5p"]
-atlas = ExtResource("8_4tfh1")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sy7ya"]
-atlas = ExtResource("8_4tfh1")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6q5n2"]
-atlas = ExtResource("8_4tfh1")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_c2ipk"]
-atlas = ExtResource("8_4tfh1")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yw0o1"]
-atlas = ExtResource("8_4tfh1")
-region = Rect2(192, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_y4wqj"]
-atlas = ExtResource("8_4tfh1")
-region = Rect2(240, 0, 48, 48)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_fn8bx"]
 atlas = ExtResource("4_jxf22")
 region = Rect2(48, 0, 48, 48)
@@ -166,6 +144,78 @@ region = Rect2(240, 0, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_uu333"]
 atlas = ExtResource("4_jxf22")
 region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8fn86"]
+atlas = ExtResource("9_na65c")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1tim7"]
+atlas = ExtResource("9_na65c")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1wfm2"]
+atlas = ExtResource("9_na65c")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qoump"]
+atlas = ExtResource("9_na65c")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vw5hk"]
+atlas = ExtResource("9_na65c")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qtins"]
+atlas = ExtResource("9_na65c")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sl5th"]
+atlas = ExtResource("10_arm2v")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gx3pg"]
+atlas = ExtResource("10_arm2v")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5p1gp"]
+atlas = ExtResource("10_arm2v")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uygxm"]
+atlas = ExtResource("10_arm2v")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_irgkg"]
+atlas = ExtResource("10_arm2v")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dtaqv"]
+atlas = ExtResource("10_arm2v")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4j13r"]
+atlas = ExtResource("11_ohoct")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y56oq"]
+atlas = ExtResource("11_ohoct")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_avye6"]
+atlas = ExtResource("11_ohoct")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ytwgg"]
+atlas = ExtResource("11_ohoct")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_acleb"]
+atlas = ExtResource("11_ohoct")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bnt4m"]
+atlas = ExtResource("11_ohoct")
+region = Rect2(240, 0, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_l1tm1"]
 animations = [{
@@ -279,29 +329,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_rlb5p")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sy7ya")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6q5n2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_c2ipk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_yw0o1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_y4wqj")
-}],
-"loop": true,
-"name": &"Walk",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_fn8bx")
 }, {
 "duration": 1.0,
@@ -320,7 +347,76 @@ animations = [{
 "texture": SubResource("AtlasTexture_uu333")
 }],
 "loop": true,
-"name": &"Walk j",
+"name": &"Walk ORIGINAL",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8fn86")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1tim7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1wfm2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qoump")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vw5hk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qtins")
+}],
+"loop": true,
+"name": &"Walk Shooting Rect",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sl5th")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gx3pg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5p1gp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uygxm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_irgkg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dtaqv")
+}],
+"loop": true,
+"name": &"Walk Shooting Up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4j13r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y56oq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_avye6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ytwgg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_acleb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bnt4m")
+}],
+"loop": true,
+"name": &"Walk with Gun",
 "speed": 5.0
 }]
 
@@ -377,30 +473,45 @@ script = ExtResource("1_y8i6y")
 z_index = -1
 material = SubResource("ShaderMaterial_c5nj1")
 sprite_frames = SubResource("SpriteFrames_l1tm1")
-animation = &"Walk"
+animation = &"Walk with Gun"
+frame_progress = 0.485167
+offset = Vector2(10, -7)
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+visible = false
+z_index = -1
+material = SubResource("ShaderMaterial_c5nj1")
+sprite_frames = SubResource("SpriteFrames_l1tm1")
+animation = &"Walk Shooting Rect"
 offset = Vector2(10, -7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0.5, 0.25)
 shape = SubResource("RectangleShape2D_sro4f")
 
 [node name="Area2D" type="Area2D" parent="."]
+visible = false
 collision_layer = 2
 collision_mask = 28
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
 shape = SubResource("CapsuleShape2D_m4vyk")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+visible = false
 zoom = Vector2(3, 3)
 limit_left = -10
 limit_top = 50
 limit_bottom = 750
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
+visible = false
 target_position = Vector2(15, 0)
 
 [node name="RayCast2D2" type="RayCast2D" parent="."]
+visible = false
 target_position = Vector2(0, 20)
 
 [node name="DashTimer" type="Timer" parent="."]
