@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://mwhbup6tnnqo"]
+[gd_scene load_steps=19 format=4 uid="uid://mwhbup6tnnqo"]
 
 [ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://Recursos/PowerStationTileSet.tres" id="1_c1dvb"]
 [ext_resource type="Script" path="res://Scripts/Pause_Menu.gd" id="1_jm8e1"]
@@ -16,10 +16,6 @@
 [ext_resource type="Texture2D" uid="uid://b50anxboht7j5" path="res://Graphics/New GUI/UI Package/Elements/11-3.png" id="16_45g05"]
 [ext_resource type="Texture2D" uid="uid://b2bod7ibmudmv" path="res://Graphics/New GUI/UI Package/Elements/7-2.png" id="16_g1y04"]
 [ext_resource type="FontFile" uid="uid://6mkqmhipyb1j" path="res://Recursos/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="17_3bvd6"]
-[ext_resource type="PackedScene" uid="uid://d0lv1t50yhwap" path="res://Prefabs/Enemy_1.tscn" id="17_qfxpe"]
-[ext_resource type="PackedScene" uid="uid://cp6k1o6rfgevf" path="res://Prefabs/Enemy_2.tscn" id="18_rtve6"]
-[ext_resource type="PackedScene" uid="uid://bswo0jt5cdkqw" path="res://Prefabs/Enemy_3.tscn" id="19_xm8nw"]
-[ext_resource type="PackedScene" uid="uid://ce5qnuwutjn77" path="res://Prefabs/Enemy_4.tscn" id="20_cju6s"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_m8v84"]
 font = ExtResource("17_3bvd6")
@@ -386,17 +382,5 @@ label_settings = SubResource("LabelSettings_jgdwt")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
-
-[node name="Enemy_1" parent="." instance=ExtResource("17_qfxpe")]
-position = Vector2(428, 715)
-
-[node name="Enemy_2" parent="." instance=ExtResource("18_rtve6")]
-position = Vector2(506, 492)
-
-[node name="Enemy_3" parent="." instance=ExtResource("19_xm8nw")]
-position = Vector2(674, 687)
-
-[node name="Enemy_4" parent="." instance=ExtResource("20_cju6s")]
-position = Vector2(263, 707)
 
 [connection signal="toggled" from="OptionsMenu/Options/HBoxContainer/FullScreen/Label/CheckButton" to="." method="_on_fullscreen_checkbutton_toggled"]
