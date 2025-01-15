@@ -5,6 +5,8 @@ extends CharacterBody2D
 @onready var animated_sprite2 = $AnimatedSprite2D2
 @onready var animated_sprite3 = $AnimatedSprite2D3
 
+var sprites = [animated_sprite, animated_sprite2, animated_sprite3]
+
 @onready var collision_shape = $CollisionShape2D
 @onready var raycast_floor = $RayCast2D2
 @onready var raycast_wall = $RayCast2D
@@ -92,28 +94,26 @@ func _physics_process(delta):
 func update_sprite_direction():
 	var offset = 10
 	if velocity.x < 0:
-		animated_sprite.flip_h = true
-		animated_sprite2.flip_h = true
-		animated_sprite3.flip_h = true
+		sprites = [animated_sprite, animated_sprite2, animated_sprite3]
+		for s in sprites:
+			s.position.x = -offset
+			s.flip_h = true
+		
 		raycast_wall.position.x = offset
 		raycast_wall.target_position.x = -offset
 		raycast_floor.position.x = offset
-		animated_sprite.position.x = -offset
-		animated_sprite2.position.x = -offset
-		animated_sprite3.position.x = -offset
 		collision_shape.position.x = offset
 		area2D.position.x = offset
 	
 	elif velocity.x > 0:
-		animated_sprite.flip_h = false
-		animated_sprite2.flip_h = false
-		animated_sprite3.flip_h = false
+		sprites = [animated_sprite, animated_sprite2, animated_sprite3]
+		for s in sprites:
+			s.position.x = offset
+			s.flip_h = false
+		
 		raycast_wall.position.x = offset
 		raycast_wall.target_position.x = offset
 		raycast_floor.position.x = offset
-		animated_sprite.position.x = offset
-		animated_sprite2.position.x = offset
-		animated_sprite3.position.x = offset
 		collision_shape.position.x = offset
 		area2D.position.x = offset
 
@@ -186,20 +186,6 @@ func hide_all_sprites():
 	animated_sprite3.visible = false
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Controlador del Doble Salto
 func handle_double_jump():
 	if raycast_wall.is_colliding():
@@ -217,7 +203,7 @@ func shoot_bullet():
 	var bullet = bullet_scene.instantiate() # Instancia la bala
 	
 	# Configura la posición de la bala (ajustar el offset para que salga separada)
-	var offset = Vector2(30, 0)  # Ajusta la distancia
+	var offset = Vector2(45, -10)  # Ajusta la distancia
 	bullet.position = position +  offset
 	 # Configura la dirección en la que se moverá la bala
 	bullet.direction = Vector2.RIGHT
