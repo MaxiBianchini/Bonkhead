@@ -3,6 +3,7 @@ extends CharacterBody2D
 # Referencias a nodos
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var animated_sprite2 = $AnimatedSprite2D2
+@onready var animated_sprite3 = $AnimatedSprite2D3
 
 @onready var collision_shape = $CollisionShape2D
 @onready var raycast_floor = $RayCast2D2
@@ -27,6 +28,8 @@ var lives: int = 3
 
 # Carga la escena de la bala
 var bullet_scene = preload("res://Prefabs/Bullet_1.tscn")
+
+var current_state: String = ""
 
 func _ready():
 	area2D.connect("body_entered", Callable(self, "_on_body_entered"))
@@ -91,46 +94,110 @@ func update_sprite_direction():
 	if velocity.x < 0:
 		animated_sprite.flip_h = true
 		animated_sprite2.flip_h = true
+		animated_sprite3.flip_h = true
 		raycast_wall.position.x = offset
 		raycast_wall.target_position.x = -offset
 		raycast_floor.position.x = offset
 		animated_sprite.position.x = -offset
 		animated_sprite2.position.x = -offset
+		animated_sprite3.position.x = -offset
 		collision_shape.position.x = offset
 		area2D.position.x = offset
 	
 	elif velocity.x > 0:
 		animated_sprite.flip_h = false
 		animated_sprite2.flip_h = false
+		animated_sprite3.flip_h = false
 		raycast_wall.position.x = offset
 		raycast_wall.target_position.x = offset
 		raycast_floor.position.x = offset
 		animated_sprite.position.x = offset
 		animated_sprite2.position.x = offset
+		animated_sprite3.position.x = offset
 		collision_shape.position.x = offset
 		area2D.position.x = offset
 
-
-# Controlador de animaciones
 func update_animation():
-	if animated_sprite.animation != "Hurt" and lives !=0:
-		if velocity.y > 350 and not is_on_floor():
+	# Solo hacemos la lógica si no está en "Hurt" y aún tienes vidas.
+	if animated_sprite.animation != "Hurt" and lives != 0:
+		# Movimiento vertical de caída.
+		if not is_on_floor() and velocity.y > 350:
 			animated_sprite.play("Fall")
+
+		# Quieto en x e y = 0 => Idle
 		elif velocity.x == 0 and velocity.y == 0:
-			animated_sprite.play("Idle with Gun")
-			animated_sprite2.play("Idle Shooting Rect")
+			if Input.is_action_pressed("Shoot"):
+				if Input.is_action_pressed("ui_up"):
+					animator_controller("Idle", 3)
+				else:
+					animator_controller("Idle", 2)
+			else:
+				animator_controller("Idle", 1)
+
+		# Movimiento horizontal en el suelo (sin dash) => Walk
+		elif is_on_floor() and not is_dashing and (
+			Input.get_action_strength("ui_left") or Input.get_action_strength("ui_right")
+			):
+			if Input.is_action_pressed("Shoot"):
+				if Input.is_action_pressed("ui_up"):
+					animator_controller("Walk", 3)
+				else:
+					animator_controller("Walk", 2)
+			else:
+				animator_controller("Walk", 1)
+
+
+func animator_controller(state_trigger: String, animation_number: int):
+	# Si el estado actual cambia, se reproducen las animaciones base de ese estado.
+	if current_state != state_trigger:
+		match state_trigger:
+			"Idle":
+				animated_sprite.play("Idle with Gun")
+				animated_sprite2.play("Idle Shooting Rect")
+				animated_sprite3.play("Idle Shooting Up")
 			
-			if Input.is_action_just_pressed("Shoot"):
-				animated_sprite2.visible = true
-				animated_sprite.visible = false
-			
-		elif (Input.get_action_strength("ui_left") or Input.get_action_strength("ui_right")) and is_on_floor() and not is_dashing:
-			animated_sprite.play("Walk with Gun")
-			animated_sprite2.play("Walk Shooting Rect")
-			
-			if Input.is_action_just_pressed("Shoot"):
-				animated_sprite2.visible = true
-				animated_sprite.visible = false
+			"Walk":
+				animated_sprite.play("Walk with Gun")
+				animated_sprite2.play("Walk Shooting Rect")
+				animated_sprite3.play("Walk Shooting Up")
+		
+		current_state = state_trigger
+	
+	# Aquí decidimos cuál de las 3 variaciones (1,2,3) se muestra.
+	switch_animation(animation_number)
+
+
+func switch_animation(animation_number: int):
+	# Ocultamos siempre todos los sprites antes de mostrar el que corresponda
+	hide_all_sprites()
+	match animation_number:
+		1:
+			animated_sprite.visible = true
+		2:
+			animated_sprite2.visible = true
+		3:
+			animated_sprite3.visible = true
+		# Si manejas más variantes en el futuro, agrégalas aquí.
+
+
+func hide_all_sprites():
+	animated_sprite.visible = false
+	animated_sprite2.visible = false
+	animated_sprite3.visible = false
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # Controlador del Doble Salto
