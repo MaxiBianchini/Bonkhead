@@ -35,8 +35,6 @@ var current_state: String = ""
 
 func _ready():
 	area2D.connect("body_entered", Callable(self, "_on_body_entered"))
-	
-	animated_sprite2.visible = false
 
 func _physics_process(delta):
 	# Verificar si el jugador tiene vidas antes de procesar la lógica del movimiento
@@ -51,6 +49,7 @@ func _physics_process(delta):
 		
 		# Manejar el salto
 		if Input.is_action_just_pressed("ui_jump"):
+			# Bajar de una plataforma
 			if Input.is_action_pressed("ui_down") && raycast_floor.is_colliding():
 				var collider = raycast_floor.get_collider()
 				if collider.is_in_group("Platform"):
@@ -59,18 +58,20 @@ func _physics_process(delta):
 				first_jump_completed = true
 				velocity.y = jump_force
 				animated_sprite.play("Jump")
+				current_state = "jump"
 			elif double_jump_enabled and first_jump_completed:
 				first_jump_completed = false
 				velocity.y = jump_force
 				animated_sprite.play("Double_Jump")
+				current_state = "Double_Jump"
 		
 		# Manejar el dash
 		if Input.is_action_just_pressed("Dash") and can_dash:
 			can_dash = false
 			is_dashing = true
 			animated_sprite.stop()
-			animated_sprite2.stop()
 			animated_sprite.play("Dash")
+			current_state = "Dash"
 			$DashTimer.start()
 			$CanDash.start()
 		
@@ -121,9 +122,11 @@ func update_animation():
 	# Solo hacemos la lógica si no está en "Hurt" y aún tienes vidas.
 	if animated_sprite.animation != "Hurt" and lives != 0:
 		# Movimiento vertical de caída.
+		
 		if not is_on_floor() and velocity.y > 350:
 			animated_sprite.play("Fall")
-
+			current_state = "Fall"
+		
 		# Quieto en x e y = 0 => Idle
 		elif velocity.x == 0 and velocity.y == 0:
 			if Input.is_action_pressed("Shoot"):
@@ -226,6 +229,7 @@ func take_damage():
 	if lives <= 0:
 		is_alive = false
 		animated_sprite.play("Death")
+		current_state = "Death"
 		call_deferred("disable_player_collision")
 	else:
 		$AnimationPlayer.play("Hurt")
