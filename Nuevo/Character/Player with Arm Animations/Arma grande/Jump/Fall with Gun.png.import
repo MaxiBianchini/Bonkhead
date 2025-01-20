@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ctuc25vecuknu"
-path="res://.godot/imported/Idle with Gun.png-6d6d7b122c0717d91781d032f7c8e275.ctex"
+uid="uid://be8t7uy5ocrss"
+path="res://.godot/imported/Fall with Gun.png-e4cb8b4277ca1101fcfcaec5bfa5d17e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Test/Idle with Gun.png"
-dest_files=["res://.godot/imported/Idle with Gun.png-6d6d7b122c0717d91781d032f7c8e275.ctex"]
+source_file="res://Nuevo/Character/Player with Arm Animations/Arma grande/Jump/Fall with Gun.png"
+dest_files=["res://.godot/imported/Fall with Gun.png-e4cb8b4277ca1101fcfcaec5bfa5d17e.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://leodud8ghamr"
-path="res://.godot/imported/Hurt.png-5a8ec29a725aff8c3e90a5f443c7ad9f.ctex"
+uid="uid://bvqd5xnc0xaiw"
+path="res://.godot/imported/Walk Shooting Up.png-feefa15e47d305f03bbe80759acad216.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Graphics/Effects and extras/Effects-for-platformer/6 Extra/Character/Hurt.png"
-dest_files=["res://.godot/imported/Hurt.png-5a8ec29a725aff8c3e90a5f443c7ad9f.ctex"]
+source_file="res://Nuevo/Character/Player with Arm Animations/Arma grande/Walk/Walk Shooting Up.png"
+dest_files=["res://.godot/imported/Walk Shooting Up.png-feefa15e47d305f03bbe80759acad216.ctex"]
 
 [params]
 

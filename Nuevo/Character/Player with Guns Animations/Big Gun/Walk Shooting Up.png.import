@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dgummuap8k638"
-path="res://.godot/imported/Biker_death.png-7e123d5debf7f4c938204445c84d77f4.ctex"
+uid="uid://3digcjs4h2qd"
+path="res://.godot/imported/Walk Shooting Up.png-a841e0f402f41111966505727178d5ad.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Graphics/Effects and extras/Effects-for-platformer/6 Extra/Character/Biker_death.png"
-dest_files=["res://.godot/imported/Biker_death.png-7e123d5debf7f4c938204445c84d77f4.ctex"]
+source_file="res://Nuevo/Character/Player with Guns Animations/Big Gun/Walk Shooting Up.png"
+dest_files=["res://.godot/imported/Walk Shooting Up.png-a841e0f402f41111966505727178d5ad.ctex"]
 
 [params]
 

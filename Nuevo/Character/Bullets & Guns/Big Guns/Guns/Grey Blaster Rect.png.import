@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://r60idkaccqhp"
-path="res://.godot/imported/Idle Shooting Up.png-6e89823e5db0ac330f39c60878ca23d8.ctex"
+uid="uid://dnj22two18bxq"
+path="res://.godot/imported/Grey Blaster Rect.png-550c5839f06663ac66a0c1ca8b5b32b5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Test/Idle Shooting Up.png"
-dest_files=["res://.godot/imported/Idle Shooting Up.png-6e89823e5db0ac330f39c60878ca23d8.ctex"]
+source_file="res://Nuevo/Character/Bullets & Guns/Big Guns/Guns/Grey Blaster Rect.png"
+dest_files=["res://.godot/imported/Grey Blaster Rect.png-550c5839f06663ac66a0c1ca8b5b32b5.ctex"]
 
 [params]
 

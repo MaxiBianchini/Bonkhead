@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bvvo2dt2vpx65"
-path="res://.godot/imported/Fall.png-96973574084dfb5d65e381ce7ba121d3.ctex"
+uid="uid://cbsvwqlpscguf"
+path="res://.godot/imported/Walk with Gun.png-9dda1073c018d921a49c9e14c6d49074.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Graphics/Effects and extras/Effects-for-platformer/6 Extra/Character/Fall.png"
-dest_files=["res://.godot/imported/Fall.png-96973574084dfb5d65e381ce7ba121d3.ctex"]
+source_file="res://Nuevo/Character/Player with Guns Animations/Big Gun/Walk with Gun.png"
+dest_files=["res://.godot/imported/Walk with Gun.png-9dda1073c018d921a49c9e14c6d49074.ctex"]
 
 [params]
 

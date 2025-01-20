@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3fbymg8rrh44"
-path="res://.godot/imported/Idle Shooting Rect.png-5ca4284c333c006cf11abfd24d4bea6e.ctex"
+uid="uid://cpshuad5bkdwk"
+path="res://.godot/imported/Jump with Gun.png-4c9bd0eeff270f794955c2f4f77ed6e2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Test/Idle Shooting Rect.png"
-dest_files=["res://.godot/imported/Idle Shooting Rect.png-5ca4284c333c006cf11abfd24d4bea6e.ctex"]
+source_file="res://Nuevo/Character/Player with Arm Animations/Arma grande/Jump/Jump with Gun.png"
+dest_files=["res://.godot/imported/Jump with Gun.png-4c9bd0eeff270f794955c2f4f77ed6e2.ctex"]
 
 [params]
 
