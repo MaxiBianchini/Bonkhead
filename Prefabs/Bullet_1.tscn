@@ -15,7 +15,7 @@ script = ExtResource("1_tfrpg")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_uo877")
 
-[node name="41" type="Sprite2D" parent="."]
+[node name="Bullet Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_nfbkh")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

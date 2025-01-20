@@ -30,8 +30,12 @@ var lives: int = 3
 
 # Carga la escena de la bala
 var bullet_scene = preload("res://Prefabs/Bullet_1.tscn")
+var bullet_dir = Vector2.RIGHT
+var bullet_offset = Vector2(52, -10)
 
+var gun_type: String ="Small"
 var current_state: String = ""
+var change_gun_type: bool = false
 
 func _ready():
 	area2D.connect("body_entered", Callable(self, "_on_body_entered"))
@@ -57,7 +61,11 @@ func _physics_process(delta):
 			elif is_on_floor():
 				first_jump_completed = true
 				velocity.y = jump_force
-				animated_sprite.play("Jump")
+				match gun_type:
+					"Small":
+						animated_sprite.play("SJump")
+					"Big":
+						animated_sprite.play("BJump")
 				current_state = "jump"
 			elif double_jump_enabled and first_jump_completed:
 				first_jump_completed = false
@@ -99,10 +107,14 @@ func update_sprite_direction():
 		for s in sprites:
 			s.position.x = -offset
 			s.flip_h = true
+			
+		bullet_offset= Vector2(-35, -10)
+		bullet_dir = Vector2.LEFT
 		
 		raycast_wall.position.x = offset
 		raycast_wall.target_position.x = -offset
 		raycast_floor.position.x = offset
+		
 		collision_shape.position.x = offset
 		area2D.position.x = offset
 	
@@ -112,9 +124,13 @@ func update_sprite_direction():
 			s.position.x = offset
 			s.flip_h = false
 		
+		bullet_offset= Vector2(52, -10)
+		bullet_dir = Vector2.RIGHT
+		
 		raycast_wall.position.x = offset
 		raycast_wall.target_position.x = offset
 		raycast_floor.position.x = offset
+		
 		collision_shape.position.x = offset
 		area2D.position.x = offset
 
@@ -124,7 +140,11 @@ func update_animation():
 		# Movimiento vertical de caída.
 		
 		if not is_on_floor() and velocity.y > 350:
-			animated_sprite.play("Fall")
+			match gun_type:
+				"Small":
+					animated_sprite.play("SFall")
+				"Big":
+					animated_sprite.play("BFall")
 			current_state = "Fall"
 		
 		# Quieto en x e y = 0 => Idle
@@ -132,6 +152,8 @@ func update_animation():
 			if Input.is_action_pressed("Shoot"):
 				if Input.is_action_pressed("ui_up"):
 					animator_controller("Idle", 3)
+					bullet_dir = Vector2.UP
+					bullet_offset = Vector2(0, -20)  # Ajusta la distancia en Y según tu sprite
 				else:
 					animator_controller("Idle", 2)
 			else:
@@ -144,6 +166,8 @@ func update_animation():
 			if Input.is_action_pressed("Shoot"):
 				if Input.is_action_pressed("ui_up"):
 					animator_controller("Walk", 3)
+					bullet_dir = Vector2.UP
+					bullet_offset = Vector2(0, -20)  # Ajusta la distancia en Y según tu sprite
 				else:
 					animator_controller("Walk", 2)
 			else:
@@ -152,17 +176,30 @@ func update_animation():
 
 func animator_controller(state_trigger: String, animation_number: int):
 	# Si el estado actual cambia, se reproducen las animaciones base de ese estado.
-	if current_state != state_trigger:
+	if current_state != state_trigger or gun_type:
+		change_gun_type = false
 		match state_trigger:
 			"Idle":
-				animated_sprite.play("Idle with Gun")
-				animated_sprite2.play("Idle Shooting Rect")
-				animated_sprite3.play("Idle Shooting Up")
+				match gun_type:
+					"Small":
+						animated_sprite.play("SIdle with Gun")
+						animated_sprite2.play("SIdle Shooting Rect")
+						animated_sprite3.play("SIdle Shooting Up")
+					"Big":
+						animated_sprite.play("BIdle with Gun")
+						animated_sprite2.play("BIdle Shooting Rect")
+						animated_sprite3.play("BIdle Shooting Up")
 			
 			"Walk":
-				animated_sprite.play("Walk with Gun")
-				animated_sprite2.play("Walk Shooting Rect")
-				animated_sprite3.play("Walk Shooting Up")
+				match gun_type:
+					"Small":
+						animated_sprite.play("SWalk with Gun")
+						animated_sprite2.play("SWalk Shooting Rect")
+						animated_sprite3.play("SWalk Shooting Up")
+					"Big":
+						animated_sprite.play("BWalk with Gun")
+						animated_sprite2.play("BWalk Shooting Rect")
+						animated_sprite3.play("BWalk Shooting Up")
 		
 		current_state = state_trigger
 	
@@ -205,13 +242,10 @@ func handle_double_jump():
 func shoot_bullet():
 	var bullet = bullet_scene.instantiate() # Instancia la bala
 	
-	# Configura la posición de la bala (ajustar el offset para que salga separada)
-	var offset = Vector2(45, -10)  # Ajusta la distancia
-	bullet.position = position +  offset
-	 # Configura la dirección en la que se moverá la bala
-	bullet.direction = Vector2.RIGHT
-	# Posiciona la bala en la posición del player + una distancia
-	#bullet.position = position + offset
+	 # Posición final de la bala y dirección
+	bullet.position = position + bullet_offset
+	bullet.direction = bullet_dir
+	
 	get_tree().current_scene.add_child(bullet) # Añade la bala a la escena actual
 
 
@@ -222,6 +256,12 @@ func ignore_platform_collision():
 	await (get_tree().create_timer(fall_through_time).timeout)
 	collision_shape.disabled = false
 
+func change_weapon():
+	if gun_type == "Small":
+		gun_type = "Big"
+	else:
+		gun_type = "Small"
+	change_gun_type = true
 
 # Controlador del Daño
 func take_damage():

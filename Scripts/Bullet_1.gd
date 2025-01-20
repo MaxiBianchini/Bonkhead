@@ -8,12 +8,21 @@ var direction: Vector2   # Direccion
 # Timer para autodestruir la bala
 var life_time: float = 1.5
 
+@onready var sprite = $"Bullet Sprite"
+
 func _ready():
 	# Configura el timer para autodestruir la bala
 	await get_tree().create_timer(life_time).timeout
 	queue_free()
 
 func _physics_process(delta):
+	
+	if direction.x < 0:
+		sprite.flip_h = true
+		
+	if direction.y != 0:
+		sprite.rotation_degrees = -90
+	
 	# Aumenta gradualmente la velocidad de la bala
 	speed += acceleration * delta
 	
