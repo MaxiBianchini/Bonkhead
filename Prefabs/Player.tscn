@@ -794,7 +794,7 @@ script = ExtResource("1_y8i6y")
 z_index = -1
 material = SubResource("ShaderMaterial_c5nj1")
 sprite_frames = SubResource("SpriteFrames_l1tm1")
-animation = &"SIdle with Gun"
+animation = &"SWalk with Gun"
 offset = Vector2(10, -7)
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]

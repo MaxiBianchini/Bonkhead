@@ -14,6 +14,7 @@ var sprites = [animated_sprite, animated_sprite2, animated_sprite3]
 
 # Variables para controlar física y movimiento
 var gravity: int = 2000
+var player_dir: String = "RIGHT"
 var dash_velocity: int = 400
 var jump_force: float = -550
 var movement_velocity: int = 200
@@ -107,9 +108,8 @@ func update_sprite_direction():
 		for s in sprites:
 			s.position.x = -offset
 			s.flip_h = true
-			
-		bullet_offset= Vector2(-35, -10)
-		bullet_dir = Vector2.LEFT
+		
+		player_dir = "LEFT"
 		
 		raycast_wall.position.x = offset
 		raycast_wall.target_position.x = -offset
@@ -124,8 +124,7 @@ func update_sprite_direction():
 			s.position.x = offset
 			s.flip_h = false
 		
-		bullet_offset= Vector2(52, -10)
-		bullet_dir = Vector2.RIGHT
+		player_dir = "RIGHT"
 		
 		raycast_wall.position.x = offset
 		raycast_wall.target_position.x = offset
@@ -152,13 +151,25 @@ func update_animation():
 			if Input.is_action_pressed("Shoot"):
 				if Input.is_action_pressed("ui_up"):
 					animator_controller("Idle", 3)
-					bullet_dir = Vector2.UP
-					bullet_offset = Vector2(0, -20)  # Ajusta la distancia en Y según tu sprite
+					match player_dir:
+						"RIGHT":
+							bullet_dir = Vector2.UP
+							bullet_offset = Vector2(12, -20)  # Ajusta la distancia en Y según tu sprite
+						"LEFT":
+							bullet_dir = Vector2.UP
+							bullet_offset = Vector2(10, -20)  # Ajusta la distancia en Y según tu sprite
 				else:
 					animator_controller("Idle", 2)
+					match player_dir:
+						"RIGHT":
+							bullet_offset= Vector2(52, -10)
+							bullet_dir = Vector2.RIGHT
+						"LEFT":
+							bullet_offset= Vector2(-35, -10)
+							bullet_dir = Vector2.LEFT
 			else:
 				animator_controller("Idle", 1)
-
+		
 		# Movimiento horizontal en el suelo (sin dash) => Walk
 		elif is_on_floor() and not is_dashing and (
 			Input.get_action_strength("ui_left") or Input.get_action_strength("ui_right")
@@ -170,6 +181,13 @@ func update_animation():
 					bullet_offset = Vector2(0, -20)  # Ajusta la distancia en Y según tu sprite
 				else:
 					animator_controller("Walk", 2)
+					match player_dir:
+						"RIGHT":
+							bullet_offset= Vector2(52, -10)
+							bullet_dir = Vector2.RIGHT
+						"LEFT":
+							bullet_offset= Vector2(-35, -10)
+							bullet_dir = Vector2.LEFT
 			else:
 				animator_controller("Walk", 1)
 
@@ -217,7 +235,6 @@ func switch_animation(animation_number: int):
 			animated_sprite2.visible = true
 		3:
 			animated_sprite3.visible = true
-		# Si manejas más variantes en el futuro, agrégalas aquí.
 
 
 func hide_all_sprites():
