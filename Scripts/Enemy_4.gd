@@ -1,100 +1,97 @@
 extends CharacterBody2D
 
-# Referencias a nodos
-@onready var  area2D = $Area2D
-@onready var animated_sprite = $AnimatedSprite2D
+@onready var area2d: Area2D = $Area2D
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var can_shoot_timer: Timer = $Can_Shoot
+@onready var anim_player: AnimationPlayer = $AnimationPlayer
+@onready var player = get_node("../Player")  # Ajustar el tipo si lo deseas, por ejemplo (Player)
 
-@onready var player = get_node("../Player") # Encuentra al jugador en la escena
+var bullet_scene: PackedScene = preload("res://Prefabs/Bullet_1.tscn")
 
-var bullet_scene = preload("res://Prefabs/Bullet_1.tscn")
-
-var detection_width: int = 10000
-var detection_height: int = 180
+var detection_width: float = 10000.0
+var detection_height: float = 180.0
 var can_shoot: bool = false
 
-var bullet_dir = Vector2.RIGHT
-var bullet_offset = Vector2(-15,5)
+var bullet_dir: Vector2 = Vector2.RIGHT
+var bullet_offset: Vector2 = Vector2(-15, 5)
 
-# Variables para controlar la vida
 var lives: int = 3
 var is_alive: bool = true
 
-
-func _ready():
+func _ready() -> void:
 	animated_sprite.play("Idle")
 	
-	animated_sprite.connect("animation_finished", Callable(self, "_on_animation_finished"))
+	# Conectar señales
+	animated_sprite.animation_finished.connect(_on_animation_finished)
+	area2d.body_entered.connect(_on_body_entered)
+	area2d.body_exited.connect(_on_body_exited)
+	can_shoot_timer.timeout.connect(_on_can_shoot_timeout)
+
+
+func _physics_process(delta: float) -> void:
+	if not (player and is_alive):
+		return
 	
-	area2D.connect("body_entered", Callable(self,"_on_body_entered"))
-	area2D.connect("body_exited", Callable(self,"_on_body_exited"))
-
-
-func _physics_process(delta):
-	if player and is_alive:
-		var enemy_position = position
-		var player_position = player.position
-		
-		# Definir los límites del área de detección
-		var left_bound = enemy_position.x - detection_width / 2
-		var right_bound = enemy_position.x + detection_width / 2
-		var top_bound = enemy_position.y - detection_height / 2
-		var bottom_bound = enemy_position.y + detection_height / 2
-		
-		# Verificar si el jugador está dentro del área de detección
-		if player_position.x > left_bound and player_position.x < right_bound and player_position.y > top_bound and player_position.y < bottom_bound:
-			if player_position.x < enemy_position.x:
-				animated_sprite.flip_h = true
-				animated_sprite.position = Vector2(-8, 0)
-				bullet_offset = Vector2(-25,5)
-				bullet_dir = Vector2.LEFT
-			else:
-				animated_sprite.flip_h = false
-				animated_sprite.position = Vector2(7, 0)
-				bullet_dir = Vector2.RIGHT
-				bullet_offset = Vector2(25,5)
-				
-		if can_shoot:
-			shoot_bullet()
-			can_shoot = false
-			$Can_Shoot.start()
-		
-
-func shoot_bullet():
-	var bullet = bullet_scene.instantiate() # Instancia la bala
+	# Creamos un rectángulo centrado en la posición del enemigo con el tamaño deseado
+	var detection_rect = Rect2(
+		position - Vector2(detection_width * 0.5, detection_height * 0.5),
+		Vector2(detection_width, detection_height)
+	)
 	
-	 # Posición final de la bala y dirección
+	# Comprobamos si el jugador está dentro del área de detección
+	if detection_rect.has_point(player.position):
+		# Ajustamos flip y offsets según la posición del jugador
+		if player.position.x < position.x:
+			animated_sprite.flip_h = true
+			animated_sprite.position = Vector2(-8, 0)
+			bullet_offset = Vector2(-25, 5)
+			bullet_dir = Vector2.LEFT
+		else:
+			animated_sprite.flip_h = false
+			animated_sprite.position = Vector2(7, 0)
+			bullet_offset = Vector2(25, 5)
+			bullet_dir = Vector2.RIGHT
+	
+	# Si está listo para disparar, realizamos el disparo
+	if can_shoot:
+		shoot_bullet()
+		can_shoot = false
+		can_shoot_timer.start()
+
+
+func shoot_bullet() -> void:
+	var bullet = bullet_scene.instantiate() as Area2D
 	bullet.position = position + bullet_offset
-	bullet.direction = bullet_dir
-	
-	get_tree().current_scene.add_child(bullet) # Añade la bala a la escena actual
+	bullet.direction = bullet_dir  # Asegúrate de que la bala tenga una variable 'direction'
+	get_tree().current_scene.add_child(bullet)
 
-# Controlador del Daño
-func take_damage():
+
+func take_damage() -> void:
 	lives -= 1
-	if lives == 0:
+	if lives <= 0:
 		is_alive = false
 		animated_sprite.play("Death")
 	else:
-		$AnimationPlayer.play("Hurt")
-		await (get_tree().create_timer(3.0).timeout)
+		anim_player.play("Hurt")
+		await get_tree().create_timer(3.0).timeout  # Pausa de 3 segundos antes de volver a la normalidad
 
 
-func _on_body_entered(body):
+func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("Player"):
 		animated_sprite.play("Atack")
 		can_shoot = true
 
 
-func _on_body_exited(body):
+func _on_body_exited(body: Node) -> void:
 	if body.is_in_group("Player"):
 		animated_sprite.play("Idle")
 		can_shoot = false
 
 
-func _on_animation_finished():
+func _on_animation_finished() -> void:
 	if animated_sprite.animation == "Death":
 		queue_free()
 
+
 func _on_can_shoot_timeout() -> void:
-	print("PASÖ POR EL TIMER")
 	can_shoot = true

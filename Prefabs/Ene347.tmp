@@ -1,6 +1,6 @@
 [gd_scene load_steps=25 format=3 uid="uid://ce5qnuwutjn77"]
 
-[ext_resource type="Script" path="res://Scripts/Enemy_2.gd" id="1_4mohw"]
+[ext_resource type="Script" path="res://Scripts/Enemy_4.gd" id="1_4mohw"]
 [ext_resource type="Shader" uid="uid://3eyyqpjc4awp" path="res://Shaders/Hurts_effect.tres" id="2_3l22b"]
 [ext_resource type="Texture2D" uid="uid://blpde0ijbk78v" path="res://Graphics/Enemies/Lanza Misiles/Attack.png" id="2_r2l08"]
 [ext_resource type="Texture2D" uid="uid://d0ifagidhjr8d" path="res://Graphics/Enemies/Lanza Misiles/Death.png" id="3_iyddk"]
@@ -118,7 +118,7 @@ radius = 12.0
 height = 38.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqu3y"]
-size = Vector2(633.625, 54)
+size = Vector2(723.25, 54)
 
 [sub_resource type="Animation" id="Animation_d2qdg"]
 resource_name = "new_animation"
@@ -157,7 +157,7 @@ _data = {
 "RESET": SubResource("Animation_61qno")
 }
 
-[node name="Enemy_2" type="CharacterBody2D" groups=["Enemy"]]
+[node name="Enemy_4" type="CharacterBody2D" groups=["Enemy"]]
 collision_layer = 4
 script = ExtResource("1_4mohw")
 
