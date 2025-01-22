@@ -1,103 +1,95 @@
 extends CharacterBody2D
 
-# Referencias a nodos
-@onready var animated_sprite = $AnimatedSprite2D
-@onready var collision_shape = $CollisionShape2D
-@onready var area2D = $Area2D
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var anim_player: AnimationPlayer = $AnimationPlayer
+@onready var area2d: Area2D = $Area2D
 
-@onready var player = get_node("../Player") # Encuentra al jugador en la escena
+@onready var player = get_node("../Player")  # Ajustar el tipo si lo deseas, por ejemplo (Player)
 
-# Variables para controlar el movimiento del dron
-var movement_velocity: float = 100
-var patrol_range: float = 200
-var initial_height: float
+var bullet_scene: PackedScene = preload("res://Prefabs/Bullet_1.tscn")
 
-var follow_player: bool = false
+var detection_width: float = 10000.0
+var detection_height: float = 180.0
+var can_shoot: bool = false
+var shoot_now: bool = true
 
-var start_position: Vector2
-var target_position: Vector2
+var bullet_dir: Vector2 = Vector2.RIGHT
+var bullet_offset: Vector2 = Vector2(-15, 5)
 
-# Variables para controlar la vida
 var lives: int = 3
 var is_alive: bool = true
 
-func _ready():
-	animated_sprite.connect("animation_finished", Callable(self, "_on_animation_finished"))
-	animated_sprite.play("Walk Scan") # Reproduce la animación de caminar por defecto
+func _ready() -> void:
+	animated_sprite.play("Idle")
 	
-	area2D.connect("body_entered", Callable(self,"_on_body_entered"))
-	area2D.connect("body_exited", Callable(self,"_on_body_exited"))
-	
-	start_position = position
-	initial_height = position.y
+	# Conectar señales
+	animated_sprite.animation_finished.connect(_on_animation_finished)
+	area2d.body_entered.connect(_on_body_entered)
+	area2d.body_exited.connect(_on_body_exited)
 
-func _physics_process(delta):
-	if is_alive:
-		if follow_player and player.is_alive:
-			if (player.position - position).length() > 2.0:
-				target_position = (player.position - position).normalized()
-				
-				if target_position.x < 0:
-					animated_sprite.flip_h = true
-				elif target_position.x > 0:
-					animated_sprite.flip_h = false
-				
-				position += target_position * 100 * delta
-		
+
+func _physics_process(delta: float) -> void:
+	if not (player and is_alive):
+		return
+	
+	# Creamos un rectángulo centrado en la posición del enemigo con el tamaño deseado
+	var detection_rect = Rect2(
+		position - Vector2(detection_width * 0.5, detection_height * 0.5),
+		Vector2(detection_width, detection_height)
+	)
+	
+	# Comprobamos si el jugador está dentro del área de detección
+	if detection_rect.has_point(player.position):
+		# Ajustamos flip y offsets según la posición del jugador
+		if player.position.x < position.x:
+			animated_sprite.flip_h = true
+			animated_sprite.position = Vector2(-8, 0)
+			bullet_offset = Vector2(-25, 5)
+			bullet_dir = Vector2.LEFT
 		else:
-			# Si el dron ha dejado de seguir al jugador, vuelve a su altura inicial
-			if abs(position.y - initial_height) > 1:  # Tolerancia para evitar oscilaciones
-				if position.y > initial_height:
-					position.y += -100 * delta  # Mover hacia arriba
-				else:
-					position.y += 100 * delta  # Mover hacia abajo
-			
-			# Patrullaje horizontal
-			if position.x > start_position.x + patrol_range or position.x < start_position.x - patrol_range:
-				movement_velocity *= -1  # Cambia de dirección
-			
-			position.x += movement_velocity * delta  # Movimiento horizontal
-			
-			update_sprite_direction() # Actualizar la dirección del sprite
-		
-	else:
-		# Siempre aplica la gravedad
-		velocity.y += 15 * delta
-		move_and_slide()
+			animated_sprite.flip_h = false
+			animated_sprite.position = Vector2(7, 0)
+			bullet_offset = Vector2(25, 5)
+			bullet_dir = Vector2.RIGHT
+	
+	# Si está listo para disparar, realizamos el disparo
+	if can_shoot:
+		if shoot_now:
+			shoot_bullet()
+			shoot_now = false
+			await get_tree().create_timer(0.75).timeout  # Pausa de 3 segundos antes de volver a la normalidad
+			shoot_now = true
 
 
-# Controlador de la direccion del Sprite
-func update_sprite_direction():
-	if movement_velocity < 0: 
-		animated_sprite.flip_h = true
-	elif movement_velocity > 0:
-		animated_sprite.flip_h = false
+func shoot_bullet() -> void:
+	var bullet = bullet_scene.instantiate() as Area2D
+	bullet.position = position + bullet_offset
+	bullet.direction = bullet_dir  # Asegúrate de que la bala tenga una variable 'direction'
+	get_tree().current_scene.add_child(bullet)
 
 
-# Controlador del Daño
-func take_damage():
+func take_damage() -> void:
 	lives -= 1
 	if lives <= 0:
 		is_alive = false
 		animated_sprite.play("Death")
-		collision_shape.position.y = 9
 	else:
-		$AnimationPlayer.play("Hurt")
-		await (get_tree().create_timer(3.0).timeout)
+		anim_player.play("Hurt")
+		await get_tree().create_timer(3.0).timeout  # Pausa de 3 segundos antes de volver a la normalidad
 
 
-func _on_body_entered(body):
-	if body.is_in_group("Player"):
-		animated_sprite.play("Walk")
-		follow_player = true
+func _on_body_entered(body: Node) -> void:
+	if body.is_in_group("Player") and is_alive:
+		animated_sprite.play("Atack")
+		can_shoot = true
 
 
-func _on_body_exited(body):
-	if body.is_in_group("Player"):
-		animated_sprite.play("Walk Scan")
-		follow_player = false
+func _on_body_exited(body: Node) -> void:
+	if body.is_in_group("Player") and is_alive:
+		animated_sprite.play("Idle")
+		can_shoot = false
 
 
-#func _on_animation_finished():
-	#if animated_sprite.animation == "Death":
-		#queue_free()
+func _on_animation_finished() -> void:
+	if animated_sprite.animation == "Death":
+		queue_free()
