@@ -1,10 +1,16 @@
 extends CharacterBody2D
 
-@onready var drone_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var detection_area: Area2D = $Area2D
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
+@onready var drone_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
+
 @onready var player = get_node("../Player")
+var bullet_scene: PackedScene = preload("res://Prefabs/Bullet_1.tscn")
+
+var bullet_dir: Vector2 = Vector2.RIGHT
+var bullet_offset: Vector2 = Vector2(-15, 5)
+var shoot_now: bool = true
 
 var horizontal_speed: float = 100.0
 var vertical_speed: float = 80.0
@@ -55,15 +61,26 @@ func _chase_player(delta: float) -> void:
 		var horizontal_dir = sign(dx)
 		drone_sprite.flip_h = (horizontal_dir < 0.0)
 		position.x += horizontal_dir * horizontal_speed * delta
+		if horizontal_dir < 0.0:
+			bullet_dir = Vector2.LEFT
+			bullet_offset = Vector2(-14, 12.5)
+		else:
+			bullet_dir = Vector2.RIGHT
+			bullet_offset = Vector2(14, 12.5)
+		
 	else:
-		# Si ya estamos a la distancia horizontal deseada,
-		# opcionalmente podrías poner alguna animación de disparo, etc.
 		drone_sprite.flip_h = (dx < 0.0)
-
+		if shoot_now:
+			shoot_bullet()
+			shoot_now = false
+			await get_tree().create_timer(1.5).timeout  # Pausa de 3 segundos antes de volver a la normalidad
+			shoot_now = true
+		
 	# 2. Ajustar Y para estar un poquito por encima del jugador
 	var vertical_dir = sign(desired_y - position.y)
 	if abs(position.y - desired_y) > 2.0:  # Pequeña tolerancia
 		position.y += vertical_dir * vertical_speed * delta
+
 
 func _return_to_height(delta: float) -> void:
 	# (Opcional) Si tu intención es que, cuando no persigue, el dron regrese a su Y inicial de patrulla:
@@ -79,6 +96,15 @@ func _patrol_horizontally(delta: float) -> void:
 	
 	position.x += patrol_direction * (horizontal_speed * delta)
 	drone_sprite.flip_h = (patrol_direction < 0)
+
+
+func shoot_bullet() -> void:
+	drone_sprite.play("Attack")
+	var bullet = bullet_scene.instantiate() as Area2D
+	bullet.position = position + bullet_offset
+	bullet.direction = bullet_dir  # Asegúrate de que la bala tenga una variable 'direction'
+	get_tree().current_scene.add_child(bullet)
+
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("Player") and is_alive:
