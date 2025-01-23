@@ -18,7 +18,6 @@ func _ready():
 
 # Inicia el juego cambiando a la escena del primer nivel
 func _on_start_game_pressed():
-	print("Iniciar juego")
 	get_tree().change_scene_to_file("res://Scenes/Level_1.tscn")
 
 # Muestra el menú de opciones con una animación
