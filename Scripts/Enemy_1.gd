@@ -87,7 +87,7 @@ func update_sprite_direction(value):
 
 
 func shoot_bullet():
-	var bullet_instance = bullet_scene.instantiate() # Instancia la bala
+	var bullet_instance = bullet_scene.instantiate() as Area2D # Instancia la bala
 	
 	# Posiciona la bala en la posición del player + una distancia
 	bullet_instance.position = position + Vector2(30, 0)

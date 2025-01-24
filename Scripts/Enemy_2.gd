@@ -63,6 +63,10 @@ func _physics_process(delta: float) -> void:
 
 func shoot_bullet() -> void:
 	var bullet = bullet_scene.instantiate() as Area2D
+	
+	# Le indicamos quién la disparó:
+	bullet.shooter = self
+	
 	bullet.position = position + bullet_offset
 	bullet.direction = bullet_dir  # Asegúrate de que la bala tenga una variable 'direction'
 	get_tree().current_scene.add_child(bullet)

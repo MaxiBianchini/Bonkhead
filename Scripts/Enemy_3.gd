@@ -67,7 +67,6 @@ func _chase_player(delta: float) -> void:
 		else:
 			bullet_dir = Vector2.RIGHT
 			bullet_offset = Vector2(14, 12.5)
-		
 	else:
 		drone_sprite.flip_h = (dx < 0.0)
 		if shoot_now:
@@ -88,6 +87,7 @@ func _return_to_height(delta: float) -> void:
 		var vertical_dir = sign(initial_height - position.y)
 		position.y += vertical_dir * (vertical_speed * delta)
 
+
 func _patrol_horizontally(delta: float) -> void:
 	if position.x > start_position.x + patrol_range:
 		patrol_direction = -1
@@ -101,6 +101,10 @@ func _patrol_horizontally(delta: float) -> void:
 func shoot_bullet() -> void:
 	drone_sprite.play("Attack")
 	var bullet = bullet_scene.instantiate() as Area2D
+	
+	# Le indicamos quién la disparó:
+	bullet.shooter = self
+	
 	bullet.position = position + bullet_offset
 	bullet.direction = bullet_dir  # Asegúrate de que la bala tenga una variable 'direction'
 	get_tree().current_scene.add_child(bullet)

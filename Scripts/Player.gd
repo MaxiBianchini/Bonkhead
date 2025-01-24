@@ -257,7 +257,10 @@ func handle_double_jump():
 
 # Controlador del Disparo
 func shoot_bullet():
-	var bullet = bullet_scene.instantiate() # Instancia la bala
+	var bullet = bullet_scene.instantiate() as Area2D # Instancia la bala
+	
+	# Le indicamos quién la disparó:
+	bullet.shooter = self
 	
 	 # Posición final de la bala y dirección
 	bullet.position = position + bullet_offset
