@@ -137,7 +137,6 @@ func update_animation():
 	# Solo hacemos la lógica si no está en "Hurt" y aún tienes vidas.
 	if animated_sprite.animation != "Hurt" and lives != 0:
 		# Movimiento vertical de caída.
-		
 		if not is_on_floor() and velocity.y > 350:
 			match gun_type:
 				"Small":

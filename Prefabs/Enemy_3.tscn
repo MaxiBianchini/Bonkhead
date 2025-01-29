@@ -295,13 +295,14 @@ _data = {
 }
 
 [node name="Enemy_3" type="CharacterBody2D" groups=["Enemy"]]
+process_mode = 1
 collision_layer = 4
 script = ExtResource("1_3nub3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_xixlf")
 sprite_frames = SubResource("SpriteFrames_21ncv")
-animation = &"Walk Scan"
+animation = &"Walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_07eti")

@@ -15,7 +15,7 @@ var esc_activated
 @onready var Resume_Button = $PauseMenu/VBoxContainer/ResumeButtom
 @onready var Back_Button = $OptionsMenu/BackButtonContainer/BackButton
 
-func _ready() -> void:#Play_Button.pressed.connect(_on_start_game_pressed)
+func _ready() -> void:
 	MainMenu_Button.pressed.connect(_on_mainmenu_pressed)
 	Option_Button.pressed.connect(_on_options_pressed)
 	Resume_Button.pressed.connect(_on_resume_pressed)

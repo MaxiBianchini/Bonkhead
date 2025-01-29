@@ -264,6 +264,7 @@ _data = {
 }
 
 [node name="Enemy_1" type="CharacterBody2D" groups=["Enemy"]]
+process_mode = 1
 collision_layer = 4
 script = ExtResource("1_xnerr")
 
