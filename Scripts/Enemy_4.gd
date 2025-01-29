@@ -2,60 +2,77 @@ extends CharacterBody2D
 
 # Referencias a nodos
 @onready var animated_sprite = $AnimatedSprite2D
-@onready var collision_shape = $CollisionShape2D
+@onready var animation_player = $AnimationPlayer
 @onready var raycast_detection = $RayCast2D
 @onready var raycast_floor = $RayCast2D2
 
-# Variables para controlar el movimiento del dron
-var movement_velocity: float = 250
-var start_driving: bool = false
+# Variables para el movimiento
+var direction: int = 1 # 1 para derecha, -1 para izquierda
+var is_driving: bool = false
+
+# Constantes para el movimiento
+var speed: float = 250
+
+# Posiciones iniciales del raycast_floor para derecha e izquierda
+const FLOOR_RAYCAST_RIGHT_POS: Vector2 = Vector2(50, 27.5)
+const FLOOR_RAYCAST_LEFT_POS: Vector2 = Vector2(-50, 27.5)
 
 # Variables para controlar la vida
-var lives: int = 3
+var lives: int = 5
 var is_alive: bool = true
 
 func _ready():
-	animated_sprite.connect("animation_finished", Callable(self, "_on_animation_finished"))
-	animated_sprite.play("Idle") # Reproduce la animación de caminar por defecto
+	animated_sprite.play("Idle")	# Reproducir la animación Idle al iniciar
+	raycast_floor.position = FLOOR_RAYCAST_RIGHT_POS # Configurar la posición inicial del floor_raycast
 
 func _physics_process(delta):
-	if is_on_wall() or not raycast_floor.is_colliding():
-		movement_velocity *= -1
-		update_sprite_direction() # Actualizar la dirección del sprite
+	if not is_alive:
+		return # No hacer nada si el enemigo no está vivo
 	
-	if raycast_detection.is_colliding():
+	# Detectar colisión con pared o ausencia de suelo
+	if is_on_wall() or not raycast_floor.is_colliding():
+		change_direction()
+	
+	# Controlar el movimiento basado en la variable is_driving
+	if is_driving:
+		# Movimiento horizontal del Enemy
+		position.x += speed  * direction * delta
+	elif raycast_detection.is_colliding():	# Detectar colisión con el jugador
 		var collider = raycast_detection.get_collider()
 		if collider.is_in_group("Player"):
+			# Reproducir la animación Walk y detener el movimiento
 			animated_sprite.play("Walk")
-			start_driving = true
-	
-	if start_driving:
-		# Movimiento horizontal del dron
-		position.x += movement_velocity  * delta
+			is_driving = true
+		
 
-# Controlador de la direccion del Sprite
+# Función para cambiar la dirección del enemigo
+func change_direction() -> void:
+	direction *= -1
+	update_sprite_direction()
+
+# Controlador de la direccion del SpriteE
 func update_sprite_direction():
-	if movement_velocity < 0:
-		animated_sprite.flip_h = true
-		raycast_floor.position = Vector2(-40,27.5)
-		raycast_detection.rotate(-3.14159)
-	elif movement_velocity > 0:
-		animated_sprite.flip_h = false
-		raycast_floor.position = Vector2(40,27.5)
-		raycast_detection.rotate(3.14159)
+ # Voltear el sprite horizontalmente según la dirección
+	animated_sprite.flip_h = direction < 0
+	# Actualizar la posición del floor_raycast para detectar el suelo en la nueva dirección
+	raycast_floor.position = FLOOR_RAYCAST_LEFT_POS if direction < 0 else FLOOR_RAYCAST_RIGHT_POS
 
-# Controlador del Daño
-func take_damage():
+# Función para manejar el daño recibido
+func take_damage() -> void:
+	if not is_alive:
+		return # No hacer nada si ya está muerto
+	
 	lives -= 1
-	if lives == 0:
+	if lives <= 0:
 		is_alive = false
-		animated_sprite.play("Death")
+		is_driving = false
+		velocity.x = 0
+		animated_sprite.play("Death") # Reproducir la animación de muerte
 	else:
-		$AnimationPlayer.play("Hurt")
-		await (get_tree().create_timer(3.0).timeout)
-		animated_sprite.play("Idle")
+		animation_player.play("Hurt") # Reproducir la animación de daño
+		await (get_tree().create_timer(3.0).timeout) # Esperar 3 segundos antes de continuar
 
-
-func _on_animation_finished():
+# Función para manejar la finalización de las animaciones
+func _on_animated_sprite_2d_animation_finished() -> void:
 	if animated_sprite.animation == "Death":
 		queue_free()
