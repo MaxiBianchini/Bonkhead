@@ -36,14 +36,17 @@ func _physics_process(delta):
 	# Controlar el movimiento basado en la variable is_driving
 	if is_driving:
 		# Movimiento horizontal del Enemy
-		position.x += speed  * direction * delta
+		velocity.x = speed  * direction
 	elif raycast_detection.is_colliding():	# Detectar colisión con el jugador
 		var collider = raycast_detection.get_collider()
 		if collider.is_in_group("Player"):
 			# Reproducir la animación Walk y detener el movimiento
 			animated_sprite.play("Walk")
 			is_driving = true
-		
+	
+	# Siempre aplica la gravedad
+	velocity.y += 20
+	move_and_slide()
 
 # Función para cambiar la dirección del enemigo
 func change_direction() -> void:
