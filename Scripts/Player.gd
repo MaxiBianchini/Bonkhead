@@ -99,7 +99,6 @@ func _physics_process(delta):
 	update_animation()               # Cambiar animaciones según la velocidad
 	handle_double_jump()             # Manejar el estado del doble salto
 
-
 # Controlador de la direccion del Sprite
 func update_sprite_direction():
 	var offset = 10
@@ -190,7 +189,6 @@ func update_animation():
 			else:
 				animator_controller("Walk", 1)
 
-
 func animator_controller(state_trigger: String, animation_number: int):
 	# Si el estado actual cambia, se reproducen las animaciones base de ese estado.
 	if current_state != state_trigger or gun_type:
@@ -223,7 +221,6 @@ func animator_controller(state_trigger: String, animation_number: int):
 	# Aquí decidimos cuál de las 3 variaciones (1,2,3) se muestra.
 	switch_animation(animation_number)
 
-
 func switch_animation(animation_number: int):
 	# Ocultamos siempre todos los sprites antes de mostrar el que corresponda
 	hide_all_sprites()
@@ -235,12 +232,10 @@ func switch_animation(animation_number: int):
 		3:
 			animated_sprite3.visible = true
 
-
 func hide_all_sprites():
 	animated_sprite.visible = false
 	animated_sprite2.visible = false
 	animated_sprite3.visible = false
-
 
 # Controlador del Doble Salto
 func handle_double_jump():
@@ -252,7 +247,6 @@ func handle_double_jump():
 			double_jump_enabled = false
 	else:
 		double_jump_enabled = false
-
 
 # Controlador del Disparo
 func shoot_bullet():
@@ -266,7 +260,6 @@ func shoot_bullet():
 	bullet.direction = bullet_dir
 	
 	get_tree().current_scene.add_child(bullet) # Añade la bala a la escena actual
-
 
 # Controlador de Colision con Plataforma
 func ignore_platform_collision():
@@ -296,27 +289,22 @@ func take_damage():
 		await (get_tree().create_timer(3.0).timeout)
 		call_deferred("enable_player_collision")
 
-
 func _on_body_entered(body):
 	if body.is_in_group("Enemy") and is_alive:
 		take_damage()
-
 
 func disable_player_collision():
 	area2D.set_collision_mask_value(3,false)
 	area2D.set_collision_mask_value(4,false)
 	area2D.set_collision_mask_value(5,false)
 
-
 func enable_player_collision():
 	area2D.set_collision_mask_value(3,true)
 	area2D.set_collision_mask_value(4,true)
 	area2D.set_collision_mask_value(5,true)
 
-
 func _on_dash_timer_timeout():
 	is_dashing = false
-
 
 func _on_can_dash_timeout():
 	can_dash = true

@@ -302,14 +302,10 @@ script = ExtResource("1_3nub3")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_xixlf")
 sprite_frames = SubResource("SpriteFrames_21ncv")
-animation = &"Death"
+animation = &"Walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-light_mask = 2
 shape = SubResource("CircleShape2D_07eti")
-
-[node name="RayCast2D" type="RayCast2D" parent="."]
-target_position = Vector2(25, 0)
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 4
@@ -323,6 +319,6 @@ libraries = {
 "": SubResource("AnimationLibrary_tuivb")
 }
 
-[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animation_finished"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_body_exited"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

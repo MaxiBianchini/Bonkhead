@@ -181,7 +181,6 @@ animation = &"Idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.25, 15)
 shape = SubResource("RectangleShape2D_igoet")
-metadata/_edit_lock_ = true
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(-300, 15)
