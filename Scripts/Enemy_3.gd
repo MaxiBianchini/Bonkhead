@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @onready var raycast: RayCast2D = $RayCast2D
 @onready var detection_area: Area2D = $Area2D
+@onready var raycast_floor: RayCast2D = $RayCast2D2
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 @onready var drone_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
@@ -23,7 +24,7 @@ var start_position: Vector2
 var follow_player: bool = false
 
 var chase_stop_distance_x: float = 80.0 # Distancia mínima en X
-var hover_offset_y: float = 30.0 # Offset en Y
+var hover_offset_y: float = 25.0 # Offset en Y
 
 var lives: int = 3
 var is_alive: bool = true
@@ -39,7 +40,7 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	if follow_player and player.is_alive:
-		if raycast.is_colliding() and raycast.get_collider().is_in_group("Floor"):
+		if raycast.is_colliding() and raycast.get_collider().is_in_group("Floor") or raycast_floor.is_colliding() and raycast_floor.get_collider().is_in_group("Floor"):
 			follow_player = false
 		else:
 			_chase_player(delta)
@@ -97,7 +98,7 @@ func _patrol_horizontally(delta: float) -> void:
 	elif position.x < start_position.x - patrol_range:
 		patrol_direction = 1
 	
-	raycast.target_position = Vector2 (25 * patrol_direction,0)
+	raycast.target_position = Vector2 (50 * patrol_direction,0)
 	position.x += patrol_direction * (horizontal_speed * delta)
 	drone_sprite.flip_h = (patrol_direction < 0)
 

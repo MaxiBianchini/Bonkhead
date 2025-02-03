@@ -309,7 +309,10 @@ light_mask = 2
 shape = SubResource("CircleShape2D_07eti")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
-target_position = Vector2(25, 0)
+target_position = Vector2(50, 0)
+
+[node name="RayCast2D2" type="RayCast2D" parent="."]
+target_position = Vector2(0, 21)
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 4
