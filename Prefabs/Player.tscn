@@ -825,10 +825,11 @@ collision_mask = 28
 shape = SubResource("CapsuleShape2D_m4vyk")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(3, 3)
+zoom = Vector2(3.5, 3.5)
 limit_left = -10
 limit_top = 50
-limit_bottom = 750
+limit_bottom = 1750
+drag_vertical_offset = -1.0
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 target_position = Vector2(15, 0)
