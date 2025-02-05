@@ -4,7 +4,7 @@ extends CharacterBody2D
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 @onready var area2d: Area2D = $Area2D
 
-@onready var player = get_node("../Player")  # Ajustar el tipo si lo deseas, por ejemplo (Player)
+@onready var player = get_parent().get_node("../Player")  # Ajustar el tipo si lo deseas, por ejemplo (Player)
 
 var bullet_scene: PackedScene = preload("res://Prefabs/Bullet_1.tscn")
 

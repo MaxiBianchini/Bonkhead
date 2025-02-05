@@ -5,7 +5,7 @@ extends CharacterBody2D
 @onready var collision_shape = $CollisionShape2D
 @onready var raycast_floor = $RayCast2D
 
-@onready var player = get_node("../Player") # Encuentra al jugador en la escena
+@onready var player = get_parent().get_node("../Player") # Encuentra al jugador en la escena
  
 # Variables para definir el área de detección rectangular
 var detection_width: int = 100  # Ancho del área de detección
