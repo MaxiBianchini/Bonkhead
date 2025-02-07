@@ -255,8 +255,9 @@ func _enter_tree() -> void:
 
 
 func _exit_tree() -> void:
-	_phantom_camera_manager.pcam_host_removed(self)
-	_check_camera_host_amount()
+	if is_instance_valid(_phantom_camera_manager):
+		_phantom_camera_manager.pcam_host_removed(self)
+		_check_camera_host_amount()
 
 
 func _ready() -> void:
@@ -280,6 +281,9 @@ func _check_camera_host_amount() -> void:
 
 
 func _assign_new_active_pcam(pcam: Node) -> void:
+	# Only checks if the scene tree is still present.
+	# Prevents a few errors and checks from happening if the scene is exited.
+	if not is_inside_tree(): return
 	var no_previous_pcam: bool
 	if is_instance_valid(_active_pcam_2d) or is_instance_valid(_active_pcam_3d):
 		if _is_2D:
@@ -1067,6 +1071,7 @@ func pcam_added_to_scene(pcam) -> void:
 			_pcam_list.append(pcam)
 			if not pcam.tween_on_load:
 				pcam.set_tween_skip(self, true) # Skips its tween if it has the highest priority on load
+			if not pcam.is_node_ready(): await pcam.ready
 			_find_pcam_with_highest_priority()
 	else:
 		printerr("This function should only be called from PhantomCamera scripts")

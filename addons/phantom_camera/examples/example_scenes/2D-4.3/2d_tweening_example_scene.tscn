@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://bvpp5na5054jd"]
+[gd_scene load_steps=21 format=4 uid="uid://bvpp5na5054jd"]
 
 [ext_resource type="Texture2D" uid="uid://c77npili4pel4" path="res://addons/phantom_camera/examples/textures/2D/level_spritesheet.png" id="1_h1rbo"]
 [ext_resource type="PackedScene" uid="uid://dg7rhrymsrrrm" path="res://addons/phantom_camera/examples/ui/ui_inventory.tscn" id="2_1f2t2"]
@@ -188,6 +188,12 @@ size = Vector2(560, 160)
 script = ExtResource("10_guf2v")
 duration = 1.2
 transition = 10
+ease = 2
+
+[sub_resource type="Resource" id="Resource_4yah7"]
+script = ExtResource("10_guf2v")
+duration = 1.0
+transition = 0
 ease = 2
 
 [node name="Root" type="Node2D"]
@@ -398,4 +404,9 @@ position = Vector2(344, -46)
 script = ExtResource("5_gvv7r")
 zoom = Vector2(0.9, 0.9)
 tween_resource = SubResource("Resource_e4e41")
+draw_limits = true
+
+[node name="PhantomCamera2D" type="Node2D" parent="."]
+script = ExtResource("5_gvv7r")
+tween_resource = SubResource("Resource_4yah7")
 draw_limits = true
