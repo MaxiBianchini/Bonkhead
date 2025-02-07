@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://fxla73vs5hxe"]
+
+[ext_resource type="Script" path="res://addons/phantom_camera/examples/scripts/2D/2d_trigger_area.gd" id="1_0v2rs"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="2_p00d7"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_0urmf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3dwqs"]
+resource_local_to_scene = true
+size = Vector2(622, 435)
+
+[sub_resource type="Resource" id="Resource_7ctwn"]
+script = ExtResource("3_0urmf")
+duration = 1.0
+transition = 0
+ease = 2
+
+[node name="Phantom_Area" type="Area2D" node_paths=PackedStringArray("area_pcam")]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_0v2rs")
+area_pcam = NodePath("PhantomCamera2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_3dwqs")
+metadata/_edit_lock_ = true
+
+[node name="PhantomCamera2D" type="Node2D" parent="."]
+script = ExtResource("2_p00d7")
+zoom = Vector2(2, 2)
+tween_resource = SubResource("Resource_7ctwn")
+draw_limits = true
+metadata/_edit_lock_ = true
