@@ -14,9 +14,10 @@ var sprites = [animated_sprite, animated_sprite2, animated_sprite3]
 
 # Variables para controlar física y movimiento
 var gravity: int = 2000
+var jump_force: float = -550
+var jump_cut_multiplier: float = 0.5  # Factor para cortar el salto al soltar el botón
 var player_dir: String = "RIGHT"
 var dash_velocity: int = 400
-var jump_force: float = -550
 var movement_velocity: int = 200
 var fall_through_time: float = 0.05  # Tiempo durante el cual se desactiva la colisión
 
@@ -42,19 +43,15 @@ func _ready():
 	area2D.connect("body_entered", Callable(self, "_on_body_entered"))
 
 func _physics_process(delta):
-	# Verificar si el jugador tiene vidas antes de procesar la lógica del movimiento
 	if is_alive:
-		# Obtener la entrada del jugador
 		var input_vector = Vector2.ZERO
 		input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 		
-		# Manejar la creacion de balas
 		if Input.is_action_just_pressed("Shoot"):
 			shoot_bullet()
 		
-		# Manejar el salto
+		# Manejo del salto
 		if Input.is_action_just_pressed("ui_jump"):
-			# Bajar de una plataforma
 			if Input.is_action_pressed("ui_down") && raycast_floor.is_colliding():
 				var collider = raycast_floor.get_collider()
 				if collider.is_in_group("Platform"):
@@ -74,7 +71,7 @@ func _physics_process(delta):
 				animated_sprite.play("Double_Jump")
 				current_state = "Double_Jump"
 		
-		# Manejar el dash
+		# Aquí podrías manejar el dash u otras acciones...
 		if Input.is_action_just_pressed("Dash") and can_dash:
 			can_dash = false
 			is_dashing = true
@@ -84,20 +81,23 @@ func _physics_process(delta):
 			$DashTimer.start()
 			$CanDash.start()
 		
-		# Actualizar la velocidad según el estado del dash
 		velocity.x = input_vector.x * (dash_velocity if is_dashing else movement_velocity)
-	
+		
+		# **Implementación del salto variable:**
+		# Si se suelta el botón de salto y el jugador sigue subiendo, se reduce la velocidad vertical.
+		if Input.is_action_just_released("ui_jump") and velocity.y < 0:
+			velocity.y *= jump_cut_multiplier
+		
 	else:
-		# Si no tiene vidas, se detiene el movimiento horizontal
 		velocity.x = 0
-	
-	# Siempre aplica la gravedad
+
+	# Aplica la gravedad
 	velocity.y += gravity * delta
 	
-	move_and_slide()                 # Mover el personaje
-	update_sprite_direction()        # Actualizar la dirección del sprite
-	update_animation()               # Cambiar animaciones según la velocidad
-	handle_double_jump()             # Manejar el estado del doble salto
+	move_and_slide()                 
+	update_sprite_direction()        
+	update_animation()               
+	handle_double_jump()
 
 # Controlador de la direccion del Sprite
 func update_sprite_direction():
@@ -136,7 +136,7 @@ func update_animation():
 	# Solo hacemos la lógica si no está en "Hurt" y aún tienes vidas.
 	if animated_sprite.animation != "Hurt" and lives != 0:
 		# Movimiento vertical de caída.
-		if not is_on_floor() and velocity.y > 350:
+		if not is_on_floor() and velocity.y > 250:
 			match gun_type:
 				"Small":
 					animated_sprite.play("SFall")
