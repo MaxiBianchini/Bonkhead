@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://5fatldiu7dd5"
-path="res://.godot/imported/phantom_camera_host.svg-3150f8f2d82ca9ecab9a3a415da21c5b.ctex"
+path="res://.godot/imported/phantom_camera_host.svg-7a914534e42386b13ebb26af43ebd3e9.ctex"
 metadata={
 "has_editor_variant": true,
 "vram_texture": false
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/phantom_camera/icons/phantom_camera_host.svg"
-dest_files=["res://.godot/imported/phantom_camera_host.svg-3150f8f2d82ca9ecab9a3a415da21c5b.ctex"]
+source_file="res://addons/Phantom_Camera/icons/phantom_camera_host.svg"
+dest_files=["res://.godot/imported/phantom_camera_host.svg-7a914534e42386b13ebb26af43ebd3e9.ctex"]
 
 [params]
 

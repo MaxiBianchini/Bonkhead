@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dk7omm0x44suj"
-path="res://.godot/imported/SceneTypesIcon.svg-66e2255bd3398007bec03a5cbfa4d0aa.ctex"
+path="res://.godot/imported/SceneTypesIcon.svg-267d30d9593a26600cd356ac5d27d342.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/phantom_camera/icons/viewfinder/SceneTypesIcon.svg"
-dest_files=["res://.godot/imported/SceneTypesIcon.svg-66e2255bd3398007bec03a5cbfa4d0aa.ctex"]
+source_file="res://addons/Phantom_Camera/icons/viewfinder/SceneTypesIcon.svg"
+dest_files=["res://.godot/imported/SceneTypesIcon.svg-267d30d9593a26600cd356ac5d27d342.ctex"]
 
 [params]
 

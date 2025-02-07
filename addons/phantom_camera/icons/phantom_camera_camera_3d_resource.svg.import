@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dnaykbu6ue5lo"
-path="res://.godot/imported/phantom_camera_camera_3d_resource.svg-f8bf8d1a5b7442fd6933bfbed999d57d.ctex"
+path="res://.godot/imported/phantom_camera_camera_3d_resource.svg-a183d6464d0defbc1a47df482daa526a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/phantom_camera/icons/phantom_camera_camera_3d_resource.svg"
-dest_files=["res://.godot/imported/phantom_camera_camera_3d_resource.svg-f8bf8d1a5b7442fd6933bfbed999d57d.ctex"]
+source_file="res://addons/Phantom_Camera/icons/phantom_camera_camera_3d_resource.svg"
+dest_files=["res://.godot/imported/phantom_camera_camera_3d_resource.svg-a183d6464d0defbc1a47df482daa526a.ctex"]
 
 [params]
 
