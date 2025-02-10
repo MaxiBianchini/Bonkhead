@@ -18,7 +18,7 @@ var jump_force: float = -550
 var jump_cut_multiplier: float = 0.5  # Factor para cortar el salto al soltar el botón
 var player_dir: String = "RIGHT"
 var dash_velocity: int = 400
-var movement_velocity: int = 200
+var movement_velocity: int = 250
 var fall_through_time: float = 0.05  # Tiempo durante el cual se desactiva la colisión
 
 var can_dash: bool = true
@@ -174,11 +174,11 @@ func update_animation():
 			):
 			if Input.is_action_pressed("Shoot"):
 				if Input.is_action_pressed("ui_up"):
-					animator_controller("Walk", 3)
+					animator_controller("Run", 3)
 					bullet_dir = Vector2.UP
 					bullet_offset = Vector2(0, -20)  # Ajusta la distancia en Y según tu sprite
 				else:
-					animator_controller("Walk", 2)
+					animator_controller("Run", 2)
 					match player_dir:
 						"RIGHT":
 							bullet_offset= Vector2(52, -10)
@@ -187,7 +187,7 @@ func update_animation():
 							bullet_offset= Vector2(-35, -10)
 							bullet_dir = Vector2.LEFT
 			else:
-				animator_controller("Walk", 1)
+				animator_controller("Run", 1)
 
 func animator_controller(state_trigger: String, animation_number: int):
 	# Si el estado actual cambia, se reproducen las animaciones base de ese estado.
@@ -205,16 +205,16 @@ func animator_controller(state_trigger: String, animation_number: int):
 						animated_sprite2.play("BIdle Shooting Rect")
 						animated_sprite3.play("BIdle Shooting Up")
 			
-			"Walk":
+			"Run":
 				match gun_type:
 					"Small":
-						animated_sprite.play("SWalk with Gun")
-						animated_sprite2.play("SWalk Shooting Rect")
-						animated_sprite3.play("SWalk Shooting Up")
+						animated_sprite.play("SRun with Gun")
+						animated_sprite2.play("SRun Shooting Rect")
+						animated_sprite3.play("SRun Shooting Up")
 					"Big":
-						animated_sprite.play("BWalk with Gun")
-						animated_sprite2.play("BWalk Shooting Rect")
-						animated_sprite3.play("BWalk Shooting Up")
+						animated_sprite.play("BRun with Gun")
+						animated_sprite2.play("BRun Shooting Rect")
+						animated_sprite3.play("BRun Shooting Up")
 		
 		current_state = state_trigger
 	
