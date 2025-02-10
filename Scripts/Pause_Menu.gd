@@ -14,12 +14,14 @@ var esc_activated
 @onready var Option_Button = $PauseMenu/VBoxContainer/OptionButton
 @onready var Resume_Button = $PauseMenu/VBoxContainer/ResumeButtom
 @onready var Back_Button = $OptionsMenu/BackButtonContainer/BackButton
+@onready var Exit_Button = $PauseMenu/ExitButton
 
 func _ready() -> void:
 	MainMenu_Button.pressed.connect(_on_mainmenu_pressed)
 	Option_Button.pressed.connect(_on_options_pressed)
 	Resume_Button.pressed.connect(_on_resume_pressed)
 	Back_Button.pressed.connect(_on_back_pressed)
+	Exit_Button.pressed.connect(_on_exit_pressed)
 	
 	esc_activated = false
 
@@ -36,6 +38,10 @@ func animate_menu(enter: bool):
 	tween.tween_property(button_background, "size", size, 0.5)#.set_trans(Tween.TRANS_SINE)
 	tween.parallel().tween_property(button_background, "position", position, 0.5)
 	await tween.finished
+
+# Cierra el juego
+func _on_exit_pressed():
+	get_tree().quit()
 
 func _on_options_pressed():
 	option_is_pressed = true
