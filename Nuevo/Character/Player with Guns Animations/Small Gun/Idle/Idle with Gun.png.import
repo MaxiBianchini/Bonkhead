@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://codr6dkyn706y"
-path="res://.godot/imported/Walk with Gun.png-0fa8c8df79fe22aaece1c2061f95d5c8.ctex"
+uid="uid://cieqe3bmcbd3s"
+path="res://.godot/imported/Idle with Gun.png-b6eee9bfbea140e7c01b6c4f25d7514f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Nuevo/Character/Player with Guns Animations/Small Gun/Walk with Gun.png"
-dest_files=["res://.godot/imported/Walk with Gun.png-0fa8c8df79fe22aaece1c2061f95d5c8.ctex"]
+source_file="res://Nuevo/Character/Player with Guns Animations/Small Gun/Idle/Idle with Gun.png"
+dest_files=["res://.godot/imported/Idle with Gun.png-b6eee9bfbea140e7c01b6c4f25d7514f.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cq001yy6bbv7e"
-path="res://.godot/imported/Walk Shooting Up.png-e03fc12907cbb9a6d514533f84d58dda.ctex"
+uid="uid://cicx63sdf0cbg"
+path="res://.godot/imported/Fall with Gun.png-6728201bc8f4a82d9e3b689fe40a924a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Nuevo/Character/Player with Guns Animations/Small Gun/Walk Shooting Up.png"
-dest_files=["res://.godot/imported/Walk Shooting Up.png-e03fc12907cbb9a6d514533f84d58dda.ctex"]
+source_file="res://Nuevo/Character/Player with Guns Animations/Small Gun/Fall/Fall with Gun.png"
+dest_files=["res://.godot/imported/Fall with Gun.png-6728201bc8f4a82d9e3b689fe40a924a.ctex"]
 
 [params]
 

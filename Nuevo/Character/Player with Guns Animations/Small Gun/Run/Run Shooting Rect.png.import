@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://biugy4xo0k5ns"
-path="res://.godot/imported/Jump with Gun.png-489b7c2dd0949f54a0d10b1a43bd37ce.ctex"
+uid="uid://cl34ve6ubd41o"
+path="res://.godot/imported/Run Shooting Rect.png-2f090aaf031f05a872b86858d6d47771.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Nuevo/Character/Player with Guns Animations/Big Gun/Jump with Gun.png"
-dest_files=["res://.godot/imported/Jump with Gun.png-489b7c2dd0949f54a0d10b1a43bd37ce.ctex"]
+source_file="res://Nuevo/Character/Player with Guns Animations/Small Gun/Run/Run Shooting Rect.png"
+dest_files=["res://.godot/imported/Run Shooting Rect.png-2f090aaf031f05a872b86858d6d47771.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://slhmnlrub18n"
-path="res://.godot/imported/Idle with Gun.png-9a51aae87389e911cbe10780a78d9161.ctex"
+uid="uid://ccw8oq1fyrten"
+path="res://.godot/imported/Idle Shooting Up.png-da42510926f8aee555bafd89bb355178.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Nuevo/Character/Player with Guns Animations/Big Gun/Idle with Gun.png"
-dest_files=["res://.godot/imported/Idle with Gun.png-9a51aae87389e911cbe10780a78d9161.ctex"]
+source_file="res://Nuevo/Character/Player with Guns Animations/Big Gun/Idle/Idle Shooting Up.png"
+dest_files=["res://.godot/imported/Idle Shooting Up.png-da42510926f8aee555bafd89bb355178.ctex"]
 
 [params]
 
