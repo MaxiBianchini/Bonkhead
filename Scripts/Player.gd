@@ -33,7 +33,7 @@ var lives: int = 3
 # Carga la escena de la bala
 var bullet_scene = preload("res://Prefabs/Bullet_1.tscn")
 var bullet_dir = Vector2.RIGHT
-var bullet_offset = Vector2(52, -10)
+var bullet_offset: Vector2
 
 var gun_type: String ="Small"
 var current_state: String = ""
@@ -64,12 +64,14 @@ func _physics_process(delta):
 						animated_sprite.play("SJump")
 					"Big":
 						animated_sprite.play("BJump")
-				current_state = "jump"
+				current_state = "Jump"
+				switch_animation(1)
 			elif double_jump_enabled and first_jump_completed:
 				first_jump_completed = false
 				velocity.y = jump_force
 				animated_sprite.play("Double_Jump")
 				current_state = "Double_Jump"
+				switch_animation(1)
 		
 		# Aquí podrías manejar el dash u otras acciones...
 		if Input.is_action_just_pressed("Dash") and can_dash:
@@ -143,30 +145,31 @@ func update_animation():
 				"Big":
 					animated_sprite.play("BFall")
 			current_state = "Fall"
+			switch_animation(1)
 		
 		# Quieto en x e y = 0 => Idle
 		elif velocity.x == 0 and velocity.y == 0:
 			if Input.is_action_pressed("Shoot"):
 				if Input.is_action_pressed("ui_up"):
 					animator_controller("Idle", 3)
+					bullet_dir = Vector2.UP
 					match player_dir:
 						"RIGHT":
-							bullet_dir = Vector2.UP
-							bullet_offset = Vector2(12, -20)  # Ajusta la distancia en Y según tu sprite
+							bullet_offset = Vector2(12, -25)  # Ajusta la distancia en Y según tu sprite
 						"LEFT":
-							bullet_dir = Vector2.UP
-							bullet_offset = Vector2(10, -20)  # Ajusta la distancia en Y según tu sprite
+							bullet_offset = Vector2(10, -25)  # Ajusta la distancia en Y según tu sprite
 				else:
 					animator_controller("Idle", 2)
 					match player_dir:
 						"RIGHT":
-							bullet_offset= Vector2(52, -10)
+							bullet_offset = Vector2(35, -9)
 							bullet_dir = Vector2.RIGHT
 						"LEFT":
-							bullet_offset= Vector2(-35, -10)
+							bullet_offset = Vector2(-15, -9)
 							bullet_dir = Vector2.LEFT
 			else:
 				animator_controller("Idle", 1)
+				
 		
 		# Movimiento horizontal en el suelo (sin dash) => Walk
 		elif is_on_floor() and not is_dashing and (
@@ -176,15 +179,19 @@ func update_animation():
 				if Input.is_action_pressed("ui_up"):
 					animator_controller("Run", 3)
 					bullet_dir = Vector2.UP
-					bullet_offset = Vector2(0, -20)  # Ajusta la distancia en Y según tu sprite
+					match player_dir:
+						"RIGHT":
+							bullet_offset = Vector2(25, -25)  # Ajusta la distancia en Y según tu sprite
+						"LEFT":
+							bullet_offset = Vector2(-5, -25)  # Ajusta la distancia en Y según tu sprite
 				else:
 					animator_controller("Run", 2)
 					match player_dir:
 						"RIGHT":
-							bullet_offset= Vector2(52, -10)
+							bullet_offset = Vector2(60, -9)
 							bullet_dir = Vector2.RIGHT
 						"LEFT":
-							bullet_offset= Vector2(-35, -10)
+							bullet_offset = Vector2(-40, -9)
 							bullet_dir = Vector2.LEFT
 			else:
 				animator_controller("Run", 1)
@@ -250,6 +257,9 @@ func handle_double_jump():
 
 # Controlador del Disparo
 func shoot_bullet():
+	
+	update_animation()
+	
 	var bullet = bullet_scene.instantiate() as Area2D # Instancia la bala
 	
 	# Le indicamos quién la disparó:

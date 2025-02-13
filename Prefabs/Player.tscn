@@ -746,22 +746,22 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.8,
 "texture": SubResource("AtlasTexture_a5mah")
 }, {
-"duration": 1.0,
+"duration": 0.8,
 "texture": SubResource("AtlasTexture_3rdn0")
 }, {
-"duration": 1.0,
+"duration": 0.8,
 "texture": SubResource("AtlasTexture_55poa")
 }, {
-"duration": 1.0,
+"duration": 0.8,
 "texture": SubResource("AtlasTexture_qgm7t")
 }, {
-"duration": 1.0,
+"duration": 0.8,
 "texture": SubResource("AtlasTexture_v7ajx")
 }, {
-"duration": 1.0,
+"duration": 0.8,
 "texture": SubResource("AtlasTexture_di18e")
 }],
 "loop": true,
@@ -769,22 +769,22 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.8,
 "texture": SubResource("AtlasTexture_wbqqx")
 }, {
-"duration": 1.0,
+"duration": 0.8,
 "texture": SubResource("AtlasTexture_assyb")
 }, {
-"duration": 1.0,
+"duration": 0.8,
 "texture": SubResource("AtlasTexture_02y55")
 }, {
-"duration": 1.0,
+"duration": 0.8,
 "texture": SubResource("AtlasTexture_pf4yt")
 }, {
-"duration": 1.0,
+"duration": 0.8,
 "texture": SubResource("AtlasTexture_2w2fo")
 }, {
-"duration": 1.0,
+"duration": 0.8,
 "texture": SubResource("AtlasTexture_dxryg")
 }],
 "loop": true,
@@ -792,27 +792,27 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.8,
 "texture": SubResource("AtlasTexture_hqtda")
 }, {
-"duration": 1.0,
+"duration": 0.8,
 "texture": SubResource("AtlasTexture_mvqg0")
 }, {
-"duration": 1.0,
+"duration": 0.8,
 "texture": SubResource("AtlasTexture_hroxg")
 }, {
-"duration": 1.0,
+"duration": 0.8,
 "texture": SubResource("AtlasTexture_lxxmc")
 }, {
-"duration": 1.0,
+"duration": 0.8,
 "texture": SubResource("AtlasTexture_23wfr")
 }, {
-"duration": 1.0,
+"duration": 0.8,
 "texture": SubResource("AtlasTexture_jophv")
 }],
 "loop": true,
 "name": &"SRun with Gun",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -938,7 +938,7 @@ process_mode = 1
 z_index = -1
 material = SubResource("ShaderMaterial_c5nj1")
 sprite_frames = SubResource("SpriteFrames_l1tm1")
-animation = &"SRun Shooting Up"
+animation = &"SRun Shooting Rect"
 offset = Vector2(10, -7)
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
@@ -946,7 +946,7 @@ visible = false
 z_index = -1
 material = SubResource("ShaderMaterial_c5nj1")
 sprite_frames = SubResource("SpriteFrames_l1tm1")
-animation = &"SIdle Shooting Rect"
+animation = &"SIdle with Gun"
 offset = Vector2(10, -7)
 
 [node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="."]
@@ -954,7 +954,7 @@ visible = false
 z_index = -1
 material = SubResource("ShaderMaterial_c5nj1")
 sprite_frames = SubResource("SpriteFrames_l1tm1")
-animation = &"SIdle Shooting Up"
+animation = &"SIdle with Gun"
 offset = Vector2(10, -7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -3,8 +3,8 @@ extends Area2D
 @onready var sprite = $"Bullet Sprite"
 
 # Variables para velocidad y dirección
-var speed: float = 170
-var acceleration: float = 175  # Velocidad adicional por segundo
+var speed: float = 275
+var acceleration: float = 400  # Velocidad adicional por segundo
 var direction: Vector2   # Direccion
 
 var shooter: Node = null  # O un tipo más específico si lo deseass
