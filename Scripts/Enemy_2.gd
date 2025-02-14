@@ -53,7 +53,7 @@ func _physics_process(delta: float) -> void:
 			bullet_dir = Vector2.RIGHT
 	
 	# Si está listo para disparar, realizamos el disparo
-	if can_shoot:
+	if can_shoot and player.is_alive:
 		if shoot_now:
 			shoot_bullet()
 			shoot_now = false
@@ -89,7 +89,7 @@ func _on_body_entered(body: Node) -> void:
 
 
 func _on_body_exited(body: Node) -> void:
-	if body.is_in_group("Player") and is_alive:
+	if body.is_in_group("Player"):
 		animated_sprite.play("Idle")
 		can_shoot = false
 
