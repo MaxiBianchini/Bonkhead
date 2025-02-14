@@ -287,17 +287,18 @@ func change_weapon():
 
 # Controlador del Daño
 func take_damage():
-	lives -= 1
-	if lives <= 0:
-		is_alive = false
-		animated_sprite.play("Death")
-		current_state = "Death"
-		call_deferred("disable_player_collision")
-	else:
-		$AnimationPlayer.play("Hurt")
-		call_deferred("disable_player_collision")
-		await (get_tree().create_timer(3.0).timeout)
-		call_deferred("enable_player_collision")
+	if is_alive:
+		lives -= 1
+		if lives <= 0:
+			is_alive = false
+			animated_sprite.play("Death")
+			current_state = "Death"
+			call_deferred("disable_player_collision")
+		else:
+			animated_sprite.play("Hurt")
+			call_deferred("disable_player_collision")
+			await (get_tree().create_timer(3.0).timeout)
+			call_deferred("enable_player_collision")
 
 func _on_body_entered(body):
 	if body.is_in_group("Enemy") and is_alive:
