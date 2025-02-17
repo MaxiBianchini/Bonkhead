@@ -12,6 +12,8 @@ var sprites = [animated_sprite, animated_sprite2, animated_sprite3]
 @onready var raycast_wall = $RayCast2D
 @onready var area2D = $Area2D
 
+signal player_died
+
 # Variables para controlar física y movimiento
 var gravity: int = 2000
 var jump_force: float = -550
@@ -294,8 +296,10 @@ func take_damage():
 			animated_sprite.play("Death")
 			current_state = "Death"
 			call_deferred("disable_player_collision")
+			await (get_tree().create_timer(1.5).timeout)
+			player_died.emit()
 		else:
-			animated_sprite.play("Hurt")
+			$AnimationPlayer.play("Hurt")
 			call_deferred("disable_player_collision")
 			await (get_tree().create_timer(3.0).timeout)
 			call_deferred("enable_player_collision")

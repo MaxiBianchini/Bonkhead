@@ -15,14 +15,23 @@ var esc_activated
 @onready var Resume_Button = $PauseMenu/VBoxContainer/ResumeButtom
 @onready var Back_Button = $OptionsMenu/BackButtonContainer/BackButton
 @onready var Exit_Button = $PauseMenu/ExitButton
+@onready var PlayAgain_Button = $GameOverMenu/VBoxContainer/PlayButton
+@onready var MainMenu_Button2 = $GameOverMenu/VBoxContainer/MainMenuButton
+
 
 func _ready() -> void:
+	var player = $Player  # Asegúrate de que Player esté correctamente referenciado
+	if player:
+		player.player_died.connect(on_player_died)
+	
 	MainMenu_Button.pressed.connect(_on_mainmenu_pressed)
 	Option_Button.pressed.connect(_on_options_pressed)
 	Resume_Button.pressed.connect(_on_resume_pressed)
 	Back_Button.pressed.connect(_on_back_pressed)
 	Exit_Button.pressed.connect(_on_exit_pressed)
 	
+	MainMenu_Button2.pressed.connect(_on_mainmenu_pressed)
+	PlayAgain_Button.pressed.connect(_on_playagain_pressed)
 	esc_activated = false
 
 func _on_mainmenu_pressed():
@@ -88,6 +97,12 @@ func toggle_pause_menu():
 # Ir al menú principal (cambiar escena)
 func _on_return_to_menu_pressed():
 	get_tree().paused = false  # Reanuda el juego
+
+func on_player_died():
+	$GameOverMenu.visible = true
+
+func _on_playagain_pressed():
+	get_tree().reload_current_scene()
 
 # Continuar el juego (ocultar el menú)
 func _on_continue_pressed():
