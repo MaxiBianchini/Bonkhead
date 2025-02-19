@@ -73,13 +73,13 @@ func shoot_bullet() -> void:
 
 
 func take_damage() -> void:
-	lives -= 1
-	if lives <= 0:
-		is_alive = false
-		animated_sprite.play("Death")
-	else:
+	if is_alive:
 		anim_player.play("Hurt")
-		await get_tree().create_timer(3.0).timeout  # Pausa de 3 segundos antes de volver a la normalidad
+		lives -= 1
+		if lives == 0:
+			is_alive = false
+			animated_sprite.play("Death")
+	
 
 
 func _on_body_entered(body: Node) -> void:
@@ -88,8 +88,9 @@ func _on_body_entered(body: Node) -> void:
 		can_shoot = true
 
 
+
 func _on_body_exited(body: Node) -> void:
-	if body.is_in_group("Player"):
+	if body.is_in_group("Player") and is_alive:
 		animated_sprite.play("Idle")
 		can_shoot = false
 
