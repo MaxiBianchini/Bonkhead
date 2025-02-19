@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3degqy5uf8ea"
-path="res://.godot/imported/7-1.png-76556cbd0c521b13590a91e3e9b0e530.ctex"
+uid="uid://brc5fi5763mdw"
+path="res://.godot/imported/Godot Logo.png-75112be70b26a02d8c707cb2b6188f39.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Nuevo/GUI/Buttons/7-1.png"
-dest_files=["res://.godot/imported/7-1.png-76556cbd0c521b13590a91e3e9b0e530.ctex"]
+source_file="res://Nuevo/GUI/Godot Logo.png"
+dest_files=["res://.godot/imported/Godot Logo.png-75112be70b26a02d8c707cb2b6188f39.ctex"]
 
 [params]
 
