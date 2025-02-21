@@ -933,12 +933,12 @@ collision_layer = 2
 floor_max_angle = 0.872665
 script = ExtResource("1_y8i6y")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Player"]]
 process_mode = 1
 z_index = -1
 material = SubResource("ShaderMaterial_c5nj1")
 sprite_frames = SubResource("SpriteFrames_l1tm1")
-animation = &"SRun Shooting Rect"
+animation = &"SIdle with Gun"
 offset = Vector2(10, -7)
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]

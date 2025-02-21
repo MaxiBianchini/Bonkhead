@@ -91,7 +91,7 @@ size = Vector2(783, 54)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k33du"]
 resource_local_to_scene = true
-size = Vector2(840, 54)
+size = Vector2(611, 54)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ux2mv"]
 resource_local_to_scene = true
@@ -318,6 +318,21 @@ texture = ExtResource("9_m6c2t")
 [node name="41" type="Sprite2D" parent="Decoration"]
 position = Vector2(1999, 1663)
 texture = ExtResource("10_dmepy")
+
+[node name="45" type="Sprite2D" parent="Decoration"]
+z_index = -1
+position = Vector2(1064, 1072)
+texture = ExtResource("53_yqj6f")
+
+[node name="46" type="Sprite2D" parent="Decoration"]
+z_index = -1
+position = Vector2(905, 1067)
+texture = ExtResource("11_xrw06")
+
+[node name="24" type="Sprite2D" parent="Decoration"]
+z_index = -1
+position = Vector2(1009, 1079)
+texture = ExtResource("28_b42oa")
 
 [node name="TileMaps" type="Node" parent="."]
 process_mode = 1
@@ -901,14 +916,10 @@ shape = SubResource("RectangleShape2D_yyitx")
 position = Vector2(1712, 1315)
 
 [node name="CollisionShape2D" parent="Node2D/Enemy_8/Area2D" index="0"]
-position = Vector2(-22, 4)
 shape = SubResource("RectangleShape2D_k33du")
 
 [node name="Enemy_9" parent="Node2D" instance=ExtResource("18_noxkl")]
 position = Vector2(1611, 1671)
-
-[node name="Enemy_3" parent="Node2D" instance=ExtResource("17_t4et2")]
-position = Vector2(405, 708)
 
 [node name="Enemy_4" parent="Node2D" instance=ExtResource("18_noxkl")]
 position = Vector2(1757, 1547)
@@ -926,18 +937,6 @@ position = Vector2(1322, 1602)
 [node name="CollisionShape2D" parent="Node2D/Enemy_11/Area2D" index="0"]
 position = Vector2(218, 1)
 shape = SubResource("RectangleShape2D_ox0pl")
-
-[node name="27" type="Sprite2D" parent="."]
-position = Vector2(1063, 1066)
-texture = ExtResource("53_yqj6f")
-
-[node name="26" type="Sprite2D" parent="."]
-position = Vector2(904, 1061)
-texture = ExtResource("11_xrw06")
-
-[node name="20" type="Sprite2D" parent="."]
-position = Vector2(1008, 1073)
-texture = ExtResource("28_b42oa")
 
 [connection signal="toggled" from="OptionsMenu/Options/HBoxContainer/FullScreen/Label/CheckButton" to="." method="_on_fullscreen_checkbutton_toggled"]
 
