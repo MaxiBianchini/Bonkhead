@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://d0lv1t50yhwap"]
+[gd_scene load_steps=41 format=3 uid="uid://d0lv1t50yhwap"]
 
 [ext_resource type="Script" path="res://Scripts/Enemy_1.gd" id="1_xnerr"]
 [ext_resource type="Shader" uid="uid://3eyyqpjc4awp" path="res://Shaders/Hurts_effect.tres" id="2_5735i"]
@@ -226,6 +226,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3jxnh"]
 size = Vector2(13, 32)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bex0l"]
+size = Vector2(360.25, 20)
+
 [sub_resource type="Animation" id="Animation_5finp"]
 resource_name = "Hurt"
 length = 2.6
@@ -268,7 +271,7 @@ process_mode = 1
 collision_layer = 4
 script = ExtResource("1_xnerr")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Enemy"]]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_eln1y")
 sprite_frames = SubResource("SpriteFrames_d4cnq")
 animation = &"Death"
@@ -282,7 +285,19 @@ shape = SubResource("RectangleShape2D_3jxnh")
 position = Vector2(11, 9)
 target_position = Vector2(0, 12)
 
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+light_mask = 2
+shape = SubResource("RectangleShape2D_bex0l")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_tuivb")
 }
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animation_finished"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_body_exited"]

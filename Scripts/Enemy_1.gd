@@ -4,33 +4,34 @@ extends CharacterBody2D
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var collision_shape = $CollisionShape2D
 @onready var raycast_floor = $RayCast2D
+@onready var detection_area = $Area2D/CollisionShape2D2
+@onready var anim_player = $AnimationPlayer
 
 @onready var player = get_parent().get_node("../Player") # Encuentra al jugador en la escena
- 
-# Variables para definir el área de detección rectangular
-var detection_width: int = 100  # Ancho del área de detección
-var detection_height: int = 90  # Altura del área de detección
 
 # Variables para controlar el movimiento y la física
 var direction: int = 1
 const gravity: int = 2000
 const movement_velocity: int = 60
 
-var is_stay_angry: bool = false
+var is_shooting: bool = false
 
 # Variables para controlar la vida
 var lives: int = 3
 var is_alive: bool = true
+var enemy_is_near: bool = false
 
 # Carga la escena de la bala
 var bullet_scene = preload("res://Prefabs/Bullet_1.tscn")
+var bullet_dir = Vector2.RIGHT
+var bullet_offset: Vector2
+
+var can_shoot: bool = true
 
 func _ready():
-	animated_sprite.connect("animation_finished", Callable(self, "_on_animation_finished"))
 	animated_sprite.play("Walk") # Reproduce la animación de caminar por defecto
 
 func _physics_process(delta):
-	
 	if is_alive:
 		# Actualiza las posiciones de los nodos según la dirección
 		update_sprite_direction(velocity.x < 0)
@@ -38,39 +39,36 @@ func _physics_process(delta):
 		# Aplica la gravedad si no está en el suelo
 		if not is_on_floor():
 			velocity.y += gravity * delta
+			move_and_slide()
 		
 		# Invierte la dirección si está en la pared o no está en el suelo
 		if is_on_wall() or not raycast_floor.is_colliding():
 			direction *= -1
 		
 		# Controla el movimiento del enemigo
-		if animated_sprite.animation != "Shoot":
+		if !enemy_is_near:
 			velocity.x = direction * movement_velocity
 			move_and_slide()
 		
 		# Verifica la proximidad del jugador y cambia la animación y el comportamiento
 		if player and player.is_alive:
 			# Verificar si el jugador está dentro del área de detección
-			if abs(player.position.x - position.x) <  detection_width  and abs(player.position.y - position.y) < detection_height:
-				if not is_stay_angry:
-					animated_sprite.play("Shoot")
-					is_stay_angry = true
-					detection_width = 200
-					
+			if enemy_is_near:
 				# Actualiza la dirección y posición del enemigo según la posición del jugador
-				if player.position.x < position.x:
-					update_sprite_direction(true) # Actualizar la dirección del sprite
-				else:
-					update_sprite_direction(false) # Actualizar la dirección del sprite
-				
-				await (get_tree().create_timer(3.0).timeout)
-				shoot_bullet()
-			
+				update_sprite_direction(player.position.x < position.x)
+				animated_sprite.play("Shoot")
+				if can_shoot:
+					
+					shoot_bullet()
+					can_shoot = false
+					await (get_tree().create_timer(2.0).timeout)
+					can_shoot = true
 			else:
-				if is_stay_angry:
-					is_stay_angry = false
-					animated_sprite.play("Walk")
-					detection_width = 100
+				animated_sprite.play("Walk")
+		else:
+			animated_sprite.play("Walk")
+			enemy_is_near = false
+
 
 
 # Controlador de la direccion del Sprite
@@ -80,31 +78,49 @@ func update_sprite_direction(value):
 		animated_sprite.flip_h = true
 		animated_sprite.position.x = -offset
 		collision_shape.position.x = offset
+		bullet_offset = Vector2(-15, -9)
+		bullet_dir = Vector2.LEFT
 	else:
 		animated_sprite.flip_h = false
 		animated_sprite.position.x = offset
 		collision_shape.position.x = offset
+		bullet_offset = Vector2(35, -9)
+		bullet_dir = Vector2.RIGHT
 
 
 func shoot_bullet():
-	var bullet_instance = bullet_scene.instantiate() as Area2D # Instancia la bala
+	var bullet = bullet_scene.instantiate() as Area2D # Instancia la bala
 	
-	# Posiciona la bala en la posición del player + una distancia
-	bullet_instance.position = position + Vector2(30, 0)
-	get_tree().current_scene.add_child(bullet_instance) # Añade la bala a la escena actual
+	# Le indicamos quién la disparó:
+	bullet.shooter = self
+	
+	 # Posición final de la bala y dirección
+	bullet.position = position + bullet_offset
+	bullet.direction = bullet_dir
+	
+	get_tree().current_scene.add_child(bullet) # Añade la bala a la escena actual
 
 
 # Controlador del Daño
 func take_damage():
-	lives -= 1
-	if lives == 0:
-		is_alive = false
-		animated_sprite.play("Death")
-	else:
-		$AnimationPlayer.play("Hurt")
-		await (get_tree().create_timer(3.0).timeout)
+	if is_alive:
+		anim_player.play("Hurt")
+		lives -= 1
+		if lives == 0:
+			is_alive = false
+			animated_sprite.play("Death")
 
 
 func _on_animation_finished():
 	if animated_sprite.animation == "Death":
 		queue_free()
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if body.is_in_group("Player"):
+		enemy_is_near = true
+
+
+func _on_body_exited(body: Node2D) -> void:
+	if body.is_in_group("Player"):
+		enemy_is_near = false
