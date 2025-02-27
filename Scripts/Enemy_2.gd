@@ -24,8 +24,7 @@ func _ready() -> void:
 	
 	# Conectar señales
 	animated_sprite.animation_finished.connect(_on_animation_finished)
-	area2d.body_entered.connect(_on_body_entered)
-	area2d.body_exited.connect(_on_body_exited)
+	
 
 
 func _physics_process(delta: float) -> void:
@@ -81,12 +80,10 @@ func take_damage() -> void:
 			animated_sprite.play("Death")
 	
 
-
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("Player") and is_alive:
 		animated_sprite.play("Atack")
 		can_shoot = true
-
 
 
 func _on_body_exited(body: Node) -> void:

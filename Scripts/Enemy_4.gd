@@ -76,6 +76,6 @@ func take_damage() -> void:
 		await (get_tree().create_timer(3.0).timeout) # Esperar 3 segundos antes de continuar
 
 # Función para manejar la finalización de las animaciones
-func _on_animated_sprite_2d_animation_finished() -> void:
+func _on_animation_finished() -> void:
 	if animated_sprite.animation == "Death":
 		queue_free()
