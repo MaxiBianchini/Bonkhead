@@ -1,6 +1,6 @@
 [gd_scene load_steps=137 format=3 uid="uid://cdqlmgh2vxout"]
 
-[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_y8i6y"]
+[ext_resource type="Script" uid="uid://bbt48srafskvx" path="res://Scripts/Player.gd" id="1_y8i6y"]
 [ext_resource type="Texture2D" uid="uid://62ay6d3dcw1m" path="res://Graphics/Cyberpunk Characters/1 Biker/Biker_doublejump.png" id="2_3kxgr"]
 [ext_resource type="Texture2D" uid="uid://7pv1d2jn3gv5" path="res://Graphics/Cyberpunk Characters/1 Biker/Dash.png" id="2_a22uy"]
 [ext_resource type="Shader" uid="uid://3eyyqpjc4awp" path="res://Shaders/Hurts_effect.tres" id="2_b3bx2"]
@@ -924,8 +924,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tuivb"]
 _data = {
-"Hurt": SubResource("Animation_5finp"),
-"RESET": SubResource("Animation_ymlft")
+&"Hurt": SubResource("Animation_5finp"),
+&"RESET": SubResource("Animation_ymlft")
 }
 
 [node name="Player" type="CharacterBody2D" groups=["Player"]]

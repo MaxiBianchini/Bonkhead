@@ -1,6 +1,6 @@
 [gd_scene load_steps=26 format=3 uid="uid://bswo0jt5cdkqw"]
 
-[ext_resource type="Script" path="res://Scripts/Enemy_4.gd" id="1_tnnmb"]
+[ext_resource type="Script" uid="uid://btnmu6t5ruw6i" path="res://Scripts/Enemy_4.gd" id="1_tnnmb"]
 [ext_resource type="Shader" uid="uid://3eyyqpjc4awp" path="res://Shaders/Hurts_effect.tres" id="2_3l22b"]
 [ext_resource type="Texture2D" uid="uid://dvdjcbbm8xlq6" path="res://Graphics/Enemies/Bosses/1/Death.png" id="3_i0egb"]
 [ext_resource type="Texture2D" uid="uid://cv1nk102hla6q" path="res://Graphics/Enemies/Bosses/1/Idle.png" id="4_uotvi"]
@@ -163,8 +163,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tuivb"]
 _data = {
-"Hurt": SubResource("Animation_5finp"),
-"RESET": SubResource("Animation_ymlft")
+&"Hurt": SubResource("Animation_5finp"),
+&"RESET": SubResource("Animation_ymlft")
 }
 
 [node name="Enemy_4" type="CharacterBody2D" groups=["Enemy"]]

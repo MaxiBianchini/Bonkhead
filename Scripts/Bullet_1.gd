@@ -8,11 +8,13 @@ var acceleration: float = 400  # Velocidad adicional por segundo
 var direction: Vector2   # Direccion
 
 var shooter: Node = null  # O un tipo más específico si lo deseass
-
+var mask: int
 # Timer para autodestruir la bala
 var life_time: float = 1.5
 
 func _ready():
+	set_collision_mask_value(mask,true)
+	
 	# Configura el timer para autodestruir la bala
 	await get_tree().create_timer(life_time).timeout
 	queue_free()

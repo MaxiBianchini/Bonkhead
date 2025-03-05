@@ -1,6 +1,6 @@
 [gd_scene load_steps=45 format=3 uid="uid://cp6k1o6rfgevf"]
 
-[ext_resource type="Script" path="res://Scripts/Enemy_3.gd" id="1_3nub3"]
+[ext_resource type="Script" uid="uid://dc0i8cnuwwsjs" path="res://Scripts/Enemy_3.gd" id="1_3nub3"]
 [ext_resource type="Texture2D" uid="uid://b74g7x87p8xwx" path="res://Graphics/Enemies/Drone/1 Drones/1/Death.png" id="1_wwflq"]
 [ext_resource type="Shader" uid="uid://3eyyqpjc4awp" path="res://Shaders/Hurts_effect.tres" id="2_ie02j"]
 [ext_resource type="Texture2D" uid="uid://bn7gpjmkr2grm" path="res://Graphics/Enemies/Drone/1 Drones/1/Idle.png" id="2_q31nm"]
@@ -290,8 +290,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tuivb"]
 _data = {
-"Hurt": SubResource("Animation_5finp"),
-"RESET": SubResource("Animation_ymlft")
+&"Hurt": SubResource("Animation_5finp"),
+&"RESET": SubResource("Animation_ymlft")
 }
 
 [node name="Enemy_3" type="CharacterBody2D" groups=["Enemy"]]

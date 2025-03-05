@@ -1,6 +1,6 @@
 [gd_scene load_steps=41 format=3 uid="uid://d0lv1t50yhwap"]
 
-[ext_resource type="Script" path="res://Scripts/Enemy_1.gd" id="1_xnerr"]
+[ext_resource type="Script" uid="uid://ddvjjllkxfhm2" path="res://Scripts/Enemy_1.gd" id="1_xnerr"]
 [ext_resource type="Shader" uid="uid://3eyyqpjc4awp" path="res://Shaders/Hurts_effect.tres" id="2_5735i"]
 [ext_resource type="Texture2D" uid="uid://bsrpvg7b3h605" path="res://Graphics/Cyberpunk Characters/2 Punk/Angry.png" id="2_vjile"]
 [ext_resource type="Texture2D" uid="uid://bo7xyr3ix0lrr" path="res://Graphics/Cyberpunk Characters/2 Punk/Punk_idle.png" id="2_xj8j7"]
@@ -262,8 +262,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tuivb"]
 _data = {
-"Hurt": SubResource("Animation_5finp"),
-"RESET": SubResource("Animation_ymlft")
+&"Hurt": SubResource("Animation_5finp"),
+&"RESET": SubResource("Animation_ymlft")
 }
 
 [node name="Enemy_1" type="CharacterBody2D" groups=["Enemy"]]
