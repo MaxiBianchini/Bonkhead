@@ -91,6 +91,7 @@ func update_sprite_direction(value):
 func shoot_bullet():
 	var bullet = bullet_scene.instantiate() as Area2D # Instancia la bala
 	
+	bullet.mask = 2
 	# Le indicamos quién la disparó:
 	bullet.shooter = self
 	

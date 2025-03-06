@@ -263,7 +263,7 @@ func shoot_bullet():
 	update_animation()
 	
 	var bullet = bullet_scene.instantiate() as Area2D # Instancia la bala
-	
+	bullet.mask = 3
 	# Le indicamos quién la disparó:
 	bullet.shooter = self
 	

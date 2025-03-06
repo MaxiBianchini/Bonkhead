@@ -105,7 +105,7 @@ func _patrol_horizontally(delta: float) -> void:
 func shoot_bullet() -> void:
 	drone_sprite.play("Attack")
 	var bullet = bullet_scene.instantiate() as Area2D
-	
+	bullet.mask = 2
 	bullet.shooter = self # Le indicamos quién la disparó:
 	
 	bullet.position = position + bullet_offset

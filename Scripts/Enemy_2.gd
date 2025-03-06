@@ -62,7 +62,7 @@ func _physics_process(delta: float) -> void:
 
 func shoot_bullet() -> void:
 	var bullet = bullet_scene.instantiate() as Area2D
-	
+	bullet.mask = 2
 	# Le indicamos quién la disparó:
 	bullet.shooter = self
 	

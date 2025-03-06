@@ -985,7 +985,7 @@ wait_time = 5.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_tuivb")
+&"": SubResource("AnimationLibrary_tuivb")
 }
 
 [connection signal="timeout" from="DashTimer" to="." method="_on_dash_timer_timeout"]
