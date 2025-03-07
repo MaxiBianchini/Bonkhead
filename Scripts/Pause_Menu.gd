@@ -100,8 +100,10 @@ func _on_return_to_menu_pressed():
 
 func on_player_died():
 	$GameOverMenu.visible = true
+	get_tree().paused = true
 
 func _on_playagain_pressed():
+	get_tree().paused = false
 	get_tree().reload_current_scene()
 
 # Continuar el juego (ocultar el menú)
