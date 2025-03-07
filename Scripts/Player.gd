@@ -42,7 +42,7 @@ var current_state: String = ""
 var change_gun_type: bool = false
 
 func _ready():
-	area2D.connect("body_entered", Callable(self, "_on_body_entered"))
+	pass
 
 func _physics_process(delta):
 	if is_alive:
@@ -307,6 +307,7 @@ func take_damage():
 func _on_body_entered(body):
 	if body.is_in_group("Enemy") and is_alive:
 		take_damage()
+	
 
 func disable_player_collision():
 	area2D.set_collision_mask_value(3,false)
@@ -323,3 +324,9 @@ func _on_dash_timer_timeout():
 
 func _on_can_dash_timeout():
 	can_dash = true
+
+func _on_area_entered(area: Area2D) -> void:
+	if area.is_in_group("Dead"):
+		await (get_tree().create_timer(1.0).timeout)
+		lives = 0
+		player_died.emit()
