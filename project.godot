@@ -36,6 +36,7 @@ enabled=PackedStringArray("res://addons/Phantom_Camera/plugin.cfg")
 Enemy=""
 Player=""
 Fondo=""
+Dead=""
 
 [input]
 

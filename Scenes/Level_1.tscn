@@ -53,6 +53,7 @@
 [ext_resource type="Script" uid="uid://c0gjidam1ydup" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="35_dj60k"]
 [ext_resource type="PackedScene" uid="uid://fxla73vs5hxe" path="res://Prefabs/Phantom_Area.tscn" id="36_qaamm"]
 [ext_resource type="Texture2D" uid="uid://ddr0c4rfbebvs" path="res://Graphics/Zonas/Power-station-zone/3 Objects/2 Decoration/27.png" id="53_yqj6f"]
+[ext_resource type="PackedScene" uid="uid://d2fpq7nxaiblh" path="res://Prefabs/Dead_Area.tscn" id="54_q3luj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_m8v84"]
 font = ExtResource("17_3bvd6")
@@ -108,9 +109,6 @@ size = Vector2(571, 54)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ox0pl"]
 resource_local_to_scene = true
 size = Vector2(571, 54)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fdbj4"]
-size = Vector2(259, 20)
 
 [node name="Node2D" type="Node2D"]
 process_mode = 3
@@ -255,34 +253,40 @@ scale = Vector2(2.11111, 1)
 texture = ExtResource("21_y2hxy")
 
 [node name="22" type="Sprite2D" parent="Decoration"]
+z_index = -1
 position = Vector2(1019, 1540)
 scale = Vector2(1, 1.03125)
 texture = ExtResource("12_4hl8y")
 
 [node name="23" type="Sprite2D" parent="Decoration"]
+z_index = -1
 position = Vector2(1404, 1334.5)
 scale = Vector2(1, 1.4375)
 texture = ExtResource("16_1v0gd")
 
 [node name="31" type="Sprite2D" parent="Decoration"]
+z_index = -1
 position = Vector2(1306, 1288)
 texture = ExtResource("10_t18ma")
 
 [node name="32" type="Sprite2D" parent="Decoration"]
+z_index = -1
 position = Vector2(1363, 1292)
 texture = ExtResource("28_wrhf7")
 
 [node name="33" type="Sprite2D" parent="Decoration"]
+z_index = -1
 position = Vector2(1394, 1333)
 texture = ExtResource("20_tfrk4")
 
 [node name="34" type="Sprite2D" parent="Decoration"]
+z_index = -1
 position = Vector2(1131, 1524)
 rotation = 3.14159
 texture = ExtResource("8_6uoxd")
 
 [node name="35" type="Sprite2D" parent="Decoration"]
-z_index = 2
+z_index = -1
 position = Vector2(375, 1387)
 texture = ExtResource("25_2j4dd")
 
@@ -294,15 +298,18 @@ scale = Vector2(1, 1.66742)
 texture = ExtResource("12_4hl8y")
 
 [node name="42" type="Sprite2D" parent="Decoration"]
+z_index = -1
 position = Vector2(132, 1687)
 texture = ExtResource("26_8pthq")
 
 [node name="43" type="Sprite2D" parent="Decoration"]
+z_index = -1
 position = Vector2(58, 1663)
 scale = Vector2(2.72857, 3.5)
 texture = ExtResource("18_u6715")
 
 [node name="44" type="Sprite2D" parent="Decoration"]
+z_index = -1
 position = Vector2(91, 1665)
 texture = ExtResource("10_dmepy")
 
@@ -318,14 +325,17 @@ rotation = -0.490438
 texture = ExtResource("12_4hl8y")
 
 [node name="39" type="Sprite2D" parent="Decoration"]
+z_index = -1
 position = Vector2(1872, 1686)
 texture = ExtResource("28_b42oa")
 
 [node name="40" type="Sprite2D" parent="Decoration"]
+z_index = -1
 position = Vector2(2075, 1661)
 texture = ExtResource("9_m6c2t")
 
 [node name="41" type="Sprite2D" parent="Decoration"]
+z_index = -1
 position = Vector2(1999, 1663)
 texture = ExtResource("10_dmepy")
 
@@ -829,11 +839,11 @@ vertical_alignment = 1
 [node name="Player" parent="." instance=ExtResource("2_72p7r")]
 process_mode = 1
 z_index = 1
-position = Vector2(1237, 1062)
+position = Vector2(285, 1665)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
-position = Vector2(1237, 1062)
+position = Vector2(285, 1630)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
@@ -848,7 +858,7 @@ script = ExtResource("33_htkjl")
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(1237, 1062)
+position = Vector2(285, 1630)
 script = ExtResource("34_2m2q6")
 priority = 1
 follow_mode = 2
@@ -972,12 +982,8 @@ position = Vector2(1621, 607)
 [node name="Enemy_12" parent="Node2D" instance=ExtResource("17_t4et2")]
 position = Vector2(1644, 1001)
 
-[node name="Dead_Area" type="Area2D" parent="."]
-position = Vector2(542, 1757)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Dead_Area"]
-shape = SubResource("RectangleShape2D_fdbj4")
-metadata/_edit_lock_ = true
+[node name="Dead_Area" parent="." instance=ExtResource("54_q3luj")]
+position = Vector2(545, 1722)
 
 [connection signal="toggled" from="OptionsMenu/Options/HBoxContainer/FullScreen/Label/CheckButton" to="." method="_on_fullscreen_checkbutton_toggled"]
 
