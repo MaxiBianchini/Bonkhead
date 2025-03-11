@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d06x0cllmi2ac"
-path="res://.godot/imported/Industrial-zone.png-ba812b823c0364c0a3f92b152f3f5b12.ctex"
+uid="uid://b48j6eu7ahhqt"
+path="res://.godot/imported/13.png-959e56bc7e2c4f28965074b9d5e293bf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Graphics/Zonas/Industrial-zone/Industrial-zone.png"
-dest_files=["res://.godot/imported/Industrial-zone.png-ba812b823c0364c0a3f92b152f3f5b12.ctex"]
+source_file="res://Graphics/Zonas/Station-zone/3 Objects/2 Decoration/13.png"
+dest_files=["res://.godot/imported/13.png-959e56bc7e2c4f28965074b9d5e293bf.ctex"]
 
 [params]
 

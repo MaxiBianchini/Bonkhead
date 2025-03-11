@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d06x0cllmi2ac"
-path="res://.godot/imported/Industrial-zone.png-ba812b823c0364c0a3f92b152f3f5b12.ctex"
+uid="uid://bn6ronbqnurq8"
+path="res://.godot/imported/Exclusion-zone.png-620d313deca327cea25401a804ffa794.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Graphics/Zonas/Industrial-zone/Industrial-zone.png"
-dest_files=["res://.godot/imported/Industrial-zone.png-ba812b823c0364c0a3f92b152f3f5b12.ctex"]
+source_file="res://Graphics/Zonas/Exclusion-zone/Exclusion-zone.png"
+dest_files=["res://.godot/imported/Exclusion-zone.png-620d313deca327cea25401a804ffa794.ctex"]
 
 [params]
 
