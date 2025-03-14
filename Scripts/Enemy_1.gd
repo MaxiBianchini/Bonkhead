@@ -7,7 +7,10 @@ extends CharacterBody2D
 @onready var detection_area = $Area2D/CollisionShape2D2
 @onready var anim_player = $AnimationPlayer
 
-@onready var player = get_parent().get_node("../Player") # Encuentra al jugador en la escena
+@onready var player = get_tree().current_scene.get_node_or_null("%Player") # Encuentra al jugador en la escena
+
+const FLOOR_RAYCAST_RIGHT_POS: Vector2 = Vector2(22, 12)
+const FLOOR_RAYCAST_LEFT_POS: Vector2 = Vector2(-5, 12)
 
 # Variables para controlar el movimiento y la física
 var direction: int = 1
@@ -44,6 +47,7 @@ func _physics_process(delta):
 		# Invierte la dirección si está en la pared o no está en el suelo
 		if is_on_wall() or not raycast_floor.is_colliding():
 			direction *= -1
+			raycast_floor.position = FLOOR_RAYCAST_LEFT_POS if direction < 0 else FLOOR_RAYCAST_RIGHT_POS
 		
 		# Controla el movimiento del enemigo
 		if !enemy_is_near:

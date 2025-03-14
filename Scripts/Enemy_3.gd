@@ -7,7 +7,7 @@ extends CharacterBody2D
 @onready var drone_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
-@onready var player = get_node("../Player")
+@onready var player = get_tree().current_scene.get_node_or_null("%Player") # Encuentra al jugador en la escena
 var bullet_scene: PackedScene = preload("res://Prefabs/Bullet_1.tscn")
 
 var bullet_dir: Vector2 = Vector2.RIGHT
