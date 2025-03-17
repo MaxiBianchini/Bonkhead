@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=4 uid="uid://mwhbup6tnnqo"]
+[gd_scene load_steps=64 format=4 uid="uid://mwhbup6tnnqo"]
 
 [ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://Recursos/PowerStationTileSet.tres" id="1_c1dvb"]
 [ext_resource type="Script" uid="uid://csmg076s44l30" path="res://Scripts/Pause_Menu.gd" id="1_jm8e1"]
@@ -49,6 +49,8 @@
 [ext_resource type="Script" uid="uid://c5qy3qr1bd3cm" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="34_2m2q6"]
 [ext_resource type="Script" uid="uid://c0gjidam1ydup" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="35_dj60k"]
 [ext_resource type="PackedScene" uid="uid://fxla73vs5hxe" path="res://Prefabs/Phantom_Area.tscn" id="36_qaamm"]
+[ext_resource type="Texture2D" uid="uid://30mchi3gi365" path="res://Graphics/GUI/9 Other/3 Skill icons/Skillicon7_16.png" id="51_8wlb5"]
+[ext_resource type="Texture2D" uid="uid://boij4x2dox2yn" path="res://Nuevo/spritesheet.png" id="51_ewtky"]
 [ext_resource type="PackedScene" uid="uid://d2fpq7nxaiblh" path="res://Prefabs/Dead_Area.tscn" id="54_q3luj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_m8v84"]
@@ -115,7 +117,6 @@ motion_offset = Vector2(0, -50)
 
 [node name="Background1" type="Sprite2D" parent="Background/ParallaxBackground/ParallaxLayer"]
 texture_filter = 1
-position = Vector2(-87, 51)
 texture = ExtResource("3_fwilu")
 centered = false
 
@@ -125,7 +126,6 @@ motion_offset = Vector2(0, -50)
 
 [node name="Background2" type="Sprite2D" parent="Background/ParallaxBackground/ParallaxLayer2"]
 texture_filter = 1
-position = Vector2(-87, 51)
 texture = ExtResource("4_8kuxf")
 centered = false
 
@@ -135,7 +135,6 @@ motion_offset = Vector2(0, -50)
 
 [node name="Background3" type="Sprite2D" parent="Background/ParallaxBackground/ParallaxLayer3"]
 texture_filter = 1
-position = Vector2(-87, 51)
 texture = ExtResource("5_06qqj")
 centered = false
 
@@ -145,7 +144,6 @@ motion_offset = Vector2(0, -50)
 
 [node name="Background4" type="Sprite2D" parent="Background/ParallaxBackground/ParallaxLayer4"]
 texture_filter = 1
-position = Vector2(-87, 51)
 texture = ExtResource("6_al3q1")
 centered = false
 
@@ -155,7 +153,6 @@ motion_offset = Vector2(0, -50)
 
 [node name="Background5" type="Sprite2D" parent="Background/ParallaxBackground/ParallaxLayer5"]
 texture_filter = 1
-position = Vector2(-87, 51)
 texture = ExtResource("7_u54d8")
 centered = false
 
@@ -859,6 +856,33 @@ position = Vector2(596, 1072)
 
 [node name="Dead_Area" parent="." instance=ExtResource("54_q3luj")]
 position = Vector2(545, 1722)
+
+[node name="GUI" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Sprite2D" type="Sprite2D" parent="GUI"]
+position = Vector2(198, 86)
+scale = Vector2(6.17187, 5.15625)
+texture = ExtResource("51_ewtky")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GUI"]
+offset_left = 27.0
+offset_top = 44.0
+offset_right = 271.0
+offset_bottom = 99.0
+scale = Vector2(3, 3)
+
+[node name="Sprite2D" type="Sprite2D" parent="GUI/HBoxContainer"]
+position = Vector2(15.667, 16)
+texture = ExtResource("51_8wlb5")
+
+[node name="Sprite2D2" type="Sprite2D" parent="GUI/HBoxContainer"]
+position = Vector2(57.333, 16)
+texture = ExtResource("51_8wlb5")
+
+[node name="Sprite2D3" type="Sprite2D" parent="GUI/HBoxContainer"]
+position = Vector2(98.3333, 16)
+texture = ExtResource("51_8wlb5")
 
 [connection signal="toggled" from="OptionsMenu/Options/HBoxContainer/FullScreen/Label/CheckButton" to="." method="_on_fullscreen_checkbutton_toggled"]
 
