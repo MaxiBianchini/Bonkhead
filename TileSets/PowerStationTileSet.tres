@@ -1,13 +1,13 @@
 [gd_resource type="TileSet" load_steps=17 format=3 uid="uid://bwmrtff06jx5m"]
 
-[ext_resource type="Texture2D" uid="uid://bn6ronbqnurq8" path="res://Graphics/Zonas/Exclusion-zone/Exclusion-zone.png" id="1_ytfyc"]
-[ext_resource type="Texture2D" uid="uid://bl6cfe4jcc366" path="res://Graphics/Zonas/Green-zone/Green-zone.png" id="2_ovoqu"]
-[ext_resource type="Texture2D" uid="uid://d06x0cllmi2ac" path="res://Graphics/Zonas/Industrial-zone/Industrial-zone.png" id="3_3cysp"]
-[ext_resource type="Texture2D" uid="uid://duucdsl62xwpa" path="res://Graphics/Zonas/Exclusion-zone/Bidirectional Platform.png" id="3_ovoqu"]
-[ext_resource type="Texture2D" uid="uid://b481tnfk33dlk" path="res://Graphics/Zonas/Station-zone/Station-zone.png" id="4_i5wm2"]
-[ext_resource type="Texture2D" uid="uid://4ixht17trucf" path="res://Graphics/Zonas/Green-zone/Bidirectional Platform.png" id="6_3cysp"]
-[ext_resource type="Texture2D" uid="uid://cdnjvvj85nqhb" path="res://Graphics/Zonas/Industrial-zone/Bidirectional Platform.png" id="7_3qcl4"]
-[ext_resource type="Texture2D" uid="uid://bqxhmhfgivukq" path="res://Graphics/Zonas/Station-zone/Bidirectional Platform.png" id="8_7avcq"]
+[ext_resource type="Texture2D" uid="uid://bn6ronbqnurq8" path="res://Graphics/Zonas/Exclusion-zone/1 Tiles/Exclusion-zone.png" id="1_ytfyc"]
+[ext_resource type="Texture2D" uid="uid://bl6cfe4jcc366" path="res://Graphics/Zonas/Green-zone/1 Tiles/Green-zone.png" id="2_ovoqu"]
+[ext_resource type="Texture2D" uid="uid://d06x0cllmi2ac" path="res://Graphics/Zonas/Industrial-zone/1 Tiles/Industrial-zone.png" id="3_3cysp"]
+[ext_resource type="Texture2D" uid="uid://duucdsl62xwpa" path="res://Graphics/Zonas/Exclusion-zone/1 Tiles/Bidirectional Platform.png" id="3_ovoqu"]
+[ext_resource type="Texture2D" uid="uid://b481tnfk33dlk" path="res://Graphics/Zonas/Station-zone/1 Tiles/Station-zone.png" id="4_i5wm2"]
+[ext_resource type="Texture2D" uid="uid://4ixht17trucf" path="res://Graphics/Zonas/Green-zone/1 Tiles/Bidirectional Platform.png" id="6_3cysp"]
+[ext_resource type="Texture2D" uid="uid://cdnjvvj85nqhb" path="res://Graphics/Zonas/Industrial-zone/1 Tiles/Bidirectional Platform.png" id="7_3qcl4"]
+[ext_resource type="Texture2D" uid="uid://bqxhmhfgivukq" path="res://Graphics/Zonas/Station-zone/1 Tiles/Bidirectional Platform.png" id="8_7avcq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3qcl4"]
 texture = ExtResource("1_ytfyc")
