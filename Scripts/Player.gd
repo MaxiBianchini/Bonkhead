@@ -41,6 +41,8 @@ var gun_type: String ="Small"
 var current_state: String = ""
 var change_gun_type: bool = false
 
+signal change_UI_lives(nueva_vida)
+
 func _ready():
 	pass
 
@@ -291,6 +293,7 @@ func change_weapon():
 func take_damage():
 	if is_alive:
 		lives -= 1
+		emit_signal("change_UI_lives", lives)  # Enviar la señal a la UI
 		if lives <= 0:
 			is_alive = false
 			animated_sprite.play("Death")
