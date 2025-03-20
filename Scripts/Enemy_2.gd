@@ -19,6 +19,9 @@ var bullet_offset: Vector2 = Vector2(-15, 5)
 var lives: int = 3
 var is_alive: bool = true
 
+signal add_points
+var points = 25
+
 func _ready() -> void:
 	animated_sprite.play("Idle")
 	
@@ -75,6 +78,7 @@ func take_damage() -> void:
 	if is_alive:
 		anim_player.play("Hurt")
 		lives -= 1
+		emit_signal("add_points", points)  # Enviar la señal a la UI
 		if lives == 0:
 			is_alive = false
 			animated_sprite.play("Death")

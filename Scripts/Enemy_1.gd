@@ -12,11 +12,14 @@ extends CharacterBody2D
 const FLOOR_RAYCAST_RIGHT_POS: Vector2 = Vector2(22, 12)
 const FLOOR_RAYCAST_LEFT_POS: Vector2 = Vector2(-5, 12)
 
+
 # Variables para controlar el movimiento y la física
 var direction: int = 1
 const gravity: int = 2000
 const movement_velocity: int = 60
 
+signal add_points
+var points = 20
 var is_shooting: bool = false
 
 # Variables para controlar la vida
@@ -111,6 +114,7 @@ func take_damage():
 	if is_alive:
 		anim_player.play("Hurt")
 		lives -= 1
+		emit_signal("add_points", points)  # Enviar la señal a la UI
 		if lives == 0:
 			is_alive = false
 			animated_sprite.play("Death")

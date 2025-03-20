@@ -41,7 +41,7 @@ var gun_type: String ="Small"
 var current_state: String = ""
 var change_gun_type: bool = false
 
-signal change_UI_lives(nueva_vida)
+signal change_UI_lives(change_lives)
 
 func _ready():
 	pass
@@ -101,7 +101,7 @@ func _physics_process(delta):
 	velocity.y += gravity * delta
 	
 	move_and_slide()                 
-	update_sprite_direction()        
+	if is_alive:update_sprite_direction()        
 	update_animation()               
 	handle_double_jump()
 
@@ -139,6 +139,8 @@ func update_sprite_direction():
 		area2D.position.x = offset
 
 func update_animation():
+	if not is_alive:
+		return  # No seguir actualizando animaciones si el jugador está muerto
 	# Solo hacemos la lógica si no está en "Hurt" y aún tienes vidas.
 	if animated_sprite.animation != "Hurt" and lives != 0:
 		# Movimiento vertical de caída.
@@ -297,6 +299,9 @@ func take_damage():
 		if lives <= 0:
 			is_alive = false
 			animated_sprite.play("Death")
+			animated_sprite2.play("Death")
+			animated_sprite3.play("Death")
+			
 			current_state = "Death"
 			call_deferred("disable_player_collision")
 			await (get_tree().create_timer(1.5).timeout)
@@ -305,7 +310,7 @@ func take_damage():
 			$AnimationPlayer.play("Hurt")
 			call_deferred("disable_player_collision")
 			await (get_tree().create_timer(3.0).timeout)
-			call_deferred("enable_player_collision")
+			#call_deferred("enable_player_collision")
 
 func _on_body_entered(body):
 	if body.is_in_group("Enemy") and is_alive:
@@ -330,6 +335,7 @@ func _on_can_dash_timeout():
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Dead"):
-		await (get_tree().create_timer(1.0).timeout)
 		lives = 0
+		emit_signal("change_UI_lives", lives)  # Enviar la señal a la UI
+		await (get_tree().create_timer(1.0).timeout)
 		player_died.emit()

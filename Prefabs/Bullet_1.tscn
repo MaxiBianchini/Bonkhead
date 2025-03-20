@@ -8,6 +8,7 @@ radius = 3.0
 height = 6.0
 
 [node name="Bullet_1" type="Area2D"]
+process_mode = 1
 collision_layer = 16
 script = ExtResource("1_tfrpg")
 

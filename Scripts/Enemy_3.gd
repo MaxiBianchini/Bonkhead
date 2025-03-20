@@ -29,6 +29,9 @@ var hover_offset_y: float = 25.0 # Offset en Y
 var lives: int = 3
 var is_alive: bool = true
 
+signal add_points
+var points = 30
+
 func _ready() -> void:
 	drone_sprite.play("Walk Scan")
 	start_position = position
@@ -131,6 +134,7 @@ func take_damage() -> void:
 		return
 	
 	lives -= 1
+	emit_signal("add_points", points)  # Enviar la señal a la UI
 	if lives <= 0:
 		is_alive = false
 		drone_sprite.play("Death")

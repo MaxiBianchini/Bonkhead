@@ -8,7 +8,11 @@ extends Control
 @onready var Back_Button = $OthersMenu/BackButtonContainer/BackButton
 @onready var button_background = $CanvasLayer/ButtonBackground
 
+var textura_cursor = preload("res://Graphics/GUI/Cursors/1.png")  # Reemplaza con la ruta de tu imagen
+
 func _ready():
+	Input.set_custom_mouse_cursor(textura_cursor)
+	
 	# Conectamos las señales de los botones a sus respectivas funciones
 	Play_Button.pressed.connect(_on_start_game_pressed)
 	Option_Button.pressed.connect(_on_options_pressed)

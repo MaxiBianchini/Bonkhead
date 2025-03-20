@@ -3,51 +3,57 @@ extends Node
 # Referencias a nodos importantes
 @onready var pause_menu = $PauseMenu
 @onready var button_background = $PauseMenu/ButtonBackground
+@onready var enemies_node = $Enemies  # Referencia al nodo que contiene los enemigos
 
-# Variables varias
-var option_is_pressed
-var option_is_now_visible
-var esc_activated
-
-var tiempo_jugado: float = 0.0
-var puntos: int = 0
-var vidas: int = 3  # Puedes cambiar el número inicial de vidas
-
-@onready var tiempo_label = $GUI/TimeLabel
-@onready var puntos_label = $GUI/PointsLabel
-@onready var vidas_sprites = $GUI/LivesLabel/Lives/HBoxContainer.get_children()  # Obtiene todos los sprites dentro del HBoxContainer
-
+@onready var time_label = $GUI/HBoxContainer/TimeLabel/Text
+@onready var points_label = $GUI/HBoxContainer/PointsLabel/Text
+@onready var lives_sprites = $GUI/HBoxContainer/LivesLabel/HBoxContainer.get_children()  # Obtiene todos los sprites dentro del HBoxContainer
 
 # Conectamos las señales de los botones al script
 @onready var MainMenu_Button = $PauseMenu/VBoxContainer/MainMenuButton
 @onready var Option_Button = $PauseMenu/VBoxContainer/OptionButton
 @onready var Resume_Button = $PauseMenu/VBoxContainer/ResumeButtom
 @onready var Back_Button = $OptionsMenu/BackButtonContainer/BackButton
-@onready var Exit_Button = $PauseMenu/ExitButton
 @onready var PlayAgain_Button = $GameOverMenu/VBoxContainer/PlayButton
 @onready var MainMenu_Button2 = $GameOverMenu/VBoxContainer/MainMenuButton
 
+# Variables varias
+var option_is_pressed
+var option_is_now_visible
+var esc_activated
 
-func _ready() -> void:
+var game_time: float = 0.0
+var points: int = 0
+
+var textura_cursor = preload("res://Graphics/GUI/Cursors/1.png")  # Reemplaza con la ruta de tu imagen
+
+func _ready() -> void: 
+	Input.set_custom_mouse_cursor(textura_cursor)
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN) # Ocultar el cursor
+	
+	#add_points.connect(new_points)
+	for enemy in enemies_node.get_children():  # Obtiene todos los nodos hijos dentro de `enemies`
+		if enemy.has_signal("add_points"):  # Asegura que el nodo tiene la señal
+			enemy.add_points.connect(add_new_points)
+			
 	var player = $Player  # Asegúrate de que Player esté correctamente referenciado
 	if player:
 		player.player_died.connect(on_player_died)
-		player.change_UI_lives.connect(actualizar_vidas)
+		player.change_UI_lives.connect(update_lives)
 	
 	MainMenu_Button.pressed.connect(_on_mainmenu_pressed)
 	Option_Button.pressed.connect(_on_options_pressed)
 	Resume_Button.pressed.connect(_on_resume_pressed)
 	Back_Button.pressed.connect(_on_back_pressed)
-	Exit_Button.pressed.connect(_on_exit_pressed)
-	
 	MainMenu_Button2.pressed.connect(_on_mainmenu_pressed)
 	PlayAgain_Button.pressed.connect(_on_playagain_pressed)
 	esc_activated = false
 
 func _process(delta):
 	# Aumentar el tiempo jugado
-	tiempo_jugado += delta
-	actualizar_ui()
+	if $GUI.visible:
+		game_time += delta
+		update_ui()
 
 func _on_mainmenu_pressed():
 	get_tree().paused = false  # Reanuda el juego
@@ -76,12 +82,15 @@ func _on_options_pressed():
 	esc_activated = false
 
 func _on_resume_pressed():
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	$GUI.visible = true
 	pause_menu.hide()
 	get_tree().paused = false  # Reanuda el juego
 
 func _on_back_pressed():
 	$OptionsMenu.hide()
 	await animate_menu(false)
+	
 	$PauseMenu/VBoxContainer.show()
 	option_is_pressed = false
 	option_is_now_visible = false
@@ -107,15 +116,23 @@ func toggle_pause_menu():
 		# Si no se ha presionado el botón de opciones, manejamos el menú de pausa
 		pause_menu.visible = !pause_menu.visible
 		get_tree().paused = pause_menu.visible
+		$GUI.visible = !pause_menu.visible
+		if pause_menu.visible:Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		else:Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 		esc_activated = false
 
 # Ir al menú principal (cambiar escena)
 func _on_return_to_menu_pressed():
 	get_tree().paused = false  # Reanuda el juego
+	$GUI.visible = true
 
 func on_player_died():
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	$GameOverMenu.visible = true
+	$GUI.visible = false
 	get_tree().paused = true
+	
+	
 
 func _on_playagain_pressed():
 	get_tree().paused = false
@@ -131,19 +148,20 @@ func _on_fullscreen_checkbutton_toggled(toggled_on: bool) -> void:
 	else:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED) # Cambia a modo ventana
 
-func agregar_puntos(valor: int):
-	puntos += valor
-	actualizar_ui()
+func add_new_points(value: int):
+	points += value
+	update_ui()
 
-func actualizar_ui():
+func update_ui():
 	# Actualizar el cronómetro en formato mm:ss
-	var minutos = int(tiempo_jugado) / 60
-	var segundos = int(tiempo_jugado) % 60
-	tiempo_label.text = "%02d:%02d" % [minutos, segundos]
+	var minuts = int(game_time) / 60
+	var seconds = int(game_time) % 60
+	time_label.text = "%02d:%02d" % [minuts, seconds]
 	
 	# Actualizar puntos y vidas
-	puntos_label.text = "Puntos: " + str(puntos)
+	points_label.text = str(points)
 	
-func actualizar_vidas(nueva_vida):
-	for i in range(len(vidas_sprites)):
-		vidas_sprites[i].visible = i < nueva_vida  # Muestra/oculta según la cantidad de vidas
+func update_lives(lives):
+	for i in range(len(lives_sprites)):
+		lives_sprites[i].visible = i < lives  # Muestra/oculta según la cantidad de vidas
+		

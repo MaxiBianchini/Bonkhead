@@ -13,6 +13,9 @@ var is_driving: bool = false
 # Constantes para el movimiento
 var speed: float = 250
 
+signal add_points
+var points = 35
+
 # Posiciones iniciales del raycast_floor para derecha e izquierda
 const FLOOR_RAYCAST_RIGHT_POS: Vector2 = Vector2(50, 27.5)
 const FLOOR_RAYCAST_LEFT_POS: Vector2 = Vector2(-50, 27.5)
@@ -66,6 +69,7 @@ func take_damage() -> void:
 		return # No hacer nada si ya está muerto
 	
 	lives -= 1
+	emit_signal("add_points", points)  # Enviar la señal a la UI
 	if lives <= 0:
 		is_alive = false
 		is_driving = false
