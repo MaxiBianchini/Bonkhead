@@ -25,6 +25,9 @@ var lives: int = 5
 var is_alive: bool = true
 
 func _ready():
+	var sprite = $AnimatedSprite2D 
+	sprite.material = sprite.material.duplicate()
+	
 	animated_sprite.play("Idle")	# Reproducir la animación Idle al iniciar
 	raycast_floor.position = FLOOR_RAYCAST_RIGHT_POS # Configurar la posición inicial del floor_raycast
 
@@ -77,7 +80,6 @@ func take_damage() -> void:
 		animated_sprite.play("Death") # Reproducir la animación de muerte
 	else:
 		animation_player.play("Hurt") # Reproducir la animación de daño
-		await (get_tree().create_timer(3.0).timeout) # Esperar 3 segundos antes de continuar
 
 # Función para manejar la finalización de las animaciones
 func _on_animation_finished() -> void:

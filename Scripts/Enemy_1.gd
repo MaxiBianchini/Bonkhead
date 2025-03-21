@@ -35,6 +35,9 @@ var bullet_offset: Vector2
 var can_shoot: bool = true
 
 func _ready():
+	var sprite = $AnimatedSprite2D 
+	sprite.material = sprite.material.duplicate()
+
 	animated_sprite.play("Walk") # Reproduce la animación de caminar por defecto
 
 func _physics_process(delta):
@@ -68,7 +71,7 @@ func _physics_process(delta):
 					
 					shoot_bullet()
 					can_shoot = false
-					await (get_tree().create_timer(2.0).timeout)
+					await (get_tree().create_timer(1.5).timeout)
 					can_shoot = true
 			else:
 				animated_sprite.play("Walk")
@@ -126,10 +129,10 @@ func _on_animation_finished():
 
 
 func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("Player"):
+	if body.is_in_group("Player") and body.is_alive:
 		enemy_is_near = true
 
 
 func _on_body_exited(body: Node2D) -> void:
-	if body.is_in_group("Player"):
+	if body.is_in_group("Player") and body.is_alive:
 		enemy_is_near = false

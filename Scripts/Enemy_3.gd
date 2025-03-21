@@ -33,6 +33,9 @@ signal add_points
 var points = 30
 
 func _ready() -> void:
+	var sprite = $AnimatedSprite2D 
+	sprite.material = sprite.material.duplicate()
+	
 	drone_sprite.play("Walk Scan")
 	start_position = position
 	initial_height = position.y
@@ -116,12 +119,12 @@ func shoot_bullet() -> void:
 	get_tree().current_scene.add_child(bullet)
 
 func _on_body_entered(body: Node) -> void:
-	if body.is_in_group("Player") and is_alive:
+	if body.is_in_group("Player") and body.is_alive:
 		drone_sprite.play("Walk")
 		follow_player = true
 
 func _on_body_exited(body: Node) -> void:
-	if body.is_in_group("Player") and is_alive:
+	if body.is_in_group("Player"):
 		drone_sprite.play("Walk Scan")
 		follow_player = false
 
@@ -141,5 +144,4 @@ func take_damage() -> void:
 		collision_shape.position.y = 9
 	else:
 		anim_player.play("Hurt")
-		await get_tree().create_timer(3.0).timeout
 	

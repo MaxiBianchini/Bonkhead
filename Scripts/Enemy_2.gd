@@ -28,6 +28,8 @@ func _ready() -> void:
 	# Conectar señales
 	animated_sprite.animation_finished.connect(_on_animation_finished)
 	
+	var sprite = $AnimatedSprite2D 
+	sprite.material = sprite.material.duplicate()
 
 
 func _physics_process(delta: float) -> void:
@@ -85,13 +87,13 @@ func take_damage() -> void:
 	
 
 func _on_body_entered(body: Node) -> void:
-	if body.is_in_group("Player") and is_alive:
+	if body.is_in_group("Player") and body.is_alive:
 		animated_sprite.play("Atack")
 		can_shoot = true
 
 
 func _on_body_exited(body: Node) -> void:
-	if body.is_in_group("Player") and is_alive:
+	if body.is_in_group("Player"):
 		animated_sprite.play("Idle")
 		can_shoot = false
 
