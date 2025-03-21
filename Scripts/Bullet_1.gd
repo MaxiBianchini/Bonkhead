@@ -10,7 +10,7 @@ var direction: Vector2   # Direccion
 var shooter: Node = null  # O un tipo más específico si lo deseass
 var mask: int = 1
 # Timer para autodestruir la bala
-var life_time: float = 1.5
+var life_time: float = 0.7
 
 func _ready():
 	set_collision_mask_value(mask,true)
@@ -18,7 +18,6 @@ func _ready():
 	# Configura el timer para autodestruir la bala
 	await get_tree().create_timer(life_time).timeout
 	queue_free()
-
 
 func _physics_process(delta):
 	
@@ -42,6 +41,6 @@ func _on_body_entered(body):
 	elif body.is_in_group("Floor"):
 		queue_free()  # Eliminar la bala
 	
-	if body.is_in_group("Enemy") or body.is_in_group("Player"):  # Verificar si colisionó con un enemigo
-		body.take_damage()  # Función de daño en el enemigo
+	if (body.is_in_group("Enemy") or body.is_in_group("Player")) and body.is_alive:  # Verificar si colisionó con un enemigo o el player
+		body.take_damage()  # Función de daño
 		queue_free()  # Eliminar la bala
