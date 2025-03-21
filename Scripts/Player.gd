@@ -61,6 +61,13 @@ func _physics_process(delta):
 				if collider.is_in_group("Platform"):
 					ignore_platform_collision()
 			elif is_on_floor():
+				match player_dir:
+						"RIGHT":
+							bullet_offset = Vector2(35, -9)
+							bullet_dir = Vector2.RIGHT
+						"LEFT":
+							bullet_offset = Vector2(-15, -9)
+							bullet_dir = Vector2.LEFT
 				first_jump_completed = true
 				velocity.y = jump_force
 				match gun_type:
@@ -115,6 +122,8 @@ func update_sprite_direction():
 			s.flip_h = true
 		
 		player_dir = "LEFT"
+		bullet_offset = Vector2(-15, -9)
+		bullet_dir = Vector2.LEFT
 		
 		raycast_wall.position.x = offset
 		raycast_wall.target_position.x = -offset
@@ -130,6 +139,9 @@ func update_sprite_direction():
 			s.flip_h = false
 		
 		player_dir = "RIGHT"
+		
+		bullet_offset = Vector2(35, -9)
+		bullet_dir = Vector2.RIGHT
 		
 		raycast_wall.position.x = offset
 		raycast_wall.target_position.x = offset
@@ -310,10 +322,10 @@ func take_damage():
 			$AnimationPlayer.play("Hurt")
 			call_deferred("disable_player_collision")
 			await (get_tree().create_timer(3.0).timeout)
-			#call_deferred("enable_player_collision")
+			call_deferred("enable_player_collision")
 
 func _on_body_entered(body):
-	if body.is_in_group("Enemy") and is_alive:
+	if body.is_in_group("Enemy") and body.is_alive:
 		take_damage()
 	
 
