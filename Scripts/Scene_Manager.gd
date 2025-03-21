@@ -98,7 +98,7 @@ func _on_back_pressed():
 
 # Método para manejar la pausa
 func _input(event):
-	if event.is_action_pressed("ui_cancel") and !esc_activated:  # Detecta la tecla "Esc"
+	if event.is_action_pressed("ui_cancel") and !esc_activated and !$GameOverMenu.visible:  # Detecta la tecla "Esc"
 		toggle_pause_menu()
 
 # Mostrar u ocultar el menú de pausa
@@ -130,8 +130,7 @@ func on_player_died():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	$GameOverMenu.visible = true
 	$GUI.visible = false
-	get_tree().paused = true
-	
+	#get_tree().paused = true
 	
 
 func _on_playagain_pressed():
