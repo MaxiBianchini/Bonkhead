@@ -37,6 +37,7 @@ Enemy=""
 Player=""
 Fondo=""
 Dead=""
+Floor=""
 
 [input]
 
@@ -86,6 +87,10 @@ Shoot={
 2d_physics/layer_3="Enemies"
 2d_physics/layer_4="Collectibles"
 2d_physics/layer_5="Bullets"
+
+[phantom_camera]
+
+tips/show_jitter_tips=false
 
 [rendering]
 

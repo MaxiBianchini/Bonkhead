@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cfdnwh558m6i2"]
+
+[ext_resource type="Script" uid="uid://b8qeh5rwsdqab" path="res://Scripts/Falling_Platform.gd" id="1_ocy05"]
+[ext_resource type="Texture2D" uid="uid://bu0uy4gq21yja" path="res://Graphics/Zonas/Exclusion-zone/1 Tiles/MovingPlatform.png" id="1_qi0lp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ocy05"]
+size = Vector2(46, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x5u1c"]
+size = Vector2(48, 12)
+
+[node name="FallingPlatform" type="CharacterBody2D"]
+script = ExtResource("1_ocy05")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_qi0lp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ocy05")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_x5u1c")
