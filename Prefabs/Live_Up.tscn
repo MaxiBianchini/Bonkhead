@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cscqxhrr4mwbx"]
+
+[ext_resource type="Texture2D" uid="uid://beqnac4chs2lj" path="res://Graphics/GUI/Status/1-4.png" id="1_l6agx"]
+[ext_resource type="Script" uid="uid://ybo7j4ho56m5" path="res://Scripts/Live_Up.gd" id="1_o0alv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o0alv"]
+
+[node name="Live_Up" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_o0alv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("1_l6agx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_o0alv")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -329,6 +329,14 @@ func _on_body_entered(body):
 		take_damage()
 	
 
+func increase_life():
+	if lives < 3:
+		lives += 1
+		emit_signal("change_UI_lives", lives)  # Enviar la señal a la UI
+		return true
+	else:
+		return false
+
 func disable_player_collision():
 	area2D.set_collision_mask_value(3,false)
 	area2D.set_collision_mask_value(4,false)
