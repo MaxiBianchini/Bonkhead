@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://d1vt7g0mfuxqw"
+path="res://.godot/imported/click tap.ogg-284dbf98d26a137113fd37b73cb40888.oggvorbisstr"
+
+[deps]
+
+source_file="res://SFX/mouse/click tap.ogg"
+dest_files=["res://.godot/imported/click tap.ogg-284dbf98d26a137113fd37b73cb40888.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

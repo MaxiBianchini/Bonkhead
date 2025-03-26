@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bc38j5p5e0ht"
+path="res://.godot/imported/beep simple.mp3-475edff001ac3e0d2aaccc485c5b9126.mp3str"
+
+[deps]
+
+source_file="res://SFX/mouse/beep simple.mp3"
+dest_files=["res://.godot/imported/beep simple.mp3-475edff001ac3e0d2aaccc485c5b9126.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

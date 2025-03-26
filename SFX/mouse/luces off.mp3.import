@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://r6yfkvksy7xe"
+path="res://.godot/imported/luces off.mp3-3ec500dfa304a475f6bd358a4465ce79.mp3str"
+
+[deps]
+
+source_file="res://SFX/mouse/luces off.mp3"
+dest_files=["res://.godot/imported/luces off.mp3-3ec500dfa304a475f6bd358a4465ce79.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

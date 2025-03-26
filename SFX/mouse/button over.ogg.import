@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cm7linpkfkkso"
+path="res://.godot/imported/button over.ogg-b391bf2af33823f5663636e72792937c.oggvorbisstr"
+
+[deps]
+
+source_file="res://SFX/mouse/button over.ogg"
+dest_files=["res://.godot/imported/button over.ogg-b391bf2af33823f5663636e72792937c.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

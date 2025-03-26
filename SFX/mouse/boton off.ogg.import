@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://l5hx53bic7a0"
+path="res://.godot/imported/boton off.ogg-61ec4893b848f21cc131f203982a775b.oggvorbisstr"
+
+[deps]
+
+source_file="res://SFX/mouse/boton off.ogg"
+dest_files=["res://.godot/imported/boton off.ogg-61ec4893b848f21cc131f203982a775b.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

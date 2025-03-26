@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bu753xa7kcimi"
+path="res://.godot/imported/click wrong.mp3-841db618ae5d38bfc1cd1507dba41895.mp3str"
+
+[deps]
+
+source_file="res://SFX/mouse/click wrong.mp3"
+dest_files=["res://.godot/imported/click wrong.mp3-841db618ae5d38bfc1cd1507dba41895.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
