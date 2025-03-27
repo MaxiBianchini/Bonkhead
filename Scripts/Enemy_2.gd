@@ -81,7 +81,7 @@ func take_damage() -> void:
 		anim_player.play("Hurt")
 		lives -= 1
 		emit_signal("add_points", points)  # Enviar la señal a la UI
-		if lives == 0:
+		if lives <= 0:
 			is_alive = false
 			animated_sprite.play("Death")
 	
