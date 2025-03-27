@@ -17,6 +17,8 @@ extends Node
 @onready var PlayAgain_Button = $GameOverMenu/VBoxContainer/PlayButton
 @onready var MainMenu_Button2 = $GameOverMenu/VBoxContainer/MainMenuButton
 
+@onready var doorway = $Doorway
+
 # Variables varias
 var option_is_pressed
 var option_is_now_visible
@@ -30,6 +32,10 @@ var textura_cursor = preload("res://Graphics/GUI/Cursors/1.png")  # Reemplaza co
 func _ready() -> void: 
 	Input.set_custom_mouse_cursor(textura_cursor)
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN) # Ocultar el cursor
+	
+	if doorway:
+		doorway.has_signal("winLevel")
+		doorway.winLevel.connect(LevelPass)
 	
 	#add_points.connect(new_points)
 	for enemy in enemies_node.get_children():  # Obtiene todos los nodos hijos dentro de `enemies`
@@ -150,6 +156,9 @@ func _on_fullscreen_checkbutton_toggled(toggled_on: bool) -> void:
 func add_new_points(value: int):
 	points += value
 	update_ui()
+
+func LevelPass():
+	ScenesTransitions.change_scene("res://Scenes/Main_Menu.tscn")
 
 func update_ui():
 	# Actualizar el cronómetro en formato mm:ss
