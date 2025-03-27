@@ -109,7 +109,7 @@ size = Vector2(461, 40)
 resource_local_to_scene = true
 size = Vector2(479, 54)
 
-[node name="Node2D" type="Node2D"]
+[node name="Level_1" type="Node2D"]
 process_mode = 3
 script = ExtResource("1_jm8e1")
 metadata/_edit_horizontal_guides_ = [540.0, 1080.0, 1312.0]
@@ -790,11 +790,11 @@ vertical_alignment = 1
 unique_name_in_owner = true
 process_mode = 1
 z_index = 1
-position = Vector2(53, 711)
+position = Vector2(1939, 1058)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
-position = Vector2(198.333, 711)
+position = Vector2(1936.67, 1058)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
@@ -809,7 +809,7 @@ script = ExtResource("33_htkjl")
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(198.333, 711)
+position = Vector2(1936.67, 1058)
 script = ExtResource("34_2m2q6")
 priority = 1
 follow_mode = 2
