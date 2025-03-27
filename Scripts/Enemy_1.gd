@@ -72,6 +72,7 @@ func _physics_process(delta):
 		# Aplica el movimiento físico al enemigo
 		move_and_slide()
 		
+		
 		# Comportamiento cuando el jugador está cerca y vivo
 		if enemy_is_near and player and player.is_alive:
 			animated_sprite.play("Shoot")  # Cambia a la animación de disparo
@@ -83,6 +84,7 @@ func _physics_process(delta):
 				can_shoot = true
 		else:
 			animated_sprite.play("Walk")  # Vuelve a la animación de caminar si el jugador no está cerca
+			enemy_is_near = false
 
 # Actualiza la dirección visual del sprite y ajusta posiciones
 func update_sprite_direction(is_facing_left: bool):
@@ -115,7 +117,7 @@ func take_damage():
 		anim_player.play("Hurt")          # Reproduce la animación de daño
 		lives -= 1                        # Reduce las vidas
 		emit_signal("add_points", points) # Emite señal para agregar puntos
-		if lives == 0:
+		if lives <= 0:
 			is_alive = false              # Marca al enemigo como muerto
 			animated_sprite.play("Death") # Reproduce la animación de muerte
 
