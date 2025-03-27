@@ -64,7 +64,7 @@ func _process(delta):
 func _on_mainmenu_pressed():
 	get_tree().paused = false  # Reanuda el juego
 	# Cambia de escena o realiza alguna acción para iniciar el juego
-	get_tree().change_scene_to_file("res://Scenes/Main_Menu.tscn")
+	ScenesTransitions.change_scene("res://Scenes/Main_Menu.tscn")
 
 # Función para manejar la animación del menú, tomando un parámetro para determinar si es de entrada o salida
 func animate_menu(enter: bool):
@@ -141,7 +141,7 @@ func on_player_died():
 
 func _on_playagain_pressed():
 	get_tree().paused = false
-	get_tree().reload_current_scene()
+	ScenesTransitions.change_scene(get_tree().current_scene.scene_file_path)
 
 # Continuar el juego (ocultar el menú)
 func _on_continue_pressed():
