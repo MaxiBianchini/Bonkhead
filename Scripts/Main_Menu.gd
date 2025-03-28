@@ -51,11 +51,11 @@ func _on_exit_pressed():
 
 # Función para manejar la animación del menú, tomando un parámetro para determinar si es de entrada o salida
 func animate_menu(enter: bool):
-	var sizes = Vector2(1430, 1080) if enter else Vector2(540, 700)
-	var positions = Vector2(245, 0) if enter else Vector2(690, 305)
+	var size = Vector2(1430, 1080) if enter else Vector2(540, 700)
+	var position = Vector2(245, 0) if enter else Vector2(690, 305)
 	var tween = create_tween()
-	tween.tween_property(button_background, "sizes", sizes, 0.5)#.set_trans(Tween.TRANS_SINE)
-	tween.parallel().tween_property(button_background, "positions", positions, 0.5)
+	tween.tween_property(button_background, "size", size, 0.5)#.set_trans(Tween.TRANS_SINE)
+	tween.parallel().tween_property(button_background, "position", position, 0.5)
 	await tween.finished
 
 # Centraliza la lógica para mostrar el otro menú
