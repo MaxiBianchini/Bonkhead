@@ -39,6 +39,7 @@ Player=""
 Fondo=""
 Dead=""
 Floor=""
+Wall=""
 
 [input]
 
