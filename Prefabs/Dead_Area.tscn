@@ -1,6 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://d2fpq7nxaiblh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fdbj4"]
+resource_local_to_scene = true
 size = Vector2(259, 20)
 
 [node name="Dead_Area" type="Area2D" groups=["Dead"]]
