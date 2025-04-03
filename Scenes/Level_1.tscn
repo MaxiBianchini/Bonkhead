@@ -54,7 +54,7 @@
 [ext_resource type="PackedScene" uid="uid://cfdnwh558m6i2" path="res://Prefabs/Falling_Platform.tscn" id="54_kd73b"]
 [ext_resource type="PackedScene" uid="uid://d2fpq7nxaiblh" path="res://Prefabs/Dead_Area.tscn" id="54_q3luj"]
 [ext_resource type="Texture2D" uid="uid://ccv10fc17chx" path="res://Graphics/GUI/Status/Points.png" id="55_3wqco"]
-[ext_resource type="PackedScene" uid="uid://cudsw1wye1kqc" path="res://Prefabs/Spikes.tscn" id="55_kd73b"]
+[ext_resource type="PackedScene" uid="uid://cudsw1wye1kqc" path="res://Prefabs/SpikesX3.tscn" id="55_kd73b"]
 [ext_resource type="PackedScene" uid="uid://cscqxhrr4mwbx" path="res://Prefabs/Live_Up.tscn" id="56_kd73b"]
 [ext_resource type="PackedScene" uid="uid://dfayxmxk17csg" path="res://Prefabs/Doorway.tscn" id="57_bvkrs"]
 
