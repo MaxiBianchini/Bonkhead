@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sd0t6"]
 size = Vector2(26, 53)
 
-[node name="Area2D" type="Area2D"]
+[node name="Doorway" type="Area2D"]
 collision_mask = 2
 script = ExtResource("1_sd0t6")
 
