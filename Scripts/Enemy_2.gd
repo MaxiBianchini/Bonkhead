@@ -77,13 +77,15 @@ func shoot_bullet() -> void:
 
 
 func take_damage() -> void:
-	if is_alive:
+	lives -= 1
+	if lives <= 0:
+			is_alive = false              # Marca al enemigo como muerto
+			animated_sprite.play("Death") # Reproduce la animación de muerte
+			await get_tree().create_timer(0.75).timeout
+			queue_free()
+	elif is_alive:
 		anim_player.play("Hurt")
-		lives -= 1
-		emit_signal("add_points", points)  # Enviar la señal a la UI
-		if lives <= 0:
-			is_alive = false
-			animated_sprite.play("Death")
+		emit_signal("add_points", points) # Emite señal para agregar puntos
 	
 
 func _on_body_entered(body: Node) -> void:
@@ -99,5 +101,6 @@ func _on_body_exited(body: Node) -> void:
 
 
 func _on_animation_finished() -> void:
-	if animated_sprite.animation == "Death":
-		queue_free()
+	pass
+	#if animated_sprite.animation == "Death":
+		#queue_free()
