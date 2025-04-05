@@ -356,6 +356,6 @@ func _on_can_dash_timeout():
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Dead"):
 		lives = 0
-		emit_signal("change_UI_lives", lives)  # Enviar la señal a la UI
-		await (get_tree().create_timer(1.0).timeout)
-		player_died.emit()
+		take_damage()
+		#emit_signal("change_UI_lives", lives)  # Enviar la señal a la UI
+		#player_died.emit()
