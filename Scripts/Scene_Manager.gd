@@ -1,8 +1,8 @@
 extends Node
 
 # Referencias a nodos importantes
-@onready var pause_menu = $PauseMenu
-@onready var button_background = $PauseMenu/ButtonBackground
+#@onready var pause_menu = $PauseMenu
+#@onready var button_background = $PauseMenu/ButtonBackground
 @onready var enemies_node = $Enemies  # Referencia al nodo que contiene los enemigos
 
 @onready var time_label = $GUI/HBoxContainer/TimeLabel/Text
@@ -10,10 +10,10 @@ extends Node
 @onready var lives_sprites = $GUI/HBoxContainer/LivesLabel/HBoxContainer.get_children()  # Obtiene todos los sprites dentro del HBoxContainer
 
 # Conectamos las señales de los botones al script
-@onready var MainMenu_Button = $PauseMenu/VBoxContainer/MainMenuButton
-@onready var Option_Button = $PauseMenu/VBoxContainer/OptionButton
-@onready var Resume_Button = $PauseMenu/VBoxContainer/ResumeButtom
-@onready var Back_Button = $OptionsMenu/BackButtonContainer/BackButton
+#@onready var MainMenu_Button = $PauseMenu/VBoxContainer/MainMenuButton
+#@onready var Option_Button = $PauseMenu/VBoxContainer/OptionButton
+#@onready var Resume_Button = $PauseMenu/VBoxContainer/ResumeButtom
+#@onready var Back_Button = $OptionsMenu/BackButtonContainer/BackButton
 @onready var PlayAgain_Button = $GameOverMenu/VBoxContainer/PlayButton
 @onready var MainMenu_Button2 = $GameOverMenu/VBoxContainer/MainMenuButton
 
@@ -47,10 +47,10 @@ func _ready() -> void:
 		player.player_died.connect(on_player_died)
 		player.change_UI_lives.connect(update_lives)
 	
-	MainMenu_Button.pressed.connect(_on_mainmenu_pressed)
-	Option_Button.pressed.connect(_on_options_pressed)
-	Resume_Button.pressed.connect(_on_resume_pressed)
-	Back_Button.pressed.connect(_on_back_pressed)
+	#MainMenu_Button.pressed.connect(_on_mainmenu_pressed)
+	#Option_Button.pressed.connect(_on_options_pressed)
+	#Resume_Button.pressed.connect(_on_resume_pressed)
+	#Back_Button.pressed.connect(_on_back_pressed)
 	MainMenu_Button2.pressed.connect(_on_mainmenu_pressed)
 	PlayAgain_Button.pressed.connect(_on_playagain_pressed)
 	esc_activated = false
@@ -71,8 +71,8 @@ func animate_menu(enter: bool):
 	var size = Vector2(1430, 1080) if enter else Vector2(540, 700)
 	var position = Vector2(245, 0) if enter else Vector2(690, 190)
 	var tween = create_tween()
-	tween.tween_property(button_background, "size", size, 0.5)#.set_trans(Tween.TRANS_SINE)
-	tween.parallel().tween_property(button_background, "position", position, 0.5)
+	#tween.tween_property(button_background, "size", size, 0.5)#.set_trans(Tween.TRANS_SINE)
+	#tween.parallel().tween_property(button_background, "position", position, 0.5)
 	await tween.finished
 
 # Cierra el juego
@@ -90,17 +90,17 @@ func _on_options_pressed():
 func _on_resume_pressed():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	$GUI.visible = true
-	pause_menu.hide()
+	#pause_menu.hide()
 	get_tree().paused = false  # Reanuda el juego
 
-func _on_back_pressed():
-	$OptionsMenu.hide()
-	await animate_menu(false)
+#func _on_back_pressed():
+	#$OptionsMenu.hide()
+	#await animate_menu(false)
 	
-	$PauseMenu/VBoxContainer.show()
-	option_is_pressed = false
-	option_is_now_visible = false
-	esc_activated = false
+	#$PauseMenu/VBoxContainer.show()
+	#option_is_pressed = false
+	#option_is_now_visible = false
+	#esc_activated = false
 
 # Método para manejar la pausa
 func _input(event):
@@ -109,22 +109,25 @@ func _input(event):
 
 # Mostrar u ocultar el menú de pausa
 func toggle_pause_menu():
-	esc_activated = true
+	esc_activated  = true
 	if option_is_pressed:
 		if !option_is_now_visible:
 			# Si se presionó el botón de opciones y el menú de opciones aún no es visible,
 			# esperamos a que termine de mostrarse
 			return
-		else:
+		#else:
 			# Si el menú de opciones ya es visible, volvemos al menú de pausa
-			_on_back_pressed()
-	else:
+			#_on_back_pressed()
+	else:#
 		# Si no se ha presionado el botón de opciones, manejamos el menú de pausa
-		pause_menu.visible = !pause_menu.visible
-		get_tree().paused = pause_menu.visible
-		$GUI.visible = !pause_menu.visible
-		if pause_menu.visible:Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		else:Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+		show_pause_menu()
+		#pause_menu.visible = !pause_menu.visible
+		#get_tree().paused = pause_menu.visible
+		#$GUI.visible = !pause_menu.visible
+		#if pause_menu.visible:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		
+		#else:Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 		esc_activated = false
 
 # Ir al menú principal (cambiar escena)
@@ -173,3 +176,8 @@ func update_lives(lives):
 	for i in range(len(lives_sprites)):
 		lives_sprites[i].visible = i < lives  # Muestra/oculta según la cantidad de vidas
 		
+
+
+func show_pause_menu() -> void:
+	var pause_menu = preload("res://Scenes/PauseMenu.tscn").instantiate()
+	get_tree().current_scene.add_child(pause_menu)

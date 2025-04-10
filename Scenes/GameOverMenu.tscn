@@ -1,0 +1,118 @@
+[gd_scene load_steps=8 format=3 uid="uid://by12apuyapsbr"]
+
+[ext_resource type="Texture2D" uid="uid://df3eaw8ttv2l6" path="res://Graphics/GUI/Windows/1-4.png" id="1_tyfdi"]
+[ext_resource type="FontFile" uid="uid://c88rb6dh1ub4j" path="res://Graphics/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="2_h5hk4"]
+[ext_resource type="Texture2D" uid="uid://b3degqy5uf8ea" path="res://Graphics/GUI/Buttons/7-1.png" id="3_f01nq"]
+[ext_resource type="Texture2D" uid="uid://bdn1sk233bncw" path="res://Graphics/GUI/Buttons/7-3.png" id="4_mdt18"]
+[ext_resource type="Texture2D" uid="uid://b2bod7ibmudmv" path="res://Graphics/GUI/Buttons/7-2.png" id="5_anb84"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_aih8b"]
+line_spacing = 10.0
+font = ExtResource("2_h5hk4")
+font_size = 60
+
+[sub_resource type="LabelSettings" id="LabelSettings_m8v84"]
+font = ExtResource("2_h5hk4")
+font_size = 30
+
+[node name="GameOverMenu" type="CanvasLayer"]
+
+[node name="ButtonBackground" type="TextureRect" parent="."]
+process_mode = 3
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 690.0
+offset_top = 190.0
+offset_right = -690.0
+offset_bottom = -190.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+localize_numeral_system = false
+texture = ExtResource("1_tyfdi")
+
+[node name="Label" type="Label" parent="ButtonBackground"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 174.5
+offset_right = 480.0
+offset_bottom = 304.5
+text = "Game
+Over"
+label_settings = SubResource("LabelSettings_aih8b")
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.611
+anchor_right = 0.5
+anchor_bottom = 0.611
+offset_left = -125.0
+offset_top = -119.88
+offset_right = 125.0
+offset_bottom = 112.12
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 35
+alignment = 1
+
+[node name="PlayButton" type="TextureButton" parent="VBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("3_f01nq")
+texture_pressed = ExtResource("4_mdt18")
+texture_hover = ExtResource("5_anb84")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="VBoxContainer/PlayButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = -35.5
+offset_right = 75.0
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "PLAY
+AGAIN"
+label_settings = SubResource("LabelSettings_m8v84")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MainMenuButton" type="TextureButton" parent="VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("3_f01nq")
+texture_pressed = ExtResource("4_mdt18")
+texture_hover = ExtResource("5_anb84")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="VBoxContainer/MainMenuButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -37.0
+offset_right = 60.0
+offset_bottom = 26.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "MAIN
+MENU"
+label_settings = SubResource("LabelSettings_m8v84")
+horizontal_alignment = 1
+vertical_alignment = 1

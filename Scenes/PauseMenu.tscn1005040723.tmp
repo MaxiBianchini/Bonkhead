@@ -1,0 +1,301 @@
+[gd_scene load_steps=12 format=3 uid="uid://d4iwr8icvtwr6"]
+
+[ext_resource type="Script" uid="uid://dqbyb0sth55en" path="res://Scripts/PauseMenu.gd" id="1_425uk"]
+[ext_resource type="Texture2D" uid="uid://df3eaw8ttv2l6" path="res://Graphics/GUI/Windows/1-4.png" id="1_siy43"]
+[ext_resource type="Texture2D" uid="uid://b3degqy5uf8ea" path="res://Graphics/GUI/Buttons/7-1.png" id="2_yxrls"]
+[ext_resource type="Texture2D" uid="uid://bdn1sk233bncw" path="res://Graphics/GUI/Buttons/7-3.png" id="3_gqxqw"]
+[ext_resource type="Texture2D" uid="uid://b2bod7ibmudmv" path="res://Graphics/GUI/Buttons/7-2.png" id="4_lptsj"]
+[ext_resource type="FontFile" uid="uid://c88rb6dh1ub4j" path="res://Graphics/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="5_425uk"]
+[ext_resource type="Texture2D" uid="uid://uivhim05lh6f" path="res://Graphics/GUI/Buttons/11-1.png" id="7_mys0b"]
+[ext_resource type="Texture2D" uid="uid://duy6x83y07ptt" path="res://Graphics/GUI/Buttons/11-2.png" id="8_c7c70"]
+[ext_resource type="Texture2D" uid="uid://b50anxboht7j5" path="res://Graphics/GUI/Buttons/11-3.png" id="9_pmvjn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_m8v84"]
+font = ExtResource("5_425uk")
+font_size = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_1363l"]
+font = ExtResource("5_425uk")
+font_size = 30
+
+[node name="PauseMenu" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_425uk")
+
+[node name="ButtonBackground" type="TextureRect" parent="."]
+process_mode = 3
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 690.0
+offset_top = 190.0
+offset_right = -690.0
+offset_bottom = -190.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+localize_numeral_system = false
+texture = ExtResource("1_siy43")
+metadata/_edit_use_anchors_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.611
+anchor_right = 0.5
+anchor_bottom = 0.611
+offset_left = -125.0
+offset_top = -307.88
+offset_right = 125.0
+offset_bottom = 68.12
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 35
+alignment = 1
+
+[node name="ResumeButtom" type="TextureButton" parent="VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("2_yxrls")
+texture_pressed = ExtResource("3_gqxqw")
+texture_hover = ExtResource("4_lptsj")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="VBoxContainer/ResumeButtom"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -11.5
+offset_right = 32.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "RESUME"
+label_settings = SubResource("LabelSettings_m8v84")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionButton" type="TextureButton" parent="VBoxContainer"]
+texture_filter = 1
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("2_yxrls")
+texture_pressed = ExtResource("3_gqxqw")
+texture_hover = ExtResource("4_lptsj")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="VBoxContainer/OptionButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -11.5
+offset_right = 32.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "OPTIONS"
+label_settings = SubResource("LabelSettings_m8v84")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MainMenuButton" type="TextureButton" parent="VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("2_yxrls")
+texture_pressed = ExtResource("3_gqxqw")
+texture_hover = ExtResource("4_lptsj")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="VBoxContainer/MainMenuButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -60.0
+offset_top = -37.0
+offset_right = 60.0
+offset_bottom = 26.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "MAIN
+MENU"
+label_settings = SubResource("LabelSettings_m8v84")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionsMenu" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
+
+[node name="Options" type="VBoxContainer" parent="OptionsMenu"]
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -656.0
+offset_top = 70.0
+offset_right = 656.0
+offset_bottom = -70.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="OptionsMenu/Options"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 50
+text = "
+Options"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="OptionsMenu/Options"]
+layout_mode = 2
+
+[node name="Volumen" type="VBoxContainer" parent="OptionsMenu/Options/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+
+[node name="Label2" type="Label" parent="OptionsMenu/Options/HBoxContainer/Volumen"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 25
+text = "
+
+
+
+       Volumen"
+
+[node name="HSlider" type="HSlider" parent="OptionsMenu/Options/HBoxContainer/Volumen/Label2"]
+custom_minimum_size = Vector2(200, 25)
+layout_mode = 2
+offset_left = 161.0
+offset_top = 156.0
+offset_right = 361.0
+offset_bottom = 195.0
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_icons/grabber = ExtResource("7_mys0b")
+theme_override_icons/grabber_highlight = ExtResource("8_c7c70")
+theme_override_icons/tick = ExtResource("9_pmvjn")
+step = 2.0
+allow_lesser = true
+
+[node name="Mute" type="VBoxContainer" parent="OptionsMenu/Options/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="OptionsMenu/Options/HBoxContainer/Mute"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 25
+text = "
+
+
+
+         Mute"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CheckBox" type="CheckBox" parent="OptionsMenu/Options/HBoxContainer/Mute/Label"]
+layout_mode = 0
+offset_left = 223.0
+offset_top = 148.0
+offset_right = 331.0
+offset_bottom = 179.0
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 10
+text = "Sound On"
+flat = true
+alignment = 1
+
+[node name="FullScreen" type="VBoxContainer" parent="OptionsMenu/Options/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="OptionsMenu/Options/HBoxContainer/FullScreen"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 25
+text = "
+
+
+
+         Graphics"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CheckButton" type="CheckButton" parent="OptionsMenu/Options/HBoxContainer/FullScreen/Label"]
+layout_mode = 0
+offset_left = 231.0
+offset_top = 149.0
+offset_right = 420.0
+offset_bottom = 180.0
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 10
+button_pressed = true
+text = "Full Screen On"
+alignment = 1
+
+[node name="BackButtonContainer" type="VBoxContainer" parent="OptionsMenu"]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.611
+anchor_right = 0.5
+anchor_bottom = 0.611
+offset_left = -124.0
+offset_top = 176.12
+offset_right = 125.0
+offset_bottom = 271.12
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 35
+alignment = 1
+
+[node name="BackButton" type="TextureButton" parent="OptionsMenu/BackButtonContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("2_yxrls")
+texture_pressed = ExtResource("3_gqxqw")
+texture_hover = ExtResource("4_lptsj")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="OptionsMenu/BackButtonContainer/BackButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -11.5
+offset_right = 32.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "BACK"
+label_settings = SubResource("LabelSettings_1363l")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
