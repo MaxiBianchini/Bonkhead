@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://fxla73vs5hxe"]
 
-[ext_resource type="Script" uid="uid://bh5tdsjphr0x4" path="res://addons/phantom_camera/examples/scripts/2D/2d_trigger_area.gd" id="1_0v2rs"]
-[ext_resource type="Script" uid="uid://c5qy3qr1bd3cm" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="2_p00d7"]
-[ext_resource type="Script" uid="uid://c0gjidam1ydup" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_0urmf"]
+[ext_resource type="Script" uid="uid://t8wa4e5y5hcf" path="res://addons/phantom_camera/examples/scripts/2D/2d_trigger_area.gd" id="1_0v2rs"]
+[ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="2_p00d7"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="3_0urmf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3dwqs"]
 resource_local_to_scene = true
