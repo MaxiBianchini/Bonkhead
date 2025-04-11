@@ -146,7 +146,7 @@ func save_game_data() -> void:
 
 func load_game_data() -> void:
 	var file = FileAccess.open("user://save_data.json", FileAccess.READ)
-	if file and file.file_exists("user://save_data.json"):
+	if file and FileAccess.file_exists("user://save_data.json"):
 		var data = JSON.parse_string(file.get_as_text())
 		if data:
 			points = data["score"]
