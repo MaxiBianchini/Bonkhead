@@ -120,12 +120,12 @@ func resuem_gameplay() -> void:
 	if gui: gui.visible = true
 
 func go_to_mainmenu() -> void:
-	#load_game_data()
+	load_game_data()
 	get_tree().paused = false
 	ScenesTransitions.change_scene("res://Scenes/Main_Menu.tscn")
 	
 func restart_gameplay() -> void:
-	#load_game_data()
+	load_game_data()
 	get_tree().paused = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	ScenesTransitions.change_scene(get_tree().current_scene.scene_file_path)
