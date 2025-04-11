@@ -14,10 +14,13 @@ var pause_menu: Node = null
 var game_over_menu: Node = null
 
 # Datos globales
-var game_time: float = 0.0
-var points: int = 0
+var current_level: int
+var game_time: float
+var points: int
 
 func _ready() -> void:
+	load_game_data()
+	
 	# Conectar a la señal de cambio de escena
 	get_tree().tree_changed.connect(_on_tree_changed)
 	initialize_scene()
@@ -68,8 +71,7 @@ func _input(event):
 
 func on_player_died():
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	if gui:
-		gui.visible = false
+	if gui: gui.visible = false
 	show_game_over_menu()
 
 func add_new_points(value: int):
@@ -77,7 +79,9 @@ func add_new_points(value: int):
 	update_ui()
 
 func LevelPass():
-	ScenesTransitions.change_scene("res://Scenes/Main_Menu.tscn")
+	current_level += 1
+	save_game_data()  # Guardar los datos
+	ScenesTransitions.change_scene("res://Scenes/Level_" + str(current_level) + ".tscn")
 
 func update_ui():
 	if time_label and points_label:
@@ -94,25 +98,65 @@ func update_lives(lives):
 func show_pause_menu() -> void:
 	get_tree().paused = true
 	pause_menu = preload("res://Scenes/PauseMenu.tscn").instantiate()
-	if not pause_menu.delete_pausemenu.is_connected(resuem_gameplay):
-		pause_menu.delete_pausemenu.connect(resuem_gameplay)
+	if not pause_menu.press_resume.is_connected(resuem_gameplay):
+		pause_menu.press_resume.connect(resuem_gameplay)
+	if not pause_menu.press_mainmenu.is_connected(go_to_mainmenu):
+		pause_menu.press_mainmenu.connect(go_to_mainmenu)
 	get_tree().current_scene.add_child(pause_menu)
 
 # Mostrar menú de game over
 func show_game_over_menu() -> void:
 	get_tree().paused = true
 	game_over_menu = preload("res://Scenes/GameOverMenu.tscn").instantiate()
+	if not game_over_menu.press_playagain.is_connected(restart_gameplay):
+		game_over_menu.press_playagain.connect(restart_gameplay)
 	if not game_over_menu.press_mainmenu.is_connected(go_to_mainmenu):
 		game_over_menu.press_mainmenu.connect(go_to_mainmenu)
 	get_tree().current_scene.add_child(game_over_menu)
 
 func resuem_gameplay() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	get_tree().paused = false
-	if gui:
-		gui.visible = true
+	if gui: gui.visible = true
 
 func go_to_mainmenu() -> void:
-	print("PASO")
+	#load_game_data()
 	get_tree().paused = false
-	print("PASO")
 	ScenesTransitions.change_scene("res://Scenes/Main_Menu.tscn")
+	
+func restart_gameplay() -> void:
+	#load_game_data()
+	get_tree().paused = false
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	ScenesTransitions.change_scene(get_tree().current_scene.scene_file_path)
+	
+func save_game_data() -> void:
+	var data = {
+		"score": points,  # Variable que almacena el puntaje
+		"level": current_level  # Variable que almacena el nivel actual
+	}
+	var file = FileAccess.open("user://save_data.json", FileAccess.WRITE)
+	if file:
+		file.store_string(JSON.stringify(data))
+		file.close()
+		print("Datos guardados correctamente")
+	else:
+		print("Error al guardar datos")
+	
+
+func load_game_data() -> void:
+	var file = FileAccess.open("user://save_data.json", FileAccess.READ)
+	if file and file.file_exists("user://save_data.json"):
+		var data = JSON.parse_string(file.get_as_text())
+		if data:
+			points = data["score"]
+			current_level = data["level"]
+			print("Datos cargados correctamente")
+		else:
+			print("Error al parsear los datos")
+		file.close()
+	else:
+		print("No hay datos guardados, usando valores por defecto")
+		current_level = 1
+		game_time = 0.0
+		points = 0

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dr67ofg26l17s"]
 
-[ext_resource type="Script" uid="uid://cchtcnpl11c14" path="res://Scripts/Scenes_Transitions.gd" id="1_xy2xb"]
+[ext_resource type="Script" uid="uid://cchtcnpl11c14" path="res://Scripts/ScenesTransitions.gd" id="1_xy2xb"]
 
 [sub_resource type="Animation" id="Animation_xy2xb"]
 length = 0.001

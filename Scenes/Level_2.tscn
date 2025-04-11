@@ -246,7 +246,6 @@ func update_lives(lives):
 		lives_sprites[i].visible = i < lives  # Muestra/oculta según la cantidad de vidas
 		
 
-
 func show_pause_menu() -> void:
 	var pause_menu = preload(\"res://Scenes/PauseMenu.tscn\").instantiate()
 	get_tree().current_scene.add_child(pause_menu)
@@ -1147,8 +1146,7 @@ position = Vector2(198.333, 708)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
-limit_right = 2150
-limit_bottom = 1750
+limit_bottom = 2800
 editor_draw_limits = true
 
 [node name="PhantomCameraHost" type="Node" parent="Camera2D"]
