@@ -1,4 +1,4 @@
-extends Node
+extends CanvasLayer
 
 # Referencias a nodos importantes
 @onready var Button_background = $ButtonBackground

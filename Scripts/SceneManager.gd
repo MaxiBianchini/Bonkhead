@@ -126,6 +126,7 @@ func go_to_mainmenu() -> void:
 	
 func restart_gameplay() -> void:
 	load_game_data()
+	game_time = 0.0
 	get_tree().paused = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	ScenesTransitions.change_scene(get_tree().current_scene.scene_file_path)

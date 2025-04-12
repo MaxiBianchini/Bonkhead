@@ -17,6 +17,7 @@ font = ExtResource("2_h5hk4")
 font_size = 30
 
 [node name="GameOverMenu" type="CanvasLayer"]
+process_mode = 3
 script = ExtResource("1_5wj54")
 
 [node name="ButtonBackground" type="TextureRect" parent="."]
@@ -37,6 +38,7 @@ localize_numeral_system = false
 texture = ExtResource("1_tyfdi")
 
 [node name="Label" type="Label" parent="ButtonBackground"]
+process_mode = 3
 layout_mode = 0
 offset_left = 60.0
 offset_top = 174.5
@@ -48,6 +50,7 @@ label_settings = SubResource("LabelSettings_aih8b")
 horizontal_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+process_mode = 3
 anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.611
@@ -63,6 +66,7 @@ theme_override_constants/separation = 35
 alignment = 1
 
 [node name="PlayButton" type="TextureButton" parent="VBoxContainer"]
+process_mode = 3
 texture_filter = 1
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
@@ -73,6 +77,7 @@ texture_hover = ExtResource("5_anb84")
 stretch_mode = 0
 
 [node name="Label" type="Label" parent="VBoxContainer/PlayButton"]
+process_mode = 3
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -92,6 +97,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MainMenuButton" type="TextureButton" parent="VBoxContainer"]
+process_mode = 3
 texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 3
@@ -101,6 +107,7 @@ texture_hover = ExtResource("5_anb84")
 stretch_mode = 0
 
 [node name="Label" type="Label" parent="VBoxContainer/MainMenuButton"]
+process_mode = 3
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

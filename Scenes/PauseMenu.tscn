@@ -19,10 +19,12 @@ font = ExtResource("5_425uk")
 font_size = 30
 
 [node name="PauseMenu" type="CanvasLayer"]
+process_mode = 3
 layer = 0
 script = ExtResource("1_425uk")
 
 [node name="ButtonBackground" type="TextureRect" parent="."]
+process_mode = 3
 texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -38,6 +40,7 @@ size_flags_vertical = 4
 texture = ExtResource("1_siy43")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+process_mode = 3
 anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.611
@@ -53,6 +56,7 @@ theme_override_constants/separation = 35
 alignment = 1
 
 [node name="ResumeButtom" type="TextureButton" parent="VBoxContainer"]
+process_mode = 3
 texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 3
@@ -62,6 +66,7 @@ texture_hover = ExtResource("4_lptsj")
 stretch_mode = 0
 
 [node name="Label" type="Label" parent="VBoxContainer/ResumeButtom"]
+process_mode = 3
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -80,6 +85,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="OptionButton" type="TextureButton" parent="VBoxContainer"]
+process_mode = 3
 texture_filter = 1
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
@@ -90,6 +96,7 @@ texture_hover = ExtResource("4_lptsj")
 stretch_mode = 0
 
 [node name="Label" type="Label" parent="VBoxContainer/OptionButton"]
+process_mode = 3
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -108,6 +115,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MainMenuButton" type="TextureButton" parent="VBoxContainer"]
+process_mode = 3
 texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 3
@@ -117,6 +125,7 @@ texture_hover = ExtResource("4_lptsj")
 stretch_mode = 0
 
 [node name="Label" type="Label" parent="VBoxContainer/MainMenuButton"]
+process_mode = 3
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -136,9 +145,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="OptionsMenu" type="CanvasLayer" parent="."]
+process_mode = 3
 visible = false
 
 [node name="Options" type="VBoxContainer" parent="OptionsMenu"]
+process_mode = 3
 anchors_preset = 13
 anchor_left = 0.5
 anchor_right = 0.5
@@ -151,6 +162,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Label" type="Label" parent="OptionsMenu/Options"]
+process_mode = 3
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_425uk")
 theme_override_font_sizes/font_size = 50
@@ -160,14 +172,17 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="OptionsMenu/Options"]
+process_mode = 3
 layout_mode = 2
 
 [node name="Volumen" type="VBoxContainer" parent="OptionsMenu/Options/HBoxContainer"]
+process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 3
 
 [node name="Label2" type="Label" parent="OptionsMenu/Options/HBoxContainer/Volumen"]
+process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_fonts/font = ExtResource("5_425uk")
@@ -179,6 +194,7 @@ text = "
        Volumen"
 
 [node name="HSlider" type="HSlider" parent="OptionsMenu/Options/HBoxContainer/Volumen/Label2"]
+process_mode = 3
 custom_minimum_size = Vector2(200, 25)
 layout_mode = 2
 offset_left = 161.0
@@ -194,11 +210,13 @@ step = 2.0
 allow_lesser = true
 
 [node name="Mute" type="VBoxContainer" parent="OptionsMenu/Options/HBoxContainer"]
+process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="OptionsMenu/Options/HBoxContainer/Mute"]
+process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_fonts/font = ExtResource("5_425uk")
@@ -212,6 +230,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="CheckBox" type="CheckBox" parent="OptionsMenu/Options/HBoxContainer/Mute/Label"]
+process_mode = 3
 layout_mode = 0
 offset_left = 223.0
 offset_top = 148.0
@@ -224,11 +243,13 @@ flat = true
 alignment = 1
 
 [node name="FullScreen" type="VBoxContainer" parent="OptionsMenu/Options/HBoxContainer"]
+process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="OptionsMenu/Options/HBoxContainer/FullScreen"]
+process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_fonts/font = ExtResource("5_425uk")
@@ -242,6 +263,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="CheckButton" type="CheckButton" parent="OptionsMenu/Options/HBoxContainer/FullScreen/Label"]
+process_mode = 3
 layout_mode = 0
 offset_left = 231.0
 offset_top = 149.0
@@ -254,6 +276,7 @@ text = "Full Screen On"
 alignment = 1
 
 [node name="BackButtonContainer" type="VBoxContainer" parent="OptionsMenu"]
+process_mode = 3
 anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.611
@@ -269,6 +292,7 @@ theme_override_constants/separation = 35
 alignment = 1
 
 [node name="BackButton" type="TextureButton" parent="OptionsMenu/BackButtonContainer"]
+process_mode = 3
 texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 3
@@ -278,6 +302,7 @@ texture_hover = ExtResource("4_lptsj")
 stretch_mode = 0
 
 [node name="Label" type="Label" parent="OptionsMenu/BackButtonContainer/BackButton"]
+process_mode = 3
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
