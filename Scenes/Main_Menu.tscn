@@ -86,16 +86,16 @@ anchor_left = 0.5
 anchor_top = 0.611
 anchor_right = 0.5
 anchor_bottom = 0.611
-offset_left = -125.0
-offset_top = -191.88
-offset_right = 125.0
-offset_bottom = 184.12
+offset_left = -123.0
+offset_top = -196.88
+offset_right = 127.0
+offset_bottom = 179.12
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 35
 alignment = 1
 
-[node name="PlayButton" type="TextureButton" parent="CanvasLayer/ButtonsContainer"]
+[node name="ResumeButton" type="TextureButton" parent="CanvasLayer/ButtonsContainer"]
 texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 3
@@ -105,7 +105,7 @@ texture_hover = ExtResource("3_17nee")
 stretch_mode = 0
 metadata/_edit_lock_ = true
 
-[node name="Label" type="Label" parent="CanvasLayer/ButtonsContainer/PlayButton"]
+[node name="Label" type="Label" parent="CanvasLayer/ButtonsContainer/ResumeButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -119,6 +119,35 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "PLAY"
+label_settings = SubResource("LabelSettings_oayd6")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="NewGameButton" type="TextureButton" parent="CanvasLayer/ButtonsContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_vertical = 3
+texture_normal = ExtResource("5_fo8ij")
+texture_pressed = ExtResource("4_ftf8w")
+texture_hover = ExtResource("3_17nee")
+stretch_mode = 0
+metadata/_edit_lock_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer/ButtonsContainer/NewGameButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -11.5
+offset_right = 32.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "NEW GAME"
 label_settings = SubResource("LabelSettings_oayd6")
 horizontal_alignment = 1
 vertical_alignment = 1

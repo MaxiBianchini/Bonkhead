@@ -18,8 +18,11 @@ var current_level: int
 var game_time: float
 var points: int
 
+var has_saved_game: bool = false  # Indica si hay una partida guardada
+
 func _ready() -> void:
-	load_game_data()
+	check_saved_game()  # Verifica si hay partida guardada al iniciar
+	load_game_data()    # Carga los datos si existen
 	
 	# Conectar a la señal de cambio de escena
 	get_tree().tree_changed.connect(_on_tree_changed)
@@ -48,8 +51,8 @@ func initialize_scene() -> void:
 		
 		if current_scene.has_node("Doorway"):
 			doorway = current_scene.get_node("Doorway")
-			if doorway.has_signal("winLevel") and not doorway.winLevel.is_connected(LevelPass):
-				doorway.winLevel.connect(LevelPass)
+			if doorway.has_signal("winLevel") and not doorway.winLevel.is_connected(pass_to_nextlevel):
+				doorway.winLevel.connect(pass_to_nextlevel)
 		
 		if current_scene.has_node("Player"):
 			player = current_scene.get_node("Player")
@@ -78,7 +81,11 @@ func add_new_points(value: int):
 	points += value
 	update_ui()
 
-func LevelPass():
+# Verifica si existe una partida guardada
+func check_saved_game() -> void:
+	has_saved_game = FileAccess.file_exists("user://save_data.json")
+
+func pass_to_nextlevel():
 	current_level += 1
 	save_game_data()  # Guardar los datos
 	ScenesTransitions.change_scene("res://Scenes/Level_" + str(current_level) + ".tscn")
@@ -161,3 +168,9 @@ func load_game_data() -> void:
 		current_level = 1
 		game_time = 0.0
 		points = 0
+
+# Reinicia los datos para una nueva partida
+func start_new_game() -> void:
+	points = 0
+	current_level = 1
+	save_game_data()  # Guarda para que la nueva partida sea el estado inicial

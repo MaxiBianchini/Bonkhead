@@ -3,28 +3,43 @@ extends Control
 # Conectamos las señales de los botones al script
 @onready var Exit_Button = $CanvasLayer/ExitButton
 @onready var Button_background = $CanvasLayer/ButtonBackground
-@onready var Play_Button = $CanvasLayer/ButtonsContainer/PlayButton
+@onready var Resume_Button = $CanvasLayer/ButtonsContainer/ResumeButton
 @onready var Back_Button = $OthersMenu/BackButtonContainer/BackButton
 @onready var Option_Button = $CanvasLayer/ButtonsContainer/OptionButton
 @onready var Credit_Button = $CanvasLayer/ButtonsContainer/CreditButton
+@onready var NewGame_Button = $CanvasLayer/ButtonsContainer/NewGameButton
+
+var exist_file: SceneManager
 
 func _ready():
 	Input.set_custom_mouse_cursor(preload("res://Graphics/GUI/Cursors/1.png"))
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
 	# Conectamos las señales de los botones a sus respectivas funciones
-	Play_Button.pressed.connect(_on_start_game_pressed)
+	Resume_Button.pressed.connect(_on_continue_pressed)
 	Option_Button.pressed.connect(_on_options_pressed)
 	Credit_Button.pressed.connect(_on_credits_pressed)
 	Exit_Button.pressed.connect(_on_exit_pressed)
 	Back_Button.pressed.connect(_on_back_pressed)
-
-# Inicia el juego cambiando a la escena del primer nivel
-func _on_start_game_pressed():
+	NewGame_Button.pressed.connect(_on_new_game_pressed)
+	
+	Resume_Button.visible = SceneManager.has_saved_game
+	if Resume_Button.visible:
+		$CanvasLayer/ButtonsContainer.size.y = 480.0
+		$CanvasLayer/ButtonsContainer.position.y = 416.0
+ 
+# Carga el nivel guardado
+func _on_continue_pressed():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-	var level_to_load = SceneManager.current_level 
-	var scene_path = "res://Scenes/Level_" + str(level_to_load) + ".tscn" # Construir la ruta de la escena basada en el nivel
-	ScenesTransitions.change_scene(scene_path) # Cambiar a la escena correspondiente
+	var scene_path = "res://Scenes/Level_" + str(SceneManager.current_level) + ".tscn"
+	ScenesTransitions.change_scene(scene_path)
+
+# Inicia una nueva partida
+func _on_new_game_pressed():
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	SceneManager.start_new_game()  # Reinicia los datos
+	var scene_path = "res://Scenes/Level_1.tscn"
+	ScenesTransitions.change_scene(scene_path)
 
 # Muestra el menú de opciones con una animación
 func _on_options_pressed():
