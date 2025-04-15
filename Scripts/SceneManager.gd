@@ -68,7 +68,7 @@ func _process(delta):
 		update_ui()
 
 func _input(event):
-	if event.is_action_pressed("ui_cancel") and gui and gui.visible:
+	if event.is_action_pressed("ui_cancel") and gui and gui.visible and !ScenesTransitions.is_transitioning:
 		gui.visible = false
 		show_pause_menu()
 
@@ -88,6 +88,7 @@ func check_saved_game() -> void:
 func pass_to_nextlevel():
 	current_level += 1
 	save_game_data()  # Guardar los datos
+	game_time = 0.0
 	ScenesTransitions.change_scene("res://Scenes/Level_" + str(current_level) + ".tscn")
 
 func update_ui():
@@ -128,6 +129,7 @@ func resuem_gameplay() -> void:
 
 func go_to_mainmenu() -> void:
 	load_game_data()
+	game_time = 0.0
 	get_tree().paused = false
 	ScenesTransitions.change_scene("res://Scenes/Main_Menu.tscn")
 	

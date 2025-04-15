@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://bh3h363wnt1mt"]
+
+[ext_resource type="Texture2D" uid="uid://ciclxwjk67qi1" path="res://Graphics/GUI/Windows/8-2.png" id="1_aafyb"]
+[ext_resource type="Script" uid="uid://b0hvu58fax5o0" path="res://Scripts/Signpost.gd" id="1_rqi6p"]
+[ext_resource type="FontFile" uid="uid://c88rb6dh1ub4j" path="res://Graphics/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="2_rqi6p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8wlb5"]
+size = Vector2(123, 42)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ceuot"]
+line_spacing = 0.2
+font = ExtResource("2_rqi6p")
+font_size = 9
+
+[node name="Signpost" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_rqi6p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
+shape = SubResource("RectangleShape2D_8wlb5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -75)
+texture = ExtResource("1_aafyb")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -77.0
+offset_top = -86.0
+offset_right = 79.0
+offset_bottom = -59.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+label_settings = SubResource("LabelSettings_ceuot")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
