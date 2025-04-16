@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=4 uid="uid://mwhbup6tnnqo"]
+[gd_scene load_steps=62 format=4 uid="uid://mwhbup6tnnqo"]
 
 [ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://TileSets/PowerStationTileSet.tres" id="1_c1dvb"]
 [ext_resource type="PackedScene" uid="uid://cdqlmgh2vxout" path="res://Prefabs/Player.tscn" id="2_72p7r"]
@@ -71,7 +71,7 @@ size = Vector2(116, 94)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fowuc"]
 resource_local_to_scene = true
-size = Vector2(299, 43)
+size = Vector2(296, 43)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yyitx"]
 resource_local_to_scene = true
@@ -88,6 +88,12 @@ size = Vector2(461, 40)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ceuot"]
 resource_local_to_scene = true
 size = Vector2(479, 54)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8wlb5"]
+size = Vector2(225, 106.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ewtky"]
+size = Vector2(202, 35)
 
 [node name="Level_1" type="Node2D"]
 process_mode = 3
@@ -412,16 +418,15 @@ metadata/_edit_use_anchors_ = true
 unique_name_in_owner = true
 process_mode = 1
 z_index = 1
-position = Vector2(1810, 591)
+position = Vector2(37, 720)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
-position = Vector2(1810, 591)
+position = Vector2(198.333, 720)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
-limit_right = 2150
-limit_bottom = 1750
+limit_bottom = 2800
 editor_draw_limits = true
 
 [node name="PhantomCameraHost" type="Node" parent="Camera2D"]
@@ -431,7 +436,7 @@ script = ExtResource("33_htkjl")
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(1810, 591)
+position = Vector2(198.333, 720)
 script = ExtResource("34_2m2q6")
 priority = 1
 follow_mode = 2
@@ -497,7 +502,7 @@ metadata/_edit_lock_ = true
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" parent="Enemies/Enemy_2/Area2D" index="0"]
-position = Vector2(-110.5, -1.5)
+position = Vector2(-112, -1.5)
 shape = SubResource("RectangleShape2D_fowuc")
 
 [node name="Enemy_1" parent="Enemies" instance=ExtResource("18_noxkl")]
@@ -591,29 +596,37 @@ position = Vector2(1027, 1454)
 position = Vector2(2057, 1335)
 
 [node name="Signpost" parent="." instance=ExtResource("50_ceuot")]
-position = Vector2(2002, 607)
+position = Vector2(683, 714)
 
 [node name="CollisionShape2D" parent="Signpost" index="0"]
-position = Vector2(17, -6.5)
-
-[node name="Sprite2D" parent="Signpost" index="1"]
-position = Vector2(-0.250018, -75)
-scale = Vector2(1.03548, 1)
+position = Vector2(-37.5, -35.75)
+shape = SubResource("RectangleShape2D_8wlb5")
 
 [node name="Label" parent="Signpost" index="2"]
-text = "Press Down + Jump
-to drop through
-platforms"
-metadata/_edit_use_anchors_ = true
+offset_left = -74.0
+offset_top = -93.0
+offset_right = 74.0
+offset_bottom = -58.0
+text = "Press S to Jump
+and A to shoot"
 
 [node name="Signpost2" parent="." instance=ExtResource("50_ceuot")]
-position = Vector2(700, 743)
+position = Vector2(2014, 594)
 
 [node name="CollisionShape2D" parent="Signpost2" index="0"]
-position = Vector2(0, -23)
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_ewtky")
+
+[node name="Sprite2D" parent="Signpost2" index="1"]
+position = Vector2(-1.49997, -51)
+scale = Vector2(1.12903, 1)
 
 [node name="Label" parent="Signpost2" index="2"]
-text = "Press S to Jump"
+offset_left = -78.0
+offset_top = -64.0
+offset_right = 78.0
+offset_bottom = -37.0
+text = "Press Down + Jump to drop through platforms"
 
 [editable path="Phantom_Area"]
 [editable path="Phantom_Area2"]
