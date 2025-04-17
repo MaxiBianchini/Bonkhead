@@ -1,5 +1,6 @@
-[gd_scene load_steps=62 format=4 uid="uid://mwhbup6tnnqo"]
+[gd_scene load_steps=63 format=4 uid="uid://mwhbup6tnnqo"]
 
+[ext_resource type="Script" uid="uid://dt604huw4uhb8" path="res://Scenes/global_audio_manager.gd" id="1_8wlb5"]
 [ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://TileSets/PowerStationTileSet.tres" id="1_c1dvb"]
 [ext_resource type="PackedScene" uid="uid://cdqlmgh2vxout" path="res://Prefabs/Player.tscn" id="2_72p7r"]
 [ext_resource type="Texture2D" uid="uid://da1tyidmimbwi" path="res://Graphics/Zonas/Exclusion-zone/2 Background/Day/1.png" id="3_fwilu"]
@@ -98,6 +99,9 @@ size = Vector2(202, 35)
 [node name="Level_1" type="Node2D"]
 process_mode = 3
 metadata/_edit_horizontal_guides_ = [540.0, 1080.0, 1312.0]
+
+[node name="GlobalAudioManager" type="Node" parent="."]
+script = ExtResource("1_8wlb5")
 
 [node name="Background" type="Node2D" parent="."]
 
@@ -426,7 +430,8 @@ position = Vector2(198.333, 720)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
-limit_bottom = 2800
+limit_right = 2150
+limit_bottom = 1750
 editor_draw_limits = true
 
 [node name="PhantomCameraHost" type="Node" parent="Camera2D"]
