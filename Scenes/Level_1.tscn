@@ -103,6 +103,11 @@ metadata/_edit_horizontal_guides_ = [540.0, 1080.0, 1312.0]
 [node name="GlobalAudioManager" type="Node" parent="."]
 script = ExtResource("1_8wlb5")
 
+[node name="BackgroundMusicPlayer" type="AudioStreamPlayer" parent="GlobalAudioManager"]
+volume_db = -20.095
+autoplay = true
+bus = &"Music"
+
 [node name="Background" type="Node2D" parent="."]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="Background"]
