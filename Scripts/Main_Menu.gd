@@ -9,6 +9,8 @@ extends Control
 @onready var Credit_Button = $CanvasLayer/ButtonsContainer/CreditButton
 @onready var NewGame_Button = $CanvasLayer/ButtonsContainer/NewGameButton
 
+@onready var audio_click = $AudioStreamPlayer
+
 var exist_file: SceneManager
 
 func _ready():
@@ -30,12 +32,14 @@ func _ready():
  
 # Carga el nivel guardado
 func _on_continue_pressed():
+	audio_click.play()
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	var scene_path = "res://Scenes/Level_" + str(SceneManager.current_level) + ".tscn"
 	ScenesTransitions.change_scene(scene_path)
 
 # Inicia una nueva partida
 func _on_new_game_pressed():
+	audio_click.play()
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	SceneManager.start_new_game()  # Reinicia los datos
 	var scene_path = "res://Scenes/Level_1.tscn"
@@ -43,18 +47,21 @@ func _on_new_game_pressed():
 
 # Muestra el menú de opciones con una animación
 func _on_options_pressed():
+	audio_click.play()
 	show_main_menu(false)
 	await animate_menu(true)
 	show_other_menu(true)
 
 # Muestra los créditos con la misma animación de menú
 func _on_credits_pressed():
+	audio_click.play()
 	show_main_menu(false)
 	await animate_menu(true)
 	show_other_menu(false)
 
 # Regresa al menú principal desde cualquier menú secundario con animación
 func _on_back_pressed():
+	audio_click.play()
 	$OthersMenu.hide()
 	$OthersMenu/Options.hide()
 	$OthersMenu/Credits.hide()
@@ -63,6 +70,7 @@ func _on_back_pressed():
 
 # Cierra el juego
 func _on_exit_pressed():
+	audio_click.play()
 	get_tree().quit()
 
 # Función para manejar la animación del menú, tomando un parámetro para determinar si es de entrada o salida

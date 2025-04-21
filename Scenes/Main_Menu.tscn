@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b61e2qh88myfb"]
+[gd_scene load_steps=18 format=3 uid="uid://b61e2qh88myfb"]
 
 [ext_resource type="Texture2D" uid="uid://cn16ddildslab" path="res://Graphics/Zonas/Exclusion-zone/2 Background/Day/Fondo.png" id="1_i5kqb"]
 [ext_resource type="Script" uid="uid://dk5bo8f5w4fu8" path="res://Scripts/Main_Menu.gd" id="1_qsqme"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://duy6x83y07ptt" path="res://Graphics/GUI/Buttons/11-2.png" id="12_nbpdv"]
 [ext_resource type="Texture2D" uid="uid://b50anxboht7j5" path="res://Graphics/GUI/Buttons/11-3.png" id="13_y5em3"]
 [ext_resource type="Texture2D" uid="uid://brc5fi5763mdw" path="res://Graphics/GUI/Godot Logo.png" id="14_e6vgq"]
+[ext_resource type="AudioStream" uid="uid://xrh12o02wtfh" path="res://SFX/mouse/button click.mp3" id="15_cebuy"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_8rfh8"]
 font = ExtResource("2_n46cw")
@@ -476,5 +477,8 @@ label_settings = SubResource("LabelSettings_oayd6")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("15_cebuy")
 
 [connection signal="toggled" from="OthersMenu/Options/HBoxContainer/FullScreen/Label/CheckButton" to="." method="_on_fullscreen_checkbutton_toggled"]
