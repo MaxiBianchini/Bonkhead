@@ -1,4 +1,4 @@
-[gd_scene load_steps=137 format=3 uid="uid://cdqlmgh2vxout"]
+[gd_scene load_steps=142 format=3 uid="uid://cdqlmgh2vxout"]
 
 [ext_resource type="Script" uid="uid://bbt48srafskvx" path="res://Scripts/Player.gd" id="1_y8i6y"]
 [ext_resource type="Texture2D" uid="uid://c4fc75o86mwdi" path="res://Graphics/Character/Player Original Animations/Double Jump.png" id="2_3kxgr"]
@@ -23,6 +23,11 @@
 [ext_resource type="Texture2D" uid="uid://cq001yy6bbv7e" path="res://Graphics/Character/Player with Guns Animations/Small Gun/Walk/Walk Shooting Up.png" id="20_646oc"]
 [ext_resource type="Texture2D" uid="uid://dgxqhuujg7bqn" path="res://Graphics/Character/Player with Guns Animations/Small Gun/Run/Run with Gun.png" id="20_ywnw6"]
 [ext_resource type="Texture2D" uid="uid://codr6dkyn706y" path="res://Graphics/Character/Player with Guns Animations/Small Gun/Walk/Walk with Gun.png" id="21_xfaas"]
+[ext_resource type="AudioStream" uid="uid://nae4yd51hhd6" path="res://SFX/Player/Player_Jump.mp3" id="24_2wlbw"]
+[ext_resource type="AudioStream" uid="uid://b274l61vmh3dr" path="res://SFX/Player/Player_Shoot.mp3" id="25_406my"]
+[ext_resource type="AudioStream" uid="uid://ch2bfifn0sss4" path="res://SFX/Player/Player_Landing.mp3" id="26_fd4tb"]
+[ext_resource type="AudioStream" uid="uid://dmbm25l72f7ou" path="res://SFX/Player/Player_Dash.mp3" id="27_2wlbw"]
+[ext_resource type="AudioStream" uid="uid://d3wbph5ler5ry" path="res://SFX/Player/Player_Hurts.mp3" id="28_406my"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c5nj1"]
 shader = ExtResource("2_b3bx2")
@@ -933,7 +938,7 @@ collision_layer = 2
 floor_max_angle = 0.872665
 script = ExtResource("1_y8i6y")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Player"]]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 process_mode = 1
 z_index = -1
 material = SubResource("ShaderMaterial_c5nj1")
@@ -970,7 +975,7 @@ shape = SubResource("CapsuleShape2D_m4vyk")
 target_position = Vector2(15, 0)
 
 [node name="RayCast2D2" type="RayCast2D" parent="."]
-target_position = Vector2(0, 20)
+target_position = Vector2(0, 42)
 
 [node name="DashTimer" type="Timer" parent="."]
 wait_time = 0.2
@@ -983,6 +988,29 @@ wait_time = 5.0
 libraries = {
 &"": SubResource("AnimationLibrary_tuivb")
 }
+
+[node name="AudioStream_Jump" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("24_2wlbw")
+bus = &"SFX"
+
+[node name="AudioStream_Shoot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("25_406my")
+volume_db = -0.4
+bus = &"SFX"
+
+[node name="AudioStream_Landing" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("26_fd4tb")
+volume_db = 10.0
+attenuation = 2.37841
+bus = &"SFX"
+
+[node name="AudioStream_Dash" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("27_2wlbw")
+bus = &"SFX"
+
+[node name="AudioStream_Hurts" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("28_406my")
+bus = &"SFX"
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_entered"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]

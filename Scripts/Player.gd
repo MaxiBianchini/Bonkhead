@@ -12,6 +12,12 @@ var sprites = [animated_sprite, animated_sprite2, animated_sprite3]
 @onready var raycast_wall = $RayCast2D
 @onready var area2D = $Area2D
 
+@onready var audio_jump = $AudioStream_Jump
+@onready var audio_shoot = $AudioStream_Shoot
+@onready var audio_landing = $AudioStream_Landing
+@onready var audio_dash = $AudioStream_Dash
+@onready var audio_hurts = $AudioStream_Hurts
+
 signal player_died
 
 # Variables para controlar física y movimiento
@@ -23,6 +29,7 @@ var dash_velocity: int = 400
 var movement_velocity: int = 250
 var fall_through_time: float = 0.05  # Tiempo durante el cual se desactiva la colisión
 
+var was_in_air: bool = false
 var can_dash: bool = true
 var is_dashing: bool = false
 var double_jump_enabled: bool = false
@@ -51,7 +58,15 @@ func _physics_process(delta):
 		var input_vector = Vector2.ZERO
 		input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 		
+		if !is_on_floor() and velocity.y > 0:
+			was_in_air = true  # Está cayendo
+		elif raycast_floor.is_colliding() and was_in_air:
+			audio_jump.stop()
+			audio_landing.play()
+			was_in_air = false
+		
 		if Input.is_action_just_pressed("Shoot"):
+			audio_shoot.play()
 			shoot_bullet()
 		
 		# Manejo del salto
@@ -61,6 +76,7 @@ func _physics_process(delta):
 				if collider.is_in_group("Platform"):
 					ignore_platform_collision()
 			elif is_on_floor():
+				audio_jump.play()
 				match player_dir:
 						"RIGHT":
 							bullet_offset = Vector2(35, -9)
@@ -86,6 +102,7 @@ func _physics_process(delta):
 		
 		# Aquí podrías manejar el dash u otras acciones...
 		if Input.is_action_just_pressed("Dash") and can_dash:
+			audio_dash.play()
 			can_dash = false
 			is_dashing = true
 			animated_sprite.stop()
@@ -275,7 +292,6 @@ func handle_double_jump():
 
 # Controlador del Disparo
 func shoot_bullet():
-	
 	update_animation()
 	
 	var bullet = bullet_scene.instantiate() as Area2D # Instancia la bala
@@ -306,6 +322,7 @@ func change_weapon():
 # Controlador del Daño
 func take_damage():
 	if is_alive:
+		audio_hurts.play()
 		lives -= 1
 		emit_signal("change_UI_lives", lives)  # Enviar la señal a la UI
 		if lives <= 0:
