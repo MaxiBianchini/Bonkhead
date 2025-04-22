@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var anim_player: AnimationPlayer = $AnimationPlayer
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var area2d: Area2D = $Area2D
 
 @onready var player = get_tree().current_scene.get_node_or_null("%Player") # Encuentra al jugador en la escena
@@ -25,12 +25,8 @@ var points = 25
 func _ready() -> void:
 	animated_sprite.play("Idle")
 	
-	# Conectar señales
-	animated_sprite.animation_finished.connect(_on_animation_finished)
-	
 	var sprite = $AnimatedSprite2D 
 	sprite.material = sprite.material.duplicate()
-
 
 func _physics_process(delta: float) -> void:
 	if not (player and is_alive):
@@ -64,7 +60,6 @@ func _physics_process(delta: float) -> void:
 			await get_tree().create_timer(0.75).timeout  # Pausa de 3 segundos antes de volver a la normalidad
 			shoot_now = true
 
-
 func shoot_bullet() -> void:
 	var bullet = bullet_scene.instantiate() as Area2D
 	bullet.mask = 2
@@ -75,32 +70,28 @@ func shoot_bullet() -> void:
 	bullet.direction = bullet_dir  # Asegúrate de que la bala tenga una variable 'direction'
 	get_tree().current_scene.add_child(bullet)
 
-
 func take_damage() -> void:
-	lives -= 1
-	if lives <= 0:
-			is_alive = false              # Marca al enemigo como muerto
-			animated_sprite.play("Death") # Reproduce la animación de muerte
-			await get_tree().create_timer(0.75).timeout
-			queue_free()
-	elif is_alive:
-		anim_player.play("Hurt")
-		emit_signal("add_points", points) # Emite señal para agregar puntos
+	if not is_alive:
+		return # No hacer nada si ya está muerto
 	
+	lives -= 1
+	
+	if lives <= 0:
+		is_alive = false
+		velocity.x = 0
+		animated_sprite.play("Death") # Reproducir la animación de muerte
+		await animated_sprite.animation_finished  # Espera a que la animación termine
+		queue_free()
+	else:
+		animation_player.play("Hurt") # Reproducir la animación de daño
+		emit_signal("add_points", points)  # Enviar la señal a la UI
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("Player") and body.is_alive:
 		animated_sprite.play("Atack")
 		can_shoot = true
 
-
 func _on_body_exited(body: Node) -> void:
 	if body.is_in_group("Player"):
 		animated_sprite.play("Idle")
 		can_shoot = false
-
-
-func _on_animation_finished() -> void:
-	pass
-	#if animated_sprite.animation == "Death":
-		#queue_free()

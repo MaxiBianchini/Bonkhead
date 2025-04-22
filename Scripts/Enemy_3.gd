@@ -3,8 +3,8 @@ extends CharacterBody2D
 @onready var raycast: RayCast2D = $RayCast2D
 @onready var detection_area: Area2D = $Area2D
 @onready var raycast_floor: RayCast2D = $RayCast2D2
-@onready var anim_player: AnimationPlayer = $AnimationPlayer
-@onready var drone_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
 @onready var player = get_tree().current_scene.get_node_or_null("%Player") # Encuentra al jugador en la escena
@@ -36,7 +36,7 @@ func _ready() -> void:
 	var sprite = $AnimatedSprite2D 
 	sprite.material = sprite.material.duplicate()
 	
-	drone_sprite.play("Walk Scan")
+	animated_sprite.play("Walk Scan")
 	start_position = position
 	initial_height = position.y
 
@@ -66,7 +66,7 @@ func _chase_player(delta: float) -> void:
 	# Persecución en X solo si estamos fuera de la distancia mínima
 	if abs(dx) > chase_stop_distance_x:
 		var horizontal_dir = sign(dx)
-		drone_sprite.flip_h = (horizontal_dir < 0.0)
+		animated_sprite.flip_h = (horizontal_dir < 0.0)
 		velocity.x = horizontal_dir * horizontal_speed 
 		if horizontal_dir < 0.0:
 			bullet_dir = Vector2.LEFT
@@ -76,7 +76,7 @@ func _chase_player(delta: float) -> void:
 			bullet_offset = Vector2(14, 12.5)
 	else:
 		velocity.x = 0
-		drone_sprite.flip_h = (dx < 0.0)
+		animated_sprite.flip_h = (dx < 0.0)
 		if shoot_now:
 			shoot_bullet()
 			shoot_now = false
@@ -106,13 +106,13 @@ func _patrol_horizontally(delta: float) -> void:
 	
 	raycast.target_position = Vector2 (50 * patrol_direction,0)
 	position.x += patrol_direction * (horizontal_speed * delta)
-	drone_sprite.flip_h = (patrol_direction < 0)
+	animated_sprite.flip_h = (patrol_direction < 0)
 
 func shoot_bullet() -> void:
-	drone_sprite.play("Attack")
+	animated_sprite.play("Attack")
 	var bullet = bullet_scene.instantiate() as Area2D
 	bullet.mask = 2
-	bullet.shooter = self # Le indicamos quién la disparó:
+	bullet.shooter = self # Le indicamos quién la disparó
 	
 	bullet.position = position + bullet_offset
 	bullet.direction = bullet_dir  # Asegúrate de que la bala tenga una variable 'direction'
@@ -120,28 +120,25 @@ func shoot_bullet() -> void:
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("Player") and body.is_alive:
-		drone_sprite.play("Walk")
+		animated_sprite.play("Walk")
 		follow_player = true
 
 func _on_body_exited(body: Node) -> void:
 	if body.is_in_group("Player"):
-		drone_sprite.play("Walk Scan")
+		animated_sprite.play("Walk Scan")
 		follow_player = false
-
-func _on_animation_finished() -> void:
-	if drone_sprite.animation == "Death":
-		queue_free()
 
 func take_damage() -> void:
 	if not is_alive:
 		return
 	
 	lives -= 1
-	emit_signal("add_points", points)  # Enviar la señal a la UI
 	if lives <= 0:
 		is_alive = false
-		drone_sprite.play("Death")
+		animated_sprite.play("Death")
 		collision_shape.position.y = 9
+		await animated_sprite.animation_finished  # Espera a que la animación termine
+		queue_free()
 	else:
-		anim_player.play("Hurt")
-	
+		animation_player.play("Hurt")
+		emit_signal("add_points", points)  # Enviar la señal a la UI

@@ -299,6 +299,10 @@ func shoot_bullet():
 	# Le indicamos quién la disparó:
 	bullet.shooter = self
 	
+	bullet.change_bullet_speed(245)
+	bullet.change_bullet_acceleration(300)  
+	bullet.change_bullet_lifetime(0.7)   
+	
 	 # Posición final de la bala y dirección
 	bullet.position = position + bullet_offset
 	bullet.direction = bullet_dir

@@ -3,14 +3,14 @@ extends Area2D
 @onready var sprite = $"Bullet Sprite"
 
 # Variables para velocidad y dirección
-var speed: float = 275
-var acceleration: float = 400  # Velocidad adicional por segundo
-var direction: Vector2   # Direccion
+var speed: float = 175
+var acceleration: float = 100  # Velocidad adicional por segundo
+var direction: Vector2   # Direccion 
 
 var shooter: Node = null  # O un tipo más específico si lo deseass
 var mask: int = 1
 # Timer para autodestruir la bala
-var life_time: float = 0.7
+var life_time: float = 1.3
 
 func _ready():
 	set_collision_mask_value(mask,true)
@@ -51,7 +51,6 @@ func change_bullet_acceleration(_acceleration: float) -> void:
 
 func change_bullet_speed(_speed: float) -> void:
 	speed = _speed
-	
 
 func change_bullet_lifetime(_life_time: float) -> void:
 	life_time = _life_time

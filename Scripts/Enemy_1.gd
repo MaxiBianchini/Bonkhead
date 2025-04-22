@@ -5,9 +5,8 @@ extends CharacterBody2D
 @onready var collision_shape = $CollisionShape2D     # Forma de colisión del cuerpo
 @onready var raycast_floor = $RayCast2D              # Raycast para detectar el suelo
 @onready var detection_area = $Area2D/CollisionShape2D2  # Área de detección del jugador
-@onready var anim_player = $AnimationPlayer          # Reproductor de animaciones adicionales
+@onready var animation_player = $AnimationPlayer          # Reproductor de animaciones adicionales
 @onready var player = get_tree().current_scene.get_node_or_null("%Player")  # Referencia al jugador en la escena
-@onready var shoot_timer = $ShootTimer              #Timer para manejar el disparo
 
 # Constantes para las posiciones del RayCast2D según la dirección
 const FLOOR_RAYCAST_RIGHT_POS: Vector2 = Vector2(22, 12)  # Posición del raycast mirando a la derecha
@@ -72,7 +71,6 @@ func _physics_process(delta):
 		# Aplica el movimiento físico al enemigo
 		move_and_slide()
 		
-		
 		# Comportamiento cuando el jugador está cerca y vivo
 		if enemy_is_near and player and player.is_alive:
 			animated_sprite.play("Shoot")  # Cambia a la animación de disparo
@@ -107,30 +105,31 @@ func shoot_bullet():
 	var bullet = bullet_scene.instantiate() as Area2D  # Crea una nueva instancia de la bala
 	bullet.mask = 2                            # Define la máscara de colisión de la bala
 	bullet.shooter = self                      # Indica que este enemigo disparó la bala
-	
-	
-	bullet.change_bullet_speed(175)
-	bullet.change_bullet_acceleration(100)  
-	bullet.change_bullet_lifetime(1.3)   
-		 
+	 
 	bullet.position = position + bullet_offset # Posiciona la bala respecto al enemigo
 	bullet.direction = bullet_dir              # Asigna la dirección de la bala
 	get_tree().current_scene.add_child(bullet) # Añade la bala a la escena actual
 
 # Maneja el daño recibido por el enemigo
 func take_damage():
-	if is_alive:
-		anim_player.play("Hurt")          # Reproduce la animación de daño
-		lives -= 1                        # Reduce las vidas
-		emit_signal("add_points", points) # Emite señal para agregar puntos
-		if lives <= 0:
-			is_alive = false              # Marca al enemigo como muerto
-			animated_sprite.play("Death") # Reproduce la animación de muerte
-
-# Callback que se ejecuta al terminar una animación
-func _on_animation_finished():
-	if animated_sprite.animation == "Death":
-		queue_free()  # Elimina al enemigo de la escena al terminar la animación de muerte
+	if not is_alive:
+		return # No hacer nada si ya está muerto
+	
+	lives -= 1
+	
+	if lives <= 0:
+		is_alive = false
+		velocity.x = 0
+		animated_sprite.play("Death") # Reproducir la animación de muerte
+		await animated_sprite.animation_finished  # Espera a que la animación termine
+		queue_free()
+	else:
+		animation_player.play("Hurt") # Reproducir la animación de daño
+		emit_signal("add_points", points)  # Enviar la señal a la UI
+		
+		can_shoot = false
+		await get_tree().create_timer(1.5).timeout
+		can_shoot = true
 
 # Detecta cuando el jugador entra en el área de detección
 func _on_body_entered(body: Node2D) -> void:

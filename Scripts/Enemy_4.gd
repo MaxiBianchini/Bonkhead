@@ -9,12 +9,11 @@ extends CharacterBody2D
 # Variables para el movimiento
 var direction: int = 1 # 1 para derecha, -1 para izquierda
 var is_driving: bool = false
-
+var points: float = 35
 # Constantes para el movimiento
 var speed: float = 250
 
 signal add_points
-var points = 35
 
 # Posiciones iniciales del raycast_floor para derecha e izquierda
 const FLOOR_RAYCAST_RIGHT_POS: Vector2 = Vector2(50, 27.5)
@@ -72,16 +71,14 @@ func take_damage() -> void:
 		return # No hacer nada si ya está muerto
 	
 	lives -= 1
-	emit_signal("add_points", points)  # Enviar la señal a la UI
+	
 	if lives <= 0:
 		is_alive = false
 		is_driving = false
 		velocity.x = 0
 		animated_sprite.play("Death") # Reproducir la animación de muerte
+		await animated_sprite.animation_finished  # Espera a que la animación termine
+		queue_free()
 	else:
 		animation_player.play("Hurt") # Reproducir la animación de daño
-
-# Función para manejar la finalización de las animaciones
-func _on_animation_finished() -> void:
-	if animated_sprite.animation == "Death":
-		queue_free()
+		emit_signal("add_points", points)  # Enviar la señal a la UI
