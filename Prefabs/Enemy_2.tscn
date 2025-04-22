@@ -119,7 +119,7 @@ height = 38.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqu3y"]
 resource_local_to_scene = true
-size = Vector2(633.625, 54)
+size = Vector2(367.203, 54)
 
 [sub_resource type="Animation" id="Animation_d2qdg"]
 resource_name = "new_animation"

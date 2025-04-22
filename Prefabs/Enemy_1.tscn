@@ -227,7 +227,7 @@ animations = [{
 size = Vector2(13, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bex0l"]
-size = Vector2(360.25, 20)
+size = Vector2(306.063, 20)
 
 [sub_resource type="Animation" id="Animation_5finp"]
 resource_name = "Hurt"

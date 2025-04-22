@@ -44,3 +44,14 @@ func _on_body_entered(body):
 	if (body.is_in_group("Enemy") or body.is_in_group("Player")) and body.is_alive:  # Verificar si colisionó con un enemigo o el player
 		body.take_damage()  # Función de daño
 		queue_free()  # Eliminar la bala
+		
+
+func change_bullet_acceleration(_acceleration: float) -> void:
+	acceleration = _acceleration
+
+func change_bullet_speed(_speed: float) -> void:
+	speed = _speed
+	
+
+func change_bullet_lifetime(_life_time: float) -> void:
+	life_time = _life_time

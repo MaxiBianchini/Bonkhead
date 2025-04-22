@@ -107,6 +107,12 @@ func shoot_bullet():
 	var bullet = bullet_scene.instantiate() as Area2D  # Crea una nueva instancia de la bala
 	bullet.mask = 2                            # Define la máscara de colisión de la bala
 	bullet.shooter = self                      # Indica que este enemigo disparó la bala
+	
+	
+	bullet.change_bullet_speed(175)
+	bullet.change_bullet_acceleration(100)  
+	bullet.change_bullet_lifetime(1.3)   
+		 
 	bullet.position = position + bullet_offset # Posiciona la bala respecto al enemigo
 	bullet.direction = bullet_dir              # Asigna la dirección de la bala
 	get_tree().current_scene.add_child(bullet) # Añade la bala a la escena actual
