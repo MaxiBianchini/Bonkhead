@@ -1,16 +1,15 @@
 extends CharacterBody2D
 
 # Referencias a nodos
-@onready var animated_sprite = $AnimatedSprite2D
-@onready var animation_player = $AnimationPlayer
-@onready var raycast_detection = $RayCast2D
-@onready var raycast_floor = $RayCast2D2
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var raycast_detection: RayCast2D = $RayCast2D
+@onready var raycast_floor: RayCast2D = $RayCast2D2
 
 # Variables para el movimiento
 var direction: int = 1 # 1 para derecha, -1 para izquierda
 var is_driving: bool = false
 var points: float = 35
-# Constantes para el movimiento
 var speed: float = 250
 
 signal add_points
@@ -23,14 +22,13 @@ const FLOOR_RAYCAST_LEFT_POS: Vector2 = Vector2(-50, 27.5)
 var lives: int = 5
 var is_alive: bool = true
 
-func _ready():
-	var sprite = $AnimatedSprite2D 
-	sprite.material = sprite.material.duplicate()
-	
+func _ready() -> void:
+	animated_sprite.material = animated_sprite.material.duplicate()
 	animated_sprite.play("Idle")	# Reproducir la animación Idle al iniciar
+	
 	raycast_floor.position = FLOOR_RAYCAST_RIGHT_POS # Configurar la posición inicial del floor_raycast
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	if not is_alive:
 		return # No hacer nada si el enemigo no está vivo
 	
@@ -59,7 +57,7 @@ func change_direction() -> void:
 	update_sprite_direction()
 
 # Controlador de la direccion del SpriteE
-func update_sprite_direction():
+func update_sprite_direction() -> void:
  # Voltear el sprite horizontalmente según la dirección
 	animated_sprite.flip_h = direction < 0
 	# Actualizar la posición del floor_raycast para detectar el suelo en la nueva dirección

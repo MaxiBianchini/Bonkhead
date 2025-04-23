@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dyxdcycua33ik"]
+
+[ext_resource type="Script" uid="uid://c4at7suqkceu4" path="res://Scripts/Bullet.gd" id="1_pv5ng"]
+[ext_resource type="Texture2D" uid="uid://cv85nnv8lf48y" path="res://Graphics/Guns & Bullets/Small Guns/Bullets/Bullets (4).png" id="2_ossmt"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uo877"]
+radius = 3.0
+height = 6.0
+
+[node name="Bullet" type="Area2D"]
+process_mode = 1
+collision_layer = 16
+script = ExtResource("1_pv5ng")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_uo877")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ossmt")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

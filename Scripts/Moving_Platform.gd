@@ -1,9 +1,9 @@
 extends AnimatableBody2D
 
-@export var speed: float = 100.0  # Velocidad de movimiento
-var start_position: Vector2  # Posición inicial
-var target_position: Vector2  # Posición destino
-var direction: int = 1  # 1: hacia el destino, -1: regreso
+var direction: int = 1              # 1: hacia el destino, -1: regreso
+var speed: float = 100.0            # Velocidad de movimiento
+var start_position: Vector2         # Posición inicial
+var target_position: Vector2        # Posición destino
 
 func _ready():
 	start_position = global_position  # Guarda la posición inicial
@@ -14,7 +14,7 @@ func _ready():
 	else:
 		push_error("No se encontró un Marker2D dentro de la plataforma.")
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	if target_position == Vector2.ZERO:
 		return  # No hay destino válido, evitar errores
 

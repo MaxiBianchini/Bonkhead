@@ -1,22 +1,24 @@
 extends CharacterBody2D
 
 # Referencias a nodos
-@onready var animated_sprite = $AnimatedSprite2D
-@onready var animated_sprite2 = $AnimatedSprite2D2
-@onready var animated_sprite3 = $AnimatedSprite2D3
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var animated_sprite2:AnimatedSprite2D = $AnimatedSprite2D2
+@onready var animated_sprite3:AnimatedSprite2D = $AnimatedSprite2D3
 
-var sprites = [animated_sprite, animated_sprite2, animated_sprite3]
+var animated_sprites = [animated_sprite, animated_sprite2, animated_sprite3]
 
-@onready var collision_shape = $CollisionShape2D
-@onready var raycast_floor = $RayCast2D2
-@onready var raycast_wall = $RayCast2D
-@onready var area2D = $Area2D
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
+@onready var raycast_floor: RayCast2D = $RayCast2D2
+@onready var raycast_wall: RayCast2D = $RayCast2D
+@onready var area2D: Area2D = $Area2D
 
-@onready var audio_jump = $AudioStream_Jump
-@onready var audio_shoot = $AudioStream_Shoot
-@onready var audio_landing = $AudioStream_Landing
-@onready var audio_dash = $AudioStream_Dash
-@onready var audio_hurts = $AudioStream_Hurts
+@onready var audio_dash: AudioStreamPlayer2D = $AudioStream_Dash
+@onready var audio_jump: AudioStreamPlayer2D = $AudioStream_Jump
+@onready var audio_hurts: AudioStreamPlayer2D = $AudioStream_Hurts
+@onready var audio_shoot: AudioStreamPlayer2D = $AudioStream_Shoot
+@onready var audio_landing: AudioStreamPlayer2D = $AudioStream_Landing
+
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 signal player_died
 
@@ -40,8 +42,8 @@ var is_alive: bool = true
 var lives: int = 3 
 
 # Carga la escena de la bala
-var bullet_scene = preload("res://Prefabs/Bullet_1.tscn")
-var bullet_dir = Vector2.RIGHT
+var bullet_scene = preload("res://Prefabs/Bullet.tscn")
+var bullet_dir: Vector2 = Vector2.RIGHT
 var bullet_offset: Vector2
 
 var gun_type: String ="Small"
@@ -50,10 +52,10 @@ var change_gun_type: bool = false
 
 signal change_UI_lives(change_lives)
 
-func _ready():
+func _ready() -> void:
 	pass
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	if is_alive:
 		var input_vector = Vector2.ZERO
 		input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
@@ -130,11 +132,11 @@ func _physics_process(delta):
 	handle_double_jump()
 
 # Controlador de la direccion del Sprite
-func update_sprite_direction():
+func update_sprite_direction() -> void:
 	var offset = 10
 	if velocity.x < 0:
-		sprites = [animated_sprite, animated_sprite2, animated_sprite3]
-		for s in sprites:
+		animated_sprites = [animated_sprite, animated_sprite2, animated_sprite3]
+		for s in animated_sprites:
 			s.position.x = -offset
 			s.flip_h = true
 		
@@ -150,8 +152,8 @@ func update_sprite_direction():
 		area2D.position.x = offset
 	
 	elif velocity.x > 0:
-		sprites = [animated_sprite, animated_sprite2, animated_sprite3]
-		for s in sprites:
+		animated_sprites = [animated_sprite, animated_sprite2, animated_sprite3]
+		for s in animated_sprites:
 			s.position.x = offset
 			s.flip_h = false
 		
@@ -167,7 +169,7 @@ func update_sprite_direction():
 		collision_shape.position.x = offset
 		area2D.position.x = offset
 
-func update_animation():
+func update_animation() -> void:
 	if not is_alive:
 		return  # No seguir actualizando animaciones si el jugador está muerto
 	# Solo hacemos la lógica si no está en "Hurt" y aún tienes vidas.
@@ -231,7 +233,7 @@ func update_animation():
 			else:
 				animator_controller("Run", 1)
 
-func animator_controller(state_trigger: String, animation_number: int):
+func animator_controller(state_trigger: String, animation_number: int) -> void:
 	# Si el estado actual cambia, se reproducen las animaciones base de ese estado.
 	if current_state != state_trigger or gun_type:
 		change_gun_type = false
@@ -263,7 +265,7 @@ func animator_controller(state_trigger: String, animation_number: int):
 	# Aquí decidimos cuál de las 3 variaciones (1,2,3) se muestra.
 	switch_animation(animation_number)
 
-func switch_animation(animation_number: int):
+func switch_animation(animation_number: int) -> void:
 	# Ocultamos siempre todos los sprites antes de mostrar el que corresponda
 	hide_all_sprites()
 	match animation_number:
@@ -274,13 +276,13 @@ func switch_animation(animation_number: int):
 		3:
 			animated_sprite3.visible = true
 
-func hide_all_sprites():
+func hide_all_sprites() -> void:
 	animated_sprite.visible = false
 	animated_sprite2.visible = false
 	animated_sprite3.visible = false
 
 # Controlador del Doble Salto
-func handle_double_jump():
+func handle_double_jump() -> void:
 	if raycast_wall.is_colliding():
 		var collider = raycast_wall.get_collider()
 		if collider.is_in_group("Wall"):
@@ -291,7 +293,7 @@ func handle_double_jump():
 		double_jump_enabled = false
 
 # Controlador del Disparo
-func shoot_bullet():
+func shoot_bullet() -> void:
 	update_animation()
 	
 	var bullet = bullet_scene.instantiate() as Area2D # Instancia la bala
@@ -310,13 +312,13 @@ func shoot_bullet():
 	get_tree().current_scene.add_child(bullet) # Añade la bala a la escena actual
 
 # Controlador de Colision con Plataforma
-func ignore_platform_collision():
+func ignore_platform_collision() -> void:
 	collision_shape.disabled = true
 	velocity.y = jump_force * -1.5
 	await (get_tree().create_timer(fall_through_time).timeout)
 	collision_shape.disabled = false
 
-func change_weapon():
+func change_weapon() -> void:
 	if gun_type == "Small":
 		gun_type = "Big"
 	else:
@@ -324,7 +326,7 @@ func change_weapon():
 	change_gun_type = true
 
 # Controlador del Daño
-func take_damage():
+func take_damage() -> void:
 	if is_alive:
 		audio_hurts.play()
 		lives -= 1
@@ -340,17 +342,17 @@ func take_damage():
 			await (get_tree().create_timer(1.5).timeout)
 			player_died.emit()
 		else:
-			$AnimationPlayer.play("Hurt")
+			animation_player.play("Hurt")
 			call_deferred("disable_player_collision")
 			await (get_tree().create_timer(3.0).timeout)
 			call_deferred("enable_player_collision")
 
-func _on_body_entered(body):
+func _on_body_entered(body) -> void:
 	if body.is_in_group("Enemy") and body.is_alive:
 		take_damage()
 	
 
-func increase_life():
+func increase_life() -> bool:
 	if lives < 3:
 		lives += 1
 		emit_signal("change_UI_lives", lives)  # Enviar la señal a la UI
@@ -358,25 +360,23 @@ func increase_life():
 	else:
 		return false
 
-func disable_player_collision():
+func disable_player_collision() -> void:
 	area2D.set_collision_mask_value(3,false)
 	area2D.set_collision_mask_value(4,false)
 	area2D.set_collision_mask_value(5,false)
 
-func enable_player_collision():
+func enable_player_collision() -> void:
 	area2D.set_collision_mask_value(3,true)
 	area2D.set_collision_mask_value(4,true)
 	area2D.set_collision_mask_value(5,true)
 
-func _on_dash_timer_timeout():
+func _on_dash_timer_timeout() -> void:
 	is_dashing = false
 
-func _on_can_dash_timeout():
+func _on_can_dash_timeout() -> void:
 	can_dash = true
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Dead"):
 		lives = 0
 		take_damage()
-		#emit_signal("change_UI_lives", lives)  # Enviar la señal a la UI
-		#player_died.emit()

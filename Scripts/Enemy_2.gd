@@ -7,14 +7,14 @@ extends CharacterBody2D
 
 @onready var player = get_tree().current_scene.get_node_or_null("%Player") # Encuentra al jugador en la escena
 
-var bullet_scene: PackedScene = preload("res://Prefabs/Bullet_1.tscn")
+var bullet_scene: PackedScene = preload("res://Prefabs/Bullet.tscn")
 var bullet_offset: Vector2
 var bullet_dir: Vector2 
 
 var detection_width: float = 10000.0
 var detection_height: float = 180.0
 var enemy_is_near: bool = false
-var can_shoot: bool = true
+var can_shoot: bool = true          # Indica si el enemigo puede disparar
 
 var lives: int = 3
 var is_alive: bool = true

@@ -1,6 +1,6 @@
 extends Area2D
 
-@onready var sprite = $"Bullet Sprite"
+@onready var sprite: Sprite2D = $Sprite2D
 
 # Variables para velocidad y dirección
 var speed: float = 175
@@ -12,15 +12,14 @@ var mask: int = 1
 # Timer para autodestruir la bala
 var life_time: float = 1.3
 
-func _ready():
+func _ready() -> void:
 	set_collision_mask_value(mask,true)
 	
 	# Configura el timer para autodestruir la bala
 	await get_tree().create_timer(life_time).timeout
 	queue_free()
 
-func _physics_process(delta):
-	
+func _physics_process(delta) -> void:
 	if direction.x < 0:
 		sprite.flip_h = true
 		
@@ -34,7 +33,7 @@ func _physics_process(delta):
 	position += direction * speed * delta
 
 # Manejar la colisión con un cuerpo
-func _on_body_entered(body):
+func _on_body_entered(body) -> void:
 	# SI LA BALA COLISIONA CON QUIEN LA DISPARÓ, NO HACER NADA
 	if body == shooter:
 		return
@@ -44,7 +43,6 @@ func _on_body_entered(body):
 	if (body.is_in_group("Enemy") or body.is_in_group("Player")) and body.is_alive:  # Verificar si colisionó con un enemigo o el player
 		body.take_damage()  # Función de daño
 		queue_free()  # Eliminar la bala
-		
 
 func change_bullet_acceleration(_acceleration: float) -> void:
 	acceleration = _acceleration

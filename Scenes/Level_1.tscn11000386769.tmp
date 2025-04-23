@@ -200,7 +200,7 @@ script/source = "extends CharacterBody2D
 
 @onready var player = get_tree().current_scene.get_node_or_null(\"%Player\") # Encuentra al jugador en la escena
 
-var bullet_scene: PackedScene = preload(\"res://Prefabs/Bullet.tscn\")
+var bullet_scene: PackedScene = preload(\"res://Prefabs/Bullet_1.tscn\")
 
 var detection_width: float = 10000.0
 var detection_height: float = 180.0
@@ -317,7 +317,7 @@ script/source = "extends CharacterBody2D
 
 @onready var player = get_tree().current_scene.get_node_or_null(\"%Player\") # Encuentra al jugador en la escena
 
-var bullet_scene: PackedScene = preload(\"res://Prefabs/Bullet.tscn\")
+var bullet_scene: PackedScene = preload(\"res://Prefabs/Bullet_1.tscn\")
 
 var detection_width: float = 10000.0
 var detection_height: float = 180.0

@@ -28,7 +28,7 @@ var is_alive: bool = true           # Indica si el enemigo está vivo
 var enemy_is_near: bool = false     # Indica si el jugador está dentro del área de detección
 
 # Configuración de la bala
-var bullet_scene = preload("res://Prefabs/Bullet_1.tscn")
+var bullet_scene = preload("res://Prefabs/Bullet.tscn")
 var bullet_offset: Vector2
 var bullet_dir: Vector2
 
