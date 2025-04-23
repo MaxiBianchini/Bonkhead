@@ -555,11 +555,11 @@ metadata/_edit_use_anchors_ = true
 [node name="Player" parent="." instance=ExtResource("20_j1y0e")]
 unique_name_in_owner = true
 z_index = 1
-position = Vector2(865, 1600)
+position = Vector2(968, 2186)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
-position = Vector2(865, 1600)
+position = Vector2(968, 2186)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
@@ -573,7 +573,7 @@ script = ExtResource("21_kv4jp")
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(865, 1600)
+position = Vector2(968, 2186)
 script = ExtResource("22_utet3")
 priority = 1
 follow_mode = 2
@@ -929,7 +929,7 @@ shape = SubResource("RectangleShape2D_ssyor")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(865, 1600)
+position = Vector2(968, 2186)
 follow_mode = 1
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -944,7 +944,7 @@ shape = SubResource("RectangleShape2D_8mcgu")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area2" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(865, 1600)
+position = Vector2(968, 2186)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(2.5, 2.5)
@@ -958,7 +958,7 @@ shape = SubResource("RectangleShape2D_bdg83")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area3" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(865, 1600)
+position = Vector2(968, 2186)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 
@@ -998,6 +998,9 @@ offset_bottom = -27.0
 text = "Jump against walls
 like these to
 climb higher!"
+
+[node name="Enemy_3" parent="." instance=ExtResource("26_sucmb")]
+position = Vector2(1080, 2159)
 
 [editable path="Dead_Areas/Dead_Area"]
 [editable path="Dead_Areas/Dead_Area2"]

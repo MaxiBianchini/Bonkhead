@@ -1,12 +1,13 @@
 extends CharacterBody2D
 
 # Referencias a nodos del enemigo
-@onready var animated_sprite = $AnimatedSprite2D      # Sprite animado del enemigo
-@onready var collision_shape = $CollisionShape2D     # Forma de colisión del cuerpo
-@onready var raycast_floor = $RayCast2D              # Raycast para detectar el suelo
-@onready var detection_area = $Area2D/CollisionShape2D2  # Área de detección del jugador
-@onready var animation_player = $AnimationPlayer          # Reproductor de animaciones adicionales
-@onready var player = get_tree().current_scene.get_node_or_null("%Player")  # Referencia al jugador en la escena
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var raycast_floor: RayCast2D = $RayCast2D
+@onready var shoot_timer: Timer = $Timer
+
+@onready var player = get_tree().current_scene.get_node_or_null("%Player")  
 
 # Constantes para las posiciones del RayCast2D según la dirección
 const FLOOR_RAYCAST_RIGHT_POS: Vector2 = Vector2(22, 12)  # Posición del raycast mirando a la derecha
@@ -27,22 +28,19 @@ var is_alive: bool = true           # Indica si el enemigo está vivo
 var enemy_is_near: bool = false     # Indica si el jugador está dentro del área de detección
 
 # Configuración de la bala
-var bullet_scene = preload("res://Prefabs/Bullet_1.tscn")  # Escena precargada de la bala
-var bullet_dir = Vector2.RIGHT      # Dirección inicial de la bala
-var bullet_offset: Vector2          # Desplazamiento de la bala respecto al enemigo
+var bullet_scene = preload("res://Prefabs/Bullet_1.tscn")
+var bullet_offset: Vector2
+var bullet_dir: Vector2
 
 # Control del disparo
 var can_shoot: bool = true          # Indica si el enemigo puede disparar
 
-func _ready():
+func _ready() -> void:
 	# Duplica el material del sprite para que sea único por instancia (evita compartirlo entre enemigos)
-	var sprite = $AnimatedSprite2D
-	sprite.material = sprite.material.duplicate()
-	
-	# Inicia la animación de caminar al instanciar al enemigo
-	animated_sprite.play("Walk")
+	animated_sprite.material = animated_sprite.material.duplicate()
+	animated_sprite.play("Walk")     # Inicia la animación de caminar al instanciar al enemigo
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
 	if is_alive:
 		# Actualiza la dirección del sprite según la velocidad o la posición del jugador
 		if enemy_is_near:
@@ -77,15 +75,13 @@ func _physics_process(delta):
 			if can_shoot:
 				shoot_bullet()            # Dispara una bala
 				can_shoot = false         # Desactiva el disparo temporalmente
-				# Espera 1.5 segundos antes de permitir otro disparo
-				await get_tree().create_timer(1.5).timeout
-				can_shoot = true
+				shoot_timer.start(0.75)   # Espera 1.5 segundos antes de permitir otro disparo
 		else:
 			animated_sprite.play("Walk")  # Vuelve a la animación de caminar si el jugador no está cerca
 			enemy_is_near = false
 
 # Actualiza la dirección visual del sprite y ajusta posiciones
-func update_sprite_direction(is_facing_left: bool):
+func update_sprite_direction(is_facing_left: bool) -> void:
 	var offset = 10  # Desplazamiento para alinear sprite y colisión
 	if is_facing_left:
 		animated_sprite.flip_h = true         # Gira el sprite hacia la izquierda
@@ -101,7 +97,7 @@ func update_sprite_direction(is_facing_left: bool):
 		bullet_dir = Vector2.RIGHT           # Dirección de la bala hacia la derecha
 
 # Instancia y configura una bala para disparar
-func shoot_bullet():
+func shoot_bullet() -> void:
 	var bullet = bullet_scene.instantiate() as Area2D  # Crea una nueva instancia de la bala
 	bullet.mask = 2                            # Define la máscara de colisión de la bala
 	bullet.shooter = self                      # Indica que este enemigo disparó la bala
@@ -111,12 +107,11 @@ func shoot_bullet():
 	get_tree().current_scene.add_child(bullet) # Añade la bala a la escena actual
 
 # Maneja el daño recibido por el enemigo
-func take_damage():
+func take_damage() -> void:
 	if not is_alive:
 		return # No hacer nada si ya está muerto
 	
 	lives -= 1
-	
 	if lives <= 0:
 		is_alive = false
 		velocity.x = 0
@@ -128,8 +123,10 @@ func take_damage():
 		emit_signal("add_points", points)  # Enviar la señal a la UI
 		
 		can_shoot = false
-		await get_tree().create_timer(1.5).timeout
-		can_shoot = true
+		if shoot_timer.time_left > 0:
+			shoot_timer.start(shoot_timer.time_left + 1.0)
+		else:
+			shoot_timer.start(1.0)
 
 # Detecta cuando el jugador entra en el área de detección
 func _on_body_entered(body: Node2D) -> void:
@@ -140,3 +137,6 @@ func _on_body_entered(body: Node2D) -> void:
 func _on_body_exited(body: Node2D) -> void:
 	if body.is_in_group("Player") and body.is_alive:
 		enemy_is_near = false  # Desactiva el estado de "jugador cerca"
+
+func _on_shoot_timer_timeout() -> void:
+	can_shoot = true

@@ -289,7 +289,7 @@ target_position = Vector2(0, 12)
 collision_layer = 4
 collision_mask = 2
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 light_mask = 2
 shape = SubResource("RectangleShape2D_bex0l")
 
@@ -298,5 +298,11 @@ libraries = {
 &"": SubResource("AnimationLibrary_tuivb")
 }
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.75
+one_shot = true
+autostart = true
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_shoot_timer_timeout"]

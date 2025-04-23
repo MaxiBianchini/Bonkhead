@@ -2,19 +2,19 @@ extends CharacterBody2D
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var shoot_timer: Timer = $Timer
 @onready var area2d: Area2D = $Area2D
 
 @onready var player = get_tree().current_scene.get_node_or_null("%Player") # Encuentra al jugador en la escena
 
 var bullet_scene: PackedScene = preload("res://Prefabs/Bullet_1.tscn")
+var bullet_offset: Vector2
+var bullet_dir: Vector2 
 
 var detection_width: float = 10000.0
 var detection_height: float = 180.0
-var can_shoot: bool = false
-var shoot_now: bool = true
-
-var bullet_dir: Vector2 = Vector2.RIGHT
-var bullet_offset: Vector2 = Vector2(-15, 5)
+var enemy_is_near: bool = false
+var can_shoot: bool = true
 
 var lives: int = 3
 var is_alive: bool = true
@@ -23,10 +23,8 @@ signal add_points
 var points = 25
 
 func _ready() -> void:
+	animated_sprite.material = animated_sprite.material.duplicate()
 	animated_sprite.play("Idle")
-	
-	var sprite = $AnimatedSprite2D 
-	sprite.material = sprite.material.duplicate()
 
 func _physics_process(delta: float) -> void:
 	if not (player and is_alive):
@@ -53,12 +51,11 @@ func _physics_process(delta: float) -> void:
 			bullet_dir = Vector2.RIGHT
 	
 	# Si está listo para disparar, realizamos el disparo
-	if can_shoot and player.is_alive:
-		if shoot_now:
+	if enemy_is_near and player.is_alive:
+		if can_shoot:
 			shoot_bullet()
-			shoot_now = false
-			await get_tree().create_timer(0.75).timeout  # Pausa de 3 segundos antes de volver a la normalidad
-			shoot_now = true
+			can_shoot = false
+			shoot_timer.start(0.75)
 
 func shoot_bullet() -> void:
 	var bullet = bullet_scene.instantiate() as Area2D
@@ -85,13 +82,22 @@ func take_damage() -> void:
 	else:
 		animation_player.play("Hurt") # Reproducir la animación de daño
 		emit_signal("add_points", points)  # Enviar la señal a la UI
+		
+		can_shoot = false
+		if shoot_timer.time_left > 0:
+			shoot_timer.start(shoot_timer.time_left + 1.0)
+		else:
+			shoot_timer.start(1.0)
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("Player") and body.is_alive:
 		animated_sprite.play("Atack")
-		can_shoot = true
+		enemy_is_near = true
 
 func _on_body_exited(body: Node) -> void:
 	if body.is_in_group("Player"):
 		animated_sprite.play("Idle")
-		can_shoot = false
+		enemy_is_near = false
+
+func _on_shoot_timer_timeout() -> void:
+	can_shoot = true

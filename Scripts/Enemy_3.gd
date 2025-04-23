@@ -1,7 +1,6 @@
 extends CharacterBody2D
 
-@onready var raycast: RayCast2D = $RayCast2D
-@onready var detection_area: Area2D = $Area2D
+@onready var raycast_wall: RayCast2D = $RayCast2D
 @onready var raycast_floor: RayCast2D = $RayCast2D2
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -33,8 +32,7 @@ signal add_points
 var points = 30
 
 func _ready() -> void:
-	var sprite = $AnimatedSprite2D 
-	sprite.material = sprite.material.duplicate()
+	animated_sprite.material = animated_sprite.material.duplicate()
 	
 	animated_sprite.play("Walk Scan")
 	start_position = position
@@ -46,7 +44,7 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	if follow_player and player.is_alive:
-		if raycast.is_colliding() and raycast.get_collider().is_in_group("Floor") or raycast_floor.is_colliding() and raycast_floor.get_collider().is_in_group("Floor"):
+		if raycast_wall.is_colliding() and raycast_wall.get_collider().is_in_group("Floor") or raycast_floor.is_colliding() and raycast_floor.get_collider().is_in_group("Floor"):
 			follow_player = false
 		else:
 			_chase_player(delta)
@@ -78,10 +76,11 @@ func _chase_player(delta: float) -> void:
 		velocity.x = 0
 		animated_sprite.flip_h = (dx < 0.0)
 		if shoot_now:
-			shoot_bullet()
-			shoot_now = false
-			await get_tree().create_timer(1.5).timeout  # Pausa de 3 segundos antes de volver a la normalidad
-			shoot_now = true
+			pass
+			#shoot_bullet()
+			#shoot_now = false
+			#await get_tree().create_timer(1.5).timeout  # Pausa de 3 segundos antes de volver a la normalidad
+			#shoot_now = true
 		
 	# Ajustar Y para estar un poquito por encima del jugador
 	var vertical_dir = sign(desired_y - position.y)
@@ -97,14 +96,14 @@ func _return_to_height(delta: float) -> void:
 		position.y += vertical_dir * (vertical_speed * delta)
 
 func _patrol_horizontally(delta: float) -> void:
-	if raycast.is_colliding() and raycast.get_collider().is_in_group("Floor"):
+	if raycast_wall.is_colliding() and raycast_wall.get_collider().is_in_group("Floor"):
 		patrol_direction *=  -1
 	elif position.x > start_position.x + patrol_range:
 		patrol_direction = -1
 	elif position.x < start_position.x - patrol_range:
 		patrol_direction = 1
 	
-	raycast.target_position = Vector2 (50 * patrol_direction,0)
+	raycast_wall.target_position = Vector2 (50 * patrol_direction,0)
 	position.x += patrol_direction * (horizontal_speed * delta)
 	animated_sprite.flip_h = (patrol_direction < 0)
 
@@ -136,7 +135,7 @@ func take_damage() -> void:
 	if lives <= 0:
 		is_alive = false
 		animated_sprite.play("Death")
-		collision_shape.position.y = 9
+		#collision_shape.position.y = 9
 		await animated_sprite.animation_finished  # Espera a que la animación termine
 		queue_free()
 	else:
