@@ -76,7 +76,7 @@ func _physics_process(delta) -> void:
 				shoot_bullet()            # Dispara una bala
 				can_shoot = false         # Desactiva el disparo temporalmente
 				shoot_timer.start(0.75)   # Espera 1.5 segundos antes de permitir otro disparo
-		else:
+		elif is_alive:
 			animated_sprite.play("Walk")  # Vuelve a la animación de caminar si el jugador no está cerca
 			enemy_is_near = false
 

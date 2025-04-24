@@ -766,15 +766,16 @@ metadata/_edit_use_anchors_ = true
 unique_name_in_owner = true
 process_mode = 1
 z_index = 1
-position = Vector2(380, 1666)
+position = Vector2(32, 720)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
-position = Vector2(380, 1630)
+position = Vector2(198.333, 720)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
-limit_bottom = 2800
+limit_right = 2150
+limit_bottom = 1750
 editor_draw_limits = true
 
 [node name="PhantomCameraHost" type="Node" parent="Camera2D"]
@@ -784,7 +785,7 @@ script = ExtResource("33_htkjl")
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(380, 1630)
+position = Vector2(198.333, 720)
 script = ExtResource("34_2m2q6")
 priority = 1
 follow_mode = 2
@@ -947,7 +948,7 @@ position = Vector2(1027, 1454)
 position = Vector2(2057, 1335)
 
 [node name="Signpost" parent="." instance=ExtResource("50_ceuot")]
-position = Vector2(683, 714)
+position = Vector2(683, 728)
 
 [node name="CollisionShape2D" parent="Signpost" index="0"]
 position = Vector2(-37.5, -35.75)

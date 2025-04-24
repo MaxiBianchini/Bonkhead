@@ -118,12 +118,12 @@ func shoot_bullet() -> void:
 	get_tree().current_scene.add_child(bullet)
 
 func _on_body_entered(body: Node) -> void:
-	if body.is_in_group("Player") and body.is_alive:
+	if body.is_in_group("Player") and body.is_alive and is_alive:
 		animated_sprite.play("Walk")
 		follow_player = true
 
 func _on_body_exited(body: Node) -> void:
-	if body.is_in_group("Player"):
+	if body.is_in_group("Player") and is_alive:
 		animated_sprite.play("Walk Scan")
 		follow_player = false
 
@@ -136,6 +136,7 @@ func take_damage() -> void:
 		is_alive = false
 		animated_sprite.play("Death")
 		collision_shape.position.y = 9
+		velocity.x = 0
 		await animated_sprite.animation_finished  # Espera a que la animación termine
 		queue_free()
 	else:

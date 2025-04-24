@@ -555,11 +555,11 @@ metadata/_edit_use_anchors_ = true
 [node name="Player" parent="." instance=ExtResource("20_j1y0e")]
 unique_name_in_owner = true
 z_index = 1
-position = Vector2(39, 712)
+position = Vector2(44, 720)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
-position = Vector2(198.333, 712)
+position = Vector2(198.333, 720)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
@@ -573,7 +573,7 @@ script = ExtResource("21_kv4jp")
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(198.333, 712)
+position = Vector2(198.333, 720)
 script = ExtResource("22_utet3")
 priority = 1
 follow_mode = 2
@@ -635,9 +635,6 @@ position = Vector2(1075, 688)
 [node name="Enemy_3" parent="Enemies" instance=ExtResource("26_sucmb")]
 position = Vector2(245, 2061)
 
-[node name="Enemy_2" parent="Enemies" instance=ExtResource("27_go0cy")]
-position = Vector2(757, 1193)
-
 [node name="Enemy_4" parent="Enemies" instance=ExtResource("27_go0cy")]
 position = Vector2(2177, 1673)
 
@@ -686,6 +683,9 @@ position = Vector2(2415, 1680)
 
 [node name="Enemy_18" parent="Enemies" instance=ExtResource("26_sucmb")]
 position = Vector2(7019, 1294)
+
+[node name="Enemy_2" parent="Enemies" instance=ExtResource("27_go0cy")]
+position = Vector2(853, 1193)
 
 [node name="FallingPlatforms" type="Node2D" parent="."]
 
@@ -785,6 +785,7 @@ position = Vector2(6645, 1583)
 [node name="MovingPlatforms" type="Node2D" parent="."]
 
 [node name="MovingPlatform" parent="MovingPlatforms" instance=ExtResource("30_7lt02")]
+z_index = 1
 position = Vector2(7192, 1740)
 
 [node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform"]
@@ -932,7 +933,7 @@ shape = SubResource("RectangleShape2D_ssyor")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(39, 712)
+position = Vector2(44, 720)
 follow_mode = 1
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -947,7 +948,7 @@ shape = SubResource("RectangleShape2D_8mcgu")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area2" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(39, 712)
+position = Vector2(44, 720)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(2.5, 2.5)
@@ -961,7 +962,7 @@ shape = SubResource("RectangleShape2D_bdg83")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area3" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(39, 712)
+position = Vector2(44, 720)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 

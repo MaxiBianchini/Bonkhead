@@ -75,7 +75,6 @@ func take_damage() -> void:
 	
 	if lives <= 0:
 		is_alive = false
-		velocity.x = 0
 		animated_sprite.play("Death") # Reproducir la animación de muerte
 		await animated_sprite.animation_finished  # Espera a que la animación termine
 		queue_free()
@@ -90,12 +89,12 @@ func take_damage() -> void:
 			shoot_timer.start(1.0)
 
 func _on_body_entered(body: Node) -> void:
-	if body.is_in_group("Player") and body.is_alive:
+	if body.is_in_group("Player") and body.is_alive and is_alive:
 		animated_sprite.play("Atack")
 		enemy_is_near = true
 
 func _on_body_exited(body: Node) -> void:
-	if body.is_in_group("Player"):
+	if body.is_in_group("Player") and is_alive:
 		animated_sprite.play("Idle")
 		enemy_is_near = false
 
