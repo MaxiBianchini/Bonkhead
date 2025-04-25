@@ -20,6 +20,10 @@ var animated_sprites = [animated_sprite, animated_sprite2, animated_sprite3]
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
+@onready var dashing_timer: Timer = $Timer3
+@onready var dash_timer: Timer = $Timer2
+@onready var dead_timer: Timer = $Timer
+
 signal player_died
 
 # Variables para controlar física y movimiento
@@ -32,7 +36,7 @@ var movement_velocity: int = 250
 var fall_through_time: float = 0.05  # Tiempo durante el cual se desactiva la colisión
 
 var was_in_air: bool = false
-var can_dash: bool = true
+var can_dash: bool = false
 var is_dashing: bool = false
 var double_jump_enabled: bool = false
 var first_jump_completed: bool = false
@@ -50,10 +54,16 @@ var gun_type: String ="Small"
 var current_state: String = ""
 var change_gun_type: bool = false
 
+var hurt_jump_force: float = -200  # Fuerza del salto al recibir daño
+var current_level: int
+
 signal change_UI_lives(change_lives)
 
 func _ready() -> void:
-	pass
+	current_level = SceneManager.current_level
+	
+	if current_level >= 3:
+		can_dash = true
 
 func _physics_process(delta) -> void:
 	if is_alive:
@@ -110,8 +120,8 @@ func _physics_process(delta) -> void:
 			animated_sprite.stop()
 			animated_sprite.play("Dash")
 			current_state = "Dash"
-			$DashTimer.start()
-			$CanDash.start()
+			dashing_timer.start()
+			dash_timer.start()
 		
 		velocity.x = input_vector.x * (dash_velocity if is_dashing else movement_velocity)
 		
@@ -283,6 +293,9 @@ func hide_all_sprites() -> void:
 
 # Controlador del Doble Salto
 func handle_double_jump() -> void:
+	if current_level < 2:
+		return
+		
 	if raycast_wall.is_colliding():
 		var collider = raycast_wall.get_collider()
 		if collider.is_in_group("Wall"):
@@ -339,18 +352,19 @@ func take_damage() -> void:
 			
 			current_state = "Death"
 			call_deferred("disable_player_collision")
-			await (get_tree().create_timer(1.5).timeout)
-			player_died.emit()
+			dead_timer.start()
+			
 		else:
 			animation_player.play("Hurt")
-			call_deferred("disable_player_collision")
-			await (get_tree().create_timer(3.0).timeout)
-			call_deferred("enable_player_collision")
+			velocity.y = hurt_jump_force  # Aplica un pequeño salto al recibir daño
+			
+			#call_deferred("disable_player_collision")
+			#await (get_tree().create_timer(3.0).timeout)
+			#call_deferred("enable_player_collision")
 
 func _on_body_entered(body) -> void:
 	if body.is_in_group("Enemy") and body.is_alive:
 		take_damage()
-	
 
 func increase_life() -> bool:
 	if lives < 3:
@@ -375,6 +389,9 @@ func _on_dash_timer_timeout() -> void:
 
 func _on_can_dash_timeout() -> void:
 	can_dash = true
+
+func _on_dead_timer_timeout() -> void:
+	player_died.emit()
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Dead"):
