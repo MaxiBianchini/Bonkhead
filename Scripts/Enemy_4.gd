@@ -28,7 +28,7 @@ func _ready() -> void:
 	
 	raycast_floor.position = FLOOR_RAYCAST_RIGHT_POS # Configurar la posición inicial del floor_raycast
 
-func _physics_process(delta) -> void:
+func _physics_process(_delta) -> void:
 	if not is_alive:
 		return # No hacer nada si el enemigo no está vivo
 	
