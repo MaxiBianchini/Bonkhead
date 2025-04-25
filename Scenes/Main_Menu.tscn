@@ -359,6 +359,187 @@ button_pressed = true
 text = "Full Screen On"
 alignment = 1
 
+[node name="VBoxContainer" type="VBoxContainer" parent="OthersMenu/Options"]
+layout_mode = 2
+size_flags_vertical = 6
+
+[node name="Label2" type="Label" parent="OthersMenu/Options/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 35
+text = "Esquma de controles
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control1" type="TextureButton" parent="OthersMenu/Options/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = ExtResource("5_fo8ij")
+texture_pressed = ExtResource("4_ftf8w")
+texture_hover = ExtResource("3_17nee")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/Control1"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -11.5
+offset_right = 32.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Left"
+label_settings = SubResource("LabelSettings_oayd6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control2" type="TextureButton" parent="OthersMenu/Options/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = ExtResource("5_fo8ij")
+texture_pressed = ExtResource("4_ftf8w")
+texture_hover = ExtResource("3_17nee")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/Control2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -11.5
+offset_right = 32.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Right"
+label_settings = SubResource("LabelSettings_oayd6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control3" type="TextureButton" parent="OthersMenu/Options/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = ExtResource("5_fo8ij")
+texture_pressed = ExtResource("4_ftf8w")
+texture_hover = ExtResource("3_17nee")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/Control3"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -11.5
+offset_right = 32.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Down"
+label_settings = SubResource("LabelSettings_oayd6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control4" type="TextureButton" parent="OthersMenu/Options/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = ExtResource("5_fo8ij")
+texture_pressed = ExtResource("4_ftf8w")
+texture_hover = ExtResource("3_17nee")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/Control4"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -11.5
+offset_right = 32.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Jump"
+label_settings = SubResource("LabelSettings_oayd6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control5" type="TextureButton" parent="OthersMenu/Options/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = ExtResource("5_fo8ij")
+texture_pressed = ExtResource("4_ftf8w")
+texture_hover = ExtResource("3_17nee")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/Control5"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -11.5
+offset_right = 32.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Shoot"
+label_settings = SubResource("LabelSettings_oayd6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Control6" type="TextureButton" parent="OthersMenu/Options/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = ExtResource("5_fo8ij")
+texture_pressed = ExtResource("4_ftf8w")
+texture_hover = ExtResource("3_17nee")
+stretch_mode = 0
+
+[node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/Control6"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -11.5
+offset_right = 32.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Dash"
+label_settings = SubResource("LabelSettings_oayd6")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Credits" type="VBoxContainer" parent="OthersMenu"]
 visible = false
 anchors_preset = 13
@@ -442,9 +623,9 @@ anchor_top = 0.611
 anchor_right = 0.5
 anchor_bottom = 0.611
 offset_left = -124.0
-offset_top = 176.12
+offset_top = 198.12
 offset_right = 125.0
-offset_bottom = 271.12
+offset_bottom = 293.12
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 35
