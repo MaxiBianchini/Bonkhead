@@ -5,7 +5,7 @@ extends CharacterBody2D
 @onready var shoot_timer: Timer = $Timer
 @onready var area2d: Area2D = $Area2D
 
-@onready var player = get_tree().current_scene.get_node_or_null("%Player") # Encuentra al jugador en la escena
+@onready var player = get_tree().current_scene.get_node_or_null("%Player")
 
 var bullet_scene: PackedScene = preload("res://Prefabs/Bullet.tscn")
 var bullet_offset: Vector2
@@ -14,7 +14,7 @@ var bullet_dir: Vector2
 var detection_width: float = 10000.0
 var detection_height: float = 180.0
 var enemy_is_near: bool = false
-var can_shoot: bool = true          # Indica si el enemigo puede disparar
+var can_shoot: bool = true
 
 var lives: int = 3
 var is_alive: bool = true
@@ -30,15 +30,12 @@ func _physics_process(_delta: float) -> void:
 	if not (player and is_alive):
 		return
 	
-	# Creamos un rectángulo centrado en la posición del enemigo con el tamaño deseado
 	var detection_rect = Rect2(
 		position - Vector2(detection_width * 0.5, detection_height * 0.5),
 		Vector2(detection_width, detection_height)
 	)
 	
-	# Comprobamos si el jugador está dentro del área de detección
 	if detection_rect.has_point(player.position):
-		# Ajustamos flip y offsets según la posición del jugador
 		if player.position.x < position.x:
 			animated_sprite.flip_h = true
 			animated_sprite.position = Vector2(-8, 0)
@@ -50,7 +47,6 @@ func _physics_process(_delta: float) -> void:
 			bullet_offset = Vector2(25, 5)
 			bullet_dir = Vector2.RIGHT
 	
-	# Si está listo para disparar, realizamos el disparo
 	if enemy_is_near and player.is_alive:
 		if can_shoot:
 			shoot_bullet()
@@ -60,27 +56,26 @@ func _physics_process(_delta: float) -> void:
 func shoot_bullet() -> void:
 	var bullet = bullet_scene.instantiate() as Area2D
 	bullet.mask = 2
-	# Le indicamos quién la disparó:
 	bullet.shooter = self
 	
 	bullet.position = position + bullet_offset
-	bullet.direction = bullet_dir  # Asegúrate de que la bala tenga una variable 'direction'
+	bullet.direction = bullet_dir
 	get_tree().current_scene.add_child(bullet)
 
 func take_damage() -> void:
 	if not is_alive:
-		return # No hacer nada si ya está muerto
+		return
 	
 	lives -= 1
 	
 	if lives <= 0:
 		is_alive = false
-		animated_sprite.play("Death") # Reproducir la animación de muerte
-		await animated_sprite.animation_finished  # Espera a que la animación termine
+		animated_sprite.play("Death")
+		await animated_sprite.animation_finished
 		queue_free()
 	else:
-		animation_player.play("Hurt") # Reproducir la animación de daño
-		emit_signal("add_points", points)  # Enviar la señal a la UI
+		animation_player.play("Hurt")
+		emit_signal("add_points", points)
 		
 		can_shoot = false
 		if shoot_timer.time_left > 0:

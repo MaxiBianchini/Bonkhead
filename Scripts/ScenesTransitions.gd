@@ -1,6 +1,5 @@
 extends CanvasLayer
 
-# Variable para indicar si una transición está en curso
 var is_transitioning: bool = false
 
 func change_scene(target: String) -> void:

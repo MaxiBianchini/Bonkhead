@@ -18,14 +18,14 @@ var can_shoot: bool = true          # Indica si el enemigo puede disparar
 var horizontal_speed: float = 100.0
 var vertical_speed: float = 80.0
 var patrol_range: float = 200.0
-var patrol_direction: int = 1  # 1 = derecha, -1 = izquierda
+var patrol_direction: int = 1
 
 var initial_height: float
 var start_position: Vector2
 var follow_player: bool = false
 
-var chase_stop_distance_x: float = 80.0 # Distancia mínima en X
-var hover_offset_y: float = 25.0 # Offset en Y
+var chase_stop_distance_x: float = 80.0
+var hover_offset_y: float = 25.0
 
 var lives: int = 3
 var is_alive: bool = true
@@ -59,11 +59,9 @@ func apply_gravity() -> void:
 	move_and_slide()
 
 func chase_player(delta: float) -> void:
-	# Diferencia horizontal y vertical respecto al jugador
 	var dx = player.position.x - position.x
 	var desired_y = player.position.y - hover_offset_y
-
-	# Persecución en X solo si estamos fuera de la distancia mínima
+	
 	if abs(dx) > chase_stop_distance_x:
 		var horizontal_dir = sign(dx)
 		animated_sprite.flip_h = (horizontal_dir < 0.0)
@@ -82,15 +80,13 @@ func chase_player(delta: float) -> void:
 			can_shoot = false
 			shoot_timer.start(1.0)  
 		
-	# Ajustar Y para estar un poquito por encima del jugador
 	var vertical_dir = sign(desired_y - position.y)
-	if abs(position.y - desired_y) > 2.0:  # Pequeña tolerancia
+	if abs(position.y - desired_y) > 2.0:
 		position.y += vertical_dir * vertical_speed * delta
 		
 	move_and_slide()
 
 func return_to_height(delta: float) -> void:
-	# El dron regresa a su Y inicial de patrulla:
 	if abs(position.y - initial_height) > 1.0:
 		var vertical_dir = sign(initial_height - position.y)
 		position.y += vertical_dir * (vertical_speed * delta)
@@ -111,10 +107,10 @@ func shoot_bullet() -> void:
 	animated_sprite.play("Attack")
 	var bullet = bullet_scene.instantiate() as Area2D
 	bullet.mask = 2
-	bullet.shooter = self # Le indicamos quién la disparó
+	bullet.shooter = self
 	
 	bullet.position = position + bullet_offset
-	bullet.direction = bullet_dir  # Asegúrate de que la bala tenga una variable 'direction'
+	bullet.direction = bullet_dir
 	get_tree().current_scene.add_child(bullet)
 
 func _on_body_entered(body: Node) -> void:
@@ -137,18 +133,17 @@ func take_damage() -> void:
 		animated_sprite.play("Death")
 		collision_shape.position.y = 9
 		velocity.x = 0
-		await animated_sprite.animation_finished  # Espera a que la animación termine
+		await animated_sprite.animation_finished
 		queue_free()
 	else:
 		animation_player.play("Hurt")
-		emit_signal("add_points", points)  # Enviar la señal a la UI
+		emit_signal("add_points", points)
 		
 		can_shoot = false
 		if shoot_timer.time_left > 0:
 			shoot_timer.start(shoot_timer.time_left + 1.0)
 		else:
 			shoot_timer.start(1.0)
-
 
 func _on_shoot_timer_timeout() -> void:
 	can_shoot = true

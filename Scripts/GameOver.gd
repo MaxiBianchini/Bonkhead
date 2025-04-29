@@ -1,31 +1,35 @@
 extends Node
 
-# Referencias a nodos importantes
-@onready var Resume_Button = $VBoxContainer/PlayButton  # Referencia al botón "PlayButton" dentro de VBoxContainer.
-@onready var MainMenu_Button = $VBoxContainer/MainMenuButton  # Referencia al botón "MainMenuButton" dentro de VBoxContainer.
+@onready var audio_click = $AudioStreamPlayer
+@onready var audio_entered = $AudioStreamPlayer2
 
-# Definición de señales personalizadas
-# Estas señales se usarán para notificar a otros nodos cuando se presionen los botones.
-signal press_playagain()  # Señal emitida al presionar el botón "PlayButton".
-signal press_mainmenu()  # Señal emitida al presionar el botón "MainMenuButton".
+@onready var Resume_Button = $VBoxContainer/PlayButton
+@onready var MainMenu_Button = $VBoxContainer/MainMenuButton
+
+signal press_playagain()
+signal press_mainmenu()
 
 func _ready() -> void: 
-	# Configura un cursor personalizado para el mouse.
 	Input.set_custom_mouse_cursor(preload("res://Graphics/GUI/Cursors/1.png"))
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
-	# Conecta la señal "pressed" de los botones
 	MainMenu_Button.pressed.connect(_on_mainmenu_pressed)
 	Resume_Button.pressed.connect(_on_playagain_pressed)
 
-# Función que se ejecuta cuando se presiona el botón "PlayButton".
 func _on_playagain_pressed() -> void:
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN) # Oculta el cursor del mouse.
-	emit_signal("press_playagain")  # Emite la señal "press_playagain".
-	queue_free()# Elimina este nodo (el menú).
+	audio_click.play()
+	await  audio_click.finished
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	emit_signal("press_playagain")
+	queue_free()
 
-# Función que se ejecuta cuando se presiona el botón "MainMenuButton".
 func _on_mainmenu_pressed() -> void:
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)# Asegura que el cursor del mouse siga visible para el menú principal.
-	emit_signal("press_mainmenu")  # Emite la señal "press_mainmenu".
-	queue_free() # Elimina este nodo (el menú) de la escena.
+	audio_click.play()
+	await  audio_click.finished
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	emit_signal("press_mainmenu")
+	queue_free()
+
+func _on_mouse_entered() -> void:
+	audio_entered.play()
+	await audio_entered.finished

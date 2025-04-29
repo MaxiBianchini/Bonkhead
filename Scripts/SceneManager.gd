@@ -1,6 +1,5 @@
 extends Node
 
-# Referencias a nodos de la escena actual
 var enemies_node: Node = null
 var time_label: Label = null
 var points_label: Label = null
@@ -9,33 +8,28 @@ var doorway: Node = null
 var player: Node = null
 var gui: Node = null
 
-# Menús
 var pause_menu: Node = null
 var game_over_menu: Node = null
 
-# Datos globales
 var current_level: int
 var game_time: float
 var points: int
 
-var has_saved_game: bool = false  # Indica si hay una partida guardada
+var has_saved_game: bool = false
 
 func _ready() -> void:
-	check_saved_game()  # Verifica si hay partida guardada al iniciar
-	load_game_data()    # Carga los datos si existen
+	check_saved_game()
+	load_game_data()
 	
-	# Conectar a la señal de cambio de escena
 	get_tree().tree_changed.connect(_on_tree_changed)
 	initialize_scene()
 
 func _on_tree_changed() -> void:
-	# Se llama cuando el árbol de nodos cambia (por ejemplo, al cargar una nueva escena)
 	call_deferred("initialize_scene")
 
 func initialize_scene() -> void:
 	var current_scene = get_tree().current_scene
 	if current_scene:
-		# Buscar nodos en la escena actual
 		if current_scene.has_node("Enemies"):
 			enemies_node = current_scene.get_node("Enemies")
 			for enemy in enemies_node.get_children():
@@ -81,13 +75,12 @@ func add_new_points(value: int):
 	points += value
 	update_ui()
 
-# Verifica si existe una partida guardada
 func check_saved_game() -> void:
 	has_saved_game = FileAccess.file_exists("user://save_data.json")
 
 func pass_to_nextlevel():
 	current_level += 1
-	save_game_data()  # Guardar los datos
+	save_game_data()
 	game_time = 0.0
 	ScenesTransitions.change_scene("res://Scenes/Level_" + str(current_level) + ".tscn")
 
@@ -102,7 +95,6 @@ func update_lives(lives):
 	for i in range(len(lives_sprites)):
 		lives_sprites[i].visible = i < lives
 
-# Mostrar menú de pausa
 func show_pause_menu() -> void:
 	get_tree().paused = true
 	pause_menu = preload("res://Scenes/PauseMenu.tscn").instantiate()
@@ -112,7 +104,6 @@ func show_pause_menu() -> void:
 		pause_menu.press_mainmenu.connect(go_to_mainmenu)
 	get_tree().current_scene.add_child(pause_menu)
 
-# Mostrar menú de game over
 func show_game_over_menu() -> void:
 	get_tree().paused = true
 	game_over_menu = preload("res://Scenes/GameOverMenu.tscn").instantiate()
@@ -142,8 +133,8 @@ func restart_gameplay() -> void:
 	
 func save_game_data() -> void:
 	var data = {
-		"score": points,  # Variable que almacena el puntaje
-		"level": current_level  # Variable que almacena el nivel actual
+		"score": points,
+		"level": current_level
 	}
 	var file = FileAccess.open("user://save_data.json", FileAccess.WRITE)
 	if file:
@@ -171,8 +162,7 @@ func load_game_data() -> void:
 		game_time = 0.0
 		points = 0
 
-# Reinicia los datos para una nueva partida
 func start_new_game() -> void:
 	points = 0
 	current_level = 1
-	save_game_data()  # Guarda para que la nueva partida sea el estado inicial
+	save_game_data()
