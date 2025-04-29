@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://b61e2qh88myfb"]
+[gd_scene load_steps=19 format=3 uid="uid://b61e2qh88myfb"]
 
 [ext_resource type="Texture2D" uid="uid://cn16ddildslab" path="res://Graphics/Zonas/Exclusion-zone/2 Background/Day/Fondo.png" id="1_i5kqb"]
 [ext_resource type="Script" uid="uid://dk5bo8f5w4fu8" path="res://Scripts/Main_Menu.gd" id="1_qsqme"]
@@ -14,7 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://duy6x83y07ptt" path="res://Graphics/GUI/Buttons/11-2.png" id="12_nbpdv"]
 [ext_resource type="Texture2D" uid="uid://b50anxboht7j5" path="res://Graphics/GUI/Buttons/11-3.png" id="13_y5em3"]
 [ext_resource type="Texture2D" uid="uid://brc5fi5763mdw" path="res://Graphics/GUI/Godot Logo.png" id="14_e6vgq"]
-[ext_resource type="AudioStream" uid="uid://xrh12o02wtfh" path="res://SFX/mouse/button click.mp3" id="15_cebuy"]
+[ext_resource type="AudioStream" uid="uid://kffjcdwavdni" path="res://SFX/New/Buttons_Clicks.mp3" id="15_cebuy"]
+[ext_resource type="AudioStream" uid="uid://cm5jcqpgvsjcl" path="res://SFX/mouse/button over.mp3" id="16_3a5co"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_8rfh8"]
 font = ExtResource("2_n46cw")
@@ -50,9 +51,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_i5kqb")
-metadata/_edit_lock_ = true
 
-[node name="ButtonBackground" type="TextureRect" parent="CanvasLayer"]
+[node name="ButtonsBackground" type="TextureRect" parent="CanvasLayer"]
 texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -122,7 +122,6 @@ text = "RESUME"
 label_settings = SubResource("LabelSettings_oayd6")
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_lock_ = true
 
 [node name="NewGameButton" type="TextureButton" parent="CanvasLayer/ButtonsContainer"]
 texture_filter = 1
@@ -132,7 +131,6 @@ texture_normal = ExtResource("5_fo8ij")
 texture_pressed = ExtResource("4_ftf8w")
 texture_hover = ExtResource("3_17nee")
 stretch_mode = 0
-metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="CanvasLayer/ButtonsContainer/NewGameButton"]
 layout_mode = 1
@@ -151,7 +149,6 @@ text = "NEW GAME"
 label_settings = SubResource("LabelSettings_oayd6")
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_lock_ = true
 
 [node name="OptionButton" type="TextureButton" parent="CanvasLayer/ButtonsContainer"]
 texture_filter = 1
@@ -162,7 +159,6 @@ texture_normal = ExtResource("5_fo8ij")
 texture_pressed = ExtResource("4_ftf8w")
 texture_hover = ExtResource("3_17nee")
 stretch_mode = 0
-metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="CanvasLayer/ButtonsContainer/OptionButton"]
 layout_mode = 1
@@ -181,7 +177,6 @@ text = "OPTIONS"
 label_settings = SubResource("LabelSettings_oayd6")
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_lock_ = true
 
 [node name="CreditButton" type="TextureButton" parent="CanvasLayer/ButtonsContainer"]
 texture_filter = 1
@@ -191,7 +186,6 @@ texture_normal = ExtResource("5_fo8ij")
 texture_pressed = ExtResource("4_ftf8w")
 texture_hover = ExtResource("3_17nee")
 stretch_mode = 0
-metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="CanvasLayer/ButtonsContainer/CreditButton"]
 layout_mode = 1
@@ -210,7 +204,6 @@ text = "CREDITS"
 label_settings = SubResource("LabelSettings_oayd6")
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_lock_ = true
 
 [node name="ExitButton" type="TextureButton" parent="CanvasLayer"]
 anchors_preset = -1
@@ -226,7 +219,6 @@ texture_normal = ExtResource("8_1slrm")
 texture_pressed = ExtResource("9_iua7b")
 texture_hover = ExtResource("10_wnoiy")
 stretch_mode = 0
-metadata/_edit_lock_ = true
 
 [node name="Label" type="Label" parent="CanvasLayer/ExitButton"]
 layout_mode = 0
@@ -237,7 +229,6 @@ theme_override_font_sizes/font_size = 50
 text = "X"
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_lock_ = true
 
 [node name="OthersMenu" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -361,6 +352,7 @@ alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="OthersMenu/Options"]
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 6
 
 [node name="Label2" type="Label" parent="OthersMenu/Options/VBoxContainer"]
@@ -372,173 +364,119 @@ text = "Esquma de controles
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Control1" type="TextureButton" parent="OthersMenu/Options/VBoxContainer"]
-texture_filter = 1
+[node name="MoveLeft" type="HBoxContainer" parent="OthersMenu/Options/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
-texture_normal = ExtResource("5_fo8ij")
-texture_pressed = ExtResource("4_ftf8w")
-texture_hover = ExtResource("3_17nee")
-stretch_mode = 0
+alignment = 1
 
-[node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/Control1"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -32.0
-offset_top = -11.5
-offset_right = 32.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Left"
-label_settings = SubResource("LabelSettings_oayd6")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Control2" type="TextureButton" parent="OthersMenu/Options/VBoxContainer"]
-texture_filter = 1
+[node name="TextureRect" type="TextureRect" parent="OthersMenu/Options/VBoxContainer/MoveLeft"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
-texture_normal = ExtResource("5_fo8ij")
-texture_pressed = ExtResource("4_ftf8w")
-texture_hover = ExtResource("3_17nee")
-stretch_mode = 0
 
-[node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/Control2"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -32.0
-offset_top = -11.5
-offset_right = 32.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Right"
-label_settings = SubResource("LabelSettings_oayd6")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Control3" type="TextureButton" parent="OthersMenu/Options/VBoxContainer"]
-texture_filter = 1
+[node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/MoveLeft"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
-texture_normal = ExtResource("5_fo8ij")
-texture_pressed = ExtResource("4_ftf8w")
-texture_hover = ExtResource("3_17nee")
-stretch_mode = 0
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 20
+text = "Move Left: "
 
-[node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/Control3"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -32.0
-offset_top = -11.5
-offset_right = 32.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Down"
-label_settings = SubResource("LabelSettings_oayd6")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Control4" type="TextureButton" parent="OthersMenu/Options/VBoxContainer"]
-texture_filter = 1
+[node name="Label2" type="Label" parent="OthersMenu/Options/VBoxContainer/MoveLeft"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
-texture_normal = ExtResource("5_fo8ij")
-texture_pressed = ExtResource("4_ftf8w")
-texture_hover = ExtResource("3_17nee")
-stretch_mode = 0
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 20
+text = "Left Arrow"
 
-[node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/Control4"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -32.0
-offset_top = -11.5
-offset_right = 32.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Jump"
-label_settings = SubResource("LabelSettings_oayd6")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Control5" type="TextureButton" parent="OthersMenu/Options/VBoxContainer"]
-texture_filter = 1
+[node name="MoveRight" type="HBoxContainer" parent="OthersMenu/Options/VBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
-texture_normal = ExtResource("5_fo8ij")
-texture_pressed = ExtResource("4_ftf8w")
-texture_hover = ExtResource("3_17nee")
-stretch_mode = 0
+alignment = 1
 
-[node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/Control5"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -32.0
-offset_top = -11.5
-offset_right = 32.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Shoot"
-label_settings = SubResource("LabelSettings_oayd6")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Control6" type="TextureButton" parent="OthersMenu/Options/VBoxContainer"]
-texture_filter = 1
+[node name="TextureRect" type="TextureRect" parent="OthersMenu/Options/VBoxContainer/MoveRight"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 6
-texture_normal = ExtResource("5_fo8ij")
-texture_pressed = ExtResource("4_ftf8w")
-texture_hover = ExtResource("3_17nee")
-stretch_mode = 0
 
-[node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/Control6"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -32.0
-offset_top = -11.5
-offset_right = 32.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "Dash"
-label_settings = SubResource("LabelSettings_oayd6")
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/MoveRight"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 20
+text = "Move Right: "
+
+[node name="Label2" type="Label" parent="OthersMenu/Options/VBoxContainer/MoveRight"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 20
+text = "Right Arrow"
+
+[node name="MoveDown" type="HBoxContainer" parent="OthersMenu/Options/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="OthersMenu/Options/VBoxContainer/MoveDown"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/MoveDown"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 20
+text = "Move Down: "
+
+[node name="Label2" type="Label" parent="OthersMenu/Options/VBoxContainer/MoveDown"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 20
+text = "Down Arrow"
+
+[node name="Jump" type="HBoxContainer" parent="OthersMenu/Options/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="OthersMenu/Options/VBoxContainer/Jump"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/Jump"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 20
+text = "Jump: "
+
+[node name="Label2" type="Label" parent="OthersMenu/Options/VBoxContainer/Jump"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 20
+text = "S    "
+
+[node name="Shoot" type="HBoxContainer" parent="OthersMenu/Options/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="OthersMenu/Options/VBoxContainer/Shoot"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/Shoot"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 20
+text = "Shoot: "
+
+[node name="Label2" type="Label" parent="OthersMenu/Options/VBoxContainer/Shoot"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 20
+text = "A     "
+
+[node name="Dash" type="HBoxContainer" parent="OthersMenu/Options/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="OthersMenu/Options/VBoxContainer/Dash"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/Dash"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 20
+text = "Dash: "
+
+[node name="Label2" type="Label" parent="OthersMenu/Options/VBoxContainer/Dash"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_font_sizes/font_size = 20
+text = "Shift"
 
 [node name="Credits" type="VBoxContainer" parent="OthersMenu"]
 visible = false
@@ -661,5 +599,14 @@ metadata/_edit_lock_ = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("15_cebuy")
+volume_db = -10.0
 
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_3a5co")
+
+[connection signal="mouse_entered" from="CanvasLayer/ButtonsContainer/ResumeButton" to="." method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="CanvasLayer/ButtonsContainer/NewGameButton" to="." method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="CanvasLayer/ButtonsContainer/OptionButton" to="." method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="CanvasLayer/ButtonsContainer/CreditButton" to="." method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="CanvasLayer/ExitButton" to="." method="_on_mouse_entered"]
 [connection signal="toggled" from="OthersMenu/Options/HBoxContainer/FullScreen/Label/CheckButton" to="." method="_on_fullscreen_checkbutton_toggled"]

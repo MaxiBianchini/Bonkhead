@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d4iwr8icvtwr6"]
+[gd_scene load_steps=14 format=3 uid="uid://d4iwr8icvtwr6"]
 
 [ext_resource type="Script" uid="uid://dqbyb0sth55en" path="res://Scripts/PauseMenu.gd" id="1_425uk"]
 [ext_resource type="Texture2D" uid="uid://df3eaw8ttv2l6" path="res://Graphics/GUI/Windows/1-4.png" id="1_siy43"]
@@ -9,6 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://uivhim05lh6f" path="res://Graphics/GUI/Buttons/11-1.png" id="7_mys0b"]
 [ext_resource type="Texture2D" uid="uid://duy6x83y07ptt" path="res://Graphics/GUI/Buttons/11-2.png" id="8_c7c70"]
 [ext_resource type="Texture2D" uid="uid://b50anxboht7j5" path="res://Graphics/GUI/Buttons/11-3.png" id="9_pmvjn"]
+[ext_resource type="AudioStream" uid="uid://kffjcdwavdni" path="res://SFX/New/Buttons_Clicks.mp3" id="10_mys0b"]
+[ext_resource type="AudioStream" uid="uid://cm5jcqpgvsjcl" path="res://SFX/mouse/button over.mp3" id="11_c7c70"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_m8v84"]
 font = ExtResource("5_425uk")
@@ -23,7 +25,7 @@ process_mode = 3
 layer = 0
 script = ExtResource("1_425uk")
 
-[node name="ButtonBackground" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 process_mode = 3
 texture_filter = 1
 anchors_preset = 15
@@ -320,3 +322,15 @@ label_settings = SubResource("LabelSettings_1363l")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_mys0b")
+volume_db = -10.0
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_c7c70")
+
+[connection signal="mouse_entered" from="VBoxContainer/ResumeButtom" to="." method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="VBoxContainer/OptionButton" to="." method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="VBoxContainer/MainMenuButton" to="." method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="OptionsMenu/BackButtonContainer/BackButton" to="." method="_on_mouse_entered"]

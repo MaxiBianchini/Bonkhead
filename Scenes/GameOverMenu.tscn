@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://by12apuyapsbr"]
+[gd_scene load_steps=11 format=3 uid="uid://by12apuyapsbr"]
 
 [ext_resource type="Script" uid="uid://bbhmaa7qph103" path="res://Scripts/GameOver.gd" id="1_5wj54"]
 [ext_resource type="Texture2D" uid="uid://df3eaw8ttv2l6" path="res://Graphics/GUI/Windows/1-4.png" id="1_tyfdi"]
@@ -6,6 +6,8 @@
 [ext_resource type="Texture2D" uid="uid://b3degqy5uf8ea" path="res://Graphics/GUI/Buttons/7-1.png" id="3_f01nq"]
 [ext_resource type="Texture2D" uid="uid://bdn1sk233bncw" path="res://Graphics/GUI/Buttons/7-3.png" id="4_mdt18"]
 [ext_resource type="Texture2D" uid="uid://b2bod7ibmudmv" path="res://Graphics/GUI/Buttons/7-2.png" id="5_anb84"]
+[ext_resource type="AudioStream" uid="uid://kffjcdwavdni" path="res://SFX/New/Buttons_Clicks.mp3" id="7_l4lwm"]
+[ext_resource type="AudioStream" uid="uid://cm5jcqpgvsjcl" path="res://SFX/mouse/button over.mp3" id="8_1kcw6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_aih8b"]
 line_spacing = 10.0
@@ -20,7 +22,7 @@ font_size = 30
 process_mode = 3
 script = ExtResource("1_5wj54")
 
-[node name="ButtonBackground" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 process_mode = 3
 texture_filter = 1
 anchors_preset = 15
@@ -37,7 +39,7 @@ size_flags_vertical = 4
 localize_numeral_system = false
 texture = ExtResource("1_tyfdi")
 
-[node name="Label" type="Label" parent="ButtonBackground"]
+[node name="Label" type="Label" parent="Background"]
 process_mode = 3
 layout_mode = 0
 offset_left = 60.0
@@ -125,3 +127,13 @@ MENU"
 label_settings = SubResource("LabelSettings_m8v84")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_l4lwm")
+volume_db = -10.0
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_1kcw6")
+
+[connection signal="mouse_entered" from="VBoxContainer/PlayButton" to="." method="_on_mouse_entered"]
+[connection signal="mouse_entered" from="VBoxContainer/MainMenuButton" to="." method="_on_mouse_entered"]
