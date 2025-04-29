@@ -216,9 +216,8 @@ text = "[WASD] to move
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
-position = Vector2(227, -28)
+position = Vector2(232, -28)
 zoom = Vector2(1.5, 1.5)
-process_callback = 0
 editor_draw_limits = true
 
 [node name="PhantomCameraHost" type="Node" parent="Camera2D"]
@@ -232,7 +231,7 @@ script = ExtResource("5_gcww2")
 unique_name_in_owner = true
 process_priority = -1
 top_level = true
-position = Vector2(227, -28)
+position = Vector2(232, -28)
 script = ExtResource("6_i3g4f")
 priority = 10
 follow_mode = 2
@@ -245,5 +244,5 @@ follow_damping = true
 draw_limits = true
 
 [node name="CharacterBody2D" parent="Player" instance=ExtResource("8_ytjsp")]
-position = Vector2(227, -28)
+position = Vector2(232, -28)
 script = ExtResource("9_o4c4h")

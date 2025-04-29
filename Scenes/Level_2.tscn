@@ -1,24 +1,15 @@
-[gd_scene load_steps=71 format=4 uid="uid://62rpf654fvo6"]
+[gd_scene load_steps=66 format=4 uid="uid://62rpf654fvo6"]
 
 [ext_resource type="Texture2D" uid="uid://vr4vltjsdl0o" path="res://Graphics/Zonas/Green-zone/2 Background/Day/1.png" id="1_xbslt"]
 [ext_resource type="Texture2D" uid="uid://okpnwlqcy00" path="res://Graphics/Zonas/Green-zone/2 Background/Day/2.png" id="2_q8wyw"]
 [ext_resource type="Texture2D" uid="uid://drm1n6nbur15p" path="res://Graphics/Zonas/Green-zone/2 Background/Day/3.png" id="3_rq6k0"]
 [ext_resource type="Texture2D" uid="uid://deyolcsyfas12" path="res://Graphics/Zonas/Green-zone/2 Background/Day/4.png" id="4_0ouaf"]
 [ext_resource type="Texture2D" uid="uid://cxqosmpwyqpk0" path="res://Graphics/Zonas/Green-zone/2 Background/Day/5.png" id="5_xd5wc"]
-[ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://TileSets/PowerStationTileSet.tres" id="6_sucmb"]
-[ext_resource type="Texture2D" uid="uid://1y0p34ksxrjo" path="res://Graphics/GUI/Status/Contenedor Vidas.png" id="7_go0cy"]
-[ext_resource type="Texture2D" uid="uid://30mchi3gi365" path="res://Graphics/GUI/Other/3 Skill icons/Skillicon7_16.png" id="8_7lt02"]
+[ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://TileSets/TileSets.tres" id="6_sucmb"]
 [ext_resource type="Texture2D" uid="uid://c4dthuj35awpq" path="res://Graphics/Zonas/Green-zone/3 Objects/Fountain/2.png" id="8_utet3"]
-[ext_resource type="Texture2D" uid="uid://ccv10fc17chx" path="res://Graphics/GUI/Status/Points.png" id="9_ssyor"]
-[ext_resource type="Texture2D" uid="uid://08prew2yytlt" path="res://Graphics/GUI/Icons/Icon_11.png" id="10_8mcgu"]
-[ext_resource type="FontFile" uid="uid://c88rb6dh1ub4j" path="res://Graphics/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="11_bdg83"]
-[ext_resource type="Texture2D" uid="uid://cthae01aake71" path="res://Graphics/GUI/Status/Timer.png" id="12_awmmt"]
 [ext_resource type="PackedScene" uid="uid://cdqlmgh2vxout" path="res://Prefabs/Player.tscn" id="20_j1y0e"]
 [ext_resource type="Texture2D" uid="uid://c1nx38be1asuj" path="res://Graphics/Zonas/Green-zone/3 Objects/Bushes/2.png" id="21_86852"]
-[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="21_kv4jp"]
 [ext_resource type="Texture2D" uid="uid://bc48a5conehj7" path="res://Graphics/Zonas/Green-zone/3 Objects/Bushes/3.png" id="22_pd1gx"]
-[ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="22_utet3"]
-[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="23_uah6q"]
 [ext_resource type="PackedScene" uid="uid://d2fpq7nxaiblh" path="res://Prefabs/Dead_Area.tscn" id="24_q8wyw"]
 [ext_resource type="PackedScene" uid="uid://d0lv1t50yhwap" path="res://Prefabs/Enemy_1.tscn" id="25_xd5wc"]
 [ext_resource type="PackedScene" uid="uid://cp6k1o6rfgevf" path="res://Prefabs/Enemy_3.tscn" id="26_sucmb"]
@@ -44,6 +35,7 @@
 [ext_resource type="Texture2D" uid="uid://dppfitv3akvbk" path="res://Graphics/Zonas/Green-zone/3 Objects/Stones/5.png" id="38_44812"]
 [ext_resource type="Texture2D" uid="uid://281qsmtr6gvd" path="res://Graphics/Zonas/Green-zone/3 Objects/Benches/1.png" id="38_irpmg"]
 [ext_resource type="Texture2D" uid="uid://bq8lihronfcvu" path="res://Graphics/Zonas/Green-zone/3 Objects/Grass/15.png" id="39_33kqp"]
+[ext_resource type="PackedScene" uid="uid://dch15up2fk0ht" path="res://Prefabs/GUI.tscn" id="39_281yw"]
 [ext_resource type="Texture2D" uid="uid://ccxwmso8me5uc" path="res://Graphics/Zonas/Green-zone/3 Objects/Benches/2.png" id="39_fkjh7"]
 [ext_resource type="Texture2D" uid="uid://b08biri5mudp8" path="res://Graphics/Zonas/Green-zone/3 Objects/Bushes/4.png" id="40_86852"]
 [ext_resource type="Texture2D" uid="uid://c02byxr0scup3" path="res://Graphics/Zonas/Green-zone/3 Objects/Other/Tree1.png" id="41_pd1gx"]
@@ -56,12 +48,15 @@
 [ext_resource type="Texture2D" uid="uid://dxeyevpmec63j" path="res://Graphics/Zonas/Green-zone/3 Objects/Other/Tree3.png" id="47_fkjh7"]
 [ext_resource type="Texture2D" uid="uid://oct8cqkym0p0" path="res://Graphics/Zonas/Green-zone/3 Objects/Other/Ramp1.png" id="50_m2s7e"]
 [ext_resource type="Texture2D" uid="uid://j0axuy3i4ar8" path="res://Graphics/Zonas/Green-zone/3 Objects/Other/Ramp2.png" id="51_5toea"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="52_jhwe0"]
 [ext_resource type="Texture2D" uid="uid://b7ffqlkivg71k" path="res://Graphics/Zonas/Green-zone/3 Objects/Fence/1.png" id="53_p2eoq"]
+[ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="53_v40af"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="54_m2s7e"]
 [ext_resource type="Texture2D" uid="uid://fa75u2xkk2xt" path="res://Graphics/Zonas/Green-zone/3 Objects/Fence/5.png" id="55_w37ya"]
 [ext_resource type="PackedScene" uid="uid://bh3h363wnt1mt" path="res://Prefabs/Signpost.tscn" id="59_u5cqn"]
 
-[sub_resource type="Resource" id="Resource_86852"]
-script = ExtResource("23_uah6q")
+[sub_resource type="Resource" id="Resource_5toea"]
+script = ExtResource("54_m2s7e")
 duration = 1.0
 transition = 0
 ease = 2
@@ -473,84 +468,7 @@ texture = ExtResource("30_vofji")
 position = Vector2(1969, 1694)
 texture = ExtResource("31_bp6cg")
 
-[node name="GUI" type="CanvasLayer" parent="."]
-
-[node name="HBoxContainer" type="HBoxContainer" parent="GUI"]
-anchors_preset = 10
-anchor_right = 1.0
-grow_horizontal = 2
-
-[node name="LivesLabel" type="Sprite2D" parent="GUI/HBoxContainer"]
-texture_filter = 1
-position = Vector2(144, 68)
-scale = Vector2(4, 4)
-texture = ExtResource("7_go0cy")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="GUI/HBoxContainer/LivesLabel"]
-offset_left = -32.0
-offset_top = -16.0
-offset_right = -32.0
-offset_bottom = -16.0
-size_flags_horizontal = 4
-size_flags_vertical = 4
-metadata/_edit_use_anchors_ = true
-
-[node name="Sprite2D" type="Sprite2D" parent="GUI/HBoxContainer/LivesLabel/HBoxContainer"]
-texture_filter = 1
-position = Vector2(12, 17)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("8_7lt02")
-
-[node name="Sprite2D2" type="Sprite2D" parent="GUI/HBoxContainer/LivesLabel/HBoxContainer"]
-position = Vector2(32, 17)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("8_7lt02")
-
-[node name="Sprite2D3" type="Sprite2D" parent="GUI/HBoxContainer/LivesLabel/HBoxContainer"]
-position = Vector2(52, 17)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("8_7lt02")
-
-[node name="PointsLabel" type="Sprite2D" parent="GUI/HBoxContainer"]
-z_as_relative = false
-texture_filter = 1
-position = Vector2(1712, 68)
-scale = Vector2(4, 4)
-texture = ExtResource("9_ssyor")
-
-[node name="Sprite2D" type="Sprite2D" parent="GUI/HBoxContainer/PointsLabel"]
-position = Vector2(-34, 1)
-texture = ExtResource("10_8mcgu")
-
-[node name="Text" type="Label" parent="GUI/HBoxContainer/PointsLabel"]
-offset_left = -5.0
-offset_top = -2.835
-offset_right = -4.0
-offset_bottom = 14.165
-scale = Vector2(0.5, 0.5)
-theme_override_fonts/font = ExtResource("11_bdg83")
-theme_override_font_sizes/font_size = 17
-horizontal_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="TimeLabel" type="Sprite2D" parent="GUI/HBoxContainer"]
-texture_filter = 1
-position = Vector2(960, 80)
-scale = Vector2(5, 5)
-texture = ExtResource("12_awmmt")
-
-[node name="Text" type="Label" parent="GUI/HBoxContainer/TimeLabel"]
-offset_left = -20.0
-offset_top = -2.0
-offset_right = -19.0
-offset_bottom = 14.0
-scale = Vector2(0.5, 0.5)
-size_flags_horizontal = 4
-theme_override_constants/shadow_offset_x = 10
-theme_override_fonts/font = ExtResource("11_bdg83")
-theme_override_font_sizes/font_size = 17
-horizontal_alignment = 1
-metadata/_edit_use_anchors_ = true
+[node name="GUI" parent="." instance=ExtResource("39_281yw")]
 
 [node name="Player" parent="." instance=ExtResource("20_j1y0e")]
 unique_name_in_owner = true
@@ -563,33 +481,34 @@ position = Vector2(198.333, 720)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
-limit_bottom = 2800
+limit_right = 8900
+limit_bottom = 2810
 editor_draw_limits = true
 
 [node name="PhantomCameraHost" type="Node" parent="Camera2D"]
 process_priority = 300
 process_physics_priority = 300
-script = ExtResource("21_kv4jp")
+script = ExtResource("52_jhwe0")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
 position = Vector2(198.333, 720)
-script = ExtResource("22_utet3")
+script = ExtResource("53_v40af")
 priority = 1
 follow_mode = 2
 follow_target = NodePath("../Player")
 zoom = Vector2(4.5, 4.5)
-tween_resource = SubResource("Resource_86852")
+tween_resource = SubResource("Resource_5toea")
 draw_limits = true
 limit_left = -15
 limit_top = 450
-limit_bottom = 2800
+limit_right = 8900
+limit_bottom = 2810
+metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
 
 [node name="Doorway" parent="." instance=ExtResource("34_awmmt")]
 position = Vector2(8350, 1225)
-
-[node name="Live_Up" parent="." instance=ExtResource("28_go0cy")]
-position = Vector2(8038, 1742)
 
 [node name="Dead_Areas" type="Node2D" parent="." groups=["Dead"]]
 
@@ -926,45 +845,42 @@ position = Vector2(8239, 2041)
 
 [node name="Phantom_Area" parent="PhantomAreas" instance=ExtResource("29_7lt02")]
 position = Vector2(6588, 1466)
+script = null
 
 [node name="CollisionShape2D" parent="PhantomAreas/Phantom_Area" index="0"]
 position = Vector2(-17.5, 42.5)
 shape = SubResource("RectangleShape2D_ssyor")
 
-[node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area" index="1" node_paths=PackedStringArray("follow_target")]
+[node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area" index="1"]
 top_level = true
 position = Vector2(44, 720)
-follow_mode = 1
-follow_target = NodePath("../../../Player")
-zoom = Vector2(3, 3)
-frame_preview = false
+script = null
 
 [node name="Phantom_Area2" parent="PhantomAreas" instance=ExtResource("29_7lt02")]
 position = Vector2(1234, 2096)
+script = null
 
 [node name="CollisionShape2D" parent="PhantomAreas/Phantom_Area2" index="0"]
 position = Vector2(11, 44.5)
 shape = SubResource("RectangleShape2D_8mcgu")
 
-[node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area2" index="1" node_paths=PackedStringArray("follow_target")]
+[node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area2" index="1"]
 top_level = true
 position = Vector2(44, 720)
-follow_mode = 2
-follow_target = NodePath("../../../Player")
-zoom = Vector2(2.5, 2.5)
+script = null
 
 [node name="Phantom_Area3" parent="PhantomAreas" instance=ExtResource("29_7lt02")]
 position = Vector2(5928, 2418)
+script = null
 
 [node name="CollisionShape2D" parent="PhantomAreas/Phantom_Area3" index="0"]
 position = Vector2(73.5, -19.25)
 shape = SubResource("RectangleShape2D_bdg83")
 
-[node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area3" index="1" node_paths=PackedStringArray("follow_target")]
+[node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area3" index="1"]
 top_level = true
 position = Vector2(44, 720)
-follow_mode = 2
-follow_target = NodePath("../../../Player")
+script = null
 
 [node name="Signpost" parent="." instance=ExtResource("59_u5cqn")]
 z_index = 2
@@ -1001,6 +917,9 @@ position = Vector2(2280, 915)
 
 [node name="Live_Up5" parent="Live_Ups" instance=ExtResource("28_go0cy")]
 position = Vector2(6644, 1553)
+
+[node name="Live_Up" parent="Live_Ups" instance=ExtResource("28_go0cy")]
+position = Vector2(8038, 1742)
 
 [editable path="Dead_Areas/Dead_Area"]
 [editable path="Dead_Areas/Dead_Area2"]
