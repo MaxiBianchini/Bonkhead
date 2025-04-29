@@ -168,7 +168,7 @@ _data = {
 }
 
 [node name="Enemy_4" type="CharacterBody2D" groups=["Enemy"]]
-process_mode = 1
+process_mode = 3
 collision_layer = 4
 script = ExtResource("1_tnnmb")
 

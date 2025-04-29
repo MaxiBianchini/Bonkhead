@@ -548,6 +548,7 @@ position = Vector2(0, 8.25)
 shape = SubResource("RectangleShape2D_sucmb")
 
 [node name="Enemies" type="Node2D" parent="."]
+process_mode = 3
 
 [node name="Enemy_1" parent="Enemies" instance=ExtResource("25_xd5wc")]
 position = Vector2(1075, 688)
@@ -608,6 +609,7 @@ position = Vector2(7019, 1294)
 position = Vector2(853, 1193)
 
 [node name="FallingPlatforms" type="Node2D" parent="."]
+process_mode = 3
 
 [node name="FallingPlatform4" parent="FallingPlatforms" instance=ExtResource("31_ssyor")]
 position = Vector2(2109, 2165)
@@ -703,6 +705,7 @@ position = Vector2(7424, 1387)
 position = Vector2(6645, 1583)
 
 [node name="MovingPlatforms" type="Node2D" parent="."]
+process_mode = 3
 
 [node name="MovingPlatform" parent="MovingPlatforms" instance=ExtResource("30_7lt02")]
 z_index = 1

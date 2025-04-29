@@ -710,6 +710,7 @@ limit_bottom = 1750
 metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
 
 [node name="Enemies" type="Node2D" parent="."]
+process_mode = 3
 
 [node name="Enemy_7" parent="Enemies" instance=ExtResource("18_noxkl")]
 position = Vector2(868, 1296)
@@ -880,6 +881,7 @@ position = Vector2(-25.73, 0)
 script = null
 
 [node name="Platforms" type="Node2D" parent="."]
+process_mode = 3
 
 [node name="MovingPlatform" parent="Platforms" instance=ExtResource("52_fdbj4")]
 position = Vector2(825, 704)
