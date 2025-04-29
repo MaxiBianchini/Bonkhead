@@ -1,0 +1,88 @@
+[gd_scene load_steps=7 format=3 uid="uid://dch15up2fk0ht"]
+
+[ext_resource type="Texture2D" uid="uid://1y0p34ksxrjo" path="res://Graphics/GUI/Status/Contenedor Vidas.png" id="1_1r6vs"]
+[ext_resource type="Texture2D" uid="uid://30mchi3gi365" path="res://Graphics/GUI/Other/3 Skill icons/Skillicon7_16.png" id="2_apbyh"]
+[ext_resource type="Texture2D" uid="uid://ccv10fc17chx" path="res://Graphics/GUI/Status/Points.png" id="3_dd2ji"]
+[ext_resource type="Texture2D" uid="uid://08prew2yytlt" path="res://Graphics/GUI/Icons/Icon_11.png" id="4_wlkr0"]
+[ext_resource type="FontFile" uid="uid://c88rb6dh1ub4j" path="res://Graphics/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="5_tcnxb"]
+[ext_resource type="Texture2D" uid="uid://cthae01aake71" path="res://Graphics/GUI/Status/Timer.png" id="6_ajp3r"]
+
+[node name="GUI" type="CanvasLayer"]
+process_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="LivesLabel" type="Sprite2D" parent="HBoxContainer"]
+texture_filter = 1
+position = Vector2(144, 68)
+scale = Vector2(4, 4)
+texture = ExtResource("1_1r6vs")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/LivesLabel"]
+offset_left = -32.0
+offset_top = -16.0
+offset_right = -32.0
+offset_bottom = -16.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="HBoxContainer/LivesLabel/HBoxContainer"]
+texture_filter = 1
+position = Vector2(12, 17)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_apbyh")
+
+[node name="Sprite2D2" type="Sprite2D" parent="HBoxContainer/LivesLabel/HBoxContainer"]
+position = Vector2(32, 17)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_apbyh")
+
+[node name="Sprite2D3" type="Sprite2D" parent="HBoxContainer/LivesLabel/HBoxContainer"]
+position = Vector2(52, 17)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_apbyh")
+
+[node name="PointsLabel" type="Sprite2D" parent="HBoxContainer"]
+z_as_relative = false
+texture_filter = 1
+position = Vector2(1712, 68)
+scale = Vector2(4, 4)
+texture = ExtResource("3_dd2ji")
+
+[node name="Sprite2D" type="Sprite2D" parent="HBoxContainer/PointsLabel"]
+position = Vector2(-34, 1)
+texture = ExtResource("4_wlkr0")
+
+[node name="Text" type="Label" parent="HBoxContainer/PointsLabel"]
+offset_left = -5.0
+offset_top = -2.835
+offset_right = -4.0
+offset_bottom = 14.165
+scale = Vector2(0.5, 0.5)
+theme_override_fonts/font = ExtResource("5_tcnxb")
+theme_override_font_sizes/font_size = 17
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="TimeLabel" type="Sprite2D" parent="HBoxContainer"]
+texture_filter = 1
+position = Vector2(960, 80)
+scale = Vector2(5, 5)
+texture = ExtResource("6_ajp3r")
+
+[node name="Text" type="Label" parent="HBoxContainer/TimeLabel"]
+offset_left = -20.0
+offset_top = -2.0
+offset_right = -19.0
+offset_bottom = 14.0
+scale = Vector2(0.5, 0.5)
+size_flags_horizontal = 4
+theme_override_constants/shadow_offset_x = 10
+theme_override_fonts/font = ExtResource("5_tcnxb")
+theme_override_font_sizes/font_size = 17
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
