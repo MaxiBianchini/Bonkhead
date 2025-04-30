@@ -1,12 +1,8 @@
-extends Control
+extends CanvasLayer
 
-@onready var Exit_Button = $CanvasLayer/ExitButton
-@onready var Button_background = $CanvasLayer/ButtonsBackground
-@onready var Back_Button = $OthersMenu/BackButtonContainer/BackButton
-@onready var Resume_Button = $CanvasLayer/ButtonsContainer/ResumeButton
-@onready var Option_Button = $CanvasLayer/ButtonsContainer/OptionButton
-@onready var Credit_Button = $CanvasLayer/ButtonsContainer/CreditButton
-@onready var NewGame_Button = $CanvasLayer/ButtonsContainer/NewGameButton
+@onready var Exit_Button = $ExitButton
+@onready var Button_background = $ButtonsBackground
+@onready var Resume_Button = $ButtonsContainer/ResumeButton
 
 @onready var audio_click = $AudioStreamPlayer
 @onready var audio_entered = $AudioStreamPlayer2
@@ -17,17 +13,10 @@ func _ready():
 	Input.set_custom_mouse_cursor(preload("res://Graphics/GUI/Cursors/1.png"))
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	
-	Resume_Button.pressed.connect(_on_continue_pressed)
-	Option_Button.pressed.connect(_on_options_pressed)
-	Credit_Button.pressed.connect(_on_credits_pressed)
-	Exit_Button.pressed.connect(_on_exit_pressed)
-	Back_Button.pressed.connect(_on_back_pressed)
-	NewGame_Button.pressed.connect(_on_new_game_pressed)
-	
 	Resume_Button.visible = SceneManager.has_saved_game
 	if Resume_Button.visible:
-		$CanvasLayer/ButtonsContainer.size.y = 480.0
-		$CanvasLayer/ButtonsContainer.position.y = 416.0
+		$ButtonsContainer.size.y = 480.0
+		$ButtonsContainer.position.y = 416.0
  
 func _on_continue_pressed():
 	audio_click.play()
@@ -90,12 +79,12 @@ func show_other_menu(enter: bool):
 func show_main_menu(enter: bool):
 	if enter:
 		Exit_Button.show()
-		$CanvasLayer/ButtonsContainer.show()
-		$CanvasLayer/Label.show()
+		$ButtonsContainer.show()
+		$Label.show()
 	else:
-		$CanvasLayer/Label.hide()
-		$CanvasLayer/ExitButton.hide()
-		$CanvasLayer/ButtonsContainer.hide()
+		$Label.hide()
+		$ExitButton.hide()
+		$ButtonsContainer.hide()
 
 func _on_fullscreen_checkbutton_toggled(toggled_on: bool) -> void:
 	if toggled_on:

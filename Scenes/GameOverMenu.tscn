@@ -136,4 +136,6 @@ volume_db = -10.0
 stream = ExtResource("8_1kcw6")
 
 [connection signal="mouse_entered" from="VBoxContainer/PlayButton" to="." method="_on_mouse_entered"]
+[connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_playagain_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/MainMenuButton" to="." method="_on_mouse_entered"]
+[connection signal="pressed" from="VBoxContainer/MainMenuButton" to="." method="_on_mainmenu_pressed"]

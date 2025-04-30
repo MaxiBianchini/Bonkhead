@@ -1,58 +1,43 @@
 [gd_scene load_steps=19 format=3 uid="uid://b61e2qh88myfb"]
 
-[ext_resource type="Texture2D" uid="uid://cn16ddildslab" path="res://Graphics/Zonas/Exclusion-zone/2 Background/Day/Fondo.png" id="1_i5kqb"]
-[ext_resource type="Script" uid="uid://dk5bo8f5w4fu8" path="res://Scripts/Main_Menu.gd" id="1_qsqme"]
-[ext_resource type="FontFile" uid="uid://c88rb6dh1ub4j" path="res://Graphics/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="2_n46cw"]
-[ext_resource type="Texture2D" uid="uid://b2bod7ibmudmv" path="res://Graphics/GUI/Buttons/7-2.png" id="3_17nee"]
-[ext_resource type="Texture2D" uid="uid://df3eaw8ttv2l6" path="res://Graphics/GUI/Windows/1-4.png" id="3_s2uu6"]
-[ext_resource type="Texture2D" uid="uid://bdn1sk233bncw" path="res://Graphics/GUI/Buttons/7-3.png" id="4_ftf8w"]
-[ext_resource type="Texture2D" uid="uid://b3degqy5uf8ea" path="res://Graphics/GUI/Buttons/7-1.png" id="5_fo8ij"]
-[ext_resource type="Texture2D" uid="uid://cecrno5ffpubr" path="res://Graphics/GUI/Buttons/1-1.png" id="8_1slrm"]
-[ext_resource type="Texture2D" uid="uid://l4htlbip8c4h" path="res://Graphics/GUI/Buttons/1-3.png" id="9_iua7b"]
-[ext_resource type="Texture2D" uid="uid://c41884kfdl8mq" path="res://Graphics/GUI/Buttons/1-2.png" id="10_wnoiy"]
-[ext_resource type="Texture2D" uid="uid://uivhim05lh6f" path="res://Graphics/GUI/Buttons/11-1.png" id="11_dolc3"]
-[ext_resource type="Texture2D" uid="uid://duy6x83y07ptt" path="res://Graphics/GUI/Buttons/11-2.png" id="12_nbpdv"]
-[ext_resource type="Texture2D" uid="uid://b50anxboht7j5" path="res://Graphics/GUI/Buttons/11-3.png" id="13_y5em3"]
-[ext_resource type="Texture2D" uid="uid://brc5fi5763mdw" path="res://Graphics/GUI/Godot Logo.png" id="14_e6vgq"]
-[ext_resource type="AudioStream" uid="uid://kffjcdwavdni" path="res://SFX/New/Buttons_Clicks.mp3" id="15_cebuy"]
-[ext_resource type="AudioStream" uid="uid://cm5jcqpgvsjcl" path="res://SFX/mouse/button over.mp3" id="16_3a5co"]
+[ext_resource type="Script" uid="uid://dk5bo8f5w4fu8" path="res://Scripts/Main_Menu.gd" id="1_2x1g0"]
+[ext_resource type="Texture2D" uid="uid://cn16ddildslab" path="res://Graphics/Zonas/Exclusion-zone/2 Background/Day/Fondo.png" id="2_riqfo"]
+[ext_resource type="Texture2D" uid="uid://df3eaw8ttv2l6" path="res://Graphics/GUI/Windows/1-4.png" id="3_yxkem"]
+[ext_resource type="FontFile" uid="uid://c88rb6dh1ub4j" path="res://Graphics/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="4_7v4os"]
+[ext_resource type="Texture2D" uid="uid://b3degqy5uf8ea" path="res://Graphics/GUI/Buttons/7-1.png" id="5_pjscj"]
+[ext_resource type="Texture2D" uid="uid://bdn1sk233bncw" path="res://Graphics/GUI/Buttons/7-3.png" id="6_m7n2d"]
+[ext_resource type="Texture2D" uid="uid://b2bod7ibmudmv" path="res://Graphics/GUI/Buttons/7-2.png" id="7_65hh5"]
+[ext_resource type="Texture2D" uid="uid://cecrno5ffpubr" path="res://Graphics/GUI/Buttons/1-1.png" id="8_6byu3"]
+[ext_resource type="Texture2D" uid="uid://l4htlbip8c4h" path="res://Graphics/GUI/Buttons/1-3.png" id="9_leunp"]
+[ext_resource type="Texture2D" uid="uid://c41884kfdl8mq" path="res://Graphics/GUI/Buttons/1-2.png" id="10_h1v62"]
+[ext_resource type="Texture2D" uid="uid://uivhim05lh6f" path="res://Graphics/GUI/Buttons/11-1.png" id="11_5hdia"]
+[ext_resource type="Texture2D" uid="uid://duy6x83y07ptt" path="res://Graphics/GUI/Buttons/11-2.png" id="12_iqn0u"]
+[ext_resource type="Texture2D" uid="uid://b50anxboht7j5" path="res://Graphics/GUI/Buttons/11-3.png" id="13_3u44c"]
+[ext_resource type="Texture2D" uid="uid://brc5fi5763mdw" path="res://Graphics/GUI/Godot Logo.png" id="14_bxv1r"]
+[ext_resource type="AudioStream" uid="uid://kffjcdwavdni" path="res://SFX/New/Buttons_Clicks.mp3" id="15_ux20s"]
+[ext_resource type="AudioStream" uid="uid://cm5jcqpgvsjcl" path="res://SFX/mouse/button over.mp3" id="16_ke15f"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_8rfh8"]
-font = ExtResource("2_n46cw")
+font = ExtResource("4_7v4os")
 font_size = 88
 
 [sub_resource type="LabelSettings" id="LabelSettings_oayd6"]
-font = ExtResource("2_n46cw")
+font = ExtResource("4_7v4os")
 font_size = 30
 
-[node name="MainMenu" type="Control"]
-texture_filter = 1
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -1980.0
-offset_bottom = -1080.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-script = ExtResource("1_qsqme")
-metadata/_edit_vertical_guides_ = [960.0, 1920.0, 0.0]
-metadata/_edit_horizontal_guides_ = [-824.0, 650.0, 1080.0]
-
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="MainMenu" type="CanvasLayer"]
 process_mode = 3
+script = ExtResource("1_2x1g0")
 
-[node name="Background" type="TextureRect" parent="CanvasLayer"]
+[node name="Background" type="TextureRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_i5kqb")
+texture = ExtResource("2_riqfo")
 
-[node name="ButtonsBackground" type="TextureRect" parent="CanvasLayer"]
+[node name="ButtonsBackground" type="TextureRect" parent="."]
 texture_filter = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -66,10 +51,10 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
 localize_numeral_system = false
-texture = ExtResource("3_s2uu6")
+texture = ExtResource("3_yxkem")
 expand_mode = 1
 
-[node name="Label" type="Label" parent="CanvasLayer"]
+[node name="Label" type="Label" parent="."]
 anchors_preset = 10
 anchor_right = 1.0
 offset_top = 1.0
@@ -81,7 +66,7 @@ label_settings = SubResource("LabelSettings_8rfh8")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ButtonsContainer" type="VBoxContainer" parent="CanvasLayer"]
+[node name="ButtonsContainer" type="VBoxContainer" parent="."]
 anchors_preset = -1
 anchor_left = 0.5
 anchor_top = 0.611
@@ -96,16 +81,16 @@ grow_vertical = 2
 theme_override_constants/separation = 35
 alignment = 1
 
-[node name="ResumeButton" type="TextureButton" parent="CanvasLayer/ButtonsContainer"]
+[node name="ResumeButton" type="TextureButton" parent="ButtonsContainer"]
 texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 3
-texture_normal = ExtResource("5_fo8ij")
-texture_pressed = ExtResource("4_ftf8w")
-texture_hover = ExtResource("3_17nee")
+texture_normal = ExtResource("5_pjscj")
+texture_pressed = ExtResource("6_m7n2d")
+texture_hover = ExtResource("7_65hh5")
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="CanvasLayer/ButtonsContainer/ResumeButton"]
+[node name="Label" type="Label" parent="ButtonsContainer/ResumeButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -123,16 +108,16 @@ label_settings = SubResource("LabelSettings_oayd6")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="NewGameButton" type="TextureButton" parent="CanvasLayer/ButtonsContainer"]
+[node name="NewGameButton" type="TextureButton" parent="ButtonsContainer"]
 texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 3
-texture_normal = ExtResource("5_fo8ij")
-texture_pressed = ExtResource("4_ftf8w")
-texture_hover = ExtResource("3_17nee")
+texture_normal = ExtResource("5_pjscj")
+texture_pressed = ExtResource("6_m7n2d")
+texture_hover = ExtResource("7_65hh5")
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="CanvasLayer/ButtonsContainer/NewGameButton"]
+[node name="Label" type="Label" parent="ButtonsContainer/NewGameButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -150,17 +135,17 @@ label_settings = SubResource("LabelSettings_oayd6")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="OptionButton" type="TextureButton" parent="CanvasLayer/ButtonsContainer"]
+[node name="OptionButton" type="TextureButton" parent="ButtonsContainer"]
 texture_filter = 1
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_vertical = 3
-texture_normal = ExtResource("5_fo8ij")
-texture_pressed = ExtResource("4_ftf8w")
-texture_hover = ExtResource("3_17nee")
+texture_normal = ExtResource("5_pjscj")
+texture_pressed = ExtResource("6_m7n2d")
+texture_hover = ExtResource("7_65hh5")
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="CanvasLayer/ButtonsContainer/OptionButton"]
+[node name="Label" type="Label" parent="ButtonsContainer/OptionButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -178,16 +163,16 @@ label_settings = SubResource("LabelSettings_oayd6")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CreditButton" type="TextureButton" parent="CanvasLayer/ButtonsContainer"]
+[node name="CreditsButton" type="TextureButton" parent="ButtonsContainer"]
 texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 3
-texture_normal = ExtResource("5_fo8ij")
-texture_pressed = ExtResource("4_ftf8w")
-texture_hover = ExtResource("3_17nee")
+texture_normal = ExtResource("5_pjscj")
+texture_pressed = ExtResource("6_m7n2d")
+texture_hover = ExtResource("7_65hh5")
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="CanvasLayer/ButtonsContainer/CreditButton"]
+[node name="Label" type="Label" parent="ButtonsContainer/CreditsButton"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -205,7 +190,7 @@ label_settings = SubResource("LabelSettings_oayd6")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ExitButton" type="TextureButton" parent="CanvasLayer"]
+[node name="ExitButton" type="TextureButton" parent="."]
 anchors_preset = -1
 anchor_left = 0.929
 anchor_top = 0.046
@@ -215,16 +200,16 @@ offset_left = 0.579956
 offset_top = 0.319996
 offset_right = -0.540039
 offset_bottom = 0.0799866
-texture_normal = ExtResource("8_1slrm")
-texture_pressed = ExtResource("9_iua7b")
-texture_hover = ExtResource("10_wnoiy")
+texture_normal = ExtResource("8_6byu3")
+texture_pressed = ExtResource("9_leunp")
+texture_hover = ExtResource("10_h1v62")
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="CanvasLayer/ExitButton"]
+[node name="Label" type="Label" parent="ExitButton"]
 layout_mode = 0
 offset_right = 91.0
 offset_bottom = 84.0
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 50
 text = "X"
 horizontal_alignment = 1
@@ -249,7 +234,7 @@ grow_vertical = 2
 
 [node name="Label" type="Label" parent="OthersMenu/Options"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 50
 text = "
 Options"
@@ -267,7 +252,7 @@ size_flags_vertical = 3
 [node name="Label2" type="Label" parent="OthersMenu/Options/HBoxContainer/Volumen"]
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 25
 text = "
 
@@ -284,9 +269,9 @@ offset_right = 361.0
 offset_bottom = 195.0
 size_flags_horizontal = 0
 size_flags_vertical = 4
-theme_override_icons/grabber = ExtResource("11_dolc3")
-theme_override_icons/grabber_highlight = ExtResource("12_nbpdv")
-theme_override_icons/tick = ExtResource("13_y5em3")
+theme_override_icons/grabber = ExtResource("11_5hdia")
+theme_override_icons/grabber_highlight = ExtResource("12_iqn0u")
+theme_override_icons/tick = ExtResource("13_3u44c")
 step = 2.0
 allow_lesser = true
 
@@ -298,7 +283,7 @@ size_flags_vertical = 3
 [node name="Label" type="Label" parent="OthersMenu/Options/HBoxContainer/Mute"]
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 25
 text = "
 
@@ -314,7 +299,7 @@ offset_left = 223.0
 offset_top = 148.0
 offset_right = 331.0
 offset_bottom = 179.0
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 10
 text = "Sound On"
 flat = true
@@ -328,7 +313,7 @@ size_flags_vertical = 3
 [node name="Label" type="Label" parent="OthersMenu/Options/HBoxContainer/FullScreen"]
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 25
 text = "
 
@@ -344,7 +329,7 @@ offset_left = 231.0
 offset_top = 149.0
 offset_right = 420.0
 offset_bottom = 180.0
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 10
 button_pressed = true
 text = "Full Screen On"
@@ -357,7 +342,7 @@ size_flags_vertical = 6
 
 [node name="Label2" type="Label" parent="OthersMenu/Options/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 35
 text = "Esquma de controles
 "
@@ -373,13 +358,13 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/MoveLeft"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 20
 text = "Move Left: "
 
 [node name="Label2" type="Label" parent="OthersMenu/Options/VBoxContainer/MoveLeft"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 20
 text = "Left Arrow"
 
@@ -392,13 +377,13 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/MoveRight"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 20
 text = "Move Right: "
 
 [node name="Label2" type="Label" parent="OthersMenu/Options/VBoxContainer/MoveRight"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 20
 text = "Right Arrow"
 
@@ -411,13 +396,13 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/MoveDown"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 20
 text = "Move Down: "
 
 [node name="Label2" type="Label" parent="OthersMenu/Options/VBoxContainer/MoveDown"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 20
 text = "Down Arrow"
 
@@ -430,13 +415,13 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/Jump"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 20
 text = "Jump: "
 
 [node name="Label2" type="Label" parent="OthersMenu/Options/VBoxContainer/Jump"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 20
 text = "S    "
 
@@ -449,13 +434,13 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/Shoot"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 20
 text = "Shoot: "
 
 [node name="Label2" type="Label" parent="OthersMenu/Options/VBoxContainer/Shoot"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 20
 text = "A     "
 
@@ -468,13 +453,13 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer/Dash"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 20
 text = "Dash: "
 
 [node name="Label2" type="Label" parent="OthersMenu/Options/VBoxContainer/Dash"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 20
 text = "Shift"
 
@@ -493,7 +478,7 @@ grow_vertical = 2
 
 [node name="Label" type="Label" parent="OthersMenu/Credits"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 50
 text = "
 Credits"
@@ -502,7 +487,7 @@ vertical_alignment = 1
 
 [node name="Label3" type="Label" parent="OthersMenu/Credits"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 25
 text = "
                      FICH - UNL
@@ -524,7 +509,7 @@ size_flags_horizontal = 4
 
 [node name="Label2" type="Label" parent="OthersMenu/Credits/HBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 25
 text = "
 
@@ -544,11 +529,11 @@ texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
-texture = ExtResource("14_e6vgq")
+texture = ExtResource("14_bxv1r")
 
 [node name="Label2" type="Label" parent="OthersMenu/Credits"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_n46cw")
+theme_override_fonts/font = ExtResource("4_7v4os")
 text = "
 I hope you enjoy playing it as much as I enjoyed developing it."
 horizontal_alignment = 1
@@ -573,9 +558,9 @@ alignment = 1
 texture_filter = 1
 layout_mode = 2
 size_flags_vertical = 3
-texture_normal = ExtResource("5_fo8ij")
-texture_pressed = ExtResource("4_ftf8w")
-texture_hover = ExtResource("3_17nee")
+texture_normal = ExtResource("5_pjscj")
+texture_pressed = ExtResource("6_m7n2d")
+texture_hover = ExtResource("7_65hh5")
 stretch_mode = 0
 
 [node name="Label" type="Label" parent="OthersMenu/BackButtonContainer/BackButton"]
@@ -598,15 +583,15 @@ vertical_alignment = 1
 metadata/_edit_lock_ = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("15_cebuy")
+stream = ExtResource("15_ux20s")
 volume_db = -10.0
 
 [node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("16_3a5co")
+stream = ExtResource("16_ke15f")
 
-[connection signal="mouse_entered" from="CanvasLayer/ButtonsContainer/ResumeButton" to="." method="_on_mouse_entered"]
-[connection signal="mouse_entered" from="CanvasLayer/ButtonsContainer/NewGameButton" to="." method="_on_mouse_entered"]
-[connection signal="mouse_entered" from="CanvasLayer/ButtonsContainer/OptionButton" to="." method="_on_mouse_entered"]
-[connection signal="mouse_entered" from="CanvasLayer/ButtonsContainer/CreditButton" to="." method="_on_mouse_entered"]
-[connection signal="mouse_entered" from="CanvasLayer/ExitButton" to="." method="_on_mouse_entered"]
-[connection signal="toggled" from="OthersMenu/Options/HBoxContainer/FullScreen/Label/CheckButton" to="." method="_on_fullscreen_checkbutton_toggled"]
+[connection signal="pressed" from="ButtonsContainer/ResumeButton" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="ButtonsContainer/NewGameButton" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="ButtonsContainer/OptionButton" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="ButtonsContainer/CreditsButton" to="." method="_on_credits_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="OthersMenu/BackButtonContainer/BackButton" to="." method="_on_back_pressed"]

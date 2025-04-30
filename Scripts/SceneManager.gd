@@ -86,7 +86,7 @@ func pass_to_nextlevel():
 
 func update_ui():
 	if time_label and points_label:
-		var minuts = int(game_time) / 60
+		var minuts = float(game_time) / 60
 		var seconds = int(game_time) % 60
 		time_label.text = "%02d:%02d" % [minuts, seconds]
 		points_label.text = str(points)
@@ -122,7 +122,7 @@ func go_to_mainmenu() -> void:
 	load_game_data()
 	game_time = 0.0
 	get_tree().paused = false
-	ScenesTransitions.change_scene("res://Scenes/Main_Menu.tscn")
+	ScenesTransitions.change_scene("res://Scenes/MainMenu.tscn")
 	
 func restart_gameplay() -> void:
 	load_game_data()

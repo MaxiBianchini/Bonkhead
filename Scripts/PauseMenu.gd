@@ -4,22 +4,13 @@ extends CanvasLayer
 @onready var audio_entered = $AudioStreamPlayer2
 
 @onready var Background = $Background
-@onready var Option_Button = $VBoxContainer/OptionButton
-@onready var Resume_Button = $VBoxContainer/ResumeButtom
-@onready var MainMenu_Button = $VBoxContainer/MainMenuButton
-@onready var Back_Button = $OptionsMenu/BackButtonContainer/BackButton
 
 signal press_resume()
 signal press_mainmenu()
 
 func _ready() -> void: 
 	Input.set_custom_mouse_cursor(preload("res://Graphics/GUI/Cursors/1.png"))
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE) 
-	
-	MainMenu_Button.pressed.connect(_on_mainmenu_pressed)
-	Option_Button.pressed.connect(_on_options_pressed)
-	Resume_Button.pressed.connect(_on_resume_pressed)
-	Back_Button.pressed.connect(_on_back_pressed)
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func _on_resume_pressed() -> void:
 	audio_click.play()

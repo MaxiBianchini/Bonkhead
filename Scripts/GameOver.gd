@@ -1,10 +1,7 @@
-extends Node
+extends CanvasLayer
 
 @onready var audio_click = $AudioStreamPlayer
 @onready var audio_entered = $AudioStreamPlayer2
-
-@onready var Resume_Button = $VBoxContainer/PlayButton
-@onready var MainMenu_Button = $VBoxContainer/MainMenuButton
 
 signal press_playagain()
 signal press_mainmenu()
@@ -12,9 +9,6 @@ signal press_mainmenu()
 func _ready() -> void: 
 	Input.set_custom_mouse_cursor(preload("res://Graphics/GUI/Cursors/1.png"))
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	
-	MainMenu_Button.pressed.connect(_on_mainmenu_pressed)
-	Resume_Button.pressed.connect(_on_playagain_pressed)
 
 func _on_playagain_pressed() -> void:
 	audio_click.play()
