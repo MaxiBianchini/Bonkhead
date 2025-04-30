@@ -1,6 +1,7 @@
 extends Area2D
 
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var life_timer: Timer = $Timer
 
 var speed: float = 175
 var acceleration: float = 100
@@ -9,11 +10,12 @@ var direction: Vector2
 var shooter: Node = null
 var mask: int = 1
 
-var life_time: float = 1.3
+var time: float = 1.3
 
 func _ready() -> void:
 	set_collision_mask_value(mask,true)
-	await get_tree().create_timer(life_time).timeout
+	life_timer.start(time)
+	await life_timer.timeout
 	queue_free()
 
 func _physics_process(delta) -> void:
@@ -43,5 +45,5 @@ func change_bullet_acceleration(_acceleration: float) -> void:
 func change_bullet_speed(_speed: float) -> void:
 	speed = _speed
 
-func change_bullet_lifetime(_life_time: float) -> void:
-	life_time = _life_time
+func change_bullet_lifetime(_time: float) -> void:
+	time = _time
