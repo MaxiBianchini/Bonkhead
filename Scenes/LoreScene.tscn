@@ -1,18 +1,129 @@
-[gd_scene load_steps=8 format=3 uid="uid://dh1nh7gxjxtks"]
+[gd_scene load_steps=14 format=3 uid="uid://dh1nh7gxjxtks"]
 
 [ext_resource type="FontFile" uid="uid://c88rb6dh1ub4j" path="res://Graphics/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="1_888sp"]
-[ext_resource type="Script" uid="uid://b2w0cu3x4d8o0" path="res://Scenes/LoreScene.gd" id="1_fiyw2"]
+[ext_resource type="Script" uid="uid://b2w0cu3x4d8o0" path="res://Scripts/LoreScene.gd" id="1_fiyw2"]
+[ext_resource type="Texture2D" uid="uid://df8k3sbykb7eq" path="res://Graphics/Zonas/LoreScene/Awakening.jpeg" id="2_2p7ni"]
 [ext_resource type="Texture2D" uid="uid://b3degqy5uf8ea" path="res://Graphics/GUI/Buttons/7-1.png" id="2_fiyw2"]
+[ext_resource type="Texture2D" uid="uid://dhulhlqi6wkkm" path="res://Graphics/Zonas/LoreScene/ComicPage (2).jpeg" id="3_2p7ni"]
 [ext_resource type="Texture2D" uid="uid://bdn1sk233bncw" path="res://Graphics/GUI/Buttons/7-3.png" id="3_6hop8"]
+[ext_resource type="Texture2D" uid="uid://dioecmjwret5l" path="res://Graphics/Zonas/LoreScene/ComicArtist.jpeg" id="4_53m27"]
 [ext_resource type="Texture2D" uid="uid://b2bod7ibmudmv" path="res://Graphics/GUI/Buttons/7-2.png" id="4_feaa0"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_bsqbw"]
-font = ExtResource("1_888sp")
-font_size = 15
+[ext_resource type="PackedScene" uid="uid://ccpbm1qpal8m0" path="res://Scenes/TypewriterLabel.tscn" id="9_2p7ni"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2p7ni"]
 font = ExtResource("1_888sp")
 font_size = 30
+
+[sub_resource type="Animation" id="Animation_feaa0"]
+resource_name = "IntroSequence"
+length = 36.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Assets/ComicArtist:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 19),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Assets/ComicPage:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(19, 27),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Assets/Awakening:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(27),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.5, 7.6, 12.5, 19, 27),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"values": [{
+"args": [0],
+"method": &"start_new_text"
+}, {
+"args": [1],
+"method": &"start_new_text"
+}, {
+"args": [2],
+"method": &"start_new_text"
+}, {
+"args": [3],
+"method": &"start_new_text"
+}, {
+"args": [4],
+"method": &"start_new_text"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_bsqbw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Assets/ComicArtist:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Assets/ComicPage:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Assets/Awakening:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bsqbw"]
+_data = {
+&"IntroSequence": SubResource("Animation_feaa0"),
+&"RESET": SubResource("Animation_bsqbw")
+}
 
 [node name="CanvasLayer" type="CanvasLayer"]
 script = ExtResource("1_fiyw2")
@@ -25,20 +136,46 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.100214, 0.07912, 0.0166648, 1)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Assets" type="Node2D" parent="."]
 
-[node name="Label" type="Label" parent="."]
-offset_left = 73.0
-offset_top = 592.0
-offset_right = 1843.0
-offset_bottom = 730.0
-size_flags_horizontal = 4
-text = "Eres un escritor de historietas trabajando en tu última obra maestra: un cómic sobre un héroe con habilidades únicas. 
-Una noche, agotado, te quedas dormido... y despiertas dentro del mundo del cómic. 
-¡Las páginas se han dispersado! Tu misión es recuperarlas enfrentándote a enemigos y trampas para completar tu obra."
-label_settings = SubResource("LabelSettings_bsqbw")
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Awakening" type="TextureRect" parent="Assets"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 3840.0
+offset_bottom = 2160.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_2p7ni")
+
+[node name="ComicPage" type="TextureRect" parent="Assets"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 3840.0
+offset_bottom = 2160.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_2p7ni")
+
+[node name="ComicArtist" type="TextureRect" parent="Assets"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 3840.0
+offset_bottom = 2160.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_53m27")
 
 [node name="ContinueButton" type="TextureButton" parent="."]
 process_mode = 3
@@ -73,11 +210,23 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 10.0
-one_shot = true
+[node name="TypewriterLabel" parent="." instance=ExtResource("9_2p7ni")]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -138.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="."]
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_bsqbw")
+}
+autoplay = "IntroSequence"
+
 [connection signal="pressed" from="ContinueButton" to="." method="_on_continue_button_pressed"]
-[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

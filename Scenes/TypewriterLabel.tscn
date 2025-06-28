@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccpbm1qpal8m0"]
+
+[ext_resource type="Script" uid="uid://drttaacxfles6" path="res://Scripts/TypewriterLabel.gd" id="1_6w3d1"]
+[ext_resource type="FontFile" uid="uid://c88rb6dh1ub4j" path="res://Graphics/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="1_ombsl"]
+
+[node name="TypewriterLabel" type="Label"]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("1_ombsl")
+theme_override_font_sizes/font_size = 25
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("1_6w3d1")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
