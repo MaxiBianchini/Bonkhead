@@ -1,27 +1,25 @@
-# LoreScene.gd (modificado)
 extends CanvasLayer
 
-# --- Nodos de la Escena ---
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
 # Actualizamos la referencia a nuestro nuevo componente.
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var typewriter_label: Label = $TypewriterLabel # Asegúrate que el nodo se llame así.
 @onready var continue_button: TextureButton = $ContinueButton
 @onready var audio_click: AudioStreamPlayer2D = $AudioStreamPlayer
 
 # --- Textos de la Narración (sin cambios) ---
 var story_texts: Array[String] = [
-	"Para un artista, no hay nada como la presión de una fecha de entrega. 
-	Noche tras noche, nuestro héroe trabajaba sin descanso...",
-	"...dando vida a su más grande creación: 
-		un cómic destinado a ser legendario.",
-	"Pero hasta el lápiz más afilado necesita descansar. 
-	Y en un parpadeo, el agotamiento ganó la batalla.",
-	"Fue entonces cuando el mundo real se desvaneció, 
-	y la tinta y el papel cobraron vida. 
-	Despertó dentro de su propia creación...",
-	"...pero algo andaba mal. Las páginas de su obra maestra 
-	se habían esparcido por este nuevo y extraño mundo. 
-	Su misión era clara: ¡recuperarlas todas!"
+	"For an artist, there's nothing like the pressure of a deadline.
+Night after night, our hero worked tirelessly...",
+	"...bringing to life his greatest creation:
+a comic book destined to be legendary.",
+	"But even the sharpest pencil needs to rest.
+And in the blink of an eye, exhaustion won the battle.",
+	"That's when the real world faded away,
+and the ink and paper came to life.
+He awoke inside his own creation...",
+	"...but something was wrong. The pages of his masterpiece
+had been scattered across this new and strange world.
+His mission was clear: recover them all!"
 ]
 
 func _ready() -> void:
