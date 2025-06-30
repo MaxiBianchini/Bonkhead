@@ -1,9 +1,12 @@
 extends Node
 
+var life_packs: int
+
 var enemies_node: Node = null
 var time_label: Label = null
 var points_label: Label = null
 var lives_sprites: Array = []
+var packs_sprites: Array = []
 var doorway: Node = null
 var player: Node = null
 var gui: Node = null
@@ -42,6 +45,8 @@ func initialize_scene() -> void:
 			points_label = gui.get_node("HBoxContainer/PointsLabel/Text")
 			var lives_container = gui.get_node("HBoxContainer/LivesLabel/HBoxContainer")
 			lives_sprites = lives_container.get_children()
+			var packs_container = gui.get_node("HBoxContainer/LifePacks/HBoxContainer")
+			packs_sprites = packs_container.get_children()
 		
 		if current_scene.has_node("Doorway"):
 			doorway = current_scene.get_node("Doorway")
@@ -66,10 +71,40 @@ func _input(event):
 		gui.visible = false
 		show_pause_menu()
 
+
 func on_player_died():
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	if gui: gui.visible = false
-	show_game_over_menu()
+	# El jugador ha perdido sus 5 vidas, así que le restamos un paquete.
+	life_packs -= 1
+	print("LIFE PACKS: ", life_packs)
+	save_game_data() # Guardamos el progreso para que no pierda los puntos ganados.
+	
+	if life_packs < 0:
+		# ¡GAME OVER REAL! El jugador ha perdido todos sus paquetes.
+		# Según el GDD, debe empezar la partida desde cero. [cite: 46]
+		if gui: gui.visible = false
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		show_game_over_menu() # Este menú ahora significa "perdiste todo"
+	else:
+		# Aún le quedan paquetes. Hacemos "respawn".
+		respawn_player()
+
+func respawn_player():
+	# Esta función simplemente recarga la escena actual.
+	# El jugador reaparecerá al inicio con sus vidas reseteadas.
+	get_tree().paused = false
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	# Reiniciamos el tiempo del nivel para que no se acumule tras la muerte.
+	game_time = 0.0 
+	ScenesTransitions.change_scene(get_tree().current_scene.scene_file_path)
+
+# En la función restart_gameplay(), asegúrate de que reinicie el juego desde cero.
+func restart_gameplay() -> void:
+	# Esta función es llamada desde el menú de Game Over.
+	# Ahora significa empezar una partida completamente nueva.
+	start_new_game() # Esto reiniciará puntos, nivel 1 y life_packs a 3.
+	get_tree().paused = false
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	ScenesTransitions.change_scene("res://Scenes/Level_1.tscn") # Siempre al nivel 1
 
 func add_new_points(value: int):
 	points += value
@@ -94,6 +129,9 @@ func update_ui():
 func update_lives(lives):
 	for i in range(len(lives_sprites)):
 		lives_sprites[i].visible = i < lives
+	
+	for i in range(len(packs_sprites)):
+		packs_sprites[i].visible = i < life_packs
 
 func show_pause_menu() -> void:
 	get_tree().paused = true
@@ -123,18 +161,12 @@ func go_to_mainmenu() -> void:
 	game_time = 0.0
 	get_tree().paused = false
 	ScenesTransitions.change_scene("res://Scenes/MainMenu.tscn")
-	
-func restart_gameplay() -> void:
-	load_game_data()
-	game_time = 0.0
-	get_tree().paused = false
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-	ScenesTransitions.change_scene(get_tree().current_scene.scene_file_path)
-	
+
 func save_game_data() -> void:
 	var data = {
 		"score": points,
-		"level": current_level
+		"level": current_level,
+		"life_packs": life_packs
 	}
 	var file = FileAccess.open("user://save_data.json", FileAccess.WRITE)
 	if file:
@@ -152,6 +184,7 @@ func load_game_data() -> void:
 		if data:
 			points = data["score"]
 			current_level = data["level"]
+			life_packs = data.get("life_packs", 3)
 			print("Datos cargados correctamente")
 		else:
 			print("Error al parsear los datos")
@@ -160,9 +193,11 @@ func load_game_data() -> void:
 		print("No hay datos guardados, usando valores por defecto")
 		current_level = 1
 		game_time = 0.0
+		life_packs = 3
 		points = 0
 
 func start_new_game() -> void:
 	points = 0
 	current_level = 1
+	life_packs = 3
 	save_game_data()

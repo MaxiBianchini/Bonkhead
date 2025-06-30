@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dch15up2fk0ht"]
+[gd_scene load_steps=8 format=3 uid="uid://dch15up2fk0ht"]
 
 [ext_resource type="Texture2D" uid="uid://1y0p34ksxrjo" path="res://Graphics/GUI/Status/Contenedor Vidas.png" id="1_1r6vs"]
 [ext_resource type="Texture2D" uid="uid://30mchi3gi365" path="res://Graphics/GUI/Other/3 Skill icons/Skillicon7_16.png" id="2_apbyh"]
 [ext_resource type="Texture2D" uid="uid://ccv10fc17chx" path="res://Graphics/GUI/Status/Points.png" id="3_dd2ji"]
+[ext_resource type="Texture2D" uid="uid://fug3ay3d53cs" path="res://Graphics/GUI/Icons/Icon_09.png" id="4_apbyh"]
 [ext_resource type="Texture2D" uid="uid://08prew2yytlt" path="res://Graphics/GUI/Icons/Icon_11.png" id="4_wlkr0"]
 [ext_resource type="FontFile" uid="uid://c88rb6dh1ub4j" path="res://Graphics/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="5_tcnxb"]
 [ext_resource type="Texture2D" uid="uid://cthae01aake71" path="res://Graphics/GUI/Status/Timer.png" id="6_ajp3r"]
@@ -16,35 +17,74 @@ anchor_right = 1.0
 grow_horizontal = 2
 
 [node name="LivesLabel" type="Sprite2D" parent="HBoxContainer"]
-texture_filter = 1
-position = Vector2(144, 68)
+position = Vector2(207, 68)
 scale = Vector2(4, 4)
-texture = ExtResource("1_1r6vs")
+texture = ExtResource("3_dd2ji")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/LivesLabel"]
-offset_left = -32.0
-offset_top = -16.0
-offset_right = -32.0
-offset_bottom = -16.0
+offset_left = -47.75
+offset_top = 9.5
+offset_right = -47.75
+offset_bottom = 9.5
 size_flags_horizontal = 4
 size_flags_vertical = 4
 metadata/_edit_use_anchors_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="HBoxContainer/LivesLabel/HBoxContainer"]
 texture_filter = 1
-position = Vector2(12, 17)
+position = Vector2(12, -8.25)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_apbyh")
 
 [node name="Sprite2D2" type="Sprite2D" parent="HBoxContainer/LivesLabel/HBoxContainer"]
-position = Vector2(32, 17)
+position = Vector2(29.5, -8.25)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_apbyh")
 
 [node name="Sprite2D3" type="Sprite2D" parent="HBoxContainer/LivesLabel/HBoxContainer"]
-position = Vector2(52, 17)
+position = Vector2(47, -8.25)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_apbyh")
+
+[node name="Sprite2D4" type="Sprite2D" parent="HBoxContainer/LivesLabel/HBoxContainer"]
+position = Vector2(64.5, -8.25)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_apbyh")
+
+[node name="Sprite2D5" type="Sprite2D" parent="HBoxContainer/LivesLabel/HBoxContainer"]
+position = Vector2(82, -8.25)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_apbyh")
+
+[node name="LifePacks" type="Sprite2D" parent="HBoxContainer"]
+texture_filter = 1
+position = Vector2(144, 170)
+scale = Vector2(4, 4)
+texture = ExtResource("1_1r6vs")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/LifePacks"]
+offset_left = -47.75
+offset_top = 9.5
+offset_right = -47.75
+offset_bottom = 9.5
+size_flags_horizontal = 4
+size_flags_vertical = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="HBoxContainer/LifePacks/HBoxContainer"]
+texture_filter = 1
+position = Vector2(27.75, -9)
+texture = ExtResource("4_apbyh")
+
+[node name="Sprite2D2" type="Sprite2D" parent="HBoxContainer/LifePacks/HBoxContainer"]
+texture_filter = 1
+position = Vector2(48, -9)
+texture = ExtResource("4_apbyh")
+
+[node name="Sprite2D3" type="Sprite2D" parent="HBoxContainer/LifePacks/HBoxContainer"]
+texture_filter = 1
+position = Vector2(68, -8.75)
+texture = ExtResource("4_apbyh")
 
 [node name="PointsLabel" type="Sprite2D" parent="HBoxContainer"]
 z_as_relative = false

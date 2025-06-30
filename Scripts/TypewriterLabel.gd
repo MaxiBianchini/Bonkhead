@@ -3,17 +3,14 @@ extends Label
 # Señal que emitiremos cuando el texto termine de escribirse
 signal typing_finished
 
-# --- Variables Configurables desde el Editor ---
 # Velocidad de escritura en caracteres por segundo.
 @export var typing_speed: float = 20.0
 # Sonido que se reproduce con cada letra. Puedes arrastrar un archivo .wav o .ogg aquí.
 #@export var typing_sound: AudioStream
 
-# --- Nodos Hijos ---
 @onready var timer: Timer = $Timer
 @onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
 
-# --- Variables Internas ---
 var _full_text: String = ""
 var _current_char_index: int = 0
 var _is_typing: bool = false

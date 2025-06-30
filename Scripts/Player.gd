@@ -40,7 +40,7 @@ var double_jump_enabled: bool = false
 var first_jump_completed: bool = false
 
 var is_alive: bool = true
-var lives: int = 3 
+var lives: int = 5
 
 var bullet_scene = preload("res://Prefabs/Bullet.tscn")
 var bullet_dir: Vector2 = Vector2.RIGHT
