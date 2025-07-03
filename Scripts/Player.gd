@@ -341,7 +341,7 @@ func _on_body_entered(body) -> void:
 		take_damage()
 
 func increase_life() -> bool:
-	if lives < 3:
+	if lives < 5:
 		lives += 1
 		emit_signal("change_UI_lives", lives)
 		return true

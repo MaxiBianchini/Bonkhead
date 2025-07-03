@@ -32,6 +32,7 @@ func _on_tree_changed() -> void:
 
 func initialize_scene() -> void:
 	var current_scene = get_tree().current_scene
+	
 	if current_scene:
 		if current_scene.has_node("Enemies"):
 			enemies_node = current_scene.get_node("Enemies")
@@ -60,6 +61,10 @@ func initialize_scene() -> void:
 					player.player_died.connect(on_player_died)
 				if not player.change_UI_lives.is_connected(update_lives):
 					player.change_UI_lives.connect(update_lives)
+		
+		if (packs_sprites.is_empty()):
+			for i in range(len(packs_sprites)):
+				packs_sprites[i].visible = i < life_packs
 
 func _process(delta):
 	if gui and gui.visible:
@@ -75,10 +80,9 @@ func _input(event):
 func on_player_died():
 	# El jugador ha perdido sus 5 vidas, así que le restamos un paquete.
 	life_packs -= 1
-	print("LIFE PACKS: ", life_packs)
 	save_game_data() # Guardamos el progreso para que no pierda los puntos ganados.
 	
-	if life_packs < 0:
+	if life_packs <= 0:
 		# ¡GAME OVER REAL! El jugador ha perdido todos sus paquetes.
 		# Según el GDD, debe empezar la partida desde cero. [cite: 46]
 		if gui: gui.visible = false
@@ -181,6 +185,7 @@ func load_game_data() -> void:
 	var file = FileAccess.open("user://save_data.json", FileAccess.READ)
 	if file and FileAccess.file_exists("user://save_data.json"):
 		var data = JSON.parse_string(file.get_as_text())
+		print("PACKS: ", data.get("life_packs"))
 		if data:
 			points = data["score"]
 			current_level = data["level"]
