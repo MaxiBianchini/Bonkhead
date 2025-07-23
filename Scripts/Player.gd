@@ -19,11 +19,16 @@ var animated_sprites = [animated_sprite, animated_sprite2, animated_sprite3]
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
+@onready var wall_grab_timer: Timer = $Timer4 
 @onready var dashing_timer: Timer = $Timer3
 @onready var dash_timer: Timer = $Timer2
 @onready var dead_timer: Timer = $Timer
 
+@export var wall_slide_speed: float = 12.5
+@export var wall_jump_force: float = -150
+
 signal player_died
+signal change_UI_lives(change_lives)
 
 var gravity: int = 2000
 var jump_force: float = -550
@@ -38,9 +43,11 @@ var can_dash: bool = false
 var is_dashing: bool = false
 var double_jump_enabled: bool = false
 var first_jump_completed: bool = false
+var has_used_wall_grab: bool = false # Para controlar el agarre único por aire
+var wall_grab_duration: float = 0.8 # Tiempo en segundos que puede estar agarrado
 
 var is_alive: bool = true
-var lives: int = 5
+var lives: int = 5 # Vidas por paquete, ajustado según el GDD
 
 var bullet_scene = preload("res://Prefabs/Bullet.tscn")
 var bullet_dir: Vector2 = Vector2.RIGHT
@@ -53,19 +60,100 @@ var change_gun_type: bool = false
 var hurt_jump_force: float = -200
 var current_level: int
 
-signal change_UI_lives(change_lives)
+var can_wall_grab: bool = false
+var is_wall_grabbing: bool = false
 
 func _ready() -> void:
+	# Conectamos la señal de timeout a nuestra nueva función
+	wall_grab_timer.timeout.connect(_on_wall_grab_timer_timeout)
+	# Configuramos la duración del agarre
+	wall_grab_timer.wait_time = wall_grab_duration
 	current_level = SceneManager.current_level
 	
 	if current_level >= 3:
 		can_dash = true
+	if current_level >= 1: # Se desbloquea al empezar el nivel 4
+		can_wall_grab = true
+
 
 func _physics_process(delta) -> void:
 	if is_alive:
 		var input_vector = Vector2.ZERO
 		input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 		
+		# --- LÓGICA DE AGARRE EN PARED (WALL GRAB) ---
+		# Condiciones para iniciar el agarre
+		var on_wall = raycast_wall.is_colliding()
+		var is_moving_towards_wall = (player_dir == "RIGHT" and input_vector.x > 0) or (player_dir == "LEFT" and input_vector.x < 0)
+
+		if can_wall_grab and not is_on_floor() and on_wall and is_moving_towards_wall:
+			is_wall_grabbing = true
+		else:
+			is_wall_grabbing = false
+
+		# --- Lógica del estado de Agarre y Salto de Pared ---
+		if is_wall_grabbing:
+			# Reducimos la velocidad de caída (deslizamiento)
+			velocity.y = min(velocity.y + (gravity * 0.5 * delta), wall_slide_speed)
+			
+			# Lógica del Salto de Pared (Wall Jump)
+			if Input.is_action_just_pressed("ui_jump"):
+				# El impulso horizontal es opuesto a la pared
+				var jump_direction = -1.0 if player_dir == "RIGHT" else 1.0
+				velocity.y = wall_jump_force
+				is_wall_grabbing = false # Dejamos de agarrar al saltar
+		else:
+			# --- FÍSICAS NORMALES (Si NO nos estamos agarrando a la pared) ---
+			# Gravedad normal
+			velocity.y += gravity * delta
+			
+			# Movimiento y acciones normales
+			if Input.is_action_just_pressed("Dash") and can_dash:
+				audio_dash.play()
+				can_dash = false
+				is_dashing = true
+				animated_sprite.stop()
+				animated_sprite.play("Dash")
+				current_state = "Dash"
+				dashing_timer.start()
+				dash_timer.start()
+
+			velocity.x = input_vector.x * (dash_velocity if is_dashing else movement_velocity)
+
+			if Input.is_action_just_pressed("ui_jump"):
+				if Input.is_action_pressed("ui_down") && raycast_floor.is_colliding():
+					var collider = raycast_floor.get_collider()
+					if collider.is_in_group("Platform"):
+						ignore_platform_collision()
+				elif is_on_floor():
+					audio_jump.play()
+					match player_dir:
+							"RIGHT":
+								bullet_offset = Vector2(35, -9)
+								bullet_dir = Vector2.RIGHT
+							"LEFT":
+								bullet_offset = Vector2(-15, -9)
+								bullet_dir = Vector2.LEFT
+					first_jump_completed = true
+					velocity.y = jump_force
+					match gun_type:
+						"Small":
+							animated_sprite.play("SJump")
+						"Big":
+							animated_sprite.play("BJump")
+					current_state = "Jump"
+					switch_animation(1)
+				elif double_jump_enabled and first_jump_completed:
+					first_jump_completed = false
+					velocity.y = jump_force
+					animated_sprite.play("Double_Jump")
+					current_state = "Double_Jump"
+					switch_animation(1)
+			
+			if Input.is_action_just_released("ui_jump") and velocity.y < 0:
+				velocity.y *= jump_cut_multiplier
+		
+		# Esta lógica de disparo y aterrizaje se mantiene fuera de la condición de agarre
 		if !is_on_floor() and velocity.y > 0:
 			was_in_air = true
 		elif raycast_floor.is_colliding() and was_in_air:
@@ -76,61 +164,16 @@ func _physics_process(delta) -> void:
 		if Input.is_action_just_pressed("Shoot"):
 			audio_shoot.play()
 			shoot_bullet()
-		
-		if Input.is_action_just_pressed("ui_jump"):
-			if Input.is_action_pressed("ui_down") && raycast_floor.is_colliding():
-				var collider = raycast_floor.get_collider()
-				if collider.is_in_group("Platform"):
-					ignore_platform_collision()
-			elif is_on_floor():
-				audio_jump.play()
-				match player_dir:
-						"RIGHT":
-							bullet_offset = Vector2(35, -9)
-							bullet_dir = Vector2.RIGHT
-						"LEFT":
-							bullet_offset = Vector2(-15, -9)
-							bullet_dir = Vector2.LEFT
-				first_jump_completed = true
-				velocity.y = jump_force
-				match gun_type:
-					"Small":
-						animated_sprite.play("SJump")
-					"Big":
-						animated_sprite.play("BJump")
-				current_state = "Jump"
-				switch_animation(1)
-			elif double_jump_enabled and first_jump_completed:
-				first_jump_completed = false
-				velocity.y = jump_force
-				animated_sprite.play("Double_Jump")
-				current_state = "Double_Jump"
-				switch_animation(1)
-		
-		if Input.is_action_just_pressed("Dash") and can_dash:
-			audio_dash.play()
-			can_dash = false
-			is_dashing = true
-			animated_sprite.stop()
-			animated_sprite.play("Dash")
-			current_state = "Dash"
-			dashing_timer.start()
-			dash_timer.start()
-		
-		velocity.x = input_vector.x * (dash_velocity if is_dashing else movement_velocity)
-		
-		if Input.is_action_just_released("ui_jump") and velocity.y < 0:
-			velocity.y *= jump_cut_multiplier
-		
 	else:
 		velocity.x = 0
+		velocity.y += gravity * delta # Permitir que el jugador caiga si muere en el aire
 	
-	velocity.y += gravity * delta
-	
-	move_and_slide()                 
-	if is_alive:update_sprite_direction()        
-	update_animation()               
+	move_and_slide()
+	if is_alive:
+		update_sprite_direction()
+		update_animation()
 	handle_double_jump()
+
 
 func update_sprite_direction() -> void:
 	var offset = 10
@@ -169,10 +212,16 @@ func update_sprite_direction() -> void:
 		collision_shape.position.x = offset
 		area2D.position.x = offset
 
+
 func update_animation() -> void:
 	if not is_alive:
 		return
 	
+	# Añadimos la comprobación para la animación de agarre en pared
+	if is_wall_grabbing:
+		#animated_sprite.play("WallGrab") # Necesitarás crear una animación con este nombre
+		return # Detenemos la función aquí para no sobreescribir la animación
+
 	if animated_sprite.animation != "Hurt" and lives != 0:
 		if not is_on_floor() and velocity.y > 250:
 			match gun_type:
@@ -205,7 +254,6 @@ func update_animation() -> void:
 			else:
 				animator_controller("Idle", 1)
 				
-		
 		elif is_on_floor() and not is_dashing and (
 			Input.get_action_strength("ui_left") or Input.get_action_strength("ui_right")
 			):
@@ -229,6 +277,7 @@ func update_animation() -> void:
 							bullet_dir = Vector2.LEFT
 			else:
 				animator_controller("Run", 1)
+
 
 func animator_controller(state_trigger: String, animation_number: int) -> void:
 	if current_state != state_trigger or gun_type:
@@ -260,6 +309,7 @@ func animator_controller(state_trigger: String, animation_number: int) -> void:
 	
 	switch_animation(animation_number)
 
+
 func switch_animation(animation_number: int) -> void:
 	hide_all_sprites()
 	match animation_number:
@@ -270,10 +320,12 @@ func switch_animation(animation_number: int) -> void:
 		3:
 			animated_sprite3.visible = true
 
+
 func hide_all_sprites() -> void:
 	animated_sprite.visible = false
 	animated_sprite2.visible = false
 	animated_sprite3.visible = false
+
 
 func handle_double_jump() -> void:
 	if current_level < 2:
@@ -287,6 +339,7 @@ func handle_double_jump() -> void:
 			double_jump_enabled = false
 	else:
 		double_jump_enabled = false
+
 
 func shoot_bullet() -> void:
 	update_animation()
@@ -304,11 +357,13 @@ func shoot_bullet() -> void:
 	
 	get_tree().current_scene.add_child(bullet)
 
+
 func ignore_platform_collision() -> void:
 	collision_shape.disabled = true
 	velocity.y = jump_force * -1.5
 	await (get_tree().create_timer(fall_through_time).timeout)
 	collision_shape.disabled = false
+
 
 func change_weapon() -> void:
 	if gun_type == "Small":
@@ -317,6 +372,7 @@ func change_weapon() -> void:
 		gun_type = "Small"
 	change_gun_type = true
 
+
 func take_damage() -> void:
 	if is_alive:
 		audio_hurts.play()
@@ -324,11 +380,12 @@ func take_damage() -> void:
 		emit_signal("change_UI_lives", lives)
 		if lives <= 0:
 			is_alive = false
+			# La animación de muerte ahora se maneja en update_animation para evitar conflictos
+			current_state = "Death"
 			animated_sprite.play("Death")
 			animated_sprite2.play("Death")
 			animated_sprite3.play("Death")
 			
-			current_state = "Death"
 			call_deferred("disable_player_collision")
 			dead_timer.start()
 			
@@ -336,38 +393,44 @@ func take_damage() -> void:
 			animation_player.play("Hurt")
 			velocity.y = hurt_jump_force
 
+
 func _on_body_entered(body) -> void:
 	if body.is_in_group("Enemy") and body.is_alive:
 		take_damage()
 
+
 func increase_life() -> bool:
-	if lives < 5:
+	if lives < 5: # Ahora el máximo es 5
 		lives += 1
 		emit_signal("change_UI_lives", lives)
 		return true
 	else:
 		return false
 
+
 func disable_player_collision() -> void:
 	area2D.set_collision_mask_value(3,false)
 	area2D.set_collision_mask_value(4,false)
 	area2D.set_collision_mask_value(5,false)
 
-#func enable_player_collision() -> void:
-#	area2D.set_collision_mask_value(3,true)
-#	area2D.set_collision_mask_value(4,true)
-#	area2D.set_collision_mask_value(5,true)
 
 func _on_dash_timer_timeout() -> void:
 	is_dashing = false
 
+
 func _on_can_dash_timeout() -> void:
 	can_dash = true
 
+
 func _on_dead_timer_timeout() -> void:
 	player_died.emit()
+
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Dead"):
 		lives = 0
 		take_damage()
+
+
+func _on_wall_grab_timer_timeout() -> void:
+	pass # Replace with function body.

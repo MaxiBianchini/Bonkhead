@@ -988,6 +988,9 @@ wait_time = 5.0
 wait_time = 0.2
 one_shot = true
 
+[node name="Timer4" type="Timer" parent="."]
+one_shot = true
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_tuivb")
@@ -1021,3 +1024,4 @@ bus = &"SFX"
 [connection signal="timeout" from="Timer" to="." method="_on_dead_timer_timeout"]
 [connection signal="timeout" from="Timer2" to="." method="_on_can_dash_timeout"]
 [connection signal="timeout" from="Timer3" to="." method="_on_dash_timer_timeout"]
+[connection signal="timeout" from="Timer4" to="." method="_on_wall_grab_timer_timeout"]
