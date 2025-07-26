@@ -31,6 +31,8 @@ func _on_tree_changed() -> void:
 	call_deferred("initialize_scene")
 
 func initialize_scene() -> void:
+	
+	
 	var current_scene = get_tree().current_scene
 	
 	if current_scene:
@@ -48,6 +50,8 @@ func initialize_scene() -> void:
 			lives_sprites = lives_container.get_children()
 			var packs_container = gui.get_node("HBoxContainer/LifePacks/HBoxContainer")
 			packs_sprites = packs_container.get_children()
+			for i in range(len(packs_sprites)):
+				packs_sprites[i].visible = i < life_packs
 		
 		if current_scene.has_node("Doorway"):
 			doorway = current_scene.get_node("Doorway")
@@ -61,10 +65,7 @@ func initialize_scene() -> void:
 					player.player_died.connect(on_player_died)
 				if not player.change_UI_lives.is_connected(update_lives):
 					player.change_UI_lives.connect(update_lives)
-		
-		if (packs_sprites.is_empty()):
-			for i in range(len(packs_sprites)):
-				packs_sprites[i].visible = i < life_packs
+					
 
 func _process(delta):
 	if gui and gui.visible:
