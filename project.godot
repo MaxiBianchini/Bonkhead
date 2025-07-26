@@ -44,7 +44,8 @@ Player=""
 Fondo=""
 Dead=""
 Floor=""
-Wall=""
+"Jumpleable Wall"=""
+"Grabbable Wall"=""
 
 [input]
 

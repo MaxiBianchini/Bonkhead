@@ -1,7 +1,8 @@
-[gd_resource type="TileSet" load_steps=21 format=3 uid="uid://bwmrtff06jx5m"]
+[gd_resource type="TileSet" load_steps=23 format=3 uid="uid://bwmrtff06jx5m"]
 
 [ext_resource type="Texture2D" uid="uid://bn6ronbqnurq8" path="res://Graphics/Zonas/Exclusion-zone/1 Tiles/Exclusion-zone.png" id="1_ytfyc"]
 [ext_resource type="Texture2D" uid="uid://bl6cfe4jcc366" path="res://Graphics/Zonas/Green-zone/1 Tiles/Green-zone.png" id="2_ovoqu"]
+[ext_resource type="Texture2D" uid="uid://puxg0sjtv58a" path="res://Graphics/Zonas/Industrial-zone/1 Tiles/IndustrialTile_62.png" id="3_1bih0"]
 [ext_resource type="Texture2D" uid="uid://d06x0cllmi2ac" path="res://Graphics/Zonas/Industrial-zone/1 Tiles/Industrial-zone.png" id="3_3cysp"]
 [ext_resource type="Texture2D" uid="uid://duucdsl62xwpa" path="res://Graphics/Zonas/Exclusion-zone/1 Tiles/Bidirectional Platform.png" id="3_ovoqu"]
 [ext_resource type="Texture2D" uid="uid://b481tnfk33dlk" path="res://Graphics/Zonas/Station-zone/1 Tiles/Station-zone.png" id="4_i5wm2"]
@@ -311,6 +312,12 @@ texture_region_size = Vector2i(32, 32)
 8:9/0 = 0
 7:9/0 = 0
 9:9/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_d6eqf"]
+texture = ExtResource("3_1bih0")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3cba0"]
 texture = ExtResource("3_3cysp")
@@ -3584,4 +3591,5 @@ sources/6 = SubResource("TileSetAtlasSource_u3xff")
 sources/8 = SubResource("TileSetAtlasSource_nq5sg")
 sources/7 = SubResource("TileSetAtlasSource_3cysp")
 sources/9 = SubResource("TileSetAtlasSource_7wmel")
+sources/10 = SubResource("TileSetAtlasSource_d6eqf")
 tile_proxies/coords_level = [[25, Vector2i(0, 0)], [87, Vector2i(0, 0)], [115, Vector2i(0, 0)], [87, Vector2i(1, 0)]]

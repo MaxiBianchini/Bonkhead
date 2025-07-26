@@ -1,16 +1,4 @@
-# ============================================================================
-# SCRIPT DEL JUGADOR (Player.gd)
-# Hereda de CharacterBody2D, la clase base de Godot para personajes controlados
-# que necesitan interactuar con la física del juego (colisiones, gravedad, etc.).
-# ============================================================================
 extends CharacterBody2D
-
-# ============================================================================
-# SECCIÓN DE REFERENCIAS A NODOS
-# Usamos @onready para asegurarnos de que el nodo esté listo en la escena
-# antes de asignarlo a la variable. Esto evita errores si el script se carga
-# antes que los nodos hijos.
-# ============================================================================
 
 # --- Nodos para Animaciones ---
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D # Sprite para animaciones principales (correr, saltar).
@@ -40,27 +28,12 @@ var animated_sprites = [animated_sprite, animated_sprite2, animated_sprite3] # A
 @onready var dash_timer: Timer = $Timer2 # Timer para controlar la duración del dash.
 @onready var dead_timer: Timer = $Timer # Timer para esperar tras la animación de muerte antes de notificar al SceneManager.
 
-# ============================================================================
 # SECCIÓN DE VARIABLES EXPORTADAS
-# @export permite que estas variables se puedan editar directamente desde el
-# Inspector de Godot, facilitando el ajuste de la jugabilidad sin tocar el código.
-# ============================================================================
 @export var wall_slide_speed: float = 12.5 # Velocidad de deslizamiento al estar agarrado a una pared.
 @export var wall_jump_force: float = -150 # Fuerza del salto desde una pared.
 
-# ============================================================================
-# SECCIÓN DE SEÑALES
-# Las señales permiten que este nodo se comunique con otros nodos (como el
-# SceneManager o la GUI) de forma desacoplada.
-# ============================================================================
 signal player_died # Se emite cuando el jugador muere definitivamente.
 signal change_UI_lives(change_lives) # Se emite para pedirle a la GUI que actualice los corazones de vida.
-
-# ============================================================================
-# SECCIÓN DE VARIABLES DE ESTADO Y FÍSICA
-# Aquí se definen todas las propiedades que controlan el comportamiento,
-# la física y el estado actual del jugador.
-# ============================================================================
 
 # --- Variables de Física y Movimiento ---
 var gravity: int = 2000 # Fuerza de gravedad que afecta al jugador.
@@ -78,8 +51,9 @@ var is_dashing: bool = false # Indica si el jugador está actualmente ejecutando
 var double_jump_enabled: bool = false # Indica si las condiciones para un doble salto se cumplen.
 var first_jump_completed: bool = false # Registra si ya se realizó el primer salto.
 var has_used_wall_grab: bool = false # Registra si ya se usó el agarre en el aire actual.
-var wall_grab_duration: float = 0.2 # Tiempo en segundos que puede estar agarrado
+var wall_grab_duration: float = 1.0 # Tiempo en segundos que puede estar agarrado
 var is_alive: bool = true # Estado de vida del jugador.
+var jump_in_wall_grab: bool = false
 
 # --- Variables de Combate ---
 var lives: int = 5 # Vidas actuales dentro del "paquete de vidas".
@@ -96,15 +70,9 @@ var current_level: int # Nivel actual del juego, obtenido del SceneManager.
 var can_wall_grab: bool = false # Indica si la habilidad de agarre en pared está desbloqueada.
 var is_wall_grabbing: bool = false # Indica si el jugador está actualmente agarrado a una pared.
 
-# ============================================================================
-# FUNCIONES INTEGRADAS DE GODOT
-# ============================================================================
+var on_wall :bool = false
 
-# La función _ready() se ejecuta una sola vez cuando el nodo entra en la escena.
-# Es ideal para inicializar variables y configurar el nodo.
 func _ready() -> void:
-	# Configura la duración del temporizador de agarre en pared.
-	wall_grab_timer.wait_time = wall_grab_duration
 	# Obtiene el nivel actual desde el SceneManager para desbloquear habilidades.
 	current_level = SceneManager.current_level
 	
@@ -115,38 +83,37 @@ func _ready() -> void:
 	if current_level >= 1:
 		can_wall_grab = true
 
-# La función _physics_process(delta) se ejecuta en cada fotograma de física.
-# Es el lugar principal para toda la lógica de movimiento y control del jugador.
 func _physics_process(delta) -> void:
 	if is_alive:
 		# Captura la entrada del jugador (izquierda/derecha).
 		var input_vector = Vector2.ZERO
 		input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+		# --- LÓGICA DE AGARRE EN PARED (ACTUALIZADA) ---
 		
-		# --- LÓGICA DE AGARRE EN PARED ---
-		# Comprueba si hay una pared al lado.
-		var on_wall = raycast_wall.is_colliding()
-		# Comprueba si el jugador se está moviendo hacia la pared.
 		var is_moving_towards_wall = (player_dir == "RIGHT" and input_vector.x > 0) or (player_dir == "LEFT" and input_vector.x < 0)
-
-		# Condiciones para iniciar el agarre: tener la habilidad, estar en el aire, moverse hacia la pared.
-		if can_wall_grab and not is_on_floor() and on_wall and is_moving_towards_wall:
-			wall_grab_timer.start()
-			is_wall_grabbing = true
-		else:
-			is_wall_grabbing = false
-
-		# --- Lógica de Estado: Agarrado a la Pared vs. Movimiento Normal ---
+		# La condición ahora incluye que NO hayamos usado ya el agarre en este salto
+		if can_wall_grab and not is_on_floor() and on_wall and is_moving_towards_wall and not has_used_wall_grab:
+			if not is_wall_grabbing: # Solo se ejecuta la primera vez que se agarra
+				has_used_wall_grab = true
+				wall_grab_timer.start() # Marcamos el agarre como usado e iniciamos el temporizador
+				is_wall_grabbing = true
+			else:
+				if is_wall_grabbing: # Si nos soltamos por cualquier motivo
+					wall_grab_timer.stop() # Detenemos el temporizador para que no se dispare
+				is_wall_grabbing = false
+		
+		# --- Lógica de Estado: Agarrando Pared vs. Movimiento Normal ---
 		if is_wall_grabbing:
-			# Se reduce la velocidad de caída para simular un deslizamiento.
+			# Reducimos la velocidad de caída (deslizamiento)
 			velocity.y = min(velocity.y + (gravity * 0.5 * delta), wall_slide_speed)
 			
-			# Lógica del Salto de Pared (Wall Jump).
+			# Lógica del Salto de Pared (Wall Jump)
 			if Input.is_action_just_pressed("ui_jump"):
-				# Se aplica un impulso hacia arriba.
+				var jump_direction = -1.0 if player_dir == "RIGHT" else 1.0
+				velocity.x = wall_jump_force * jump_direction
 				velocity.y = wall_jump_force
-				# Se desactiva el agarre al saltar.
 				is_wall_grabbing = false
+				wall_grab_timer.stop() # Detenemos el timer al saltar
 		else:
 			# --- FÍSICAS NORMALES ---
 			# Se aplica la gravedad estándar.
@@ -175,6 +142,7 @@ func _physics_process(delta) -> void:
 						ignore_platform_collision()
 				# Salto normal desde el suelo.
 				elif is_on_floor():
+					has_used_wall_grab = false
 					audio_jump.play()
 					first_jump_completed = true
 					velocity.y = jump_force
@@ -222,10 +190,6 @@ func _physics_process(delta) -> void:
 		update_sprite_direction()
 		update_animation()
 	handle_double_jump()
-
-# ============================================================================
-# FUNCIONES PERSONALIZADAS
-# ============================================================================
 
 # Gestiona la orientación visual del jugador y la posición de sus componentes.
 func update_sprite_direction() -> void:
@@ -389,10 +353,12 @@ func handle_double_jump() -> void:
 		
 	if raycast_wall.is_colliding():
 		var collider = raycast_wall.get_collider()
-		if collider.is_in_group("Wall"):
+		if collider.is_in_group("Jumpeable Wall"):
 			double_jump_enabled = true
 		if collider.is_in_group("Floor"):
 			double_jump_enabled = false
+		if collider.is_in_group("Jumpeable Wall"):
+			on_wall = raycast_wall.is_colliding()
 	else:
 		double_jump_enabled = false
 
@@ -464,11 +430,7 @@ func disable_player_collision() -> void:
 	area2D.set_collision_mask_value(4,false)
 	area2D.set_collision_mask_value(5,false)
 
-# ============================================================================
 # FUNCIONES CONECTADAS A SEÑALES (_on_...)
-# Estas funciones se ejecutan automáticamente cuando un nodo emite una señal
-# que ha sido conectada a ellas en el editor de Godot.
-# ============================================================================
 
 # Se ejecuta cuando el Area2D del jugador entra en contacto con otro cuerpo.
 func _on_body_entered(body) -> void:
