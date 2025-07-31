@@ -1,22 +1,5 @@
 extends CharacterBody2D
 
-# Definimos todos los estados posibles del jugador de forma clara y centralizada.
-enum State {
-	IDLE,      # Quieto en el suelo
-	RUN,       # Corriendo por el suelo
-	JUMP,      # Ascendiendo en un salto
-	FALL,      # Cayendo
-	DASH,      # En medio de un dash
-	WALL_GRAB, # Agarrado a una pared
-	HURT,      # Recibiendo daño (inmóvil temporalmente)
-	DEAD       # Muerto
-}
-
-# Esta única variable reemplazará a muchas de nuestras variables booleanas.
-var state: State = State.IDLE
-
-
-
 # --- Nodos para Animaciones ---
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D # Sprite para animaciones principales (correr, saltar).
 @onready var animated_sprite2:AnimatedSprite2D = $AnimatedSprite2D2 # Sprite para animaciones de disparo horizontal.
@@ -47,7 +30,7 @@ var animated_sprites = [animated_sprite, animated_sprite2, animated_sprite3] # A
 
 # SECCIÓN DE VARIABLES EXPORTADAS
 @export var wall_slide_speed: float = 12.5 # Velocidad de deslizamiento al estar agarrado a una pared.
-@export var wall_jump_force: Vector2 = Vector2(450, -550)
+@export var wall_jump_force: float = -150 # Fuerza del salto desde una pared.
 
 signal player_died # Se emite cuando el jugador muere definitivamente.
 signal change_UI_lives(change_lives) # Se emite para pedirle a la GUI que actualice los corazones de vida.
@@ -71,8 +54,6 @@ var has_used_wall_grab: bool = false # Registra si ya se usó el agarre en el ai
 var wall_grab_duration: float = 1.0 # Tiempo en segundos que puede estar agarrado
 var is_alive: bool = true # Estado de vida del jugador.
 var jump_in_wall_grab: bool = false
-# Cerca de las otras variables de estado booleanas
-var just_jumped_from_floor: bool = false
 
 # --- Variables de Combate ---
 var lives: int = 5 # Vidas actuales dentro del "paquete de vidas".
@@ -102,152 +83,113 @@ func _ready() -> void:
 	if current_level >= 1:
 		can_wall_grab = true
 
-# Reemplaza tu _physics_process entero con este:
-
-# Reemplaza tu función _physics_process entera con esta:
-
 func _physics_process(delta) -> void:
-	# --- PRE-PROCESADO DE ESTADO ---
-	# Si no estamos vivos, el único estado posible es DEAD.
-	if not is_alive:
-		state = State.DEAD
-	
-	# Reiniciamos las banderas de un solo uso al tocar el suelo.
-	if is_on_floor():
-		has_used_wall_grab = false
-		just_jumped_from_floor = false
-
-	# --- CAPTURA DE ENTRADAS (INPUTS) ---
-	# Capturamos las entradas aquí para que todos los estados tengan acceso a ellas.
-	var input_vector = Vector2.ZERO
-	input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
-	var is_jump_pressed = Input.is_action_just_pressed("ui_jump")
-	var is_dash_pressed = Input.is_action_just_pressed("Dash")
-	var is_shoot_pressed = Input.is_action_just_pressed("Shoot")
-
-	# --- ESTADOS COMPARTIDOS ---
-	# Declaramos estas variables aquí para que sean visibles por todos los estados en el 'match'.
-	var on_wall = raycast_wall.is_colliding()
-	var is_moving_towards_wall = (player_dir == "RIGHT" and input_vector.x > 0) or (player_dir == "LEFT" and input_vector.x < 0)
-
-	# ========================================================================
-	# --- MÁQUINA DE ESTADOS PRINCIPAL ---
-	# ========================================================================
-	match state:
-		# --- ESTADO: IDLE (Quieto en el suelo) ---
-		State.IDLE:
-			# Físicas: Aplicamos gravedad para mantener al jugador pegado al suelo.
-			velocity.y += gravity * delta
-			velocity.x = 0
-			
-			# Transiciones a otros estados:
-			if is_jump_pressed:
-				state = State.JUMP
-				velocity.y = jump_force
-				just_jumped_from_floor = true
-			elif input_vector.x != 0:
-				state = State.RUN
-			elif is_dash_pressed and can_dash:
-				state = State.DASH
-				# Lógica de inicio de Dash
-				audio_dash.play()
-				velocity.y = 0 # El dash es horizontal
-				dash_timer.start()
-
-		# --- ESTADO: RUN (Corriendo por el suelo) ---
-		State.RUN:
-			# Físicas: Aplicamos gravedad y movimiento horizontal.
-			velocity.y += gravity * delta
-			velocity.x = input_vector.x * movement_velocity
-			
-			# Transiciones a otros estados:
-			if is_jump_pressed:
-				state = State.JUMP
-				velocity.y = jump_force
-				just_jumped_from_floor = true
-			elif input_vector.x == 0:
-				state = State.IDLE
-			elif is_dash_pressed and can_dash:
-				state = State.DASH
-				# Lógica de inicio de Dash
-				audio_dash.play()
-				velocity.y = 0
-				dash_timer.start()
-
-		# --- ESTADOS AÉREOS: JUMP (Ascendiendo) y FALL (Cayendo) ---
-		State.JUMP, State.FALL:
-			# Físicas: Aplicamos gravedad y permitimos control aéreo.
-			velocity.y += gravity * delta
-			velocity.x = input_vector.x * movement_velocity
-			
-			# Transición de JUMP a FALL cuando empezamos a caer.
-			if state == State.JUMP and velocity.y > 0:
-				state = State.FALL
-
-			# Transición de vuelta a IDLE o RUN al aterrizar.
-			if is_on_floor():
-				audio_landing.play()
-				state = State.IDLE if input_vector.x == 0 else State.RUN
-
-			# Transición a WALL_GRAB si se cumplen todas las condiciones.
-			if can_wall_grab and on_wall and is_moving_towards_wall and not has_used_wall_grab and not just_jumped_from_floor:
-				state = State.WALL_GRAB
+	if is_alive:
+		# Captura la entrada del jugador (izquierda/derecha).
+		var input_vector = Vector2.ZERO
+		input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+		# --- LÓGICA DE AGARRE EN PARED (ACTUALIZADA) ---
+		
+		var is_moving_towards_wall = (player_dir == "RIGHT" and input_vector.x > 0) or (player_dir == "LEFT" and input_vector.x < 0)
+		# La condición ahora incluye que NO hayamos usado ya el agarre en este salto
+		if can_wall_grab and not is_on_floor() and on_wall and is_moving_towards_wall and not has_used_wall_grab:
+			if not is_wall_grabbing: # Solo se ejecuta la primera vez que se agarra
 				has_used_wall_grab = true
-				wall_grab_timer.start()
+				wall_grab_timer.start() # Marcamos el agarre como usado e iniciamos el temporizador
+				is_wall_grabbing = true
+			else:
+				if is_wall_grabbing: # Si nos soltamos por cualquier motivo
+					wall_grab_timer.stop() # Detenemos el temporizador para que no se dispare
+				is_wall_grabbing = false
 		
-		# --- ESTADO: WALL_GRAB (Agarrado a la pared) ---
-		State.WALL_GRAB:
-			# Físicas: Deslizamiento lento y sin movimiento horizontal.
+		# --- Lógica de Estado: Agarrando Pared vs. Movimiento Normal ---
+		if is_wall_grabbing:
+			# Reducimos la velocidad de caída (deslizamiento)
 			velocity.y = min(velocity.y + (gravity * 0.5 * delta), wall_slide_speed)
-			velocity.x = 0
 			
-			# Transición a JUMP al saltar desde la pared.
-			if is_jump_pressed:
+			# Lógica del Salto de Pared (Wall Jump)
+			if Input.is_action_just_pressed("ui_jump"):
 				var jump_direction = -1.0 if player_dir == "RIGHT" else 1.0
-				velocity.x = wall_jump_force.x * jump_direction
-				velocity.y = wall_jump_force.y
-				state = State.JUMP
-				wall_grab_timer.stop()
-			
-			# Transición a FALL si nos soltamos de la pared.
-			if not on_wall or (input_vector.x != 0 and not is_moving_towards_wall):
-				state = State.FALL
-				wall_grab_timer.stop()
-		
-		# --- ESTADO: DASH ---
-		State.DASH:
-			# Físicas: Sin gravedad y con velocidad fija.
-			velocity.y = 0
-			velocity.x = dash_velocity * (1.0 if player_dir == "RIGHT" else -1.0)
-			# La transición de salida de este estado se maneja en la función _on_dash_timer_timeout
-
-		# --- ESTADO: DEAD ---
-		State.DEAD:
-			# Físicas: Sin control, solo afectado por la gravedad para caer.
-			velocity.x = 0
+				velocity.x = wall_jump_force * jump_direction
+				velocity.y = wall_jump_force
+				is_wall_grabbing = false
+				wall_grab_timer.stop() # Detenemos el timer al saltar
+		else:
+			# --- FÍSICAS NORMALES ---
+			# Se aplica la gravedad estándar.
 			velocity.y += gravity * delta
+			
+			# Lógica del Dash.
+			if Input.is_action_just_pressed("Dash") and can_dash:
+				audio_dash.play()
+				can_dash = false
+				is_dashing = true
+				animated_sprite.stop()
+				animated_sprite.play("Dash")
+				current_state = "Dash"
+				dashing_timer.start()
+				dash_timer.start()
+
+			# Se aplica la velocidad de movimiento (normal o de dash).
+			velocity.x = input_vector.x * (dash_velocity if is_dashing else movement_velocity)
+
+			# Lógica de Salto (con todas sus variantes).
+			if Input.is_action_just_pressed("ui_jump"):
+				# Si se presiona "abajo + salto" en una plataforma, se atraviesa hacia abajo.
+				if Input.is_action_pressed("ui_down") && raycast_floor.is_colliding():
+					var collider = raycast_floor.get_collider()
+					if collider.is_in_group("Platform"):
+						ignore_platform_collision()
+				# Salto normal desde el suelo.
+				elif is_on_floor():
+					has_used_wall_grab = false
+					audio_jump.play()
+					first_jump_completed = true
+					velocity.y = jump_force
+					match gun_type:
+						"Small":
+							animated_sprite.play("SJump")
+						"Big":
+							animated_sprite.play("BJump")
+					current_state = "Jump"
+					switch_animation(1)
+				# Doble salto si está habilitado y ya se hizo el primer salto.
+				elif double_jump_enabled and first_jump_completed:
+					first_jump_completed = false
+					velocity.y = jump_force
+					animated_sprite.play("Double_Jump")
+					current_state = "Double_Jump"
+					switch_animation(1)
+			
+			# Lógica para acortar el salto si se suelta el botón.
+			if Input.is_action_just_released("ui_jump") and velocity.y < 0:
+				velocity.y *= jump_cut_multiplier
 		
-		# (Aquí se añadirían los estados HURT, etc. en el futuro)
-
-	# --- LÓGICA GENERAL ---
-	# Lógica que se aplica en varios estados pero no en todos.
+		# Lógica de aterrizaje (para el sonido).
+		if !is_on_floor() and velocity.y > 0:
+			was_in_air = true
+		elif raycast_floor.is_colliding() and was_in_air:
+			audio_jump.stop()
+			audio_landing.play()
+			was_in_air = false
+		
+		# Lógica de disparo.
+		if Input.is_action_just_pressed("Shoot"):
+			audio_shoot.play()
+			shoot_bullet()
+	else:
+		# Si el jugador no está vivo, no tiene control y solo le afecta la gravedad.
+		velocity.x = 0
+		velocity.y += gravity * delta
 	
-	# Acortar el salto si se suelta el botón (solo si estamos subiendo).
-	if state == State.JUMP and Input.is_action_just_released("ui_jump") and velocity.y < 0:
-		velocity.y *= jump_cut_multiplier
-	
-	# El disparo puede ocurrir en los estados principales.
-	if is_shoot_pressed and (state == State.IDLE or state == State.RUN or state == State.JUMP or state == State.FALL):
-		shoot_bullet()
-
-	# Aplicamos el movimiento final al personaje.
+	# Aplica el vector de velocidad al personaje para moverlo y gestionar colisiones.
 	move_and_slide()
 	
-	# Actualizamos la parte visual y otras lógicas secundarias.
+	# Actualiza la parte visual y otros estados después del movimiento.
 	if is_alive:
 		update_sprite_direction()
-		# update_animation() # Esta función también debería ser refactorizada para usar 'state'.
-	handle_double_jump() # Esta función es independiente y comprueba si se puede habilitar el doble salto.
+		update_animation()
+	handle_double_jump()
 
 # Gestiona la orientación visual del jugador y la posición de sus componentes.
 func update_sprite_direction() -> void:
@@ -404,26 +346,21 @@ func hide_all_sprites() -> void:
 	animated_sprite2.visible = false
 	animated_sprite3.visible = false
 
-
+# Gestiona si el doble salto está disponible.
 func handle_double_jump() -> void:
-	# Si el jugador está en el suelo, el doble salto NUNCA puede estar habilitado.
-	if is_on_floor():
-		double_jump_enabled = false
-		return # Salimos de la función aquí.
-
-	# Si estamos en el aire, revisamos si estamos tocando una pared para habilitarlo.
-	if current_level >= 2 and raycast_wall.is_colliding():
+	if current_level < 2:
+		return
+		
+	if raycast_wall.is_colliding():
 		var collider = raycast_wall.get_collider()
 		if collider.is_in_group("Jumpeable Wall"):
-			# Al tocar una pared en el aire, se nos permite un "doble salto" (que actúa como salto de pared).
 			double_jump_enabled = true
-			# También reseteamos first_jump_completed para asegurar que podamos usar este nuevo salto.
-			first_jump_completed = true
-		if collider.is_in_group("Grabbable Wall"):
-			on_wall = true
+		if collider.is_in_group("Floor"):
+			double_jump_enabled = false
+		if collider.is_in_group("Jumpeable Wall"):
+			on_wall = raycast_wall.is_colliding()
 	else:
 		double_jump_enabled = false
-
 
 # Crea una instancia de la bala y la añade a la escena.
 func shoot_bullet() -> void:
@@ -522,4 +459,3 @@ func _on_area_entered(area: Area2D) -> void:
 func _on_wall_grab_timer_timeout() -> void:
 	# El tiempo se acabó, forzamos al jugador a soltarse de la pared.
 	is_wall_grabbing = false
-	on_wall = false
