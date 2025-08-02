@@ -32,8 +32,8 @@ var animated_sprites: Array[AnimatedSprite2D] = []
 
 @onready var wall_grab_timer: Timer = $WallGrabTimer
 @onready var hurt_timer: Timer = $HurtTimer
-@onready var dashing_timer: Timer = $DashingTimer
-@onready var dash_timer: Timer = $DashTimer
+@onready var dash_duration_timer: Timer = $DashDurationTimer 
+@onready var dash_cool_down_timer: Timer = $DashCooldownTimer
 @onready var dead_timer: Timer = $DeadTimer
 
 @export var wall_slide_speed: float = 12.5
@@ -51,11 +51,9 @@ var movement_velocity: int = 250
 var fall_through_time: float = 0.05
 
 var was_in_air: bool = false
-var can_dash: bool = false
-var double_jump_enabled: bool = false
+var dash_power_activated: bool = false
+var double_jump_power_activated: bool = false
 var first_jump_completed: bool = false
-var has_used_wall_grab: bool = false
-var wall_grab_duration: float = 1.0
 var is_alive: bool = true
 var just_jumped_from_floor: bool = false
 
@@ -66,19 +64,27 @@ var bullet_offset: Vector2
 var gun_type: String ="Small"
 var change_gun_type: bool = false
 var hurt_jump_force: float = -200
-
 var current_level: int
-var can_wall_grab: bool = false
+var wall_grab_power_activated: bool = false
 var is_stunned: bool = false
 var just_double_jumped: bool = false
+var double_jump_enabled: bool = false
+var can_dash = true
 
 func _ready() -> void:
 	current_level = SceneManager.current_level
+	# Según el GDD, los poderes se desbloquean AL INICIAR el nivel siguiente.
+	# Nivel 2: Se obtiene el Doble Salto
+	if current_level >= 1:#2
+		double_jump_power_activated = true
 	
-	if current_level >= 1:
-		can_dash = true
-	if current_level >= 1:
-		can_wall_grab = true
+	# Nivel 3: Se obtiene el Dash
+	if current_level >=1:#3
+		dash_power_activated = true
+	
+	# Nivel 4: Se obtiene el Agarre en Pared
+	if current_level >= 1:#4
+		wall_grab_power_activated = true
 		
 	animated_sprites = [animated_sprite, animated_sprite2, animated_sprite3]
 
@@ -90,7 +96,6 @@ func _physics_process(delta) -> void:
 		if was_in_air:
 			audio_landing.play()
 			was_in_air = false
-		has_used_wall_grab = false
 		just_jumped_from_floor = false
 	else:
 		was_in_air = true
@@ -124,11 +129,11 @@ func _physics_process(delta) -> void:
 				just_jumped_from_floor = true
 			elif input_vector.x != 0:
 				state = State.RUN
-			elif is_dash_pressed and can_dash:
+			elif is_dash_pressed and dash_power_activated and can_dash:
 				state = State.DASH
 				audio_dash.play()
 				velocity.y = 0
-				dash_timer.start()
+				dash_duration_timer.start()
 
 		State.RUN:
 			velocity.y += gravity * delta
@@ -143,15 +148,21 @@ func _physics_process(delta) -> void:
 				just_jumped_from_floor = true
 			elif input_vector.x == 0:
 				state = State.IDLE
-			elif is_dash_pressed and can_dash:
+			elif is_dash_pressed and dash_power_activated and can_dash:
 				state = State.DASH
 				audio_dash.play()
 				velocity.y = 0
-				dash_timer.start()
+				dash_duration_timer.start()
 
 		State.JUMP, State.FALL:
 			velocity.y += gravity * delta
 			velocity.x = input_vector.x * movement_velocity
+			
+			if is_dash_pressed and dash_power_activated and can_dash:
+				state = State.DASH
+				audio_dash.play()
+				velocity.y = 0 # Mantiene el dash perfectamente horizontal en el aire
+			dash_duration_timer.start()
 			
 			if is_jump_pressed and double_jump_enabled and first_jump_completed:
 				print("--- FÍSICA: Doble Salto Detectado! Seteando flag y estado. ---")
@@ -163,6 +174,8 @@ func _physics_process(delta) -> void:
 			
 			if state == State.JUMP and velocity.y > 0:
 				state = State.FALL
+				just_jumped_from_floor = false 
+				
 			if is_on_floor():
 				if was_in_air: 
 					audio_landing.play()
@@ -171,10 +184,9 @@ func _physics_process(delta) -> void:
 			else:
 				was_in_air = true 
 			var collider = raycast_wall.get_collider()
-			if can_wall_grab and on_wall and collider.is_in_group("Grabbable Wall") and is_moving_towards_wall and not has_used_wall_grab and not just_jumped_from_floor:
+			if wall_grab_power_activated  and on_wall and collider.is_in_group("Grabbable Wall") and is_moving_towards_wall and not just_jumped_from_floor:
 				state = State.WALL_GRAB
-				has_used_wall_grab = true
-				wall_grab_timer.start(wall_grab_duration)
+				wall_grab_timer.start()
 		
 		State.WALL_GRAB:
 			velocity.y = min(velocity.y + (gravity * 0.5 * delta), wall_slide_speed)
@@ -303,8 +315,8 @@ func update_animation() -> void:
 			switch_animation(1)
 
 		State.WALL_GRAB:
-			if animated_sprite.animation != "WallGrab":
-				animated_sprite.play("WallGrab")
+			#if animated_sprite.animation != "WallGrab":
+			#	animated_sprite.play("WallGrab")
 			switch_animation(1)
 
 		State.DASH:
@@ -338,6 +350,10 @@ func hide_all_sprites() -> void:
 
 
 func handle_double_jump() -> void:
+	# Si el poder no está activado, salimos de la función.
+	if not double_jump_power_activated:
+		return
+	
 	# Si estamos en el suelo, siempre reseteamos el estado.
 	if is_on_floor():
 		double_jump_enabled = false
@@ -428,13 +444,16 @@ func _on_body_entered(body) -> void:
 		take_damage()
 
 
-func _on_dash_timer_timeout() -> void:
+func _on_dash_duration_timer_timeout() -> void:
+	dash_cool_down_timer.start()
+	can_dash = false
+	
 	if is_on_floor():
 		state = State.IDLE
 	else:
 		state = State.FALL
 
-func _on_can_dash_timeout() -> void:
+func _on_dash_cool_down_timeout() -> void:
 	can_dash = true
 
 func _on_dead_timer_timeout() -> void:
