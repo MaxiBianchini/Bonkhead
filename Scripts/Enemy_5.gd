@@ -31,6 +31,48 @@ func _ready() -> void:
 	# Configuramos el temporizador de ataque
 	attack_timer.wait_time = attack_cooldown
 
-func _physics_process(delta: float) -> void:
-	# Aquí irá la lógica de nuestra máquina de estados
-	pass
+func _physics_process(_delta) -> void:
+	# Máquina de estados para controlar el comportamiento.
+	match state:
+		State.INACTIVE:
+			# En estado inactivo, el enemigo está quieto y "camuflado".
+			animated_sprite.play("Death")
+			velocity = Vector2.ZERO # Nos aseguramos de que no se mueva.
+
+		State.ACTIVE:
+			# En estado activo, el enemigo "despierta" y patrulla la pared.
+			animated_sprite.play("Walk")
+			
+			# Lógica de movimiento vertical (patrulla)
+			var target_y = initial_position.y + (patrol_distance * patrol_direction)
+			
+			# Cambiamos de dirección si llegamos al límite de la patrulla
+			if (patrol_direction == 1 and position.y >= target_y) or \
+			   (patrol_direction == -1 and position.y <= initial_position.y):
+				patrol_direction *= -1
+
+			velocity.y = climb_speed * patrol_direction
+
+		State.ATTACKING:
+			# Por ahora no hace nada, lo programaremos después.
+			pass
+
+	# Aplicamos el movimiento
+	move_and_slide()
+
+
+func _on_detection_area_body_entered(body: Node2D) -> void:
+	# Esta función se ejecuta cuando algo entra en el área de detección.
+	# Comprobamos si lo que entró es el jugador.
+	if body.is_in_group("Player"):
+		# Si es el jugador, cambiamos nuestro estado a ACTIVO.
+		state = State.ACTIVE
+
+
+func _on_detection_area_body_exited(body: Node2D) -> void:
+	# Esta función se ejecuta cuando algo sale del área de detección.
+	# Comprobamos si lo que salió es el jugador.
+	
+	if body.is_in_group("Player"):
+		# Si es el jugador, volvemos al estado INACTIVO.
+		state = State.INACTIVE
