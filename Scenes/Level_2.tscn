@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=4 uid="uid://62rpf654fvo6"]
+[gd_scene load_steps=67 format=4 uid="uid://62rpf654fvo6"]
 
 [ext_resource type="Texture2D" uid="uid://vr4vltjsdl0o" path="res://Graphics/Zonas/Green-zone/2 Background/Day/1.png" id="1_xbslt"]
 [ext_resource type="Texture2D" uid="uid://okpnwlqcy00" path="res://Graphics/Zonas/Green-zone/2 Background/Day/2.png" id="2_q8wyw"]
@@ -37,6 +37,7 @@
 [ext_resource type="Texture2D" uid="uid://bq8lihronfcvu" path="res://Graphics/Zonas/Green-zone/3 Objects/Grass/15.png" id="39_33kqp"]
 [ext_resource type="PackedScene" uid="uid://dch15up2fk0ht" path="res://Prefabs/GUI.tscn" id="39_281yw"]
 [ext_resource type="Texture2D" uid="uid://ccxwmso8me5uc" path="res://Graphics/Zonas/Green-zone/3 Objects/Benches/2.png" id="39_fkjh7"]
+[ext_resource type="PackedScene" uid="uid://b3kr0bfr4cu0h" path="res://Prefabs/Enemy_5.tscn" id="39_v40af"]
 [ext_resource type="Texture2D" uid="uid://b08biri5mudp8" path="res://Graphics/Zonas/Green-zone/3 Objects/Bushes/4.png" id="40_86852"]
 [ext_resource type="Texture2D" uid="uid://c02byxr0scup3" path="res://Graphics/Zonas/Green-zone/3 Objects/Other/Tree1.png" id="41_pd1gx"]
 [ext_resource type="Texture2D" uid="uid://dadg5l32ey1kn" path="res://Graphics/Zonas/Green-zone/3 Objects/Other/Tree2.png" id="42_281yw"]
@@ -617,6 +618,9 @@ position = Vector2(7019, 1294)
 
 [node name="Enemy_2" parent="Enemies" instance=ExtResource("27_go0cy")]
 position = Vector2(853, 1193)
+
+[node name="Enemy_19" parent="Enemies" instance=ExtResource("39_v40af")]
+position = Vector2(132, 725)
 
 [node name="FallingPlatforms" type="Node2D" parent="."]
 process_mode = 3
