@@ -989,9 +989,6 @@ one_shot = true
 wait_time = 0.2
 one_shot = true
 
-[node name="WallGrabTimer" type="Timer" parent="."]
-wait_time = 4.0
-
 [node name="HurtTimer" type="Timer" parent="."]
 wait_time = 0.1
 one_shot = true
@@ -1029,5 +1026,4 @@ bus = &"SFX"
 [connection signal="timeout" from="DeadTimer" to="." method="_on_dead_timer_timeout"]
 [connection signal="timeout" from="DashCooldownTimer" to="." method="_on_dash_cool_down_timeout"]
 [connection signal="timeout" from="DashDurationTimer" to="." method="_on_dash_duration_timer_timeout"]
-[connection signal="timeout" from="WallGrabTimer" to="." method="_on_wall_grab_timer_timeout"]
 [connection signal="timeout" from="HurtTimer" to="." method="_on_hurt_timer_timeout"]

@@ -30,7 +30,6 @@ var animated_sprites: Array[AnimatedSprite2D] = []
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
-@onready var wall_grab_timer: Timer = $WallGrabTimer
 @onready var hurt_timer: Timer = $HurtTimer
 @onready var dash_duration_timer: Timer = $DashDurationTimer 
 @onready var dash_cool_down_timer: Timer = $DashCooldownTimer
@@ -55,7 +54,6 @@ var dash_power_activated: bool = false
 var double_jump_power_activated: bool = false
 var first_jump_completed: bool = false
 var is_alive: bool = true
-var just_jumped_from_floor: bool = false
 
 var lives: int = 5
 var bullet_scene = preload("res://Prefabs/Bullet.tscn")
@@ -96,7 +94,6 @@ func _physics_process(delta) -> void:
 		if was_in_air:
 			audio_landing.play()
 			was_in_air = false
-		just_jumped_from_floor = false
 	else:
 		was_in_air = true
 
@@ -126,7 +123,6 @@ func _physics_process(delta) -> void:
 				audio_jump.play() 
 				state = State.JUMP
 				velocity.y = jump_force
-				just_jumped_from_floor = true
 			elif input_vector.x != 0:
 				state = State.RUN
 			elif is_dash_pressed and dash_power_activated and can_dash:
@@ -145,7 +141,6 @@ func _physics_process(delta) -> void:
 				audio_jump.play()
 				state = State.JUMP
 				velocity.y = jump_force
-				just_jumped_from_floor = true
 			elif input_vector.x == 0:
 				state = State.IDLE
 			elif is_dash_pressed and dash_power_activated and can_dash:
@@ -174,7 +169,6 @@ func _physics_process(delta) -> void:
 			
 			if state == State.JUMP and velocity.y > 0:
 				state = State.FALL
-				just_jumped_from_floor = false 
 				
 			if is_on_floor():
 				if was_in_air: 
@@ -184,9 +178,8 @@ func _physics_process(delta) -> void:
 			else:
 				was_in_air = true 
 			var collider = raycast_wall.get_collider()
-			if wall_grab_power_activated  and on_wall and collider.is_in_group("Grabbable Wall") and is_moving_towards_wall and not just_jumped_from_floor:
+			if wall_grab_power_activated  and on_wall and collider.is_in_group("Grabbable Wall") and is_moving_towards_wall:
 				state = State.WALL_GRAB
-				wall_grab_timer.start()
 		
 		State.WALL_GRAB:
 			velocity.y = min(velocity.y + (gravity * 0.5 * delta), wall_slide_speed)
@@ -197,11 +190,9 @@ func _physics_process(delta) -> void:
 				velocity.x = wall_jump_force.x * jump_direction
 				velocity.y = wall_jump_force.y
 				state = State.JUMP
-				wall_grab_timer.stop()
 			
 			if not on_wall or (input_vector.x != 0 and not is_moving_towards_wall):
 				state = State.FALL
-				wall_grab_timer.stop()
 		
 		State.DASH:
 			velocity.y = 0
@@ -463,9 +454,6 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Dead"):
 		lives = 0
 		take_damage()
-
-func _on_wall_grab_timer_timeout() -> void:
-	state = State.FALL
 
 func _on_hurt_timer_timeout() -> void:
 	is_stunned = false
