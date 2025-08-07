@@ -620,7 +620,9 @@ position = Vector2(7019, 1294)
 position = Vector2(853, 1193)
 
 [node name="Enemy_19" parent="Enemies" instance=ExtResource("39_v40af")]
-position = Vector2(132, 725)
+position = Vector2(10, 639)
+patrol_distance = 85.0
+bullet_dir = Vector2(1, 0)
 
 [node name="FallingPlatforms" type="Node2D" parent="."]
 process_mode = 3
