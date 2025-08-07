@@ -24,10 +24,15 @@ var state: State = State.INACTIVE
 
 var bullet_scene: PackedScene = preload("res://Prefabs/Bullet.tscn")
 
+var points: int = 20
+signal add_points
+
 # --- Variables Internas ---
 var initial_position: Vector2
 var patrol_direction: int = 1
 var bullet_offset: Vector2 = Vector2(20,0)
+var is_alive: float = true
+var lives: int = 3
 
 func _ready() -> void:
 	# Guardamos la posición inicial para saber a dónde volver
@@ -64,6 +69,27 @@ func _physics_process(_delta) -> void:
 
 	# Aplicamos el movimiento
 	move_and_slide()
+
+func take_damage() -> void:
+	if not is_alive:
+		return
+	
+	lives -= 1
+	if lives <= 0:
+		is_alive = false
+		velocity.x = 0
+		animated_sprite.play("Death")
+		await animated_sprite.animation_finished
+		queue_free()
+	else:
+		#animated_sprite.play("Hurt")
+		emit_signal("add_points", points)
+		
+		#can_shoot = false
+		#if shoot_timer.time_left > 0:
+		#	shoot_timer.start(shoot_timer.time_left + 1.0)
+		#else:
+		#	shoot_timer.start(1.0)
 
 func shoot_bullet() -> void:
 	var bullet = bullet_scene.instantiate() as Area2D
