@@ -104,18 +104,9 @@ func _on_animated_sprite_animation_finished() -> void:
 	# Esta función se llama cuando CUALQUIER animación termina.
 	# Nos aseguramos de que la que terminó fue la de "attack".
 	if animated_sprite.animation == "Attack":
-		shoot_bullet()
 		# 1. Creamos la instancia de la bala.
-		#var bullet = bullet_scene.instantiate() as Area2D
+		shoot_bullet()
 		
-		# 2. La posicionamos en el punto de spawn.
-		#get_tree().current_scene.add_child(bullet)
-		#bullet.global_position = projectile_spawn_point.global_position
-		
-		# 3. Le damos una dirección (asumimos que el enemigo mira a la derecha).
-		#    Si tu sprite mira a la izquierda, cambia a Vector2.LEFT.
-		#bullet.direction = Vector2.RIGHT
-		
-		# 4. Volvemos al estado activo y reiniciamos el temporizador para el próximo ataque.
+		# 2. Volvemos al estado activo y reiniciamos el temporizador para el próximo ataque.
 		state = State.ACTIVE
 		attack_timer.start()
