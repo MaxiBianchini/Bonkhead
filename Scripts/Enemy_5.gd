@@ -21,6 +21,7 @@ var state: State = State.INACTIVE
 @onready var detection_area: Area2D = $DetectionArea
 @onready var attack_timer: Timer = $AttackTimer
 @onready var projectile_spawn_point: Marker2D = $ProjectileSpawnPoint
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 var bullet_scene: PackedScene = preload("res://Prefabs/Bullet.tscn")
 
@@ -82,14 +83,9 @@ func take_damage() -> void:
 		await animated_sprite.animation_finished
 		queue_free()
 	else:
-		#animated_sprite.play("Hurt")
+		animation_player.play("Hurt")
 		emit_signal("add_points", points)
 		
-		#can_shoot = false
-		#if shoot_timer.time_left > 0:
-		#	shoot_timer.start(shoot_timer.time_left + 1.0)
-		#else:
-		#	shoot_timer.start(1.0)
 
 func shoot_bullet() -> void:
 	var bullet = bullet_scene.instantiate() as Area2D
