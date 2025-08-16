@@ -4,7 +4,8 @@ extends CharacterBody2D
 enum State {
 	INACTIVE,  # Inmóvil y camuflado en la pared
 	ACTIVE,    # Despierto, patrullando la pared
-	ATTACKING  # Detenido y a punto de disparar
+	ATTACKING, # Detenido y a punto de disparar
+	DEAD
 }
 
 # Variable para el estado actual
@@ -22,6 +23,8 @@ var state: State = State.INACTIVE
 @onready var attack_timer: Timer = $AttackTimer
 @onready var projectile_spawn_point: Marker2D = $ProjectileSpawnPoint
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+
+@onready var player = get_tree().current_scene.get_node_or_null("%Player")  
 
 var bullet_scene: PackedScene = preload("res://Prefabs/Bullet.tscn")
 
@@ -48,7 +51,7 @@ func _physics_process(_delta) -> void:
 			# En estado inactivo, el enemigo está quieto y "camuflado".
 			animated_sprite.play("Idle")
 			velocity = Vector2.ZERO # Nos aseguramos de que no se mueva.
-
+		
 		State.ACTIVE:
 			# En estado activo, el enemigo "despierta" y patrulla la pared.
 			animated_sprite.play("Walk")
@@ -60,13 +63,24 @@ func _physics_process(_delta) -> void:
 			if (patrol_direction == 1 and position.y >= target_y) or \
 			   (patrol_direction == -1 and position.y <= initial_position.y):
 				patrol_direction *= -1
-
+				
 			velocity.y = climb_speed * patrol_direction
-
+		
 		State.ATTACKING:
 			# Al atacar, el enemigo se detiene y reproduce su animación.
 			velocity = Vector2.ZERO
 			animated_sprite.play("Attack")
+			
+			# 1. Creamos la instancia de la bala.
+			if player.position.x < position.x:
+				bullet_dir = Vector2.LEFT
+			else:
+				bullet_dir = Vector2.RIGHT
+			
+		State.DEAD:
+			animated_sprite.play("Death")
+			await animated_sprite.animation_finished
+			queue_free()
 
 	# Aplicamos el movimiento
 	move_and_slide()
@@ -79,9 +93,8 @@ func take_damage() -> void:
 	if lives <= 0:
 		is_alive = false
 		velocity.x = 0
-		animated_sprite.play("Death")
-		await animated_sprite.animation_finished
-		queue_free()
+		state = State.DEAD
+		
 	else:
 		animation_player.play("Hurt")
 		emit_signal("add_points", points)
@@ -126,7 +139,6 @@ func _on_animated_sprite_animation_finished() -> void:
 	# Esta función se llama cuando CUALQUIER animación termina.
 	# Nos aseguramos de que la que terminó fue la de "attack".
 	if animated_sprite.animation == "Attack":
-		# 1. Creamos la instancia de la bala.
 		shoot_bullet()
 		
 		# 2. Volvemos al estado activo y reiniciamos el temporizador para el próximo ataque.

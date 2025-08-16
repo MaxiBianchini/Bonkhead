@@ -198,7 +198,7 @@ bullet_dir = Vector2(-1, 0)
 material = SubResource("ShaderMaterial_vkrtj")
 rotation = 1.5708
 sprite_frames = SubResource("SpriteFrames_e77wi")
-animation = &"Idle"
+animation = &"Death"
 offset = Vector2(8, -12)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
