@@ -10,6 +10,12 @@ enum State {
 	DEAD
 }
 
+enum AmmoType {
+	NORMAL,
+	MORTAR
+	# Aquí añadiremos más tipos en el futuro (ej. RICOCHET)
+}
+
 var state: State = State.IDLE
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -56,7 +62,14 @@ var first_jump_completed: bool = false
 var is_alive: bool = true
 
 var lives: int = 5
-var bullet_scene = preload("res://Prefabs/Bullet.tscn")
+
+var current_ammo_type: AmmoType = AmmoType.NORMAL
+var ammo_scenes: Dictionary = {
+	AmmoType.NORMAL: preload("res://Prefabs/Bullet.tscn"),
+	AmmoType.MORTAR: preload("res://Prefabs/MortarBullet.tscn")
+}
+
+#var bullet_scene = preload("res://Prefabs/Bullet.tscn")
 var bullet_dir: Vector2 = Vector2.RIGHT
 var bullet_offset: Vector2
 var gun_type: String ="Small"
@@ -363,18 +376,23 @@ func handle_double_jump() -> void:
 func shoot_bullet() -> void:
 	update_animation()
 	
-	var bullet = bullet_scene.instantiate() as Area2D
-	bullet.mask = 3
-	bullet.shooter = self
 	
-	bullet.change_bullet_speed(245)
-	bullet.change_bullet_acceleration(300)
-	bullet.change_bullet_lifetime(0.7)
+	# 1. Obtenemos la escena de la bala correcta desde nuestro diccionario.
+	var bullet_scene_to_spawn = ammo_scenes[current_ammo_type]
 	
-	bullet.position = position + bullet_offset
+	# 2. Creamos una instancia de esa escena.
+	var bullet = bullet_scene_to_spawn.instantiate()
+	
+	# 3. La añadimos a la escena principal del juego.
+	get_tree().current_scene.add_child(bullet)
+	
+	# 4. Configuramos sus propiedades (posición, dirección, etc.).
+	bullet.global_position = global_position + bullet_offset
 	bullet.direction = bullet_dir
 	
-	get_tree().current_scene.add_child(bullet)
+	# (Si tus balas tienen otras propiedades como "shooter", puedes asignarlas aquí también)
+	# if bullet.has_method("set_shooter"):
+	#	 bullet.set_shooter(self)
 
 
 func ignore_platform_collision() -> void:
