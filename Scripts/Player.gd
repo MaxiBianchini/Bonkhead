@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody2D
 
 enum State {
@@ -63,13 +64,12 @@ var is_alive: bool = true
 
 var lives: int = 5
 
-var current_ammo_type: AmmoType = AmmoType.NORMAL
 var ammo_scenes: Dictionary = {
 	AmmoType.NORMAL: preload("res://Prefabs/Bullet.tscn"),
 	AmmoType.MORTAR: preload("res://Prefabs/MortarBullet.tscn")
 }
+var current_ammo_type: AmmoType = AmmoType.NORMAL
 
-#var bullet_scene = preload("res://Prefabs/Bullet.tscn")
 var bullet_dir: Vector2 = Vector2.RIGHT
 var bullet_offset: Vector2
 var gun_type: String ="Small"
@@ -170,7 +170,7 @@ func _physics_process(delta) -> void:
 				state = State.DASH
 				audio_dash.play()
 				velocity.y = 0 # Mantiene el dash perfectamente horizontal en el aire
-			dash_duration_timer.start()
+				dash_duration_timer.start()
 			
 			if is_jump_pressed and double_jump_enabled and first_jump_completed:
 				print("--- FÍSICA: Doble Salto Detectado! Seteando flag y estado. ---")
@@ -376,24 +376,24 @@ func handle_double_jump() -> void:
 func shoot_bullet() -> void:
 	update_animation()
 	
-	
-	# 1. Obtenemos la escena de la bala correcta desde nuestro diccionario.
 	var bullet_scene_to_spawn = ammo_scenes[current_ammo_type]
+	var bullet = bullet_scene_to_spawn.instantiate() as Area2D
 	
-	# 2. Creamos una instancia de esa escena.
-	var bullet = bullet_scene_to_spawn.instantiate()
+	if bullet.has_method("set_shooter"):
+		bullet.set_shooter(self)
+		
+	if bullet.has_method("set_mask"):
+		bullet.set_mask(3) 
 	
-	# 3. La añadimos a la escena principal del juego.
-	get_tree().current_scene.add_child(bullet)
-	
-	# 4. Configuramos sus propiedades (posición, dirección, etc.).
+	if "direction" in bullet:
+		bullet.direction = bullet_dir
 	bullet.global_position = global_position + bullet_offset
-	bullet.direction = bullet_dir
 	
-	# (Si tus balas tienen otras propiedades como "shooter", puedes asignarlas aquí también)
-	# if bullet.has_method("set_shooter"):
-	#	 bullet.set_shooter(self)
+	get_tree().current_scene.add_child(bullet)
 
+func set_ammo_type(new_type: AmmoType) -> void:
+	current_ammo_type = new_type
+	print("Munición cambiada a: ", AmmoType.keys()[new_type]) # Un print para depurar
 
 func ignore_platform_collision() -> void:
 	collision_shape.disabled = true

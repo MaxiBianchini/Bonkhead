@@ -3,14 +3,13 @@ extends Area2D
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var life_timer: Timer = $Timer
 
-var speed: float = 175
-var acceleration: float = 100
+@export var speed: float = 245
+@export var acceleration: float = 300
+@export var time: float = 1.3
 var direction: Vector2
 
 var shooter: Node = null
 var mask: int = 1
-
-var time: float = 1.3
 
 func _ready() -> void:
 	set_collision_mask_value(mask,true)
@@ -39,11 +38,8 @@ func _on_body_entered(body) -> void:
 		body.take_damage()
 		queue_free()
 
-func change_bullet_acceleration(_acceleration: float) -> void:
-	acceleration = _acceleration
+func set_mask(number: int) -> void:
+	mask = number
 
-func change_bullet_speed(_speed: float) -> void:
-	speed = _speed
-
-func change_bullet_lifetime(_time: float) -> void:
-	time = _time
+func set_shooter(_shooter: Node) -> void:
+	shooter = _shooter
