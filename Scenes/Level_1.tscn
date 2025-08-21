@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=4 uid="uid://mwhbup6tnnqo"]
+[gd_scene load_steps=61 format=4 uid="uid://mwhbup6tnnqo"]
 
 [ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://TileSets/TileSets.tres" id="1_c1dvb"]
 [ext_resource type="PackedScene" uid="uid://cdqlmgh2vxout" path="res://Prefabs/Player.tscn" id="2_72p7r"]
@@ -38,6 +38,7 @@
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="33_ww1bt"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="34_ww1bt"]
 [ext_resource type="PackedScene" uid="uid://fxla73vs5hxe" path="res://Prefabs/Phantom_Area.tscn" id="36_qaamm"]
+[ext_resource type="PackedScene" uid="uid://c0eguuvuvqkm7" path="res://Prefabs/AmmoPickup.tscn" id="46_d1n4i"]
 [ext_resource type="PackedScene" uid="uid://bh3h363wnt1mt" path="res://Prefabs/Signpost.tscn" id="50_ceuot"]
 [ext_resource type="PackedScene" uid="uid://blucmwrqfrted" path="res://Prefabs/Moving_Platform.tscn" id="52_fdbj4"]
 [ext_resource type="PackedScene" uid="uid://cfdnwh558m6i2" path="res://Prefabs/Falling_Platform.tscn" id="54_kd73b"]
@@ -903,6 +904,9 @@ position = Vector2(545, 1722)
 
 [node name="Doorway" parent="." instance=ExtResource("57_bvkrs")]
 position = Vector2(2057, 1335)
+
+[node name="AmmoPickup" parent="." instance=ExtResource("46_d1n4i")]
+position = Vector2(237, 719)
 
 [editable path="Enemies/Enemy_2"]
 [editable path="Enemies/Enemy_6"]
