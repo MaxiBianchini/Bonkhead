@@ -25,7 +25,6 @@ func _physics_process(delta) -> void:
 		sprite.rotation_degrees = -90
 	
 	speed += acceleration * delta
-	
 	position += direction * speed * delta
 
 func _on_body_entered(body) -> void:

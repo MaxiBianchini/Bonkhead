@@ -379,6 +379,9 @@ func shoot_bullet() -> void:
 	var bullet_scene_to_spawn = ammo_scenes[current_ammo_type]
 	var bullet = bullet_scene_to_spawn.instantiate() as Area2D
 	
+	#Comprobamos si el jugador está apuntando hacia arriba
+	var is_aiming_up = Input.is_action_pressed("ui_up")
+	
 	if bullet.has_method("set_shooter"):
 		bullet.set_shooter(self)
 		
@@ -386,8 +389,17 @@ func shoot_bullet() -> void:
 		bullet.set_mask(3) 
 	
 	if "direction" in bullet:
-		bullet.direction = bullet_dir
+		# Si apuntamos arriba, la bala normal sale hacia arriba, pero la de mortero no.
+		if is_aiming_up and AmmoType.NORMAL:
+			print("PASO COASDOASMD")
+			bullet.direction = Vector2.UP
+		else:
+			bullet.direction = bullet_dir # Dirección horizontal normal
 	bullet.global_position = global_position + bullet_offset
+	
+	# Si es una bala de mortero Y estamos apuntando arriba, activamos su bandera
+	if "is_aimed_up" in bullet and is_aiming_up:
+		bullet.is_aimed_up = true
 	
 	get_tree().current_scene.add_child(bullet)
 

@@ -1,34 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://ba1evhl3y86ym"]
+[gd_scene load_steps=4 format=3 uid="uid://ba1evhl3y86ym"]
 
 [ext_resource type="Script" uid="uid://c60k7mikxl1e4" path="res://Scripts/MortarBullet.gd" id="1_i0yva"]
 [ext_resource type="Texture2D" uid="uid://cjdqaacxl4alu" path="res://Graphics/Guns & Bullets/Small Guns/Bullets/Bullets (3).png" id="1_iyoic"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_i0yva"]
-atlas = ExtResource("1_iyoic")
-region = Rect2(2, 2, 1, 1)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_p26o5"]
-resource_local_to_scene = true
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_i0yva")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bdwlh"]
 radius = 3.0
 
 [node name="MortarBullet" type="Area2D"]
+collision_layer = 16
 script = ExtResource("1_i0yva")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(1.19209e-07, -1.19209e-07)
-scale = Vector2(4, 4)
-sprite_frames = SubResource("SpriteFrames_p26o5")
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_iyoic")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_bdwlh")
