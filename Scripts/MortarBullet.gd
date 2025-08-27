@@ -34,7 +34,6 @@ func _ready() -> void:
 	life_timer.start(time)
 	await life_timer.timeout
 	queue_free()
-	
 
 func _physics_process(delta: float) -> void:
 	# Aplicamos la gravedad en cada fotograma para crear la curva.
@@ -59,3 +58,9 @@ func set_mask(number: int) -> void:
 
 func set_shooter(_shooter: Node) -> void:
 	shooter = _shooter
+
+func set_direction(_direction: Vector2) -> void:
+	direction = _direction
+
+func set_aim_state(_aim: bool) -> void:
+	is_aimed_up = _aim

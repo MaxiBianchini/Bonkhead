@@ -173,7 +173,6 @@ func _physics_process(delta) -> void:
 				dash_duration_timer.start()
 			
 			if is_jump_pressed and double_jump_enabled and first_jump_completed:
-				print("--- FÍSICA: Doble Salto Detectado! Seteando flag y estado. ---")
 				first_jump_completed = false
 				double_jump_enabled = false 
 				velocity.y = jump_force
@@ -267,11 +266,13 @@ func update_animation() -> void:
 		State.IDLE:
 			if Input.is_action_pressed("Shoot"):
 				if Input.is_action_pressed("ui_up"):
+					bullet_dir = Vector2.UP
 					var anim_name = "SIdle Shooting Up" if gun_type == "Small" else "BIdle Shooting Up"
 					if animated_sprite3.animation != anim_name:
 						animated_sprite3.play(anim_name)
 					switch_animation(3)
 				else:
+					bullet_dir = check_direction()
 					var anim_name = "SIdle Shooting Rect" if gun_type == "Small" else "BIdle Shooting Rect"
 					if animated_sprite2.animation != anim_name:
 						animated_sprite2.play(anim_name)
@@ -286,11 +287,13 @@ func update_animation() -> void:
 		State.RUN:
 			if Input.is_action_pressed("Shoot"):
 				if Input.is_action_pressed("ui_up"):
+					bullet_dir = Vector2.UP
 					var anim_name = "SRun Shooting Up" if gun_type == "Small" else "BRun Shooting Up"
 					if animated_sprite3.animation != anim_name:
 						animated_sprite3.play(anim_name)
 					switch_animation(3)
 				else:
+					bullet_dir = check_direction()
 					var anim_name = "SRun Shooting Rect" if gun_type == "Small" else "BRun Shooting Rect"
 					if animated_sprite2.animation != anim_name:
 						animated_sprite2.play(anim_name)
@@ -379,33 +382,23 @@ func shoot_bullet() -> void:
 	var bullet_scene_to_spawn = ammo_scenes[current_ammo_type]
 	var bullet = bullet_scene_to_spawn.instantiate() as Area2D
 	
-	#Comprobamos si el jugador está apuntando hacia arriba
-	var is_aiming_up = Input.is_action_pressed("ui_up")
-	
 	if bullet.has_method("set_shooter"):
 		bullet.set_shooter(self)
 		
 	if bullet.has_method("set_mask"):
 		bullet.set_mask(3) 
 	
-	if "direction" in bullet:
-		# Si apuntamos arriba, la bala normal sale hacia arriba, pero la de mortero no.
-		if is_aiming_up and AmmoType.NORMAL:
-			print("PASO COASDOASMD")
-			bullet.direction = Vector2.UP
+	if bullet.has_method("set_direction"):
+		if (current_ammo_type == AmmoType.MORTAR and bullet_dir == Vector2.UP and bullet.has_method("set_aim_state")):
+			bullet.set_aim_state(true)
+			bullet.set_direction(check_direction())
 		else:
-			bullet.direction = bullet_dir # Dirección horizontal normal
-	bullet.global_position = global_position + bullet_offset
-	
-	# Si es una bala de mortero Y estamos apuntando arriba, activamos su bandera
-	if "is_aimed_up" in bullet and is_aiming_up:
-		bullet.is_aimed_up = true
-	
+			bullet.set_direction(bullet_dir)
+	bullet.global_position = global_position + bullet_offset   
 	get_tree().current_scene.add_child(bullet)
 
 func set_ammo_type(new_type: AmmoType) -> void:
 	current_ammo_type = new_type
-	print("Munición cambiada a: ", AmmoType.keys()[new_type]) # Un print para depurar
 
 func ignore_platform_collision() -> void:
 	collision_shape.disabled = true
@@ -463,6 +456,12 @@ func disable_player_collision() -> void:
 func _on_body_entered(body) -> void:
 	if body.is_in_group("Enemy") and body.is_alive:
 		take_damage()
+
+func check_direction()-> Vector2:
+	if (player_dir == "LEFT"):
+		return Vector2.LEFT
+	else:
+		return Vector2.RIGHT
 
 
 func _on_dash_duration_timer_timeout() -> void:

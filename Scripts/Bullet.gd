@@ -42,3 +42,6 @@ func set_mask(number: int) -> void:
 
 func set_shooter(_shooter: Node) -> void:
 	shooter = _shooter
+
+func set_direction(_direction: Vector2) -> void:
+	direction = _direction
