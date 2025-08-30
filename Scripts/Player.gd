@@ -13,8 +13,8 @@ enum State {
 
 enum AmmoType {
 	NORMAL,
-	MORTAR
-	# Aquí añadiremos más tipos en el futuro (ej. RICOCHET)
+	MORTAR,
+	PIERCING
 }
 
 var state: State = State.IDLE
@@ -66,12 +66,13 @@ var lives: int = 5
 
 var ammo_scenes: Dictionary = {
 	AmmoType.NORMAL: preload("res://Prefabs/Bullet.tscn"),
-	AmmoType.MORTAR: preload("res://Prefabs/MortarBullet.tscn")
+	AmmoType.MORTAR: preload("res://Prefabs/MortarBullet.tscn"),
+	AmmoType.PIERCING: preload("res://Prefabs/PiercingBullet.tscn")
 }
 var current_ammo_type: AmmoType = AmmoType.NORMAL
 
 var bullet_dir: Vector2 = Vector2.RIGHT
-var bullet_offset: Vector2
+var bullet_offset: Vector2 = Vector2(32, -9)
 var gun_type: String ="Small"
 var change_gun_type: bool = false
 var hurt_jump_force: float = -200
@@ -81,6 +82,23 @@ var is_stunned: bool = false
 var just_double_jumped: bool = false
 var double_jump_enabled: bool = false
 var can_dash = true
+
+# En Player.gd, en la sección de variables
+
+const OFFSET_IDLE_RIGHT: Vector2 = Vector2(40, -9)
+const OFFSET_RUN_RIGHT: Vector2 = Vector2(45, -9)  # Ligeramente más adelante
+const OFFSET_JUMP_RIGHT: Vector2 = Vector2(40, -5)
+const OFFSET_FALL_RIGHT: Vector2 = Vector2(40, -25)
+const OFFSET_UP_RIGHT: Vector2 = Vector2(13.5, -30)
+const OFFSET_RUNUP_RIGHT: Vector2 = Vector2(22, -30)
+
+# Creamos las versiones para la izquierda simplemente invirtiendo el valor X
+const OFFSET_IDLE_LEFT: Vector2 = Vector2(-20, OFFSET_IDLE_RIGHT.y)
+const OFFSET_RUN_LEFT: Vector2 = Vector2(-25, OFFSET_RUN_RIGHT.y)
+const OFFSET_JUMP_LEFT: Vector2 = Vector2(-20, OFFSET_JUMP_RIGHT.y)
+const OFFSET_FALL_LEFT: Vector2 = Vector2(-20, OFFSET_JUMP_RIGHT.y)
+const OFFSET_UP_LEFT: Vector2 = Vector2(6.5, OFFSET_UP_RIGHT.y)
+const OFFSET_RUNUP_LEFT: Vector2 = Vector2(0, OFFSET_UP_RIGHT.y)
 
 func _ready() -> void:
 	current_level = SceneManager.current_level
@@ -237,7 +255,6 @@ func update_sprite_direction() -> void:
 			s.flip_h = true
 		
 		player_dir = "LEFT"
-		bullet_offset = Vector2(-15, -9)
 		bullet_dir = Vector2.LEFT
 		raycast_wall.position.x = offset
 		raycast_wall.target_position.x = -offset
@@ -251,7 +268,6 @@ func update_sprite_direction() -> void:
 			s.flip_h = false
 		
 		player_dir = "RIGHT"
-		bullet_offset = Vector2(35, -9)
 		bullet_dir = Vector2.RIGHT
 		raycast_wall.position.x = offset
 		raycast_wall.target_position.x = offset
@@ -267,12 +283,14 @@ func update_animation() -> void:
 			if Input.is_action_pressed("Shoot"):
 				if Input.is_action_pressed("ui_up"):
 					bullet_dir = Vector2.UP
+					bullet_offset = OFFSET_UP_RIGHT if player_dir == "RIGHT" else OFFSET_UP_LEFT
 					var anim_name = "SIdle Shooting Up" if gun_type == "Small" else "BIdle Shooting Up"
 					if animated_sprite3.animation != anim_name:
 						animated_sprite3.play(anim_name)
 					switch_animation(3)
 				else:
 					bullet_dir = check_direction()
+					bullet_offset = OFFSET_IDLE_RIGHT if player_dir == "RIGHT" else OFFSET_IDLE_LEFT
 					var anim_name = "SIdle Shooting Rect" if gun_type == "Small" else "BIdle Shooting Rect"
 					if animated_sprite2.animation != anim_name:
 						animated_sprite2.play(anim_name)
@@ -288,12 +306,14 @@ func update_animation() -> void:
 			if Input.is_action_pressed("Shoot"):
 				if Input.is_action_pressed("ui_up"):
 					bullet_dir = Vector2.UP
+					bullet_offset = OFFSET_RUNUP_RIGHT if player_dir == "RIGHT" else OFFSET_RUNUP_LEFT
 					var anim_name = "SRun Shooting Up" if gun_type == "Small" else "BRun Shooting Up"
 					if animated_sprite3.animation != anim_name:
 						animated_sprite3.play(anim_name)
 					switch_animation(3)
 				else:
 					bullet_dir = check_direction()
+					bullet_offset = OFFSET_RUN_RIGHT if player_dir == "RIGHT" else OFFSET_RUN_LEFT
 					var anim_name = "SRun Shooting Rect" if gun_type == "Small" else "BRun Shooting Rect"
 					if animated_sprite2.animation != anim_name:
 						animated_sprite2.play(anim_name)
@@ -306,16 +326,19 @@ func update_animation() -> void:
 
 		State.JUMP:
 			if just_double_jumped:
+				bullet_offset = OFFSET_JUMP_RIGHT if player_dir == "RIGHT" else OFFSET_JUMP_LEFT
 				if animated_sprite.animation != "Double_Jump":
 					animated_sprite.play("Double_Jump")
 				just_double_jumped = false
 			else:
+				bullet_offset = OFFSET_JUMP_RIGHT if player_dir == "RIGHT" else OFFSET_JUMP_LEFT
 				var anim_name = "SJump" if gun_type == "Small" else "BJump"
 				if animated_sprite.animation != "Double_Jump" and animated_sprite.animation != anim_name:
 					animated_sprite.play(anim_name)
 			switch_animation(1)
 
 		State.FALL:
+			bullet_offset = OFFSET_JUMP_RIGHT if player_dir == "RIGHT" else OFFSET_JUMP_LEFT
 			var anim_name = "SFall" if gun_type == "Small" else "BFall"
 			if animated_sprite.animation != anim_name:
 				animated_sprite.play(anim_name)
@@ -394,7 +417,8 @@ func shoot_bullet() -> void:
 			bullet.set_direction(check_direction())
 		else:
 			bullet.set_direction(bullet_dir)
-	bullet.global_position = global_position + bullet_offset   
+	# Asignamos los valores que ya calculamos en update_animation
+	bullet.global_position = global_position + bullet_offset
 	get_tree().current_scene.add_child(bullet)
 
 func set_ammo_type(new_type: AmmoType) -> void:
