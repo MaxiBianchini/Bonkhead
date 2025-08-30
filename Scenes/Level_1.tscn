@@ -908,6 +908,10 @@ position = Vector2(2057, 1335)
 [node name="AmmoPickup" parent="." instance=ExtResource("46_d1n4i")]
 position = Vector2(237, 719)
 
+[node name="AmmoPickup2" parent="." instance=ExtResource("46_d1n4i")]
+position = Vector2(445, 720)
+grants_ammo = 2
+
 [editable path="Enemies/Enemy_2"]
 [editable path="Enemies/Enemy_6"]
 [editable path="Enemies/Enemy_10"]
