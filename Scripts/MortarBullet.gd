@@ -10,7 +10,7 @@ extends Area2D
 @export var aim_up_kick: float = -400.0         # Impulso vertical AUMENTADO al apuntar arriba
 
 @export var time: float = 1.3
-@onready var life_timer: Timer = $LifetimeTimer
+@onready var life_timer: Timer = $Timer
 
 # --- Variables Internas ---
 var velocity: Vector2 = Vector2.ZERO
