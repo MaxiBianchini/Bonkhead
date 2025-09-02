@@ -55,11 +55,16 @@ func _physics_process(_delta: float) -> void:
 
 func shoot_bullet() -> void:
 	var bullet = bullet_scene.instantiate() as Area2D
-	bullet.mask = 2
-	bullet.shooter = self
-	
+	if bullet.has_method("set_shooter"):
+		bullet.set_shooter(self)
+		
+	if bullet.has_method("set_mask"):
+		bullet.set_mask(2) 
+	 
+	if bullet.has_method("set_direction"):
+		bullet.set_direction( bullet_dir)
 	bullet.position = position + bullet_offset
-	bullet.direction = bullet_dir
+	
 	get_tree().current_scene.add_child(bullet)
 
 func take_damage() -> void:
