@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=4 uid="uid://mwhbup6tnnqo"]
+[gd_scene load_steps=60 format=4 uid="uid://mwhbup6tnnqo"]
 
 [ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://TileSets/TileSets.tres" id="1_c1dvb"]
 [ext_resource type="PackedScene" uid="uid://cdqlmgh2vxout" path="res://Prefabs/Player.tscn" id="2_72p7r"]
@@ -57,352 +57,13 @@ ease = 2
 resource_local_to_scene = true
 size = Vector2(296, 43)
 
-[sub_resource type="GDScript" id="GDScript_8wlb5"]
-script/source = "extends CharacterBody2D
-
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var anim_player: AnimationPlayer = $AnimationPlayer
-@onready var area2d: Area2D = $Area2D
-
-@onready var player = get_tree().current_scene.get_node_or_null(\"%Player\") # Encuentra al jugador en la escena
-
-var bullet_scene: PackedScene = preload(\"res://Prefabs/Bullet.tscn\")
-
-var detection_width: float = 10000.0
-var detection_height: float = 180.0
-var can_shoot: bool = false
-var shoot_now: bool = true
-
-var bullet_dir: Vector2 = Vector2.RIGHT
-var bullet_offset: Vector2 = Vector2(-15, 5)
-
-var lives: int = 3
-var is_alive: bool = true
-
-signal add_points
-var points = 25
-
-func _ready() -> void:
-	animated_sprite.play(\"Idle\")
-	
-	# Conectar señales
-	animated_sprite.animation_finished.connect(_on_animation_finished)
-	
-	var sprite = $AnimatedSprite2D 
-	sprite.material = sprite.material.duplicate()
-
-
-func _physics_process(_delta: float) -> void:
-	if not (player and is_alive):
-		return
-	
-	# Creamos un rectángulo centrado en la posición del enemigo con el tamaño deseado
-	var detection_rect = Rect2(
-		position - Vector2(detection_width * 0.5, detection_height * 0.5),
-		Vector2(detection_width, detection_height)
-	)
-	
-	# Comprobamos si el jugador está dentro del área de detección
-	if detection_rect.has_point(player.position):
-		# Ajustamos flip y offsets según la posición del jugador
-		if player.position.x < position.x:
-			animated_sprite.flip_h = true
-			animated_sprite.position = Vector2(-8, 0)
-			bullet_offset = Vector2(-25, 5)
-			bullet_dir = Vector2.LEFT
-		else:
-			animated_sprite.flip_h = false
-			animated_sprite.position = Vector2(7, 0)
-			bullet_offset = Vector2(25, 5)
-			bullet_dir = Vector2.RIGHT
-	
-	# Si está listo para disparar, realizamos el disparo
-	if can_shoot and player.is_alive:
-		if shoot_now:
-			shoot_bullet()
-			shoot_now = false
-			await get_tree().create_timer(0.75).timeout  # Pausa de 3 segundos antes de volver a la normalidad
-			shoot_now = true
-
-
-func shoot_bullet() -> void:
-	var bullet = bullet_scene.instantiate() as Area2D
-	bullet.mask = 2
-	# Le indicamos quién la disparó:
-	bullet.shooter = self
-	
-	bullet.change_bullet_speed(175)
-	bullet.change_bullet_acceleration(150)  
-	bullet.change_bullet_lifetime(2.5)  
-	
-	bullet.position = position + bullet_offset
-	bullet.direction = bullet_dir  # Asegúrate de que la bala tenga una variable 'direction'
-	get_tree().current_scene.add_child(bullet)
-
-
-func take_damage() -> void:
-	lives -= 1
-	if lives <= 0:
-			is_alive = false              # Marca al enemigo como muerto
-			animated_sprite.play(\"Death\") # Reproduce la animación de muerte
-			await get_tree().create_timer(0.75).timeout
-			queue_free()
-	elif is_alive:
-		anim_player.play(\"Hurt\")
-		emit_signal(\"add_points\", points) # Emite señal para agregar puntos
-	
-
-func _on_body_entered(body: Node) -> void:
-	if body.is_in_group(\"Player\") and body.is_alive:
-		animated_sprite.play(\"Atack\")
-		can_shoot = true
-
-
-func _on_body_exited(body: Node) -> void:
-	if body.is_in_group(\"Player\"):
-		animated_sprite.play(\"Idle\")
-		can_shoot = false
-
-
-func _on_animation_finished() -> void:
-	pass
-	#if animated_sprite.animation == \"Death\":
-		#queue_free()
-"
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yyitx"]
 resource_local_to_scene = true
 size = Vector2(571, 65)
 
-[sub_resource type="GDScript" id="GDScript_ewtky"]
-script/source = "extends CharacterBody2D
-
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var anim_player: AnimationPlayer = $AnimationPlayer
-@onready var area2d: Area2D = $Area2D
-
-@onready var player = get_tree().current_scene.get_node_or_null(\"%Player\") # Encuentra al jugador en la escena
-
-var bullet_scene: PackedScene = preload(\"res://Prefabs/Bullet.tscn\")
-
-var detection_width: float = 10000.0
-var detection_height: float = 180.0
-var can_shoot: bool = false
-var shoot_now: bool = true
-
-var bullet_dir: Vector2 = Vector2.RIGHT
-var bullet_offset: Vector2 = Vector2(-15, 5)
-
-var lives: int = 3
-var is_alive: bool = true
-
-signal add_points
-var points = 25
-
-func _ready() -> void:
-	animated_sprite.play(\"Idle\")
-	
-	# Conectar señales
-	animated_sprite.animation_finished.connect(_on_animation_finished)
-	
-	var sprite = $AnimatedSprite2D 
-	sprite.material = sprite.material.duplicate()
-
-
-func _physics_process(_delta: float) -> void:
-	if not (player and is_alive):
-		return
-	
-	# Creamos un rectángulo centrado en la posición del enemigo con el tamaño deseado
-	var detection_rect = Rect2(
-		position - Vector2(detection_width * 0.5, detection_height * 0.5),
-		Vector2(detection_width, detection_height)
-	)
-	
-	# Comprobamos si el jugador está dentro del área de detección
-	if detection_rect.has_point(player.position):
-		# Ajustamos flip y offsets según la posición del jugador
-		if player.position.x < position.x:
-			animated_sprite.flip_h = true
-			animated_sprite.position = Vector2(-8, 0)
-			bullet_offset = Vector2(-25, 5)
-			bullet_dir = Vector2.LEFT
-		else:
-			animated_sprite.flip_h = false
-			animated_sprite.position = Vector2(7, 0)
-			bullet_offset = Vector2(25, 5)
-			bullet_dir = Vector2.RIGHT
-	
-	# Si está listo para disparar, realizamos el disparo
-	if can_shoot and player.is_alive:
-		if shoot_now:
-			shoot_bullet()
-			shoot_now = false
-			await get_tree().create_timer(0.75).timeout  # Pausa de 3 segundos antes de volver a la normalidad
-			shoot_now = true
-
-
-func shoot_bullet() -> void:
-	var bullet = bullet_scene.instantiate() as Area2D
-	bullet.mask = 2
-	# Le indicamos quién la disparó:
-	bullet.shooter = self
-	
-	bullet.change_bullet_speed(200)
-	bullet.change_bullet_acceleration(250)  
-	bullet.change_bullet_lifetime(2)  
-	
-	bullet.position = position + bullet_offset
-	bullet.direction = bullet_dir  # Asegúrate de que la bala tenga una variable 'direction'
-	get_tree().current_scene.add_child(bullet)
-
-
-func take_damage() -> void:
-	lives -= 1
-	if lives <= 0:
-			is_alive = false              # Marca al enemigo como muerto
-			animated_sprite.play(\"Death\") # Reproduce la animación de muerte
-			await get_tree().create_timer(0.75).timeout
-			queue_free()
-	elif is_alive:
-		anim_player.play(\"Hurt\")
-		emit_signal(\"add_points\", points) # Emite señal para agregar puntos
-	
-
-func _on_body_entered(body: Node) -> void:
-	if body.is_in_group(\"Player\") and body.is_alive:
-		animated_sprite.play(\"Atack\")
-		can_shoot = true
-
-
-func _on_body_exited(body: Node) -> void:
-	if body.is_in_group(\"Player\"):
-		animated_sprite.play(\"Idle\")
-		can_shoot = false
-
-
-func _on_animation_finished() -> void:
-	pass
-	#if animated_sprite.animation == \"Death\":
-		#queue_free()
-"
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ux2mv"]
 resource_local_to_scene = true
 size = Vector2(416, 54)
-
-[sub_resource type="GDScript" id="GDScript_fdbj4"]
-script/source = "extends CharacterBody2D
-
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var anim_player: AnimationPlayer = $AnimationPlayer
-@onready var area2d: Area2D = $Area2D
-
-@onready var player = get_tree().current_scene.get_node_or_null(\"%Player\") # Encuentra al jugador en la escena
-
-var bullet_scene: PackedScene = preload(\"res://Prefabs/Bullet.tscn\")
-
-var detection_width: float = 10000.0
-var detection_height: float = 180.0
-var can_shoot: bool = false
-var shoot_now: bool = true
-
-var bullet_dir: Vector2 = Vector2.RIGHT
-var bullet_offset: Vector2 = Vector2(-15, 5)
-
-var lives: int = 3
-var is_alive: bool = true
-
-signal add_points
-var points = 25
-
-func _ready() -> void:
-	animated_sprite.play(\"Idle\")
-	
-	# Conectar señales
-	animated_sprite.animation_finished.connect(_on_animation_finished)
-	
-	var sprite = $AnimatedSprite2D 
-	sprite.material = sprite.material.duplicate()
-
-
-func _physics_process(_delta: float) -> void:
-	if not (player and is_alive):
-		return
-	
-	# Creamos un rectángulo centrado en la posición del enemigo con el tamaño deseado
-	var detection_rect = Rect2(
-		position - Vector2(detection_width * 0.5, detection_height * 0.5),
-		Vector2(detection_width, detection_height)
-	)
-	
-	# Comprobamos si el jugador está dentro del área de detección
-	if detection_rect.has_point(player.position):
-		# Ajustamos flip y offsets según la posición del jugador
-		if player.position.x < position.x:
-			animated_sprite.flip_h = true
-			animated_sprite.position = Vector2(-8, 0)
-			bullet_offset = Vector2(-25, 5)
-			bullet_dir = Vector2.LEFT
-		else:
-			animated_sprite.flip_h = false
-			animated_sprite.position = Vector2(7, 0)
-			bullet_offset = Vector2(25, 5)
-			bullet_dir = Vector2.RIGHT
-	
-	# Si está listo para disparar, realizamos el disparo
-	if can_shoot and player.is_alive:
-		if shoot_now:
-			shoot_bullet()
-			shoot_now = false
-			await get_tree().create_timer(0.75).timeout  # Pausa de 3 segundos antes de volver a la normalidad
-			shoot_now = true
-
-
-func shoot_bullet() -> void:
-	var bullet = bullet_scene.instantiate() as Area2D
-	bullet.mask = 2
-	# Le indicamos quién la disparó:
-	bullet.shooter = self
-	
-	bullet.change_bullet_speed(200)
-	bullet.change_bullet_acceleration(250)  
-	bullet.change_bullet_lifetime(2)  
-	
-	bullet.position = position + bullet_offset
-	bullet.direction = bullet_dir  # Asegúrate de que la bala tenga una variable 'direction'
-	get_tree().current_scene.add_child(bullet)
-
-
-func take_damage() -> void:
-	lives -= 1
-	if lives <= 0:
-			is_alive = false              # Marca al enemigo como muerto
-			animated_sprite.play(\"Death\") # Reproduce la animación de muerte
-			await get_tree().create_timer(0.75).timeout
-			queue_free()
-	elif is_alive:
-		anim_player.play(\"Hurt\")
-		emit_signal(\"add_points\", points) # Emite señal para agregar puntos
-	
-
-func _on_body_entered(body: Node) -> void:
-	if body.is_in_group(\"Player\") and body.is_alive:
-		animated_sprite.play(\"Atack\")
-		can_shoot = true
-
-
-func _on_body_exited(body: Node) -> void:
-	if body.is_in_group(\"Player\"):
-		animated_sprite.play(\"Idle\")
-		can_shoot = false
-
-
-func _on_animation_finished() -> void:
-	pass
-	#if animated_sprite.animation == \"Death\":
-		#queue_free()
-"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ox0pl"]
 resource_local_to_scene = true
@@ -420,7 +81,13 @@ size = Vector2(202, 35)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qe5hx"]
 resource_local_to_scene = true
-size = Vector2(426, 297)
+size = Vector2(397, 297)
+
+[sub_resource type="Resource" id="Resource_atmdf"]
+script = ExtResource("34_ww1bt")
+duration = 1.0
+transition = 0
+ease = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fhjai"]
 resource_local_to_scene = true
@@ -428,7 +95,13 @@ size = Vector2(716, 409)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kd73b"]
 resource_local_to_scene = true
-size = Vector2(116, 94)
+size = Vector2(244, 94)
+
+[sub_resource type="Resource" id="Resource_0iu3r"]
+script = ExtResource("34_ww1bt")
+duration = 1.0
+transition = 0
+ease = 2
 
 [node name="Level_1" type="Node2D"]
 process_mode = 3
@@ -675,16 +348,16 @@ texture = ExtResource("31_bvkrs")
 unique_name_in_owner = true
 process_mode = 1
 z_index = 1
-position = Vector2(59, 720)
+position = Vector2(1268, 1665)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
-position = Vector2(198.333, 720)
+position = Vector2(1268, 1630)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
-limit_right = 2150
-limit_bottom = 1750
+limit_right = 8900
+limit_bottom = 2810
 editor_draw_limits = true
 
 [node name="PhantomCameraHost" type="Node" parent="Camera2D"]
@@ -695,7 +368,7 @@ metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(198.333, 720)
+position = Vector2(1268, 1630)
 script = ExtResource("33_dtfje")
 priority = 1
 follow_mode = 2
@@ -740,7 +413,6 @@ position = Vector2(945, 1072)
 
 [node name="Enemy_6" parent="Enemies" instance=ExtResource("17_t4et2")]
 position = Vector2(1153, 1449)
-script = SubResource("GDScript_8wlb5")
 
 [node name="CollisionShape2D" parent="Enemies/Enemy_6/Area2D" index="0"]
 position = Vector2(-258.5, 9.5)
@@ -751,7 +423,6 @@ position = Vector2(1611, 1680)
 
 [node name="Enemy_10" parent="Enemies" instance=ExtResource("17_t4et2")]
 position = Vector2(1439, 1553)
-script = SubResource("GDScript_ewtky")
 
 [node name="CollisionShape2D" parent="Enemies/Enemy_10/Area2D" index="0"]
 position = Vector2(181, 4)
@@ -759,7 +430,6 @@ shape = SubResource("RectangleShape2D_ux2mv")
 
 [node name="Enemy_11" parent="Enemies" instance=ExtResource("17_t4et2")]
 position = Vector2(1970, 1425)
-script = SubResource("GDScript_fdbj4")
 
 [node name="CollisionShape2D" parent="Enemies/Enemy_11/Area2D" index="0"]
 position = Vector2(-95.5, 2)
@@ -847,39 +517,36 @@ text = "Press Down + Jump to drop through platforms"
 
 [node name="Phantom_Area" parent="Phantom_Areas" instance=ExtResource("36_qaamm")]
 position = Vector2(1078, 1536)
-script = null
 
 [node name="CollisionShape2D" parent="Phantom_Areas/Phantom_Area" index="0"]
-position = Vector2(-98, 14.5)
+position = Vector2(-83.5, 14.5)
 shape = SubResource("RectangleShape2D_qe5hx")
 
 [node name="PhantomCamera2D" parent="Phantom_Areas/Phantom_Area" index="1"]
-position = Vector2(-202, 0)
-script = null
+zoom = Vector2(3, 3)
+tween_resource = SubResource("Resource_atmdf")
 
 [node name="Phantom_Area2" parent="Phantom_Areas" instance=ExtResource("36_qaamm")]
-position = Vector2(1674, 1572)
-script = null
+position = Vector2(1735, 1491)
 
 [node name="CollisionShape2D" parent="Phantom_Areas/Phantom_Area2" index="0"]
-position = Vector2(88, -88.5)
+position = Vector2(17, 10)
 shape = SubResource("RectangleShape2D_fhjai")
 
 [node name="PhantomCamera2D" parent="Phantom_Areas/Phantom_Area2" index="1"]
-position = Vector2(75, -80)
-script = null
+zoom = Vector2(2.3, 2.3)
 
 [node name="Phantom_Area3" parent="Phantom_Areas" instance=ExtResource("36_qaamm")]
 position = Vector2(1984, 1337)
-script = null
 
 [node name="CollisionShape2D" parent="Phantom_Areas/Phantom_Area3" index="0"]
-position = Vector2(71, -8)
+position = Vector2(7, -8)
 shape = SubResource("RectangleShape2D_kd73b")
 
 [node name="PhantomCamera2D" parent="Phantom_Areas/Phantom_Area3" index="1"]
 position = Vector2(-25.73, 0)
-script = null
+zoom = Vector2(5, 5)
+tween_resource = SubResource("Resource_0iu3r")
 
 [node name="Platforms" type="Node2D" parent="."]
 process_mode = 3
