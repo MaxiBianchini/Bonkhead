@@ -7,7 +7,7 @@ var time_label: Label = null
 var points_label: Label = null
 var lives_sprites: Array = []
 var packs_sprites: Array = []
-var doorway: Node = null
+var comic_page: Node = null
 var player: Node = null
 var gui: Node = null
 
@@ -53,10 +53,10 @@ func initialize_scene() -> void:
 			for i in range(len(packs_sprites)):
 				packs_sprites[i].visible = i < life_packs
 		
-		if current_scene.has_node("Doorway"):
-			doorway = current_scene.get_node("Doorway")
-			if doorway.has_signal("winLevel") and not doorway.winLevel.is_connected(pass_to_nextlevel):
-				doorway.winLevel.connect(pass_to_nextlevel)
+		if current_scene.has_node("Page_Comic"):
+			comic_page = current_scene.get_node("Page_Comic")
+			if comic_page.has_signal("winLevel") and not comic_page.winLevel.is_connected(pass_to_nextlevel):
+				comic_page.winLevel.connect(pass_to_nextlevel)
 		
 		if current_scene.has_node("Player"):
 			player = current_scene.get_node("Player")
