@@ -117,7 +117,7 @@ transition = 0
 ease = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_asqm0"]
-size = Vector2(181, 35)
+size = Vector2(260, 35)
 
 [node name="Level_2" type="Node2D"]
 metadata/_edit_horizontal_guides_ = [1795.0]
@@ -502,16 +502,16 @@ texture = ExtResource("31_bp6cg")
 [node name="Player" parent="." instance=ExtResource("20_j1y0e")]
 unique_name_in_owner = true
 z_index = 1
-position = Vector2(8102, 1191)
+position = Vector2(18, 720)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
-position = Vector2(8102, 1191)
+position = Vector2(198.333, 720)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
-limit_right = 8900
-limit_bottom = 2810
+limit_right = 2150
+limit_bottom = 1750
 editor_draw_limits = true
 metadata/_edit_lock_ = true
 
@@ -523,7 +523,7 @@ metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(8102, 1191)
+position = Vector2(198.333, 720)
 script = ExtResource("53_v40af")
 priority = 1
 follow_mode = 2
@@ -883,7 +883,7 @@ shape = SubResource("RectangleShape2D_ssyor")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(8102, 1191)
+position = Vector2(18, 720)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -907,11 +907,33 @@ shape = SubResource("RectangleShape2D_bdg83")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area3" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(8102, 1191)
+position = Vector2(18, 720)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
 tween_resource = SubResource("Resource_n4ncl")
+
+[node name="Signpost2" parent="." instance=ExtResource("59_u5cqn")]
+z_index = 2
+position = Vector2(188, 711)
+
+[node name="CollisionShape2D" parent="Signpost2" index="0"]
+position = Vector2(-43, 1)
+shape = SubResource("RectangleShape2D_asqm0")
+
+[node name="Sprite2D" parent="Signpost2" index="1"]
+position = Vector2(-34, -46)
+scale = Vector2(0.941936, 1.26829)
+
+[node name="Label" parent="Signpost2" index="2"]
+offset_left = -104.0
+offset_top = -63.0
+offset_right = 66.0001
+offset_bottom = -27.0
+scale = Vector2(0.870189, 0.972294)
+text = "You collected a 
+lost page! New 
+ability unlocked: Double Jump"
 
 [node name="Signpost" parent="." instance=ExtResource("59_u5cqn")]
 z_index = 2
@@ -968,5 +990,6 @@ texture = ExtResource("55_m2s7e")
 [editable path="PhantomAreas/Phantom_Area"]
 [editable path="PhantomAreas/Phantom_Area2"]
 [editable path="PhantomAreas/Phantom_Area3"]
+[editable path="Signpost2"]
 [editable path="Signpost"]
 [editable path="Page_Comic"]

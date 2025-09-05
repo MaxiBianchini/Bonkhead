@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://d1i3yjdbq4dmk"]
+[gd_scene load_steps=5 format=3 uid="uid://d1i3yjdbq4dmk"]
 
 [ext_resource type="Script" uid="uid://cod0gba7gjetk" path="res://Scripts/PageComic.gd" id="1_lv7gw"]
 [ext_resource type="Texture2D" uid="uid://dlh6e0oy21ncc" path="res://Graphics/Comic Pages/ComicPage1.png" id="2_gquq5"]
+[ext_resource type="AudioStream" uid="uid://c5sy5ve5lmr4d" path="res://SFX/PowerUps/pick_note03..mp3" id="3_gquq5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sd0t6"]
 size = Vector2(102, 98)
@@ -16,5 +17,9 @@ texture = ExtResource("2_gquq5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_sd0t6")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_gquq5")
+bus = &"SFX"
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
