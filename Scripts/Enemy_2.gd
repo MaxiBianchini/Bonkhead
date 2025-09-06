@@ -25,6 +25,7 @@ var points = 25
 func _ready() -> void:
 	animated_sprite.material = animated_sprite.material.duplicate()
 	animated_sprite.play("Idle")
+	$AudioStream_Idle.play()
 
 func _physics_process(_delta: float) -> void:
 	if not (player and is_alive):
@@ -55,6 +56,7 @@ func _physics_process(_delta: float) -> void:
 
 func shoot_bullet() -> void:
 	var bullet = bullet_scene.instantiate() as Area2D
+	$AudioStream_Shoot.play()
 	if bullet.has_method("set_shooter"):
 		bullet.set_shooter(self)
 		
@@ -76,7 +78,9 @@ func take_damage() -> void:
 	if lives <= 0:
 		is_alive = false
 		animated_sprite.play("Death")
+		$AudioStream_Death.play()
 		await animated_sprite.animation_finished
+		
 		queue_free()
 	else:
 		animation_player.play("Hurt")
@@ -96,6 +100,7 @@ func _on_body_entered(body: Node) -> void:
 func _on_body_exited(body: Node) -> void:
 	if body.is_in_group("Player") and is_alive:
 		animated_sprite.play("Idle")
+		$AudioStream_Idle.play()
 		enemy_is_near = false
 
 func _on_shoot_timer_timeout() -> void:

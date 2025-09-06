@@ -1,10 +1,13 @@
-[gd_scene load_steps=25 format=3 uid="uid://ce5qnuwutjn77"]
+[gd_scene load_steps=28 format=3 uid="uid://ce5qnuwutjn77"]
 
 [ext_resource type="Script" uid="uid://dd0nbuyom4x1g" path="res://Scripts/Enemy_2.gd" id="1_4mohw"]
 [ext_resource type="Shader" uid="uid://3eyyqpjc4awp" path="res://Shaders/Hurts_effect.tres" id="2_3l22b"]
 [ext_resource type="Texture2D" uid="uid://blpde0ijbk78v" path="res://Graphics/Enemy 2/Attack.png" id="2_r2l08"]
 [ext_resource type="Texture2D" uid="uid://d0ifagidhjr8d" path="res://Graphics/Enemy 2/Death.png" id="3_iyddk"]
 [ext_resource type="Texture2D" uid="uid://oc63an2ej45a" path="res://Graphics/Enemy 2/Idle.png" id="4_x1jtm"]
+[ext_resource type="AudioStream" uid="uid://b2vcusd0lymky" path="res://SFX/Enemies/Idle-Walk/Enemy_2.wav" id="6_q05sp"]
+[ext_resource type="AudioStream" uid="uid://lskd77nd5f6t" path="res://SFX/Enemies/Death/Enemy_2.wav" id="6_vvsgj"]
+[ext_resource type="AudioStream" uid="uid://c81v87cica5yg" path="res://SFX/Enemies/Shoot/Enemy_2.wav" id="8_q05sp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_b8mix"]
 shader = ExtResource("2_3l22b")
@@ -190,6 +193,19 @@ libraries = {
 wait_time = 0.75
 one_shot = true
 autostart = true
+
+[node name="AudioStream_Idle" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_q05sp")
+max_distance = 450.0
+attenuation = 0.840896
+
+[node name="AudioStream_Death" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_vvsgj")
+volume_db = -9.0
+bus = &"SFX"
+
+[node name="AudioStream_Shoot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_q05sp")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_body_exited"]
