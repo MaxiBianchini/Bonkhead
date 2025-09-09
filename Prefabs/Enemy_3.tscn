@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://cp6k1o6rfgevf"]
+[gd_scene load_steps=47 format=3 uid="uid://cp6k1o6rfgevf"]
 
 [ext_resource type="Script" uid="uid://dc0i8cnuwwsjs" path="res://Scripts/Enemy_3.gd" id="1_3nub3"]
 [ext_resource type="Texture2D" uid="uid://b74g7x87p8xwx" path="res://Graphics/Enemy 3/Death.png" id="1_wwflq"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://ci2ltketr4q06" path="res://Graphics/Enemy 3/Scan.png" id="3_44nhp"]
 [ext_resource type="Texture2D" uid="uid://bl2uk1i4ikm1n" path="res://Graphics/Enemy 3/Walk.png" id="4_g12fp"]
 [ext_resource type="Texture2D" uid="uid://beofh7aopy8ni" path="res://Graphics/Enemy 3/Walk_scan.png" id="5_k8d27"]
+[ext_resource type="AudioStream" uid="uid://b50b1g50wyik0" path="res://SFX/Enemies/Idle-Walk/Enemy_3.wav" id="8_fo7ot"]
+[ext_resource type="AudioStream" uid="uid://c14jhbmjmhoco" path="res://SFX/Enemies/Shoot/Enemy_3.wav" id="9_aikiv"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xixlf"]
 shader = ExtResource("2_ie02j")
@@ -327,6 +329,20 @@ libraries = {
 }
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="AudioStream_Walk" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_fo7ot")
+volume_db = -8.0
+max_distance = 300.0
+attenuation = 0.965936
+bus = &"SFX"
+
+[node name="AudioStream_Shoot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_aikiv")
+volume_db = -8.0
+bus = &"SFX"
+
+[node name="AudioStream_Death" type="AudioStreamPlayer2D" parent="."]
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_body_exited"]

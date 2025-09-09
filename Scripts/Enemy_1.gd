@@ -31,6 +31,7 @@ var can_shoot: bool = true
 func _ready() -> void:
 	animated_sprite.material = animated_sprite.material.duplicate()
 	animated_sprite.play("Walk")
+	$AudioStream_Walk.play()
 
 func _physics_process(delta) -> void:
 	if is_alive:
@@ -57,10 +58,12 @@ func _physics_process(delta) -> void:
 			animated_sprite.play("Shoot")
 			if can_shoot:
 				shoot_bullet()
+				$AudioStream_Shoot.play()
 				can_shoot = false
 				shoot_timer.start(0.75)
 		elif is_alive:
 			animated_sprite.play("Walk")
+			$AudioStream_Walk.play()
 			enemy_is_near = false
 
 func update_sprite_direction(is_facing_left: bool) -> void:
@@ -101,7 +104,8 @@ func take_damage() -> void:
 		is_alive = false
 		velocity.x = 0
 		animated_sprite.play("Death")
-		await animated_sprite.animation_finished
+		$AudioStream_Death.play()
+		await $AudioStream_Death.finished
 		queue_free()
 	else:
 		animation_player.play("Hurt")

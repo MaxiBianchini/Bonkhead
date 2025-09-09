@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://d0lv1t50yhwap"]
+[gd_scene load_steps=44 format=3 uid="uid://d0lv1t50yhwap"]
 
 [ext_resource type="Script" uid="uid://ddvjjllkxfhm2" path="res://Scripts/Enemy_1.gd" id="1_xnerr"]
 [ext_resource type="Shader" uid="uid://3eyyqpjc4awp" path="res://Shaders/Hurts_effect.tres" id="2_5735i"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://cl46eu0j0e5pq" path="res://Graphics/Enemy 1/Walk.png" id="3_3ngs0"]
 [ext_resource type="Texture2D" uid="uid://caf4brxk5767c" path="res://Graphics/Enemy 1/Dath.png" id="3_yvwoq"]
 [ext_resource type="Texture2D" uid="uid://cyu7tdsdwbt8o" path="res://Graphics/Enemy 1/Shoot.png" id="4_2u03s"]
+[ext_resource type="AudioStream" uid="uid://c0qftoktwgs65" path="res://SFX/Enemies/Idle-Walk/Enemy_1.wav" id="8_n052a"]
+[ext_resource type="AudioStream" uid="uid://decaqeop1nc72" path="res://SFX/Enemies/Death/Enemy_1 (mp3cut.net).wav" id="9_iijd8"]
+[ext_resource type="AudioStream" uid="uid://bp01per3jpam6" path="res://SFX/Enemies/Shoot/Enemy_1.wav" id="10_6285k"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eln1y"]
 shader = ExtResource("2_5735i")
@@ -274,7 +277,7 @@ script = ExtResource("1_xnerr")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_eln1y")
 sprite_frames = SubResource("SpriteFrames_d4cnq")
-animation = &"Walk"
+animation = &"Shoot"
 offset = Vector2(10, -7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -302,6 +305,20 @@ libraries = {
 wait_time = 0.75
 one_shot = true
 autostart = true
+
+[node name="AudioStream_Walk" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_n052a")
+volume_db = 2.0
+bus = &"SFX"
+
+[node name="AudioStream_Death" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_iijd8")
+bus = &"SFX"
+
+[node name="AudioStream_Shoot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_6285k")
+volume_db = -10.0
+bus = &"SFX"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_body_exited"]
