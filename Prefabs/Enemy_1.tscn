@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://caf4brxk5767c" path="res://Graphics/Enemy 1/Dath.png" id="3_yvwoq"]
 [ext_resource type="Texture2D" uid="uid://cyu7tdsdwbt8o" path="res://Graphics/Enemy 1/Shoot.png" id="4_2u03s"]
 [ext_resource type="AudioStream" uid="uid://c0qftoktwgs65" path="res://SFX/Enemies/Idle-Walk/Enemy_1.wav" id="8_n052a"]
-[ext_resource type="AudioStream" uid="uid://decaqeop1nc72" path="res://SFX/Enemies/Death/Enemy_1 (mp3cut.net).wav" id="9_iijd8"]
+[ext_resource type="AudioStream" uid="uid://yqwuntwwn3h2" path="res://SFX/Enemies/Death/Enemy_1.wav" id="9_iijd8"]
 [ext_resource type="AudioStream" uid="uid://bp01per3jpam6" path="res://SFX/Enemies/Shoot/Enemy_1.wav" id="10_6285k"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eln1y"]
