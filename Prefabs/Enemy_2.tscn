@@ -196,16 +196,19 @@ autostart = true
 
 [node name="AudioStream_Idle" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_q05sp")
-max_distance = 450.0
-attenuation = 0.840896
+max_distance = 300.0
+bus = &"SFX"
 
 [node name="AudioStream_Death" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_vvsgj")
 volume_db = -9.0
+max_distance = 300.0
 bus = &"SFX"
 
 [node name="AudioStream_Shoot" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_q05sp")
+max_distance = 300.0
+bus = &"SFX"
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_body_exited"]

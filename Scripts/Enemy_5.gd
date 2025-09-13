@@ -24,6 +24,10 @@ var state: State = State.INACTIVE
 @onready var projectile_spawn_point: Marker2D = $ProjectileSpawnPoint
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
+@onready var shoot_sound: AudioStreamPlayer2D = $AudioStream_Shoot
+@onready var activ_sound: AudioStreamPlayer2D = $AudioStream_Activated
+@onready var death_sound: AudioStreamPlayer2D = $AudioStream_Death
+
 @onready var player = get_tree().current_scene.get_node_or_null("%Player")  
 
 var bullet_scene: PackedScene = preload("res://Prefabs/Bullet.tscn")
@@ -50,10 +54,12 @@ func _physics_process(_delta) -> void:
 		State.INACTIVE:
 			# En estado inactivo, el enemigo está quieto y "camuflado".
 			animated_sprite.play("Idle")
+			
 			velocity = Vector2.ZERO # Nos aseguramos de que no se mueva.
 		
 		State.ACTIVE:
 			# En estado activo, el enemigo "despierta" y patrulla la pared.
+			activ_sound.play()
 			animated_sprite.play("Walk")
 			
 			# Lógica de movimiento vertical (patrulla)
@@ -78,6 +84,7 @@ func _physics_process(_delta) -> void:
 				bullet_dir = Vector2.RIGHT
 			
 		State.DEAD:
+			death_sound.play()
 			animated_sprite.play("Death")
 			await animated_sprite.animation_finished
 			queue_free()
@@ -145,6 +152,7 @@ func _on_animated_sprite_animation_finished() -> void:
 	# Nos aseguramos de que la que terminó fue la de "attack".
 	if animated_sprite.animation == "Attack":
 		shoot_bullet()
+		shoot_sound.play()
 		
 		# 2. Volvemos al estado activo y reiniciamos el temporizador para el próximo ataque.
 		state = State.ACTIVE

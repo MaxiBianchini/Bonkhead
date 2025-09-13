@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://b3kr0bfr4cu0h"]
+[gd_scene load_steps=33 format=3 uid="uid://b3kr0bfr4cu0h"]
 
 [ext_resource type="Script" uid="uid://hosxwmtamu6i" path="res://Scripts/Enemy_5.gd" id="1_c752w"]
 [ext_resource type="Shader" uid="uid://3eyyqpjc4awp" path="res://Shaders/Hurts_effect.tres" id="2_7ig2e"]
@@ -6,6 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://5o53kr821yge" path="res://Graphics/Enemy 5/Death.png" id="3_7ig2e"]
 [ext_resource type="Texture2D" uid="uid://paokpfv0ikna" path="res://Graphics/Enemy 5/Idle.png" id="4_vkrtj"]
 [ext_resource type="Texture2D" uid="uid://578xbj0fhav1" path="res://Graphics/Enemy 5/Walk.png" id="5_6nj7n"]
+[ext_resource type="AudioStream" uid="uid://dm8roo38366k7" path="res://SFX/Enemies/Idle-Walk/Enemy_5.wav" id="7_xecgg"]
+[ext_resource type="AudioStream" uid="uid://clrheuxorhwlq" path="res://SFX/Enemies/Shoot/Enemy_5.wav" id="8_v7pod"]
+[ext_resource type="AudioStream" uid="uid://cdnh1qracxbsr" path="res://SFX/Enemies/Death/Enemy_5.wav" id="9_btmoc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vkrtj"]
 shader = ExtResource("2_7ig2e")
@@ -224,6 +227,21 @@ libraries = {
 &"": SubResource("AnimationLibrary_6nj7n")
 }
 autoplay = "Hurt"
+
+[node name="AudioStream_Activated" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_xecgg")
+max_distance = 300.0
+bus = &"SFX"
+
+[node name="AudioStream_Shoot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_v7pod")
+max_distance = 300.0
+bus = &"SFX"
+
+[node name="AudioStream_Death" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_btmoc")
+max_distance = 300.0
+bus = &"SFX"
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_animation_finished"]
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]

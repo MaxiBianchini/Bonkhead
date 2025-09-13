@@ -7,6 +7,10 @@ extends CharacterBody2D
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
+@onready var shoot_sound: AudioStreamPlayer2D = $AudioStream_Shoot
+@onready var walk_sound: AudioStreamPlayer2D = $AudioStream_Walk
+@onready var death_sound: AudioStreamPlayer2D = $AudioStream_Death
+
 @onready var player = get_tree().current_scene.get_node_or_null("%Player") # Encuentra al jugador en la escena
 
 var bullet_scene: PackedScene = preload("res://Prefabs/Bullet.tscn")
@@ -36,7 +40,7 @@ var points = 30
 func _ready() -> void:
 	animated_sprite.material = animated_sprite.material.duplicate()
 	animated_sprite.play("Walk Scan")
-	
+	walk_sound.play()
 	start_position = position
 	initial_height = position.y
 
@@ -77,6 +81,7 @@ func chase_player(delta: float) -> void:
 		animated_sprite.flip_h = (dx < 0.0)
 		if can_shoot:
 			shoot_bullet()
+			shoot_sound.play()
 			can_shoot = false
 			shoot_timer.start(1.0)  
 		
@@ -126,6 +131,7 @@ func _on_body_entered(body: Node) -> void:
 func _on_body_exited(body: Node) -> void:
 	if body.is_in_group("Player") and is_alive:
 		animated_sprite.play("Walk Scan")
+		walk_sound.play()
 		follow_player = false
 
 func take_damage() -> void:
@@ -138,6 +144,7 @@ func take_damage() -> void:
 		animated_sprite.play("Death")
 		collision_shape.position.y = 9
 		velocity.x = 0
+		death_sound.play()
 		await animated_sprite.animation_finished
 		queue_free()
 	else:

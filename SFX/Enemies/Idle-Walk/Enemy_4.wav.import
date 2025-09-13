@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://b2vcusd0lymky"
-path="res://.godot/imported/Enemy_2.wav-08825ff9af51148b11f65c362d62f1bf.sample"
+uid="uid://bow3qc1sl7bwi"
+path="res://.godot/imported/Enemy_4.wav-4bf05e726b05fdf42d7af7f5e587671e.sample"
 
 [deps]
 
-source_file="res://SFX/Enemies/Idle-Walk/Enemy_2.wav"
-dest_files=["res://.godot/imported/Enemy_2.wav-08825ff9af51148b11f65c362d62f1bf.sample"]
+source_file="res://SFX/Enemies/Idle-Walk/Enemy_4.wav"
+dest_files=["res://.godot/imported/Enemy_4.wav-4bf05e726b05fdf42d7af7f5e587671e.sample"]
 
 [params]
 

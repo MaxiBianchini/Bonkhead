@@ -5,6 +5,10 @@ extends CharacterBody2D
 @onready var shoot_timer: Timer = $Timer
 @onready var area2d: Area2D = $Area2D
 
+@onready var shoot_sound: AudioStreamPlayer2D = $AudioStream_Shoot
+@onready var walk_sound: AudioStreamPlayer2D = $AudioStream_Idle
+@onready var death_sound: AudioStreamPlayer2D = $AudioStream_Death
+
 @onready var player = get_tree().current_scene.get_node_or_null("%Player")
 
 var bullet_scene: PackedScene = preload("res://Prefabs/Bullet.tscn")
@@ -25,7 +29,7 @@ var points = 25
 func _ready() -> void:
 	animated_sprite.material = animated_sprite.material.duplicate()
 	animated_sprite.play("Idle")
-	$AudioStream_Idle.play()
+	walk_sound.play()
 
 func _physics_process(_delta: float) -> void:
 	if not (player and is_alive):
@@ -56,7 +60,7 @@ func _physics_process(_delta: float) -> void:
 
 func shoot_bullet() -> void:
 	var bullet = bullet_scene.instantiate() as Area2D
-	$AudioStream_Shoot.play()
+	shoot_sound.play()
 	if bullet.has_method("set_shooter"):
 		bullet.set_shooter(self)
 		
@@ -78,7 +82,7 @@ func take_damage() -> void:
 	if lives <= 0:
 		is_alive = false
 		animated_sprite.play("Death")
-		$AudioStream_Death.play()
+		death_sound.play()
 		await animated_sprite.animation_finished
 		
 		queue_free()
@@ -100,7 +104,7 @@ func _on_body_entered(body: Node) -> void:
 func _on_body_exited(body: Node) -> void:
 	if body.is_in_group("Player") and is_alive:
 		animated_sprite.play("Idle")
-		$AudioStream_Idle.play()
+		walk_sound.play()
 		enemy_is_near = false
 
 func _on_shoot_timer_timeout() -> void:

@@ -6,6 +6,10 @@ extends CharacterBody2D
 @onready var raycast_floor: RayCast2D = $RayCast2D
 @onready var shoot_timer: Timer = $Timer
 
+@onready var shoot_sound: AudioStreamPlayer2D = $AudioStream_Shoot
+@onready var walk_sound: AudioStreamPlayer2D = $AudioStream_Walk
+@onready var death_sound: AudioStreamPlayer2D = $AudioStream_Death
+
 @onready var player = get_tree().current_scene.get_node_or_null("%Player")  
 
 const FLOOR_RAYCAST_RIGHT_POS: Vector2 = Vector2(22, 12)
@@ -31,7 +35,7 @@ var can_shoot: bool = true
 func _ready() -> void:
 	animated_sprite.material = animated_sprite.material.duplicate()
 	animated_sprite.play("Walk")
-	$AudioStream_Walk.play()
+	walk_sound.play()
 
 func _physics_process(delta) -> void:
 	if is_alive:
@@ -58,12 +62,12 @@ func _physics_process(delta) -> void:
 			animated_sprite.play("Shoot")
 			if can_shoot:
 				shoot_bullet()
-				$AudioStream_Shoot.play()
+				shoot_sound.play()
 				can_shoot = false
 				shoot_timer.start(0.75)
 		elif is_alive:
 			animated_sprite.play("Walk")
-			$AudioStream_Walk.play()
+			#$AudioStream_Walk.play() CAMBIAR LA FORMA EN ALQUE SE DA CUENTA QUE VOLVIO A CAMINAR DESPUES DE DISPARAR
 			enemy_is_near = false
 
 func update_sprite_direction(is_facing_left: bool) -> void:
@@ -104,8 +108,8 @@ func take_damage() -> void:
 		is_alive = false
 		velocity.x = 0
 		animated_sprite.play("Death")
-		$AudioStream_Death.play()
-		await $AudioStream_Death.finished
+		death_sound.play()
+		await death_sound.finished
 		queue_free()
 	else:
 		animation_player.play("Hurt")
