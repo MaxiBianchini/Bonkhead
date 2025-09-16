@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://3ag56enda3rl"
+path="res://.godot/imported/Heroic 16 bit chiptune synthwave main menu Catchy... (61d0799e004646dbb88cb5e8b05e5f3d).mp3-cc85eda277f424934601b409dfa025a2.mp3str"
+
+[deps]
+
+source_file="res://Music/Heroic 16 bit chiptune synthwave main menu Catchy... (61d0799e004646dbb88cb5e8b05e5f3d).mp3"
+dest_files=["res://.godot/imported/Heroic 16 bit chiptune synthwave main menu Catchy... (61d0799e004646dbb88cb5e8b05e5f3d).mp3-cc85eda277f424934601b409dfa025a2.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

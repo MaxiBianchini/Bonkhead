@@ -5,7 +5,7 @@ extends CharacterBody2D
 @onready var raycast_detection: RayCast2D = $RayCast2D
 @onready var raycast_floor: RayCast2D = $RayCast2D2
 
-@onready var crash_sound: AudioStreamPlayer2D = $AudioStream_Crash
+@onready var idle_sound: AudioStreamPlayer2D = $AudioStream_Idle
 @onready var walk_sound: AudioStreamPlayer2D = $AudioStream_Walk
 @onready var death_sound: AudioStreamPlayer2D = $AudioStream_Death
 
@@ -25,7 +25,7 @@ var is_alive: bool = true
 func _ready() -> void:
 	animated_sprite.material = animated_sprite.material.duplicate()
 	animated_sprite.play("Idle")
-	walk_sound.play()
+	idle_sound.play()
 	
 	raycast_floor.position = FLOOR_RAYCAST_RIGHT_POS
 
@@ -42,6 +42,9 @@ func _physics_process(_delta) -> void:
 		var collider = raycast_detection.get_collider()
 		if collider.is_in_group("Player"):
 			animated_sprite.play("Walk")
+			idle_sound.stop()
+			if not walk_sound.playing:
+				walk_sound.play()
 			is_driving = true
 	
 	velocity.y += 20
@@ -66,6 +69,7 @@ func take_damage() -> void:
 		is_driving = false
 		velocity.x = 0
 		animated_sprite.play("Death")
+		walk_sound.stop()
 		death_sound.play()
 		await animated_sprite.animation_finished
 		queue_free()

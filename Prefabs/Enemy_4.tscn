@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://dvdjcbbm8xlq6" path="res://Graphics/Enemy 4/Death.png" id="3_i0egb"]
 [ext_resource type="Texture2D" uid="uid://cv1nk102hla6q" path="res://Graphics/Enemy 4/Idle.png" id="4_uotvi"]
 [ext_resource type="Texture2D" uid="uid://biwh46k5l2j5" path="res://Graphics/Enemy 4/Walk.png" id="5_brs0o"]
-[ext_resource type="AudioStream" uid="uid://bow3qc1sl7bwi" path="res://SFX/Enemies/Idle-Walk/Enemy_4.wav" id="6_l6m7k"]
-[ext_resource type="AudioStream" uid="uid://dd5yd7jhc16c1" path="res://SFX/Enemies/Shoot/Enemy_4.wav" id="7_lhlpp"]
+[ext_resource type="AudioStream" uid="uid://pfjis5gnl0gm" path="res://SFX/Enemies/Idle-Walk/Enemy_4.wav" id="6_l6m7k"]
+[ext_resource type="AudioStream" uid="uid://vg6ukhcav5yi" path="res://SFX/Enemies/Shoot/Enemy_4.wav" id="7_lhlpp"]
 [ext_resource type="AudioStream" uid="uid://bko4s81ggbin1" path="res://SFX/Enemies/Death/Enemy_4.wav" id="8_78jej"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w4d1f"]
@@ -199,11 +199,11 @@ libraries = {
 }
 
 [node name="AudioStream_Walk" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("6_l6m7k")
+stream = ExtResource("7_lhlpp")
 max_distance = 300.0
 
-[node name="AudioStream_Crash" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("7_lhlpp")
+[node name="AudioStream_Idle" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_l6m7k")
 max_distance = 300.0
 
 [node name="AudioStream_Death" type="AudioStreamPlayer2D" parent="."]
