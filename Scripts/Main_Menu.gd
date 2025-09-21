@@ -6,6 +6,7 @@ extends CanvasLayer
 
 @onready var audio_click = $AudioStreamPlayer
 @onready var audio_entered = $AudioStreamPlayer2
+@onready var music_main = $AudioStream_MainMusic
 
 var exist_file: SceneManager
 
@@ -17,11 +18,15 @@ func _ready():
 	if Resume_Button.visible:
 		$ButtonsContainer.size.y = 480.0
 		$ButtonsContainer.position.y = 416.0
+		
+	music_main.play()
  
 func _on_continue_pressed():
 	audio_click.play()
 	await  audio_click.finished
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	var tween = create_tween()
+	tween.tween_property(music_main, "volume_db", -80, 2)
 	var scene_path = "res://Scenes/Level_" + str(SceneManager.current_level) + ".tscn"
 	ScenesTransitions.change_scene(scene_path)
 
