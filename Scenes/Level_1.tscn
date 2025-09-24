@@ -572,6 +572,9 @@ position = Vector2(545, 1722)
 position = Vector2(2048, 1352)
 scale = Vector2(0.3, 0.3)
 
+[node name="Level_Music" type="AudioStreamPlayer2D" parent="."]
+bus = &"Music"
+
 [editable path="Enemies/Enemy_2"]
 [editable path="Enemies/Enemy_6"]
 [editable path="Enemies/Enemy_10"]
