@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=4 uid="uid://mwhbup6tnnqo"]
+[gd_scene load_steps=60 format=4 uid="uid://mwhbup6tnnqo"]
 
 [ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://TileSets/TileSets.tres" id="1_c1dvb"]
 [ext_resource type="PackedScene" uid="uid://cdqlmgh2vxout" path="res://Prefabs/Player.tscn" id="2_72p7r"]
@@ -39,6 +39,7 @@
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="34_ww1bt"]
 [ext_resource type="PackedScene" uid="uid://fxla73vs5hxe" path="res://Prefabs/Phantom_Area.tscn" id="36_qaamm"]
 [ext_resource type="PackedScene" uid="uid://d1i3yjdbq4dmk" path="res://Prefabs/Page_Comic.tscn" id="45_ww1bt"]
+[ext_resource type="AudioStream" uid="uid://b8f133nc8swer" path="res://Music/Silent Corridor (mp3cut.net) - LOOP.mp3" id="46_d1n4i"]
 [ext_resource type="PackedScene" uid="uid://bh3h363wnt1mt" path="res://Prefabs/Signpost.tscn" id="50_ceuot"]
 [ext_resource type="PackedScene" uid="uid://blucmwrqfrted" path="res://Prefabs/Moving_Platform.tscn" id="52_fdbj4"]
 [ext_resource type="PackedScene" uid="uid://cfdnwh558m6i2" path="res://Prefabs/Falling_Platform.tscn" id="54_kd73b"]
@@ -347,16 +348,16 @@ texture = ExtResource("31_bvkrs")
 unique_name_in_owner = true
 process_mode = 1
 z_index = 1
-position = Vector2(1908, 1345)
+position = Vector2(23, 720)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
-position = Vector2(1908, 1345)
+position = Vector2(198.333, 720)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
-limit_right = 2150
-limit_bottom = 1750
+limit_right = 8900
+limit_bottom = 2810
 editor_draw_limits = true
 
 [node name="PhantomCameraHost" type="Node" parent="Camera2D"]
@@ -367,7 +368,7 @@ metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(1908, 1345)
+position = Vector2(198.333, 720)
 script = ExtResource("33_dtfje")
 priority = 1
 follow_mode = 2
@@ -572,7 +573,11 @@ position = Vector2(545, 1722)
 position = Vector2(2048, 1352)
 scale = Vector2(0.3, 0.3)
 
-[node name="Level_Music" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("46_d1n4i")
+volume_db = -5.0
+autoplay = true
+mix_target = 2
 bus = &"Music"
 
 [editable path="Enemies/Enemy_2"]

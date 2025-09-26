@@ -54,7 +54,7 @@
 [ext_resource type="PackedScene" uid="uid://d1i3yjdbq4dmk" path="res://Prefabs/Page_Comic.tscn" id="54_v40af"]
 [ext_resource type="Texture2D" uid="uid://cf2xm4pu4utul" path="res://Graphics/Comic Pages/ComicPage2.png" id="55_m2s7e"]
 [ext_resource type="Texture2D" uid="uid://fa75u2xkk2xt" path="res://Graphics/Zonas/Green-zone/3 Objects/Fence/5.png" id="55_w37ya"]
-[ext_resource type="PackedScene" uid="uid://bswo0jt5cdkqw" path="res://Prefabs/Enemy_4.tscn" id="56_m2s7e"]
+[ext_resource type="AudioStream" uid="uid://cphpe1giw4pxl" path="res://Music/Level1_Music (mp3cut.net) LOOP.mp3" id="56_m2s7e"]
 [ext_resource type="PackedScene" uid="uid://bh3h363wnt1mt" path="res://Prefabs/Signpost.tscn" id="59_u5cqn"]
 
 [sub_resource type="Resource" id="Resource_5toea"]
@@ -982,8 +982,12 @@ scale = Vector2(0.5, 0.5)
 [node name="Sprite2D" parent="Page_Comic" index="0"]
 texture = ExtResource("55_m2s7e")
 
-[node name="Enemy_4" parent="." instance=ExtResource("56_m2s7e")]
-position = Vector2(314, 700)
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("56_m2s7e")
+volume_db = -5.0
+autoplay = true
+mix_target = 2
+bus = &"Music"
 
 [editable path="Dead_Areas/Dead_Area"]
 [editable path="Dead_Areas/Dead_Area2"]

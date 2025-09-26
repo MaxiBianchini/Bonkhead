@@ -151,20 +151,21 @@ process_mode = 3
 visible = false
 
 [node name="Options" type="VBoxContainer" parent="OptionsMenu"]
-process_mode = 3
-anchors_preset = 13
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -656.0
-offset_top = 70.0
-offset_right = 656.0
-offset_bottom = -70.0
+anchor_bottom = 0.5
+offset_left = -502.5
+offset_top = -449.0
+offset_right = 502.5
+offset_bottom = 225.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="Label" type="Label" parent="OptionsMenu/Options"]
-process_mode = 3
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_425uk")
 theme_override_font_sizes/font_size = 50
@@ -173,109 +174,249 @@ Options"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="OptionsMenu/Options"]
-process_mode = 3
+[node name="Label2" type="Label" parent="OptionsMenu/Options"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 50
+text = "
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="OptionsMenu/Options"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="OptionsMenu/Options/HBoxContainer"]
+layout_mode = 2
+text = "                       "
 
 [node name="Volumen" type="VBoxContainer" parent="OptionsMenu/Options/HBoxContainer"]
-process_mode = 3
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 3
+size_flags_horizontal = 2
+size_flags_vertical = 4
+alignment = 1
 
-[node name="Label2" type="Label" parent="OptionsMenu/Options/HBoxContainer/Volumen"]
-process_mode = 3
+[node name="General" type="HBoxContainer" parent="OptionsMenu/Options/HBoxContainer/Volumen"]
 layout_mode = 2
-size_flags_horizontal = 0
-theme_override_fonts/font = ExtResource("5_425uk")
-theme_override_font_sizes/font_size = 25
-text = "
+alignment = 1
 
-
-
-       Volumen"
-
-[node name="HSlider" type="HSlider" parent="OptionsMenu/Options/HBoxContainer/Volumen/Label2"]
-process_mode = 3
+[node name="MasterSlider" type="HSlider" parent="OptionsMenu/Options/HBoxContainer/Volumen/General"]
 custom_minimum_size = Vector2(200, 25)
 layout_mode = 2
-offset_left = 161.0
-offset_top = 156.0
-offset_right = 361.0
-offset_bottom = 195.0
 size_flags_horizontal = 0
 size_flags_vertical = 4
 theme_override_icons/grabber = ExtResource("7_mys0b")
 theme_override_icons/grabber_highlight = ExtResource("8_c7c70")
 theme_override_icons/tick = ExtResource("9_pmvjn")
 step = 2.0
+value = 100.0
 allow_lesser = true
 
-[node name="Mute" type="VBoxContainer" parent="OptionsMenu/Options/HBoxContainer"]
-process_mode = 3
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="OptionsMenu/Options/HBoxContainer/Mute"]
-process_mode = 3
+[node name="Label" type="Label" parent="OptionsMenu/Options/HBoxContainer/Volumen/General"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_fonts/font = ExtResource("5_425uk")
 theme_override_font_sizes/font_size = 25
-text = "
+text = "  General"
 
+[node name="Music" type="HBoxContainer" parent="OptionsMenu/Options/HBoxContainer/Volumen"]
+layout_mode = 2
 
+[node name="MusicSlider" type="HSlider" parent="OptionsMenu/Options/HBoxContainer/Volumen/Music"]
+custom_minimum_size = Vector2(200, 25)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_icons/grabber = ExtResource("7_mys0b")
+theme_override_icons/grabber_highlight = ExtResource("8_c7c70")
+theme_override_icons/tick = ExtResource("9_pmvjn")
+step = 2.0
+value = 100.0
+allow_lesser = true
 
-         Mute"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="CheckBox" type="CheckBox" parent="OptionsMenu/Options/HBoxContainer/Mute/Label"]
-process_mode = 3
-layout_mode = 0
-offset_left = 223.0
-offset_top = 148.0
-offset_right = 331.0
-offset_bottom = 179.0
+[node name="Label" type="Label" parent="OptionsMenu/Options/HBoxContainer/Volumen/Music"]
+layout_mode = 2
+size_flags_horizontal = 0
 theme_override_fonts/font = ExtResource("5_425uk")
-theme_override_font_sizes/font_size = 10
-text = "Sound On"
-flat = true
-alignment = 1
+theme_override_font_sizes/font_size = 25
+text = "  Music"
+
+[node name="SFX" type="HBoxContainer" parent="OptionsMenu/Options/HBoxContainer/Volumen"]
+layout_mode = 2
+
+[node name="SFXSlider" type="HSlider" parent="OptionsMenu/Options/HBoxContainer/Volumen/SFX"]
+custom_minimum_size = Vector2(200, 25)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_icons/grabber = ExtResource("7_mys0b")
+theme_override_icons/grabber_highlight = ExtResource("8_c7c70")
+theme_override_icons/tick = ExtResource("9_pmvjn")
+step = 2.0
+value = 100.0
+allow_lesser = true
+
+[node name="Label" type="Label" parent="OptionsMenu/Options/HBoxContainer/Volumen/SFX"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 25
+text = "  SFX"
 
 [node name="FullScreen" type="VBoxContainer" parent="OptionsMenu/Options/HBoxContainer"]
-process_mode = 3
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 3
+alignment = 1
 
 [node name="Label" type="Label" parent="OptionsMenu/Options/HBoxContainer/FullScreen"]
-process_mode = 3
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_fonts/font = ExtResource("5_425uk")
 theme_override_font_sizes/font_size = 25
+text = "Graphics
+"
+
+[node name="CheckButton" type="CheckButton" parent="OptionsMenu/Options/HBoxContainer/FullScreen"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 16
+button_pressed = true
+text = "Full Screen  "
+alignment = 1
+
+[node name="Label" type="Label" parent="OptionsMenu/Options/HBoxContainer"]
+layout_mode = 2
+text = "                       "
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsMenu/Options"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="OptionsMenu/Options/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 35
 text = "
 
 
-
-         Graphics"
+Control Layout
+"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CheckButton" type="CheckButton" parent="OptionsMenu/Options/HBoxContainer/FullScreen/Label"]
-process_mode = 3
-layout_mode = 0
-offset_left = 231.0
-offset_top = 149.0
-offset_right = 420.0
-offset_bottom = 180.0
-theme_override_fonts/font = ExtResource("5_425uk")
-theme_override_font_sizes/font_size = 10
-button_pressed = true
-text = "Full Screen On"
+[node name="MoveLeft" type="HBoxContainer" parent="OptionsMenu/Options/VBoxContainer"]
+layout_mode = 2
 alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="OptionsMenu/Options/VBoxContainer/MoveLeft"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OptionsMenu/Options/VBoxContainer/MoveLeft"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 20
+text = "Move Left: "
+
+[node name="Label2" type="Label" parent="OptionsMenu/Options/VBoxContainer/MoveLeft"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 20
+text = "Left Arrow"
+
+[node name="MoveRight" type="HBoxContainer" parent="OptionsMenu/Options/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="OptionsMenu/Options/VBoxContainer/MoveRight"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OptionsMenu/Options/VBoxContainer/MoveRight"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 20
+text = "Move Right: "
+
+[node name="Label2" type="Label" parent="OptionsMenu/Options/VBoxContainer/MoveRight"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 20
+text = "Right Arrow"
+
+[node name="MoveDown" type="HBoxContainer" parent="OptionsMenu/Options/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="OptionsMenu/Options/VBoxContainer/MoveDown"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OptionsMenu/Options/VBoxContainer/MoveDown"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 20
+text = "Move Down: "
+
+[node name="Label2" type="Label" parent="OptionsMenu/Options/VBoxContainer/MoveDown"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 20
+text = "Down Arrow"
+
+[node name="Jump" type="HBoxContainer" parent="OptionsMenu/Options/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="OptionsMenu/Options/VBoxContainer/Jump"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OptionsMenu/Options/VBoxContainer/Jump"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 20
+text = "Jump: "
+
+[node name="Label2" type="Label" parent="OptionsMenu/Options/VBoxContainer/Jump"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 20
+text = "S    "
+
+[node name="Shoot" type="HBoxContainer" parent="OptionsMenu/Options/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="OptionsMenu/Options/VBoxContainer/Shoot"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OptionsMenu/Options/VBoxContainer/Shoot"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 20
+text = "Shoot: "
+
+[node name="Label2" type="Label" parent="OptionsMenu/Options/VBoxContainer/Shoot"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 20
+text = "A     "
+
+[node name="Dash" type="HBoxContainer" parent="OptionsMenu/Options/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="OptionsMenu/Options/VBoxContainer/Dash"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OptionsMenu/Options/VBoxContainer/Dash"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 20
+text = "Dash: "
+
+[node name="Label2" type="Label" parent="OptionsMenu/Options/VBoxContainer/Dash"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 20
+text = "Shift"
 
 [node name="BackButtonContainer" type="VBoxContainer" parent="OptionsMenu"]
 process_mode = 3

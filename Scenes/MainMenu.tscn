@@ -232,6 +232,8 @@ offset_right = 656.0
 offset_bottom = -70.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="Label" type="Label" parent="OthersMenu/Options"]
 layout_mode = 2
@@ -242,110 +244,132 @@ Options"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="Label2" type="Label" parent="OthersMenu/Options"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_7v4os")
+theme_override_font_sizes/font_size = 50
+text = "
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="HBoxContainer" type="HBoxContainer" parent="OthersMenu/Options"]
 layout_mode = 2
 
+[node name="Label2" type="Label" parent="OthersMenu/Options/HBoxContainer"]
+layout_mode = 2
+text = "                                     "
+
 [node name="Volumen" type="VBoxContainer" parent="OthersMenu/Options/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 3
+size_flags_horizontal = 2
+size_flags_vertical = 4
+alignment = 1
 
-[node name="Label2" type="Label" parent="OthersMenu/Options/HBoxContainer/Volumen"]
+[node name="General" type="HBoxContainer" parent="OthersMenu/Options/HBoxContainer/Volumen"]
 layout_mode = 2
-size_flags_horizontal = 0
-theme_override_fonts/font = ExtResource("4_7v4os")
-theme_override_font_sizes/font_size = 25
-text = "
+alignment = 1
 
-
-
-       Volumen"
-
-[node name="HSlider" type="HSlider" parent="OthersMenu/Options/HBoxContainer/Volumen/Label2"]
+[node name="MasterSlider" type="HSlider" parent="OthersMenu/Options/HBoxContainer/Volumen/General"]
 custom_minimum_size = Vector2(200, 25)
 layout_mode = 2
-offset_left = 161.0
-offset_top = 156.0
-offset_right = 361.0
-offset_bottom = 195.0
 size_flags_horizontal = 0
 size_flags_vertical = 4
 theme_override_icons/grabber = ExtResource("11_5hdia")
 theme_override_icons/grabber_highlight = ExtResource("12_iqn0u")
 theme_override_icons/tick = ExtResource("13_3u44c")
 step = 2.0
+value = 100.0
 allow_lesser = true
 
-[node name="Mute" type="VBoxContainer" parent="OthersMenu/Options/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 3
-
-[node name="Label" type="Label" parent="OthersMenu/Options/HBoxContainer/Mute"]
+[node name="Label" type="Label" parent="OthersMenu/Options/HBoxContainer/Volumen/General"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 25
-text = "
+text = "  General"
 
+[node name="Music" type="HBoxContainer" parent="OthersMenu/Options/HBoxContainer/Volumen"]
+layout_mode = 2
 
+[node name="MusicSlider" type="HSlider" parent="OthersMenu/Options/HBoxContainer/Volumen/Music"]
+custom_minimum_size = Vector2(200, 25)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_icons/grabber = ExtResource("11_5hdia")
+theme_override_icons/grabber_highlight = ExtResource("12_iqn0u")
+theme_override_icons/tick = ExtResource("13_3u44c")
+step = 2.0
+value = 100.0
+allow_lesser = true
 
-         Mute"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="CheckBox" type="CheckBox" parent="OthersMenu/Options/HBoxContainer/Mute/Label"]
-layout_mode = 0
-offset_left = 223.0
-offset_top = 148.0
-offset_right = 331.0
-offset_bottom = 179.0
+[node name="Label" type="Label" parent="OthersMenu/Options/HBoxContainer/Volumen/Music"]
+layout_mode = 2
+size_flags_horizontal = 0
 theme_override_fonts/font = ExtResource("4_7v4os")
-theme_override_font_sizes/font_size = 10
-text = "Sound On"
-flat = true
-alignment = 1
+theme_override_font_sizes/font_size = 25
+text = "  Music"
+
+[node name="SFX" type="HBoxContainer" parent="OthersMenu/Options/HBoxContainer/Volumen"]
+layout_mode = 2
+
+[node name="SFXSlider" type="HSlider" parent="OthersMenu/Options/HBoxContainer/Volumen/SFX"]
+custom_minimum_size = Vector2(200, 25)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_icons/grabber = ExtResource("11_5hdia")
+theme_override_icons/grabber_highlight = ExtResource("12_iqn0u")
+theme_override_icons/tick = ExtResource("13_3u44c")
+step = 2.0
+value = 100.0
+allow_lesser = true
+
+[node name="Label" type="Label" parent="OthersMenu/Options/HBoxContainer/Volumen/SFX"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_fonts/font = ExtResource("4_7v4os")
+theme_override_font_sizes/font_size = 25
+text = "  SFX"
 
 [node name="FullScreen" type="VBoxContainer" parent="OthersMenu/Options/HBoxContainer"]
 layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 3
+alignment = 1
 
 [node name="Label" type="Label" parent="OthersMenu/Options/HBoxContainer/FullScreen"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 25
-text = "
+text = "Graphics
+"
 
-
-
-         Graphics"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="CheckButton" type="CheckButton" parent="OthersMenu/Options/HBoxContainer/FullScreen/Label"]
-layout_mode = 0
-offset_left = 231.0
-offset_top = 149.0
-offset_right = 420.0
-offset_bottom = 180.0
+[node name="CheckButton" type="CheckButton" parent="OthersMenu/Options/HBoxContainer/FullScreen"]
+layout_mode = 2
 theme_override_fonts/font = ExtResource("4_7v4os")
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 16
 button_pressed = true
-text = "Full Screen On"
+text = "Full Screen  "
 alignment = 1
+
+[node name="Label" type="Label" parent="OthersMenu/Options/HBoxContainer"]
+layout_mode = 2
+text = "                                     "
 
 [node name="VBoxContainer" type="VBoxContainer" parent="OthersMenu/Options"]
 layout_mode = 2
 size_flags_horizontal = 4
-size_flags_vertical = 6
+size_flags_vertical = 4
 
-[node name="Label2" type="Label" parent="OthersMenu/Options/VBoxContainer"]
+[node name="Label" type="Label" parent="OthersMenu/Options/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 35
-text = "Esquma de controles
+text = "
+
+
+Control Layout
 "
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -586,12 +610,16 @@ metadata/_edit_lock_ = true
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("15_ux20s")
 volume_db = -10.0
+bus = &"SFX"
 
 [node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("16_ke15f")
+bus = &"SFX"
 
-[node name="AudioStream_MainMusic" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioStream_MainMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("17_riqfo")
+volume_db = -5.0
+mix_target = 2
 bus = &"Music"
 
 [connection signal="pressed" from="ButtonsContainer/ResumeButton" to="." method="_on_continue_pressed"]
