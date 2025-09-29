@@ -4,7 +4,6 @@ extends CharacterBody2D
 enum State {
 	INACTIVE,  # Inmóvil y camuflado en la pared
 	ACTIVE,    # Despierto, patrullando la pared
-	ATTACKING, # Detenido y a punto de disparar
 	DEAD
 }
 
@@ -28,9 +27,7 @@ var state: State = State.INACTIVE
 @onready var activ_sound: AudioStreamPlayer2D = $AudioStream_Activated
 @onready var death_sound: AudioStreamPlayer2D = $AudioStream_Death
 
-@onready var player = get_tree().current_scene.get_node_or_null("%Player")  
-
-var bullet_scene: PackedScene = preload("res://Prefabs/Bullet.tscn")
+@onready var player = get_tree().current_scene.get_node_or_null("%Player")
 
 var points: int = 20
 signal add_points
@@ -69,20 +66,16 @@ func _physics_process(_delta) -> void:
 			if (patrol_direction == 1 and position.y >= target_y) or \
 			   (patrol_direction == -1 and position.y <= initial_position.y):
 				patrol_direction *= -1
+			
+			if patrol_direction == -1: # -1 significa que va hacia ARRIBA
+				animated_sprite.flip_h = true
+				animated_sprite.offset.x = -8
+			else: # 1 significa que va hacia ABAJO
+				animated_sprite.flip_h = false
+				animated_sprite.offset.x = 8
 				
 			velocity.y = climb_speed * patrol_direction
 		
-		State.ATTACKING:
-			# Al atacar, el enemigo se detiene y reproduce su animación.
-			velocity = Vector2.ZERO
-			animated_sprite.play("Attack")
-			
-			# 1. Creamos la instancia de la bala.
-			if player.position.x < position.x:
-				bullet_dir = Vector2.LEFT
-			else:
-				bullet_dir = Vector2.RIGHT
-			
 		State.DEAD:
 			death_sound.play()
 			animated_sprite.play("Death")
@@ -107,19 +100,7 @@ func take_damage() -> void:
 		emit_signal("add_points", points)
 		
 
-func shoot_bullet() -> void:
-	var bullet = bullet_scene.instantiate() as Area2D
-	if bullet.has_method("set_shooter"):
-		bullet.set_shooter(self)
-		
-	if bullet.has_method("set_mask"):
-		bullet.set_mask(2) 
-	 
-	if bullet.has_method("set_direction"):
-		bullet.set_direction( bullet_dir)
-	bullet.position = position + bullet_offset
-	
-	get_tree().current_scene.add_child(bullet)
+
 
 func _on_detection_area_body_entered(body: Node2D) -> void:
 	# Esta función se ejecuta cuando algo entra en el área de detección.
@@ -140,20 +121,3 @@ func _on_detection_area_body_exited(body: Node2D) -> void:
 		state = State.INACTIVE
 		# Detenemos el temporizador si el jugador se aleja.
 		attack_timer.stop()
-
-func _on_attack_timer_timeout() -> void:
-	# Cuando el temporizador se agota, cambiamos al estado de ataque.
-	# Solo atacamos si seguimos en estado ACTIVO (no si el jugador ya se fue).
-	if state == State.ACTIVE:
-		state = State.ATTACKING
-
-func _on_animated_sprite_animation_finished() -> void:
-	# Esta función se llama cuando CUALQUIER animación termina.
-	# Nos aseguramos de que la que terminó fue la de "attack".
-	if animated_sprite.animation == "Attack":
-		shoot_bullet()
-		shoot_sound.play()
-		
-		# 2. Volvemos al estado activo y reiniciamos el temporizador para el próximo ataque.
-		state = State.ACTIVE
-		attack_timer.start()
