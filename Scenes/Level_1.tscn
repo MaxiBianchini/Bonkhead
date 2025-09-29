@@ -356,8 +356,8 @@ position = Vector2(198.333, 720)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
-limit_right = 8900
-limit_bottom = 2810
+limit_right = 2150
+limit_bottom = 1750
 editor_draw_limits = true
 
 [node name="PhantomCameraHost" type="Node" parent="Camera2D"]
