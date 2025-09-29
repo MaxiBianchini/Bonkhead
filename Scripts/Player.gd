@@ -154,6 +154,8 @@ func _physics_process(delta) -> void:
 				audio_jump.play() 
 				state = State.JUMP
 				velocity.y = jump_force
+			elif not is_on_floor():
+				state = State.FALL
 			elif input_vector.x != 0:
 				state = State.RUN
 			elif is_dash_pressed and dash_power_activated and can_dash:
@@ -172,6 +174,8 @@ func _physics_process(delta) -> void:
 				audio_jump.play()
 				state = State.JUMP
 				velocity.y = jump_force
+			elif not is_on_floor():
+				state = State.FALL
 			elif input_vector.x == 0:
 				state = State.IDLE
 			elif is_dash_pressed and dash_power_activated and can_dash:
@@ -425,6 +429,7 @@ func set_ammo_type(new_type: AmmoType) -> void:
 	current_ammo_type = new_type
 
 func ignore_platform_collision() -> void:
+	state = State.FALL
 	collision_shape.disabled = true
 	velocity.y = jump_force * -1.5
 	await (get_tree().create_timer(fall_through_time).timeout)
