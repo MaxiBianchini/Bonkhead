@@ -39,6 +39,7 @@ func start_new_text(text_index: int) -> void:
 
 # Esta función será llamada por el AnimationPlayer para mostrar el botón al final
 func show_continue_button() -> void:
+	typewriter_label.visible = false
 	continue_button.visible = true
 
 func _on_continue_button_pressed() -> void:
