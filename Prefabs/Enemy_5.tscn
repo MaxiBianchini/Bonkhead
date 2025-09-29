@@ -193,6 +193,7 @@ _data = {
 }
 
 [node name="Enemy_5" type="CharacterBody2D" groups=["Enemy"]]
+process_mode = 1
 collision_layer = 4
 script = ExtResource("1_c752w")
 bullet_dir = Vector2(-1, 0)
@@ -201,7 +202,7 @@ bullet_dir = Vector2(-1, 0)
 material = SubResource("ShaderMaterial_vkrtj")
 rotation = 1.5708
 sprite_frames = SubResource("SpriteFrames_e77wi")
-animation = &"Death"
+animation = &"Idle"
 offset = Vector2(8, -12)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -226,7 +227,6 @@ position = Vector2(15, 0)
 libraries = {
 &"": SubResource("AnimationLibrary_6nj7n")
 }
-autoplay = "Hurt"
 
 [node name="AudioStream_Activated" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_xecgg")
