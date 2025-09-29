@@ -32,9 +32,15 @@ func _on_body_entered(body) -> void:
 	elif body.is_in_group("Floor"):
 		queue_free()
 	
-	if (body.is_in_group("Enemy") or body.is_in_group("Player")) and body.is_alive:
-		body.take_damage()
-		queue_free()
+	if shooter.is_in_group("Enemy"):
+		if body.is_in_group("Player") and body.has_method("take_damage"):
+			body.take_damage()
+			queue_free()
+			
+	elif shooter.is_in_group("Player"):
+		if body.is_in_group("Enemy") and body.has_method("take_damage"):
+			body.take_damage()
+			queue_free()
 
 func set_mask(number: int) -> void:
 	mask = number

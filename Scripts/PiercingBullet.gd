@@ -35,11 +35,15 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Floor") or body.is_in_group("Grabbable Wall") or body.is_in_group("Jumpeable Wall"):
 		queue_free()
 	
-	# Si choca con un enemigo...
-	if body.is_in_group("Enemy"):
-		# Le hacemos daño.
-		if body.has_method("take_damage"):
+	if shooter.is_in_group("Enemy"):
+		if body.is_in_group("Player") and body.has_method("take_damage"):
 			body.take_damage()
+			queue_free()
+			
+	elif shooter.is_in_group("Player"):
+		if body.is_in_group("Enemy") and body.has_method("take_damage"):
+			body.take_damage()
+			queue_free()
 		
 		# Reducimos el contador de perforaciones.
 		max_pierces -= 1
