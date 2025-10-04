@@ -503,7 +503,7 @@ texture = ExtResource("31_bp6cg")
 [node name="Player" parent="." instance=ExtResource("20_j1y0e")]
 unique_name_in_owner = true
 z_index = 1
-position = Vector2(18, 720)
+position = Vector2(65, 720)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
@@ -848,31 +848,31 @@ position = Vector2(173, 0)
 [node name="Spikes" type="Node2D" parent="."]
 
 [node name="SpikesX1" parent="Spikes" instance=ExtResource("33_bdg83")]
-position = Vector2(1936, 1209)
+position = Vector2(1936, 1210)
 
 [node name="SpikesX2" parent="Spikes" instance=ExtResource("33_bdg83")]
-position = Vector2(1872, 1273)
+position = Vector2(1872, 1274)
 
 [node name="SpikesX3" parent="Spikes" instance=ExtResource("33_bdg83")]
-position = Vector2(1808, 1337)
+position = Vector2(1808, 1338)
 
 [node name="SpikesX4" parent="Spikes" instance=ExtResource("33_bdg83")]
 position = Vector2(1744, 1402)
 
 [node name="SpikesX5" parent="Spikes" instance=ExtResource("33_bdg83")]
-position = Vector2(1680, 1465)
+position = Vector2(1680, 1466)
 
 [node name="SpikesX6" parent="Spikes" instance=ExtResource("33_bdg83")]
-position = Vector2(8175, 2009)
+position = Vector2(8175, 2010)
 
 [node name="SpikesX7" parent="Spikes" instance=ExtResource("33_bdg83")]
-position = Vector2(8047, 1945)
+position = Vector2(8047, 1946)
 
 [node name="SpikesX8" parent="Spikes" instance=ExtResource("33_bdg83")]
-position = Vector2(8111, 1977)
+position = Vector2(8111, 1978)
 
 [node name="SpikesX9" parent="Spikes" instance=ExtResource("33_bdg83")]
-position = Vector2(8239, 2041)
+position = Vector2(8239, 2042)
 
 [node name="PhantomAreas" type="Node2D" parent="."]
 
@@ -884,7 +884,7 @@ shape = SubResource("RectangleShape2D_ssyor")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(18, 720)
+position = Vector2(65, 720)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -908,7 +908,7 @@ shape = SubResource("RectangleShape2D_bdg83")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area3" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(18, 720)
+position = Vector2(65, 720)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
