@@ -12,10 +12,7 @@ var shooter: Node = null
 var mask: int = 1
 
 func _ready() -> void:
-	if direction.y != 0:
-		sprite.rotation_degrees = -90
-	elif direction.x < 0:
-		sprite.flip_h = true
+	
 	
 	set_collision_mask_value(mask,true)
 	life_timer.start(time)
@@ -50,3 +47,4 @@ func set_shooter(_shooter: Node) -> void:
 
 func set_direction(_direction: Vector2) -> void:
 	direction = _direction
+	rotation = direction.angle()

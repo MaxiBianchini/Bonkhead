@@ -70,12 +70,7 @@ func chase_player(delta: float) -> void:
 		var horizontal_dir = sign(dx)
 		animated_sprite.flip_h = (horizontal_dir < 0.0)
 		velocity.x = horizontal_dir * horizontal_speed 
-		if horizontal_dir < 0.0:
-			bullet_dir = Vector2.LEFT
-			bullet_offset = Vector2(-14, 12.5)
-		else:
-			bullet_dir = Vector2.RIGHT
-			bullet_offset = Vector2(14, 12.5)
+		
 	else:
 		velocity.x = 0
 		animated_sprite.flip_h = (dx < 0.0)
@@ -110,17 +105,28 @@ func patrol_horizontally(delta: float) -> void:
 
 func shoot_bullet() -> void:
 	animated_sprite.play("Attack")
-	var bullet = bullet_scene.instantiate() as Area2D
+	
+	# Asegúrate de que el jugador todavía existe antes de disparar
+	if not is_instance_valid(player):
+		return
+
+	var bullet = bullet_scene.instantiate()
+	
+	# 1. Calculamos la dirección normalizada desde el enemigo hacia el jugador.
+	var direction_to_player = (player.global_position - global_position).normalized()
+	
+	# 2. Configuramos la bala con la nueva dirección.
 	if bullet.has_method("set_shooter"):
 		bullet.set_shooter(self)
 		
 	if bullet.has_method("set_mask"):
-		bullet.set_mask(2) 
-	 
-	if bullet.has_method("set_direction"):
-		bullet.set_direction( bullet_dir)
-	bullet.position = position + bullet_offset
+		bullet.set_mask(2)
 	
+	if bullet.has_method("set_direction"):
+		bullet.set_direction(direction_to_player) # Usamos la dirección calculada
+
+	# 3. Posicionamos la bala y la añadimos a la escena.
+	bullet.position = position + bullet_offset
 	get_tree().current_scene.add_child(bullet)
 
 func _on_body_entered(body: Node) -> void:
