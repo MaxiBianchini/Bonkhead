@@ -1,4 +1,4 @@
-[gd_scene load_steps=142 format=3 uid="uid://cdqlmgh2vxout"]
+[gd_scene load_steps=144 format=3 uid="uid://cdqlmgh2vxout"]
 
 [ext_resource type="Script" uid="uid://bbt48srafskvx" path="res://Scripts/Player.gd" id="1_y8i6y"]
 [ext_resource type="Texture2D" uid="uid://c4fc75o86mwdi" path="res://Graphics/Character/Player Original Animations/Double Jump.png" id="2_3kxgr"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://cuehhwn7upk82" path="res://Graphics/Character/Player with Guns Animations/Small Gun/Jump/Jump with Gun.png" id="11_kd7ob"]
 [ext_resource type="Texture2D" uid="uid://c3h1j6yh8ka8u" path="res://Graphics/Character/Player with Guns Animations/Big Gun/Walk/Walk Shooting Rect.png" id="11_yhspe"]
 [ext_resource type="Texture2D" uid="uid://3digcjs4h2qd" path="res://Graphics/Character/Player with Guns Animations/Big Gun/Walk/Walk Shooting Up.png" id="12_j6h7j"]
+[ext_resource type="Texture2D" uid="uid://3y1ltxv05uv5" path="res://Graphics/Character/Player without Arm Animations/Arma chica/GrabWall.png" id="13_fd4tb"]
 [ext_resource type="Texture2D" uid="uid://cbsvwqlpscguf" path="res://Graphics/Character/Player with Guns Animations/Big Gun/Walk/Walk with Gun.png" id="13_kk2en"]
 [ext_resource type="Texture2D" uid="uid://kmi5ce3d68mq" path="res://Graphics/Character/Player with Guns Animations/Small Gun/Idle/Idle Shooting Rect.png" id="14_4nt0r"]
 [ext_resource type="Texture2D" uid="uid://cl34ve6ubd41o" path="res://Graphics/Character/Player with Guns Animations/Small Gun/Run/Run Shooting Rect.png" id="19_5f2yg"]
@@ -241,6 +242,10 @@ region = Rect2(96, 0, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_j26g8"]
 atlas = ExtResource("2_3kxgr")
 region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ywdf"]
+atlas = ExtResource("13_fd4tb")
+region = Rect2(0, 0, 20, 31)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_exm7i"]
 atlas = ExtResource("6_n3efl")
@@ -673,6 +678,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_2ywdf")
+}],
+"loop": true,
+"name": &"GrabWall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_exm7i")
 }, {
 "duration": 1.0,
@@ -943,21 +956,21 @@ process_mode = 1
 z_index = -1
 material = SubResource("ShaderMaterial_c5nj1")
 sprite_frames = SubResource("SpriteFrames_l1tm1")
-animation = &"SIdle with Gun"
+animation = &"GrabWall"
 offset = Vector2(10, -7)
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
 z_index = -1
 material = SubResource("ShaderMaterial_c5nj1")
 sprite_frames = SubResource("SpriteFrames_l1tm1")
-animation = &"SIdle with Gun"
+animation = &"GrabWall"
 offset = Vector2(10, -7)
 
 [node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="."]
 z_index = -1
 material = SubResource("ShaderMaterial_c5nj1")
 sprite_frames = SubResource("SpriteFrames_l1tm1")
-animation = &"SIdle with Gun"
+animation = &"GrabWall"
 offset = Vector2(10, -7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
