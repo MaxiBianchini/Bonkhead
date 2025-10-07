@@ -255,43 +255,57 @@ func update_sprite_direction() -> void:
 	var offset = 10
 	
 	if state == State.WALL_GRAB:
-		return
+		if player_dir == "RIGHT":
+			for s in animated_sprites:
+				s.position.x = -offset
+				s.flip_h = true
+			
+			raycast_wall.position.x = offset
+			raycast_wall.target_position.x = offset
+			raycast_floor.position.x = offset
+			collision_shape.position.x = offset
+			area2D.position.x = offset
+			return
+		elif player_dir == "LEFT":
+			for s in animated_sprites:
+				s.position.x = offset
+				s.flip_h = false
+			
+			raycast_wall.position.x = offset
+			raycast_wall.target_position.x = -offset
+			raycast_floor.position.x = offset
+			collision_shape.position.x = offset
+			area2D.position.x = offset
+			return
+	else:
+		if velocity.x < 0:
+			for s in animated_sprites:
+				s.position.x = -offset
+				s.flip_h = true
 		
-	if velocity.x < 0:
-		for s in animated_sprites:
-			s.position.x = -offset
-			s.flip_h = true
+			player_dir = "LEFT"
+			bullet_dir = Vector2.LEFT
+			raycast_wall.position.x = offset
+			raycast_wall.target_position.x = -offset
+			raycast_floor.position.x = offset
+			collision_shape.position.x = offset
+			area2D.position.x = offset
 		
-		player_dir = "LEFT"
-		bullet_dir = Vector2.LEFT
-		raycast_wall.position.x = offset
-		raycast_wall.target_position.x = -offset
-		raycast_floor.position.x = offset
-		collision_shape.position.x = offset
-		area2D.position.x = offset
-	
-	elif velocity.x > 0:
-		for s in animated_sprites:
-			s.position.x = offset
-			s.flip_h = false
+		elif velocity.x > 0:
+			for s in animated_sprites:
+				s.position.x = offset
+				s.flip_h = false
 		
-		player_dir = "RIGHT"
-		bullet_dir = Vector2.RIGHT
-		raycast_wall.position.x = offset
-		raycast_wall.target_position.x = offset
-		raycast_floor.position.x = offset
-		collision_shape.position.x = offset
-		area2D.position.x = offset
+			player_dir = "RIGHT"
+			bullet_dir = Vector2.RIGHT
+			raycast_wall.position.x = offset
+			raycast_wall.target_position.x = offset
+			raycast_floor.position.x = offset
+			collision_shape.position.x = offset
+			area2D.position.x = offset
 
 
 func update_animation() -> void:
-	
-	if state != State.WALL_GRAB:
-		animated_sprite.offset = Vector2(10, -7)
-		animated_sprite2.offset = Vector2(10, -7)
-		animated_sprite3.offset = Vector2(10, -7)
-	
-	# (Hemos quitado la comprobación de animation_player.is_playing() como acordamos)
 	match state:
 		State.IDLE:
 			if Input.is_action_pressed("Shoot"):
@@ -359,27 +373,6 @@ func update_animation() -> void:
 			switch_animation(1)
 
 		State.WALL_GRAB:
-			# 1. Aplicamos el offset especial SOLO para esta animación.
-			
-			
-			# 2. Aplicamos la lógica de flip para que mire a la pared.
-			if player_dir == "RIGHT":
-				print("RIGHT")
-				animated_sprite.offset = Vector2(1.5, 0)
-				animated_sprite.flip_h = true
-				collision_shape.position.x = 10
-				raycast_wall.position.x = 10
-				raycast_floor.position.x = 10
-				area2D.position.x = 10
-			else:
-				print("LEFT")
-				animated_sprite.offset = Vector2(0, 0)
-				animated_sprite.flip_h = false
-				collision_shape.position.x = -8.5
-				raycast_wall.position.x = -8.5
-				raycast_floor.position.x = -8.5
-				area2D.position.x = -8.5
-				
 			if animated_sprite.animation != "GrabWall":
 				animated_sprite.play("GrabWall")
 				
