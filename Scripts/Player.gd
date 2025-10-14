@@ -117,6 +117,83 @@ func _ready() -> void:
 		
 	animated_sprites = [animated_sprite, animated_sprite2, animated_sprite3]
 
+func update_visuals() -> void:
+	# --- BLOQUE 1: DETERMINAR LA DIRECCIÓN ---
+	if velocity.x < 0:
+		player_dir = "LEFT"
+	elif velocity.x > 0:
+		player_dir = "RIGHT"
+
+	# --- BLOQUE 2: CONFIGURACIÓN VISUAL ---
+	
+	# Variable ÚNICA para la posición X por defecto.
+	# Si es DERECHA, la posición es 10. Si es IZQUIERDA, es -10.
+	var final_pos_x: float = 10.0 if player_dir == "RIGHT" else -10.0
+	
+	var is_flipped: bool = (player_dir == "LEFT")
+	var sprite_offset_vector: Vector2 = Vector2(10, -7)
+
+	# --- BLOQUE 3: MANEJAR CASO ESPECIAL: WALL_GRAB ---
+	if state == State.WALL_GRAB:
+		# En Wall Grab, FORZAMOS la posición final a 0
+		final_pos_x = 0
+		sprite_offset_vector = Vector2.ZERO
+		is_flipped = (player_dir == "RIGHT") # Lógica de flip opuesta para mirar hacia afuera
+
+	# --- BLOQUE 4: APLICAR TODAS LAS PROPIEDADES VISUALES ---
+	
+	# Usamos la misma variable 'final_pos_x' para TODO.
+	# Esto garantiza que siempre estarán sincronizados.
+	for s in animated_sprites:
+		s.flip_h = is_flipped
+		s.position.x = final_pos_x
+	
+	animated_sprite.offset = sprite_offset_vector
+	
+	collision_shape.position.x = final_pos_x
+	raycast_wall.position.x = final_pos_x
+	raycast_floor.position.x = final_pos_x
+	area2D.position.x = final_pos_x
+	
+	raycast_wall.target_position.x = 20.0 if player_dir == "RIGHT" else -20.0
+
+	# --- BLOQUE 5: REPRODUCIR LA ANIMACIÓN ---
+	# (El resto de la función para reproducir las animaciones no cambia)
+	var anim_name = ""
+	var current_sprite_node = animated_sprite
+	
+	match state:
+		State.IDLE:
+			anim_name = "SIdle with Gun"
+		State.RUN:
+			anim_name = "SRun with Gun"
+		State.JUMP:
+			anim_name = "Double_Jump" if just_double_jumped else "SJump"
+			if just_double_jumped: just_double_jumped = false
+		State.FALL:
+			anim_name = "SFall"
+		State.WALL_GRAB:
+			anim_name = "GrabWall"
+		State.DASH:
+			anim_name = "Dash"
+		State.DEAD:
+			anim_name = "Death"
+
+	if Input.is_action_pressed("Shoot") and (state == State.IDLE or state == State.RUN):
+		if Input.is_action_pressed("ui_up"):
+			anim_name = "SRun Shooting Up" if state == State.RUN else "SIdle Shooting Up"
+			current_sprite_node = animated_sprite3
+		else:
+			anim_name = "SRun Shooting Rect" if state == State.RUN else "SIdle Shooting Rect"
+			current_sprite_node = animated_sprite2
+	
+	if anim_name != "" and current_sprite_node.animation != anim_name:
+		current_sprite_node.play(anim_name)
+
+	if current_sprite_node == animated_sprite: switch_animation(1)
+	elif current_sprite_node == animated_sprite2: switch_animation(2)
+	elif current_sprite_node == animated_sprite3: switch_animation(3)
+
 func _physics_process(delta) -> void:
 	if not is_alive:
 		state = State.DEAD
@@ -216,6 +293,19 @@ func _physics_process(delta) -> void:
 				state = State.WALL_GRAB
 		
 		State.WALL_GRAB:
+			if is_on_floor():
+				player_dir = "LEFT" if player_dir == "RIGHT" else "RIGHT"
+				state = State.IDLE
+				return 
+			var is_still_on_grabbable_wall = on_wall and raycast_wall.get_collider().is_in_group("Grabbable Wall")
+			var is_letting_go = input_vector.x != 0 and not is_moving_towards_wall
+			if not is_still_on_grabbable_wall or is_letting_go:
+				# --- NUEVO: Invertimos la dirección del personaje ---
+				player_dir = "LEFT" if player_dir == "RIGHT" else "RIGHT"
+				
+				state = State.FALL
+				return
+				
 			velocity.y = min(velocity.y + (gravity * 0.5 * delta), wall_slide_speed)
 			velocity.x = 0
 			
@@ -246,66 +336,57 @@ func _physics_process(delta) -> void:
 	move_and_slide()
 	
 	if is_alive:
-		update_sprite_direction()
+		#update_sprite_direction()
 		handle_double_jump()
-	update_animation()
+	#update_animation()
+	update_visuals()
 
 
-func update_sprite_direction() -> void:
+#func update_sprite_direction() -> void:
+	if state == State.WALL_GRAB:
+		return
+	
 	var offset = 10
 	
-	if state == State.WALL_GRAB:
-		if player_dir == "RIGHT":
-			for s in animated_sprites:
-				s.position.x = -offset
-				s.flip_h = true
-			
-			raycast_wall.position.x = offset
-			raycast_wall.target_position.x = offset
-			raycast_floor.position.x = offset
-			collision_shape.position.x = offset
-			area2D.position.x = offset
-			return
-		elif player_dir == "LEFT":
-			for s in animated_sprites:
-				s.position.x = offset
-				s.flip_h = false
-			
-			raycast_wall.position.x = offset
-			raycast_wall.target_position.x = -offset
-			raycast_floor.position.x = offset
-			collision_shape.position.x = offset
-			area2D.position.x = offset
-			return
+	if velocity.x < 0:
+		for s in animated_sprites:
+			s.flip_h = true
+		player_dir = "LEFT"
+		
+	elif velocity.x > 0:
+		for s in animated_sprites:
+			s.flip_h = false
+		player_dir = "RIGHT"
+	
 	else:
-		if velocity.x < 0:
+		if player_dir == "LEFT":
 			for s in animated_sprites:
-				s.position.x = -offset
 				s.flip_h = true
-		
-			player_dir = "LEFT"
-			bullet_dir = Vector2.LEFT
-			raycast_wall.position.x = offset
-			raycast_wall.target_position.x = -offset
-			raycast_floor.position.x = offset
-			collision_shape.position.x = offset
-			area2D.position.x = offset
-		
-		elif velocity.x > 0:
+		else: # player_dir == "RIGHT"
 			for s in animated_sprites:
-				s.position.x = offset
 				s.flip_h = false
-		
-			player_dir = "RIGHT"
-			bullet_dir = Vector2.RIGHT
-			raycast_wall.position.x = offset
-			raycast_wall.target_position.x = offset
-			raycast_floor.position.x = offset
-			collision_shape.position.x = offset
-			area2D.position.x = offset
+	
+	if player_dir == "LEFT":
+		bullet_dir = Vector2.LEFT
+		for s in animated_sprites:
+			s.position.x = -offset
+		raycast_wall.position.x = offset
+		raycast_wall.target_position.x = -offset
+		raycast_floor.position.x = offset
+		collision_shape.position.x = offset
+		area2D.position.x = offset
+	else: # player_dir == "RIGHT"
+		bullet_dir = Vector2.RIGHT
+		for s in animated_sprites:
+			s.position.x = offset
+		raycast_wall.position.x = offset
+		raycast_wall.target_position.x = offset
+		raycast_floor.position.x = offset
+		collision_shape.position.x = offset
+		area2D.position.x = offset
 
 
-func update_animation() -> void:
+#func update_animation() -> void:
 	match state:
 		State.IDLE:
 			if Input.is_action_pressed("Shoot"):
@@ -373,14 +454,22 @@ func update_animation() -> void:
 			switch_animation(1)
 
 		State.WALL_GRAB:
+			if player_dir == "RIGHT": 
+				animated_sprite.flip_h = true
+				for s in animated_sprites:
+					s.position.x = -10 
+			else: 
+				animated_sprite.flip_h = false 
+				for s in animated_sprites:
+					s.position.x = 10
+					
 			if animated_sprite.animation != "GrabWall":
 				animated_sprite.play("GrabWall")
-				
-				switch_animation(1)
+			switch_animation(1)
 
 		State.DASH:
 			if animated_sprite.animation != "Dash":
-				animated_sprite.play("Dash") # Aquí había un error, debería ser "Dash"
+				animated_sprite.play("Dash")
 			switch_animation(1)
 
 		State.DEAD:
@@ -429,7 +518,7 @@ func handle_double_jump() -> void:
 
 
 func shoot_bullet() -> void:
-	update_animation()
+	#update_animation()
 	
 	var bullet_scene_to_spawn = ammo_scenes[current_ammo_type]
 	var bullet = bullet_scene_to_spawn.instantiate() as Area2D
