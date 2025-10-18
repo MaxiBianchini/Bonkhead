@@ -150,12 +150,12 @@ func update_visuals() -> void:
 	
 	animated_sprite.offset = sprite_offset_vector
 	
-	collision_shape.position.x = final_pos_x
-	raycast_wall.position.x = final_pos_x
-	raycast_floor.position.x = final_pos_x
-	area2D.position.x = final_pos_x
+	collision_shape.position.x = 10
+	raycast_wall.position.x = 10
+	raycast_floor.position.x = 10
+	area2D.position.x = 10
 	
-	raycast_wall.target_position.x = 20.0 if player_dir == "RIGHT" else -20.0
+	raycast_wall.target_position.x = final_pos_x
 
 	# --- BLOQUE 5: REPRODUCIR LA ANIMACIÓN ---
 	# (El resto de la función para reproducir las animaciones no cambia)
@@ -294,18 +294,15 @@ func _physics_process(delta) -> void:
 		
 		State.WALL_GRAB:
 			if is_on_floor():
-				player_dir = "LEFT" if player_dir == "RIGHT" else "RIGHT"
 				state = State.IDLE
 				return 
+			
 			var is_still_on_grabbable_wall = on_wall and raycast_wall.get_collider().is_in_group("Grabbable Wall")
 			var is_letting_go = input_vector.x != 0 and not is_moving_towards_wall
 			if not is_still_on_grabbable_wall or is_letting_go:
-				# --- NUEVO: Invertimos la dirección del personaje ---
-				player_dir = "LEFT" if player_dir == "RIGHT" else "RIGHT"
-				
 				state = State.FALL
 				return
-				
+			
 			velocity.y = min(velocity.y + (gravity * 0.5 * delta), wall_slide_speed)
 			velocity.x = 0
 			
@@ -332,61 +329,50 @@ func _physics_process(delta) -> void:
 	if is_shoot_pressed and (state == State.IDLE or state == State.RUN or state == State.JUMP or state == State.FALL):
 		audio_shoot.play()
 		shoot_bullet()
-
+	
 	move_and_slide()
 	
 	if is_alive:
-		#update_sprite_direction()
+		update_sprite_direction()
 		handle_double_jump()
-	#update_animation()
-	update_visuals()
+	update_animation()
 
-
-#func update_sprite_direction() -> void:
+func update_sprite_direction() -> void:
+	var offset := 10
+	var dir_mult := 1 if player_dir == "RIGHT" else -1
+	
 	if state == State.WALL_GRAB:
+		# Flip en pared
+		animated_sprite.flip_h = (player_dir == "RIGHT")
+		for s in animated_sprites:
+			s.position.x = -offset * dir_mult
 		return
 	
-	var offset = 10
-	
+	# Determinar dirección según velocidad
 	if velocity.x < 0:
-		for s in animated_sprites:
-			s.flip_h = true
 		player_dir = "LEFT"
-		
 	elif velocity.x > 0:
-		for s in animated_sprites:
-			s.flip_h = false
 		player_dir = "RIGHT"
-	
-	else:
-		if player_dir == "LEFT":
-			for s in animated_sprites:
-				s.flip_h = true
-		else: # player_dir == "RIGHT"
-			for s in animated_sprites:
-				s.flip_h = false
-	
-	if player_dir == "LEFT":
-		bullet_dir = Vector2.LEFT
-		for s in animated_sprites:
-			s.position.x = -offset
-		raycast_wall.position.x = offset
-		raycast_wall.target_position.x = -offset
-		raycast_floor.position.x = offset
-		collision_shape.position.x = offset
-		area2D.position.x = offset
-	else: # player_dir == "RIGHT"
-		bullet_dir = Vector2.RIGHT
-		for s in animated_sprites:
-			s.position.x = offset
-		raycast_wall.position.x = offset
-		raycast_wall.target_position.x = offset
-		raycast_floor.position.x = offset
-		collision_shape.position.x = offset
-		area2D.position.x = offset
 
+	# Actualizar flip
+	var flip := (player_dir == "LEFT")
+	for s in animated_sprites:
+		s.flip_h = flip
 
-#func update_animation() -> void:
+	# Direcciones auxiliares
+	bullet_dir = Vector2.LEFT if player_dir == "LEFT" else Vector2.RIGHT
+	dir_mult = -1 if player_dir == "LEFT" else 1
+
+	for s in animated_sprites:
+		s.position.x = offset * dir_mult
+	
+	raycast_wall.target_position.x = offset * dir_mult
+	raycast_wall.position.x = offset
+	raycast_floor.position.x = offset
+	collision_shape.position.x = offset
+	area2D.position.x = offset
+	
+func update_animation() -> void:
 	match state:
 		State.IDLE:
 			if Input.is_action_pressed("Shoot"):
@@ -454,15 +440,6 @@ func _physics_process(delta) -> void:
 			switch_animation(1)
 
 		State.WALL_GRAB:
-			if player_dir == "RIGHT": 
-				animated_sprite.flip_h = true
-				for s in animated_sprites:
-					s.position.x = -10 
-			else: 
-				animated_sprite.flip_h = false 
-				for s in animated_sprites:
-					s.position.x = 10
-					
 			if animated_sprite.animation != "GrabWall":
 				animated_sprite.play("GrabWall")
 			switch_animation(1)
