@@ -582,15 +582,8 @@ mix_target = 2
 bus = &"Music"
 
 [node name="AmmoPickup" parent="." instance=ExtResource("47_atmdf")]
-position = Vector2(1563, 1430)
-grants_ammo = 0
-
-[node name="AmmoPickup2" parent="." instance=ExtResource("47_atmdf")]
-position = Vector2(1689, 1430)
-grants_ammo = 2
-
-[node name="AmmoPickup3" parent="." instance=ExtResource("47_atmdf")]
-position = Vector2(1845, 1428)
+position = Vector2(1740, 1407)
+grants_ammo = 3
 
 [editable path="Enemies/Enemy_2"]
 [editable path="Enemies/Enemy_6"]

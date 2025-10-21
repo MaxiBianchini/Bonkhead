@@ -1,4 +1,4 @@
-[gd_scene load_steps=145 format=3 uid="uid://cdqlmgh2vxout"]
+[gd_scene load_steps=144 format=3 uid="uid://cdqlmgh2vxout"]
 
 [ext_resource type="Script" uid="uid://bbt48srafskvx" path="res://Scripts/Player.gd" id="1_y8i6y"]
 [ext_resource type="Texture2D" uid="uid://c4fc75o86mwdi" path="res://Graphics/Character/Player Original Animations/Double Jump.png" id="2_3kxgr"]
@@ -463,9 +463,6 @@ region = Rect2(192, 0, 48, 48)
 atlas = ExtResource("21_xfaas")
 region = Rect2(240, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3b1fg"]
-region = Rect2(0, 0, 48, 48)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_l1tm1"]
 animations = [{
 "frames": [{
@@ -903,14 +900,6 @@ animations = [{
 "loop": true,
 "name": &"SWalk with Gun",
 "speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3b1fg")
-}],
-"loop": true,
-"name": &"new_animation",
-"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sro4f"]
@@ -967,7 +956,7 @@ process_mode = 1
 z_index = -1
 material = SubResource("ShaderMaterial_c5nj1")
 sprite_frames = SubResource("SpriteFrames_l1tm1")
-animation = &"GrabWall"
+animation = &"BWalk Shooting Rect"
 offset = Vector2(10, -7)
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
@@ -1017,6 +1006,10 @@ one_shot = true
 wait_time = 0.1
 one_shot = true
 
+[node name="ShootCooldownTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_tuivb")
@@ -1051,3 +1044,4 @@ bus = &"SFX"
 [connection signal="timeout" from="DashCooldownTimer" to="." method="_on_dash_cool_down_timeout"]
 [connection signal="timeout" from="DashDurationTimer" to="." method="_on_dash_duration_timer_timeout"]
 [connection signal="timeout" from="HurtTimer" to="." method="_on_hurt_timer_timeout"]
+[connection signal="timeout" from="ShootCooldownTimer" to="." method="_on_shoot_cooldown_timer_timeout"]

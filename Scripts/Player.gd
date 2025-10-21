@@ -14,7 +14,8 @@ enum State {
 enum AmmoType {
 	NORMAL,
 	MORTAR,
-	PIERCING
+	PIERCING,
+	BURST
 }
 
 var state: State = State.IDLE
@@ -37,10 +38,11 @@ var animated_sprites: Array[AnimatedSprite2D] = []
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
+@onready var dead_timer: Timer = $DeadTimer
 @onready var hurt_timer: Timer = $HurtTimer
 @onready var dash_duration_timer: Timer = $DashDurationTimer 
 @onready var dash_cool_down_timer: Timer = $DashCooldownTimer
-@onready var dead_timer: Timer = $DeadTimer
+@onready var shoot_cooldown_timer: Timer = $ShootCooldownTimer
 
 @export var wall_slide_speed: float = 12.5
 @export var wall_jump_force: Vector2 = Vector2(450, -550)
@@ -64,11 +66,13 @@ var first_jump_completed: bool = false
 var is_alive: bool = true
 
 var lives: int = 5
+var can_shoot: bool = true
 
 var ammo_scenes: Dictionary = {
 	AmmoType.NORMAL: preload("res://Prefabs/Bullet.tscn"),
 	AmmoType.MORTAR: preload("res://Prefabs/MortarBullet.tscn"),
-	AmmoType.PIERCING: preload("res://Prefabs/PiercingBullet.tscn")
+	AmmoType.PIERCING: preload("res://Prefabs/PiercingBullet.tscn"),
+	AmmoType.BURST: preload("res://Prefabs/Bullet.tscn"),
 }
 var current_ammo_type: AmmoType = AmmoType.NORMAL
 
@@ -84,10 +88,15 @@ var just_double_jumped: bool = false
 var double_jump_enabled: bool = false
 var can_dash = true
 
-# En Player.gd, en la sección de variables
+var is_burst_mode_active: bool = false
+var burst_charges_left: int = 0
+const BURST_SHOT_COUNT: int = 3       # Balas por ráfaga
+const BURST_DELAY_SECONDS: float = 0.1  # Tiempo entre cada bala de la ráfaga
+const TOTAL_BURST_CHARGES: int = 6    # Cuántas ráfagas puede disparar
+
 
 const OFFSET_IDLE_RIGHT: Vector2 = Vector2(40, -9)
-const OFFSET_RUN_RIGHT: Vector2 = Vector2(45, -9)  # Ligeramente más adelante
+const OFFSET_RUN_RIGHT: Vector2 = Vector2(45, -9) 
 const OFFSET_JUMP_RIGHT: Vector2 = Vector2(40, -5)
 const OFFSET_FALL_RIGHT: Vector2 = Vector2(40, -25)
 const OFFSET_UP_RIGHT: Vector2 = Vector2(13.5, -30)
@@ -327,9 +336,19 @@ func _physics_process(delta) -> void:
 	if state == State.JUMP and Input.is_action_just_released("ui_jump") and velocity.y < 0:
 		velocity.y *= jump_cut_multiplier
 	
-	if is_shoot_pressed and (state == State.IDLE or state == State.RUN or state == State.JUMP or state == State.FALL):
-		audio_shoot.play()
-		shoot_bullet()
+	if is_shoot_pressed and can_shoot and not is_stunned and (state == State.IDLE or state == State.RUN or state == State.JUMP or state == State.FALL):
+
+	# Bloqueamos nuevos disparos hasta que el cooldown termine
+		can_shoot = false
+		shoot_cooldown_timer.start() # Inicia el temporizador de 0.5s (o lo que configures)
+
+		if current_ammo_type == AmmoType.BURST:
+			# Llamamos a la función de ráfaga (que es asíncrona)
+			start_burst_fire() 
+		else:
+		# Disparo normal (como antes)
+			audio_shoot.play()
+			shoot_bullet()
 	
 	move_and_slide()
 	
@@ -496,29 +515,58 @@ func handle_double_jump() -> void:
 
 
 func shoot_bullet() -> void:
-	#update_animation()
+	update_animation() # (Esto ya lo tenías, actualiza los offsets de bala)
 	
-	var bullet_scene_to_spawn = ammo_scenes[current_ammo_type]
+	# 1. Determinamos qué tipo de bala instanciar
+	var ammo_type_to_spawn = current_ammo_type
+	if current_ammo_type == AmmoType.BURST:
+		# El modo Ráfaga dispara la bala Normal
+		ammo_type_to_spawn = AmmoType.NORMAL 
+
+	# 2. Obtenemos la escena de la bala a instanciar
+	var bullet_scene_to_spawn = ammo_scenes[ammo_type_to_spawn]
 	var bullet = bullet_scene_to_spawn.instantiate() as Area2D
 	
+	# 3. El resto de tu función de configuración de la bala...
 	if bullet.has_method("set_shooter"):
 		bullet.set_shooter(self)
 		
 	if bullet.has_method("set_mask"):
-		bullet.set_mask(3) 
+		bullet.set_mask(3)
 	
 	if bullet.has_method("set_direction"):
+		# (Tu lógica de disparo de mortero hacia arriba sigue funcionando aquí)
 		if (current_ammo_type == AmmoType.MORTAR and bullet_dir == Vector2.UP and bullet.has_method("set_aim_state")):
 			bullet.set_aim_state(true)
 			bullet.set_direction(check_direction())
 		else:
 			bullet.set_direction(bullet_dir)
-	# Asignamos los valores que ya calculamos en update_animation
+			
 	bullet.global_position = global_position + bullet_offset
 	get_tree().current_scene.add_child(bullet)
 
 func set_ammo_type(new_type: AmmoType) -> void:
+	# Evitamos acciones redundantes si ya tenemos ese tipo
+	if current_ammo_type == new_type:
+		return
+
 	current_ammo_type = new_type
+
+	# Usamos un 'match' para manejar la lógica de cada tipo
+	match current_ammo_type:
+		AmmoType.NORMAL, AmmoType.MORTAR, AmmoType.PIERCING:
+			# Si cambiamos a cualquier bala normal, volvemos al arma "Small"
+			if gun_type == "Big":
+				change_weapon()
+		
+		AmmoType.BURST:
+			# Activamos el modo ráfaga
+			burst_charges_left = TOTAL_BURST_CHARGES
+			# Cambiamos al arma "Big"
+			if gun_type == "Small":
+				change_weapon()
+	
+	# Emitimos la señal para que el SceneManager actualice la UI
 	ammo_changed.emit(current_ammo_type)
 
 func ignore_platform_collision() -> void:
@@ -568,6 +616,40 @@ func increase_life() -> bool:
 	else:
 		return false
 
+# --- FUNCIONES DEL MODO RÁFAGA ---
+
+# Esta es la función que debe llamar tu "AmmoPickup" especial
+func activate_burst_mode() -> void:
+	is_burst_mode_active = true
+	burst_charges_left = TOTAL_BURST_CHARGES
+	
+	# Cambiamos al arma grande si no la tenemos ya
+	if gun_type == "Small":
+		change_weapon() # Llama a tu función existente
+
+# Esta función es asíncrona (async) para poder usar 'await'
+# Se encarga de disparar las 3 balas
+func start_burst_fire() -> void:
+	burst_charges_left -= 1 # Gastamos una carga de ráfaga
+	
+	for i in range(BURST_SHOT_COUNT):
+		audio_shoot.play()
+		shoot_bullet() # Llama a tu función de disparo existente
+		
+		# Esperamos un breve momento antes de la siguiente bala
+		await get_tree().create_timer(BURST_DELAY_SECONDS).timeout
+	
+	# Comprobamos si se acabaron las cargas
+	if burst_charges_left <= 0:
+		deactivate_burst_mode()
+
+# Se llama para volver al estado normal
+func deactivate_burst_mode() -> void:
+	is_burst_mode_active = false
+	
+	# Volvemos al arma pequeña
+	if gun_type == "Big":
+		change_weapon()
 
 func disable_player_collision() -> void:
 	area2D.set_collision_mask_value(3,false)
@@ -608,3 +690,6 @@ func _on_area_entered(area: Area2D) -> void:
 
 func _on_hurt_timer_timeout() -> void:
 	is_stunned = false
+
+func _on_shoot_cooldown_timer_timeout() -> void:
+	can_shoot = true # Permitimos que el jugador vuelva a disparar
