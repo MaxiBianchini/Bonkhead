@@ -7,6 +7,7 @@ var time_label: Label = null
 var points_label: Label = null
 var lives_sprites: Array = []
 var packs_sprites: Array = []
+var bullet_type: Array = []
 var comic_page: Node = null
 var player: Node = null
 var gui: Node = null
@@ -31,8 +32,6 @@ func _on_tree_changed() -> void:
 	call_deferred("initialize_scene")
 
 func initialize_scene() -> void:
-	
-	
 	var current_scene = get_tree().current_scene
 	
 	if current_scene:
@@ -46,6 +45,13 @@ func initialize_scene() -> void:
 			gui = current_scene.get_node("GUI")
 			time_label = gui.get_node("HBoxContainer/TimeLabel/Text")
 			points_label = gui.get_node("HBoxContainer/PointsLabel/Text")
+			
+			var bullet_type_container = gui.get_node("HBoxContainer/BulletIcon")
+			bullet_type = bullet_type_container.get_children()
+			# Ocultamos todos los íconos por defecto al cargar
+			for icon in bullet_type:
+				icon.visible = false
+				
 			var lives_container = gui.get_node("HBoxContainer/LivesLabel/HBoxContainer")
 			lives_sprites = lives_container.get_children()
 			var packs_container = gui.get_node("HBoxContainer/LifePacks/HBoxContainer")
@@ -65,7 +71,10 @@ func initialize_scene() -> void:
 					player.player_died.connect(on_player_died)
 				if not player.change_UI_lives.is_connected(update_lives):
 					player.change_UI_lives.connect(update_lives)
-					
+				if not player.ammo_changed.is_connected(update_ammo_icon):
+					player.ammo_changed.connect(update_ammo_icon)
+				# Actualizamos el ícono una vez al inicio con la munición actual del jugador
+				update_ammo_icon(player.current_ammo_type)
 
 func _process(delta):
 	if gui and gui.visible:
@@ -101,6 +110,16 @@ func respawn_player():
 	# Reiniciamos el tiempo del nivel para que no se acumule tras la muerte.
 	game_time = 0.0 
 	ScenesTransitions.change_scene(get_tree().current_scene.scene_file_path)
+	
+
+func update_ammo_icon(ammo_type_index: int) -> void:
+	# 1. Ocultamos todos los íconos primero
+	for icon in bullet_type:
+		icon.visible = false
+
+	# 2. Mostramos solo el ícono correcto, si existe en el array
+	if ammo_type_index >= 0 and ammo_type_index < bullet_type.size():
+		bullet_type[ammo_type_index].visible = true
 
 # En la función restart_gameplay(), asegúrate de que reinicie el juego desde cero.
 func restart_gameplay() -> void:

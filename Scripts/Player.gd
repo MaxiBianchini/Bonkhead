@@ -47,6 +47,7 @@ var animated_sprites: Array[AnimatedSprite2D] = []
 
 signal player_died
 signal change_UI_lives(change_lives)
+signal ammo_changed(new_ammo_type)
 
 var gravity: int = 2000
 var jump_force: float = -550
@@ -518,6 +519,7 @@ func shoot_bullet() -> void:
 
 func set_ammo_type(new_type: AmmoType) -> void:
 	current_ammo_type = new_type
+	ammo_changed.emit(current_ammo_type)
 
 func ignore_platform_collision() -> void:
 	state = State.FALL
