@@ -1,4 +1,4 @@
-[gd_scene load_steps=144 format=3 uid="uid://cdqlmgh2vxout"]
+[gd_scene load_steps=151 format=3 uid="uid://cdqlmgh2vxout"]
 
 [ext_resource type="Script" uid="uid://bbt48srafskvx" path="res://Scripts/Player.gd" id="1_y8i6y"]
 [ext_resource type="Texture2D" uid="uid://c4fc75o86mwdi" path="res://Graphics/Character/Player Original Animations/Double Jump.png" id="2_3kxgr"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dv4ligaohgdx0" path="res://Graphics/Character/Player Original Animations/Death.png" id="3_jmmxa"]
 [ext_resource type="Texture2D" uid="uid://ffqup17vhfhy" path="res://Graphics/Character/Player with Guns Animations/Big Gun/Fall/Fall with Gun.png" id="6_b2t0f"]
 [ext_resource type="Texture2D" uid="uid://cicx63sdf0cbg" path="res://Graphics/Character/Player with Guns Animations/Small Gun/Fall/Fall with Gun.png" id="6_n3efl"]
+[ext_resource type="Texture2D" uid="uid://cvdqyqaa8ay7y" path="res://Graphics/Character/Run como objeto inteligente-2.png" id="7_2ywdf"]
 [ext_resource type="Texture2D" uid="uid://biugy4xo0k5ns" path="res://Graphics/Character/Player with Guns Animations/Big Gun/Jump/Jump with Gun.png" id="7_1801k"]
 [ext_resource type="Texture2D" uid="uid://c845r0n25uupx" path="res://Graphics/Character/Player with Guns Animations/Big Gun/Idle/Idle Shooting Rect.png" id="7_v8yjo"]
 [ext_resource type="Texture2D" uid="uid://6gy3rbdn7t1h" path="res://Graphics/Character/Player with Guns Animations/Small Gun/Idle/Idle Shooting Up.png" id="8_ctqys"]
@@ -106,6 +107,30 @@ region = Rect2(96, 0, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_1mju0"]
 atlas = ExtResource("7_1801k")
 region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3b1fg"]
+atlas = ExtResource("7_2ywdf")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdj0h"]
+atlas = ExtResource("7_2ywdf")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h3dj0"]
+atlas = ExtResource("7_2ywdf")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0yh01"]
+atlas = ExtResource("7_2ywdf")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ty6fx"]
+atlas = ExtResource("7_2ywdf")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_700hf"]
+atlas = ExtResource("7_2ywdf")
+region = Rect2(240, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sp0jg"]
 atlas = ExtResource("11_yhspe")
@@ -546,6 +571,29 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_3b1fg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fdj0h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h3dj0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0yh01")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ty6fx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_700hf")
+}],
+"loop": true,
+"name": &"BRun without gun",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_sp0jg")
 }, {
 "duration": 1.0,
@@ -950,13 +998,17 @@ _data = {
 collision_layer = 2
 floor_max_angle = 0.872665
 script = ExtResource("1_y8i6y")
+metadata/_edit_horizontal_guides_ = [-4.0]
+metadata/_edit_vertical_guides_ = [0.0]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 process_mode = 1
 z_index = -1
 material = SubResource("ShaderMaterial_c5nj1")
 sprite_frames = SubResource("SpriteFrames_l1tm1")
-animation = &"BWalk Shooting Rect"
+animation = &"BRun without gun"
+frame = 4
+frame_progress = 0.4029
 offset = Vector2(10, -7)
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
