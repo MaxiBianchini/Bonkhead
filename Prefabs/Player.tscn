@@ -1,4 +1,4 @@
-[gd_scene load_steps=151 format=3 uid="uid://cdqlmgh2vxout"]
+[gd_scene load_steps=158 format=3 uid="uid://cdqlmgh2vxout"]
 
 [ext_resource type="Script" uid="uid://bbt48srafskvx" path="res://Scripts/Player.gd" id="1_y8i6y"]
 [ext_resource type="Texture2D" uid="uid://c4fc75o86mwdi" path="res://Graphics/Character/Player Original Animations/Double Jump.png" id="2_3kxgr"]
@@ -7,7 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://dv4ligaohgdx0" path="res://Graphics/Character/Player Original Animations/Death.png" id="3_jmmxa"]
 [ext_resource type="Texture2D" uid="uid://ffqup17vhfhy" path="res://Graphics/Character/Player with Guns Animations/Big Gun/Fall/Fall with Gun.png" id="6_b2t0f"]
 [ext_resource type="Texture2D" uid="uid://cicx63sdf0cbg" path="res://Graphics/Character/Player with Guns Animations/Small Gun/Fall/Fall with Gun.png" id="6_n3efl"]
-[ext_resource type="Texture2D" uid="uid://cvdqyqaa8ay7y" path="res://Graphics/Character/Run como objeto inteligente-2.png" id="7_2ywdf"]
+[ext_resource type="Texture2D" uid="uid://bjh1lim0ynwko" path="res://Graphics/Character/Player with Guns Animations/Big Gun/Run/Run with Gun.png" id="7_2ywdf"]
+[ext_resource type="Texture2D" uid="uid://brbtf1glajb2y" path="res://Graphics/Character/Player with Arm Animations/Arma grande/Run/Run como objeto inteligente-1.png" id="7_3b1fg"]
 [ext_resource type="Texture2D" uid="uid://biugy4xo0k5ns" path="res://Graphics/Character/Player with Guns Animations/Big Gun/Jump/Jump with Gun.png" id="7_1801k"]
 [ext_resource type="Texture2D" uid="uid://c845r0n25uupx" path="res://Graphics/Character/Player with Guns Animations/Big Gun/Idle/Idle Shooting Rect.png" id="7_v8yjo"]
 [ext_resource type="Texture2D" uid="uid://6gy3rbdn7t1h" path="res://Graphics/Character/Player with Guns Animations/Small Gun/Idle/Idle Shooting Up.png" id="8_ctqys"]
@@ -107,6 +108,30 @@ region = Rect2(96, 0, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_1mju0"]
 atlas = ExtResource("7_1801k")
 region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_605ro"]
+atlas = ExtResource("7_3b1fg")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mghi7"]
+atlas = ExtResource("7_3b1fg")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dik4f"]
+atlas = ExtResource("7_3b1fg")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fd7od"]
+atlas = ExtResource("7_3b1fg")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_76k07"]
+atlas = ExtResource("7_3b1fg")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5sr42"]
+atlas = ExtResource("7_3b1fg")
+region = Rect2(240, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3b1fg"]
 atlas = ExtResource("7_2ywdf")
@@ -571,6 +596,29 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_605ro")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mghi7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dik4f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fd7od")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_76k07")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5sr42")
+}],
+"loop": true,
+"name": &"BRun Shooting Rect",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_3b1fg")
 }, {
 "duration": 1.0,
@@ -589,7 +637,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_700hf")
 }],
 "loop": true,
-"name": &"BRun without gun",
+"name": &"BRun with Gun",
 "speed": 5.0
 }, {
 "frames": [{
@@ -1006,12 +1054,12 @@ process_mode = 1
 z_index = -1
 material = SubResource("ShaderMaterial_c5nj1")
 sprite_frames = SubResource("SpriteFrames_l1tm1")
-animation = &"BRun without gun"
-frame = 4
-frame_progress = 0.4029
+animation = &"BRun Shooting Rect"
+frame_progress = 0.337635
 offset = Vector2(10, -7)
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+visible = false
 z_index = -1
 material = SubResource("ShaderMaterial_c5nj1")
 sprite_frames = SubResource("SpriteFrames_l1tm1")
@@ -1019,6 +1067,7 @@ animation = &"SIdle Shooting Rect"
 offset = Vector2(10, -7)
 
 [node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="."]
+visible = false
 z_index = -1
 material = SubResource("ShaderMaterial_c5nj1")
 sprite_frames = SubResource("SpriteFrames_l1tm1")
@@ -1026,10 +1075,12 @@ animation = &"SIdle with Gun"
 offset = Vector2(10, -7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0.5, 0.25)
 shape = SubResource("RectangleShape2D_sro4f")
 
 [node name="Area2D" type="Area2D" parent="."]
+visible = false
 collision_layer = 2
 collision_mask = 28
 
@@ -1037,9 +1088,11 @@ collision_mask = 28
 shape = SubResource("CapsuleShape2D_m4vyk")
 
 [node name="Raycast_wall" type="RayCast2D" parent="."]
+visible = false
 target_position = Vector2(15, 0)
 
 [node name="Raycast_floor" type="RayCast2D" parent="."]
+visible = false
 target_position = Vector2(0, 42)
 
 [node name="DeadTimer" type="Timer" parent="."]
