@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brbtf1glajb2y"
-path="res://.godot/imported/Run como objeto inteligente-1.png-5b4224a3d43af8b17b11dcb166400074.ctex"
+uid="uid://daunvme7ity3s"
+path="res://.godot/imported/Run Shooting Rect.png-f080bae4eb23579ba3b884a15d3951f0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Graphics/Character/Player with Arm Animations/Arma grande/Run/Run como objeto inteligente-1.png"
-dest_files=["res://.godot/imported/Run como objeto inteligente-1.png-5b4224a3d43af8b17b11dcb166400074.ctex"]
+source_file="res://Graphics/Character/Player with Guns Animations/Big Gun/Run/Run Shooting Rect.png"
+dest_files=["res://.godot/imported/Run Shooting Rect.png-f080bae4eb23579ba3b884a15d3951f0.ctex"]
 
 [params]
 

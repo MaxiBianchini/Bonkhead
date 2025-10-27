@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6sp37x4u087b"
-path="res://.godot/imported/Run Shooting Rect.png-e3f0b0686ccf61a4e9b5cfd3d3be310c.ctex"
+uid="uid://4rv8dhw8rwd8"
+path="res://.godot/imported/RUN up.png-1f112170bc2d8b63805c4cefa672af04.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Graphics/Character/Player with Arm Animations/Arma grande/Run/Run Shooting Rect.png"
-dest_files=["res://.godot/imported/Run Shooting Rect.png-e3f0b0686ccf61a4e9b5cfd3d3be310c.ctex"]
+source_file="res://Graphics/Character/Player with Arm Animations/Arma grande/Run/RUN up.png"
+dest_files=["res://.godot/imported/RUN up.png-1f112170bc2d8b63805c4cefa672af04.ctex"]
 
 [params]
 
