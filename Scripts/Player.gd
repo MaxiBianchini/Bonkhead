@@ -434,7 +434,7 @@ func update_animation() -> void:
 						animated_sprite2.play(anim_name)
 					switch_animation(2)
 			else:
-				var anim_name = "SRun with Gun" if gun_type == "Small" else "BRun without gun"
+				var anim_name = "SRun with Gun" if gun_type == "Small" else "BRun with Gun"
 				if animated_sprite.animation != anim_name:
 					animated_sprite.play(anim_name)
 				switch_animation(1)
