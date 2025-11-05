@@ -2,7 +2,7 @@ extends Area2D
 
 ## Esta variable nos permitirá elegir qué tipo de munición otorga este ítem
 ## desde el editor de Godot.
-@export var grants_ammo: Player.AmmoType = Player.AmmoType.MORTAR
+@export var grants_ammo: Player.AmmoType
 
 func _on_body_entered(body: Node2D) -> void:
 	# Comprobamos si el cuerpo que entró en nuestra área es el jugador.

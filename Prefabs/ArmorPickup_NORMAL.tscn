@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bhjfw0ywdedtn"]
+
+[ext_resource type="Script" uid="uid://buaumglfhdoxp" path="res://Scripts/AmmoPickup.gd" id="1_6yrwd"]
+[ext_resource type="Texture2D" uid="uid://mtx0i2c2bmsm" path="res://Graphics/Guns & Bullets/Ammo Pickup/AmmoPickup_01.png" id="2_uxm8e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l0xwl"]
+
+[node name="AmmoPickup_NORMAL" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_6yrwd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_uxm8e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_l0xwl")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

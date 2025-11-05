@@ -340,15 +340,16 @@ func _physics_process(delta) -> void:
 
 	# Bloqueamos nuevos disparos hasta que el cooldown termine
 		can_shoot = false
-		shoot_cooldown_timer.start() # Inicia el temporizador de 0.5s (o lo que configures)
-
+		
 		if current_ammo_type == AmmoType.BURST:
+			shoot_cooldown_timer.start() # Inicia el temporizador de 0.5s (o lo que configures)
 			# Llamamos a la función de ráfaga (que es asíncrona)
 			start_burst_fire() 
 		else:
 		# Disparo normal (como antes)
 			audio_shoot.play()
 			shoot_bullet()
+			can_shoot = true
 	
 	move_and_slide()
 	
@@ -582,7 +583,7 @@ func change_weapon() -> void:
 		gun_type = "Big"
 	else:
 		gun_type = "Small"
-	change_gun_type = true
+		set_ammo_type(AmmoType.NORMAL)
 
 
 func take_damage() -> void:
@@ -642,6 +643,7 @@ func start_burst_fire() -> void:
 	# Comprobamos si se acabaron las cargas
 	if burst_charges_left <= 0:
 		deactivate_burst_mode()
+		can_shoot = true
 
 # Se llama para volver al estado normal
 func deactivate_burst_mode() -> void:
