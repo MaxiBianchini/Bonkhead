@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=27 format=3 uid="uid://bwmrtff06jx5m"]
+[gd_resource type="TileSet" load_steps=29 format=3 uid="uid://bwmrtff06jx5m"]
 
 [ext_resource type="Texture2D" uid="uid://bn6ronbqnurq8" path="res://Graphics/Zonas/Exclusion-zone/1 Tiles/Exclusion-zone.png" id="1_ytfyc"]
 [ext_resource type="Texture2D" uid="uid://bl6cfe4jcc366" path="res://Graphics/Zonas/Green-zone/1 Tiles/Green-zone.png" id="2_ovoqu"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://duucdsl62xwpa" path="res://Graphics/Zonas/Exclusion-zone/1 Tiles/Bidirectional Platform.png" id="3_ovoqu"]
 [ext_resource type="Texture2D" uid="uid://dt4bfwqqtlajs" path="res://Graphics/Sonic2_MD_Map_HTZ_chunks.png" id="4_3yt2j"]
 [ext_resource type="Texture2D" uid="uid://b481tnfk33dlk" path="res://Graphics/Zonas/Station-zone/1 Tiles/Station-zone.png" id="4_i5wm2"]
+[ext_resource type="Texture2D" uid="uid://dpax132pnwyn3" path="res://Graphics/Zonas/MoltenRock.png" id="5_3au66"]
 [ext_resource type="Texture2D" uid="uid://4c3np1kk6as7" path="res://Graphics/Zonas/Lava.png" id="5_3wbki"]
 [ext_resource type="Texture2D" uid="uid://4ixht17trucf" path="res://Graphics/Zonas/Green-zone/1 Tiles/Bidirectional Platform.png" id="6_3cysp"]
 [ext_resource type="Texture2D" uid="uid://cdnjvvj85nqhb" path="res://Graphics/Zonas/Industrial-zone/1 Tiles/Bidirectional Platform.png" id="7_3qcl4"]
@@ -3652,6 +3653,20 @@ texture_region_size = Vector2i(32, 32)
 62:63/0 = 0
 63:63/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ahbui"]
+texture = ExtResource("5_3au66")
+texture_region_size = Vector2i(32, 32)
+0:0/animation_frame_0/duration = 1.0
+0:0/animation_frame_1/duration = 1.0
+0:0/animation_frame_2/duration = 1.0
+0:0/animation_frame_3/duration = 1.0
+0:0/0 = 0
+0:1/animation_frame_0/duration = 1.0
+0:1/animation_frame_1/duration = 1.0
+0:1/animation_frame_2/duration = 1.0
+0:1/animation_frame_3/duration = 1.0
+0:1/0 = 0
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3yt2j"]
 texture = ExtResource("5_3wbki")
 texture_region_size = Vector2i(32, 32)
@@ -6938,6 +6953,7 @@ sources/8 = SubResource("TileSetAtlasSource_nq5sg")
 sources/7 = SubResource("TileSetAtlasSource_3cysp")
 sources/9 = SubResource("TileSetAtlasSource_7wmel")
 sources/10 = SubResource("TileSetAtlasSource_d6eqf")
-sources/11 = SubResource("TileSetAtlasSource_3au66")
 sources/14 = SubResource("TileSetAtlasSource_3yt2j")
+sources/12 = SubResource("TileSetAtlasSource_ahbui")
+sources/11 = SubResource("TileSetAtlasSource_3au66")
 tile_proxies/coords_level = [[25, Vector2i(0, 0)], [87, Vector2i(0, 0)], [115, Vector2i(0, 0)], [87, Vector2i(1, 0)]]

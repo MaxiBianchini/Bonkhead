@@ -277,7 +277,7 @@ script = ExtResource("1_xnerr")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_eln1y")
 sprite_frames = SubResource("SpriteFrames_d4cnq")
-animation = &"Shoot"
+animation = &"Angry"
 offset = Vector2(10, -7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
