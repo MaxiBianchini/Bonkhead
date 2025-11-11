@@ -114,15 +114,15 @@ func _ready() -> void:
 	current_level = SceneManager.current_level
 	# Según el GDD, los poderes se desbloquean AL INICIAR el nivel siguiente.
 	# Nivel 2: Se obtiene el Doble Salto
-	if current_level >= 1:#3
+	if current_level >= 2:#2
 		double_jump_power_activated = true
 	
 	# Nivel 3: Se obtiene el Dash
-	if current_level >=1:#4
+	if current_level >=3:#3
 		dash_power_activated = true
 	
 	# Nivel 4: Se obtiene el Agarre en Pared
-	if current_level >= 1:#5
+	if current_level >= 4:#4
 		wall_grab_power_activated = true
 		
 	animated_sprites = [animated_sprite, animated_sprite2, animated_sprite3]
