@@ -194,10 +194,6 @@ tile_set = ExtResource("6_sucmb")
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
-[node name="Grabbable Wall" type="TileMapLayer" parent="TileMaps" groups=["Grabbable Wall"]]
-tile_set = ExtResource("6_sucmb")
-metadata/_edit_lock_ = true
-
 [node name="Decorations" type="Node2D" parent="TileMaps"]
 metadata/_edit_lock_ = true
 
@@ -212,7 +208,7 @@ position = Vector2(611, 758)
 texture = ExtResource("39_fkjh7")
 
 [node name="4" type="Sprite2D" parent="TileMaps/Decorations"]
-position = Vector2(462, 753)
+position = Vector2(464, 753)
 texture = ExtResource("40_86852")
 
 [node name="Tree1" type="Sprite2D" parent="TileMaps/Decorations"]

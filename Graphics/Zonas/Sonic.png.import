@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gnwjr206qnjb"
-path="res://.godot/imported/Sonic1_MD_Map_MZ_chunks.png-9bc866a5b604e0a9294bd46238e0d7ac.ctex"
+uid="uid://bho4fii5fbbv0"
+path="res://.godot/imported/Sonic.png-406b9918049eca06b598fa1051589757.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Graphics/Zonas/Sonic1_MD_Map_MZ_chunks.png"
-dest_files=["res://.godot/imported/Sonic1_MD_Map_MZ_chunks.png-9bc866a5b604e0a9294bd46238e0d7ac.ctex"]
+source_file="res://Graphics/Zonas/Sonic.png"
+dest_files=["res://.godot/imported/Sonic.png-406b9918049eca06b598fa1051589757.ctex"]
 
 [params]
 
