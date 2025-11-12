@@ -118,7 +118,7 @@ func _ready() -> void:
 		double_jump_power_activated = true
 	
 	# Nivel 3: Se obtiene el Dash
-	if current_level >=3:#3
+	if current_level >= 1:#3
 		dash_power_activated = true
 	
 	# Nivel 4: Se obtiene el Agarre en Pared
