@@ -258,7 +258,8 @@ animations = [{
 radius = 15.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_eka17"]
-radius = 205.039
+resource_local_to_scene = true
+radius = 210.0857
 
 [sub_resource type="Animation" id="Animation_5finp"]
 resource_name = "Hurt"
