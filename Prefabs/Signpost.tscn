@@ -5,6 +5,7 @@
 [ext_resource type="FontFile" uid="uid://c88rb6dh1ub4j" path="res://Graphics/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="2_rqi6p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rqi6p"]
+resource_local_to_scene = true
 size = Vector2(150, 35)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ceuot"]
