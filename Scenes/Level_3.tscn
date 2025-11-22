@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=4 uid="uid://cfha71cwde8ga"]
+[gd_scene load_steps=82 format=4 uid="uid://cfha71cwde8ga"]
 
 [ext_resource type="Texture2D" uid="uid://bsocdq3axyxcs" path="res://Graphics/Zonas/Industrial-zone/2 Background/1.png" id="1_kclu0"]
 [ext_resource type="Texture2D" uid="uid://bjjt1xb6dtc6x" path="res://Graphics/Zonas/Industrial-zone/2 Background/2.png" id="2_m3o7n"]
@@ -16,16 +16,46 @@
 [ext_resource type="PackedScene" uid="uid://cjs4t4cu2dreb" path="res://Prefabs/SpikesX1.tscn" id="22_vt1oc"]
 [ext_resource type="PackedScene" uid="uid://d2fpq7nxaiblh" path="res://Prefabs/Dead_Area.tscn" id="23_ks2qj"]
 [ext_resource type="PackedScene" uid="uid://cscqxhrr4mwbx" path="res://Prefabs/Live_Up.tscn" id="25_dimxf"]
+[ext_resource type="Texture2D" uid="uid://bruxedh3i3ejq" path="res://Graphics/Comic Pages/ComicPage3.png" id="26_gxv86"]
 [ext_resource type="PackedScene" uid="uid://bh3h363wnt1mt" path="res://Prefabs/Signpost.tscn" id="26_is6g6"]
+[ext_resource type="Texture2D" uid="uid://dep0ftqd4qk0b" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Box1.png" id="27_4t4by"]
 [ext_resource type="PackedScene" uid="uid://fxla73vs5hxe" path="res://Prefabs/Phantom_Area.tscn" id="27_gxv86"]
+[ext_resource type="Texture2D" uid="uid://nfk1gvdu3n3o" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Box2.png" id="28_ck2vj"]
+[ext_resource type="Texture2D" uid="uid://d1dbhfhqk2o3g" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Board2.png" id="29_m0ax1"]
+[ext_resource type="Texture2D" uid="uid://c0x4ecwjuvktn" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Mop.png" id="30_8pyqv"]
+[ext_resource type="Texture2D" uid="uid://biu2p246k0bvr" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Bucket.png" id="31_kclu0"]
+[ext_resource type="Texture2D" uid="uid://1phy88at6tky" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Fire-extinguisher2.png" id="33_fl2ps"]
+[ext_resource type="Texture2D" uid="uid://drurre1dt14e3" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Flag.png" id="34_v7d8o"]
+[ext_resource type="Texture2D" uid="uid://b5j1qi823r7jm" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Box5.png" id="35_u6gia"]
+[ext_resource type="Texture2D" uid="uid://c5lkvx4bc7gy0" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Box6.png" id="36_03ijt"]
+[ext_resource type="Texture2D" uid="uid://c2kb3rrwpte1u" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Fire-extinguisher3.png" id="37_nnsc6"]
+[ext_resource type="Texture2D" uid="uid://xu8c3c8ebg24" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Locker3.png" id="38_547qm"]
 [ext_resource type="PackedScene" uid="uid://dch15up2fk0ht" path="res://Prefabs/GUI.tscn" id="39_4rjef"]
+[ext_resource type="Texture2D" uid="uid://d3xjvvbl3fafo" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Board1.png" id="39_gt3hu"]
 [ext_resource type="PackedScene" uid="uid://cdqlmgh2vxout" path="res://Prefabs/Player.tscn" id="40_31dam"]
+[ext_resource type="Texture2D" uid="uid://ba212xdlpmiti" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Barrel1.png" id="40_s7kxy"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="41_slqqf"]
+[ext_resource type="Texture2D" uid="uid://dhv7yh5h4ed53" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Barrel2.png" id="41_y707i"]
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="42_ffm0v"]
+[ext_resource type="Texture2D" uid="uid://c0lua5m0ys85d" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Fence1.png" id="42_xuy6e"]
+[ext_resource type="Texture2D" uid="uid://pbugmrn78ljf" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Fence2.png" id="43_b63xq"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="43_qetgj"]
+[ext_resource type="Texture2D" uid="uid://bs24v4s1vw3gd" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Fence3.png" id="44_7kpxu"]
+[ext_resource type="Texture2D" uid="uid://h1ne4jhpdb5h" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Barrel3.png" id="45_3sr2a"]
+[ext_resource type="Texture2D" uid="uid://fa75u2xkk2xt" path="res://Graphics/Zonas/Green-zone/3 Objects/Fence/5.png" id="46_xkj5h"]
+[ext_resource type="Texture2D" uid="uid://b7ffqlkivg71k" path="res://Graphics/Zonas/Green-zone/3 Objects/Fence/1.png" id="47_7o5mi"]
+[ext_resource type="Texture2D" uid="uid://lj37d0d5ctu0" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Box3.png" id="48_o6jqb"]
+[ext_resource type="Texture2D" uid="uid://d141jpe7a1psq" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Box4.png" id="49_1pyoa"]
+[ext_resource type="Texture2D" uid="uid://clljavvv7rpop" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Ladder2.png" id="50_xwgeh"]
+[ext_resource type="Texture2D" uid="uid://fh40aq0xar0n" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Ladder1.png" id="51_wupq3"]
+[ext_resource type="Texture2D" uid="uid://cmgokg8ysn88s" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Locker1.png" id="52_kclu0"]
+[ext_resource type="Texture2D" uid="uid://1mw3o0wr6p22" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Ladder3.png" id="52_wlebf"]
+[ext_resource type="Texture2D" uid="uid://d4gf8t3oyy60u" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Locker2.png" id="53_m3o7n"]
 [ext_resource type="PackedScene" uid="uid://d1i3yjdbq4dmk" path="res://Prefabs/Page_Comic.tscn" id="54_763rg"]
-[ext_resource type="Texture2D" uid="uid://cf2xm4pu4utul" path="res://Graphics/Comic Pages/ComicPage2.png" id="55_3csik"]
+[ext_resource type="Texture2D" uid="uid://bncitmopx44ji" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Barrel4.png" id="54_fl2ps"]
+[ext_resource type="Texture2D" uid="uid://bmo2fmbnq5wqy" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Bench.png" id="55_v7d8o"]
 [ext_resource type="AudioStream" uid="uid://cphpe1giw4pxl" path="res://Music/Level1_Music (mp3cut.net) LOOP.mp3" id="56_l4u0w"]
+[ext_resource type="Texture2D" uid="uid://ddl6k1njkbk68" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Pointer2.png" id="56_u6gia"]
 
 [sub_resource type="Resource" id="Resource_5toea"]
 script = ExtResource("43_qetgj")
@@ -60,7 +90,7 @@ size = Vector2(419.6015, 72)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8e1fl"]
 resource_local_to_scene = true
-size = Vector2(514.6015, 54)
+size = Vector2(495.60156, 54)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fyg01"]
 resource_local_to_scene = true
@@ -108,7 +138,7 @@ size = Vector2(441, 565.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mfbgy"]
 resource_local_to_scene = true
-size = Vector2(1112, 435)
+size = Vector2(1112, 476.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q17hi"]
 resource_local_to_scene = true
@@ -224,16 +254,184 @@ metadata/_edit_lock_ = true
 [node name="Decorations" type="Node2D" parent="TileMaps"]
 metadata/_edit_lock_ = true
 
+[node name="Box1" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(1919, 1105)
+texture = ExtResource("27_4t4by")
+
+[node name="Box2" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(1904.5, 1102.5)
+scale = Vector2(1.15625, 1.15625)
+texture = ExtResource("28_ck2vj")
+
+[node name="Board2" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(1575, 1463)
+texture = ExtResource("29_m0ax1")
+
+[node name="Mop" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(1551, 1487)
+texture = ExtResource("30_8pyqv")
+
+[node name="Bucket" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(1543, 1487)
+texture = ExtResource("31_kclu0")
+
+[node name="FireExtinguisher2" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(4914, 2749)
+texture = ExtResource("33_fl2ps")
+
+[node name="Flag" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(4976, 2716)
+texture = ExtResource("34_v7d8o")
+
+[node name="Box5" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(5780, 2673)
+texture = ExtResource("35_u6gia")
+
+[node name="Box6" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(5799, 2673)
+texture = ExtResource("36_03ijt")
+
+[node name="Box3" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(5833, 2673)
+texture = ExtResource("28_ck2vj")
+
+[node name="FireExtinguisher3" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(5864, 2672)
+texture = ExtResource("37_nnsc6")
+
+[node name="Locker3" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(3043, 1573)
+scale = Vector2(1.6875, 1.75)
+texture = ExtResource("38_547qm")
+
+[node name="Board1" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(2980, 1559.5)
+scale = Vector2(1.1875, 1.15625)
+texture = ExtResource("39_gt3hu")
+
+[node name="Barrel1" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(4273, 1780)
+texture = ExtResource("40_s7kxy")
+
+[node name="Barrel2" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(4289, 1780)
+texture = ExtResource("41_y707i")
+
+[node name="Fence1" type="Sprite2D" parent="TileMaps/Decorations"]
+z_index = 1
+position = Vector2(7509, 3153)
+texture = ExtResource("42_xuy6e")
+
+[node name="Fence2" type="Sprite2D" parent="TileMaps/Decorations"]
+z_index = 1
+position = Vector2(7541, 3153)
+texture = ExtResource("43_b63xq")
+
+[node name="Fence3" type="Sprite2D" parent="TileMaps/Decorations"]
+z_index = 1
+position = Vector2(7573, 3153)
+texture = ExtResource("44_7kpxu")
+
+[node name="Barrel3" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(5933, 3028)
+texture = ExtResource("40_s7kxy")
+
+[node name="Barrel4" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(5911, 3027)
+texture = ExtResource("41_y707i")
+
+[node name="Board3" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(5874, 3008)
+texture = ExtResource("39_gt3hu")
+
+[node name="Barrel5" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(5891, 3026)
+texture = ExtResource("45_3sr2a")
+
+[node name="5" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(5872, 3010)
+texture = ExtResource("46_xkj5h")
+
+[node name="6" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(5906, 3010)
+texture = ExtResource("46_xkj5h")
+
+[node name="1" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(5838, 3010)
+texture = ExtResource("47_7o5mi")
+
+[node name="7" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(5940, 3010)
+texture = ExtResource("46_xkj5h")
+
+[node name="Box4" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(8291, 3153)
+texture = ExtResource("27_4t4by")
+
+[node name="Box7" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(8344, 3153)
+texture = ExtResource("28_ck2vj")
+
+[node name="Box8" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(8337, 3153)
+texture = ExtResource("48_o6jqb")
+
+[node name="Box9" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(8276, 3153)
+texture = ExtResource("49_1pyoa")
+
+[node name="Box10" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(8305, 3153)
+texture = ExtResource("35_u6gia")
+
+[node name="Box11" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(8324, 3153)
+texture = ExtResource("36_03ijt")
+
+[node name="Fence4" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(8244, 3153)
+texture = ExtResource("42_xuy6e")
+
+[node name="Fence5" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(8276, 3153)
+texture = ExtResource("43_b63xq")
+
+[node name="Fence6" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(8308, 3153)
+texture = ExtResource("43_b63xq")
+
+[node name="Fence7" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(8340, 3153)
+texture = ExtResource("43_b63xq")
+
+[node name="Fence8" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(8372, 3153)
+texture = ExtResource("44_7kpxu")
+
+[node name="Ladder2" type="Sprite2D" parent="TileMaps/Decorations"]
+z_index = 1
+position = Vector2(8442, 3185)
+texture = ExtResource("50_xwgeh")
+
+[node name="Ladder1" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(8442, 3215)
+texture = ExtResource("51_wupq3")
+
+[node name="Ladder3" type="Sprite2D" parent="TileMaps/Decorations"]
+z_index = 1
+position = Vector2(8442, 3153)
+texture = ExtResource("52_wlebf")
+
 [node name="GUI" parent="." instance=ExtResource("39_4rjef")]
 
 [node name="Player" parent="." instance=ExtResource("40_31dam")]
 unique_name_in_owner = true
 z_index = 1
-position = Vector2(8074, 2205)
+position = Vector2(7094, 3073)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
-position = Vector2(8074, 2205)
+position = Vector2(7094, 3073)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
@@ -250,7 +448,7 @@ metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(8074, 2205)
+position = Vector2(7094, 3073)
 script = ExtResource("42_ffm0v")
 priority = 1
 follow_mode = 2
@@ -305,9 +503,11 @@ shape = SubResource("RectangleShape2D_dalvw")
 
 [node name="Enemies" type="Node2D" parent="."]
 process_mode = 3
+metadata/_edit_lock_ = true
 
 [node name="Enemy_13" parent="Enemies" instance=ExtResource("9_vf011")]
 position = Vector2(3438, 937)
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" parent="Enemies/Enemy_13/Area2D" index="0"]
 position = Vector2(127.19922, -22)
@@ -315,9 +515,11 @@ shape = SubResource("RectangleShape2D_vt1oc")
 
 [node name="Enemy_4" parent="Enemies" instance=ExtResource("7_a1204")]
 position = Vector2(2120, 1469)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_2" parent="Enemies" instance=ExtResource("9_vf011")]
 position = Vector2(975, 1033)
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" parent="Enemies/Enemy_2/Area2D" index="0"]
 position = Vector2(188.19922, -2)
@@ -325,25 +527,31 @@ shape = SubResource("RectangleShape2D_a1204")
 
 [node name="Enemy_5" parent="Enemies" instance=ExtResource("7_a1204")]
 position = Vector2(2955, 985)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_3" parent="Enemies" instance=ExtResource("10_8e1fl")]
 position = Vector2(1656, 1034)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_6" parent="Enemies" instance=ExtResource("9_vf011")]
 position = Vector2(8880, 3145)
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" parent="Enemies/Enemy_6/Area2D" index="0"]
-position = Vector2(-229.69922, 6)
+position = Vector2(-220.19922, 6)
 shape = SubResource("RectangleShape2D_8e1fl")
 
 [node name="Enemy_7" parent="Enemies" instance=ExtResource("8_qlmpr")]
 position = Vector2(3435, 1584)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_8" parent="Enemies" instance=ExtResource("10_8e1fl")]
 position = Vector2(3840, 1068)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_9" parent="Enemies" instance=ExtResource("9_vf011")]
 position = Vector2(5081, 745)
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" parent="Enemies/Enemy_9/Area2D" index="0"]
 position = Vector2(-148, 5)
@@ -351,18 +559,22 @@ shape = SubResource("RectangleShape2D_fyg01")
 
 [node name="Enemy_10" parent="Enemies" instance=ExtResource("8_qlmpr")]
 position = Vector2(3820, 1168)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_11" parent="Enemies" instance=ExtResource("8_qlmpr")]
 position = Vector2(3687, 1328)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_12" parent="Enemies" instance=ExtResource("10_8e1fl")]
 position = Vector2(3690, 566)
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" parent="Enemies/Enemy_12/Area2D" index="0"]
 shape = SubResource("CircleShape2D_dimxf")
 
 [node name="Enemy_14" parent="Enemies" instance=ExtResource("9_vf011")]
 position = Vector2(4559, 777)
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" parent="Enemies/Enemy_14/Area2D" index="0"]
 position = Vector2(-138.80078, 3.5)
@@ -373,36 +585,46 @@ root_node = NodePath("../../Enemy_14")
 
 [node name="Enemy_15" parent="Enemies" instance=ExtResource("8_qlmpr")]
 position = Vector2(5886, 2064)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_16" parent="Enemies" instance=ExtResource("8_qlmpr")]
 position = Vector2(5769, 2320)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_17" parent="Enemies" instance=ExtResource("10_8e1fl")]
 position = Vector2(5860, 1473)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_18" parent="Enemies" instance=ExtResource("7_a1204")]
 position = Vector2(6307, 893)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_19" parent="Enemies" instance=ExtResource("8_qlmpr")]
 position = Vector2(5745, 912)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_20" parent="Enemies" instance=ExtResource("7_a1204")]
 position = Vector2(5603, 893)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_21" parent="Enemies" instance=ExtResource("7_a1204")]
 position = Vector2(3905, 637)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_22" parent="Enemies" instance=ExtResource("7_a1204")]
 position = Vector2(6338, 3001)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_23" parent="Enemies" instance=ExtResource("10_8e1fl")]
 position = Vector2(3343, 799)
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" parent="Enemies/Enemy_23/Area2D" index="0"]
 shape = SubResource("CircleShape2D_is6g6")
 
 [node name="Enemy_24" parent="Enemies" instance=ExtResource("9_vf011")]
 position = Vector2(7888, 1897)
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" parent="Enemies/Enemy_24/Area2D" index="0"]
 position = Vector2(-170, 5)
@@ -413,21 +635,27 @@ root_node = NodePath("../../Enemy_24")
 
 [node name="Enemy_25" parent="Enemies" instance=ExtResource("10_8e1fl")]
 position = Vector2(7094, 1997)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_26" parent="Enemies" instance=ExtResource("7_a1204")]
 position = Vector2(8168, 1085)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_27" parent="Enemies" instance=ExtResource("10_8e1fl")]
 position = Vector2(7593, 947)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_28" parent="Enemies" instance=ExtResource("8_qlmpr")]
 position = Vector2(7362, 1040)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_29" parent="Enemies" instance=ExtResource("8_qlmpr")]
 position = Vector2(10280, 1392)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_30" parent="Enemies" instance=ExtResource("10_8e1fl")]
 position = Vector2(9870, 1169)
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" parent="Enemies/Enemy_30/Area2D" index="0"]
 shape = SubResource("CircleShape2D_gxv86")
@@ -437,6 +665,7 @@ root_node = NodePath("../../Enemy_24")
 
 [node name="Enemy_31" parent="Enemies" instance=ExtResource("9_vf011")]
 position = Vector2(10800, 1097)
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" parent="Enemies/Enemy_31/Area2D" index="0"]
 position = Vector2(-148.5, 5)
@@ -447,21 +676,27 @@ root_node = NodePath("../../Enemy_24")
 
 [node name="Enemy_32" parent="Enemies" instance=ExtResource("7_a1204")]
 position = Vector2(8736, 1469)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_33" parent="Enemies" instance=ExtResource("10_8e1fl")]
 position = Vector2(10005, 598)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_34" parent="Enemies" instance=ExtResource("8_qlmpr")]
 position = Vector2(10464, 592)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_35" parent="Enemies" instance=ExtResource("7_a1204")]
 position = Vector2(9820, 893)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_36" parent="Enemies" instance=ExtResource("10_8e1fl")]
 position = Vector2(7634, 3056)
+metadata/_edit_lock_ = true
 
 [node name="Enemy_37" parent="Enemies" instance=ExtResource("9_vf011")]
 position = Vector2(4241, 1033)
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" parent="Enemies/Enemy_37/Area2D" index="0"]
 position = Vector2(-125.69922, 4)
@@ -848,7 +1083,7 @@ shape = SubResource("RectangleShape2D_rgs6y")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area3" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(8074, 2205)
+position = Vector2(7094, 3073)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -857,12 +1092,12 @@ zoom = Vector2(3, 3)
 position = Vector2(7637, 3012)
 
 [node name="CollisionShape2D" parent="PhantomAreas/Phantom_Area4" index="0"]
-position = Vector2(-26, 0)
+position = Vector2(-26, 20.75)
 shape = SubResource("RectangleShape2D_mfbgy")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area4" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(8074, 2205)
+position = Vector2(7094, 3070)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -877,7 +1112,7 @@ shape = SubResource("RectangleShape2D_q17hi")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area5" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(8074, 2205)
+position = Vector2(7094, 3073)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -941,7 +1176,7 @@ text = "You can Jump Down to drop through platforms"
 position = Vector2(2892, 1550)
 
 [node name="Live_Up2" parent="Live_Ups" instance=ExtResource("25_dimxf")]
-position = Vector2(4945, 2770)
+position = Vector2(4932, 2770)
 
 [node name="Live_Up3" parent="Live_Ups" instance=ExtResource("25_dimxf")]
 position = Vector2(6984, 1453)
@@ -960,11 +1195,13 @@ mix_target = 2
 bus = &"Music"
 
 [node name="Page_Comic" parent="." instance=ExtResource("54_763rg")]
-position = Vector2(10810, 555)
+position = Vector2(10829, 591)
 scale = Vector2(0.5, 0.5)
+metadata/_edit_lock_ = true
 
 [node name="Sprite2D" parent="Page_Comic" index="0"]
-texture = ExtResource("55_3csik")
+scale = Vector2(0.03, 0.04)
+texture = ExtResource("26_gxv86")
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" parent="Page_Comic" index="1"]
@@ -972,6 +1209,62 @@ metadata/_edit_lock_ = true
 
 [node name="AudioStreamPlayer2D" parent="Page_Comic" index="2"]
 metadata/_edit_lock_ = true
+
+[node name="Locker1" type="Sprite2D" parent="."]
+position = Vector2(7185, 1420)
+texture = ExtResource("52_kclu0")
+
+[node name="Locker2" type="Sprite2D" parent="."]
+position = Vector2(7211, 1419)
+texture = ExtResource("53_m3o7n")
+
+[node name="Flag" type="Sprite2D" parent="."]
+position = Vector2(7231, 1567)
+texture = ExtResource("34_v7d8o")
+
+[node name="Barrel1" type="Sprite2D" parent="."]
+position = Vector2(8286, 2260)
+texture = ExtResource("40_s7kxy")
+
+[node name="Barrel2" type="Sprite2D" parent="."]
+position = Vector2(8320, 2260)
+texture = ExtResource("41_y707i")
+
+[node name="Barrel3" type="Sprite2D" parent="."]
+position = Vector2(8272, 2260)
+texture = ExtResource("45_3sr2a")
+
+[node name="Barrel4" type="Sprite2D" parent="."]
+position = Vector2(8304, 2260)
+texture = ExtResource("54_fl2ps")
+
+[node name="Bench" type="Sprite2D" parent="."]
+position = Vector2(7171, 1455)
+texture = ExtResource("55_v7d8o")
+
+[node name="Bench2" type="Sprite2D" parent="."]
+position = Vector2(7205, 1455)
+texture = ExtResource("55_v7d8o")
+
+[node name="Flag2" type="Sprite2D" parent="."]
+position = Vector2(2923, 1469)
+texture = ExtResource("34_v7d8o")
+
+[node name="Flag3" type="Sprite2D" parent="."]
+position = Vector2(5856, 1758)
+texture = ExtResource("34_v7d8o")
+
+[node name="Flag4" type="Sprite2D" parent="."]
+position = Vector2(9807, 988)
+texture = ExtResource("34_v7d8o")
+
+[node name="Pointer2" type="Sprite2D" parent="."]
+position = Vector2(9245, 1489)
+texture = ExtResource("56_u6gia")
+
+[node name="Pointer3" type="Sprite2D" parent="."]
+position = Vector2(9256, 977)
+texture = ExtResource("56_u6gia")
 
 [editable path="Dead_Areas/Dead_Area"]
 [editable path="Dead_Areas/Dead_Area2"]
