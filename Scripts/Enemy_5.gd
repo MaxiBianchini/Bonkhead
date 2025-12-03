@@ -11,10 +11,11 @@ enum State {
 var state: State = State.INACTIVE
 
 # --- Variables Exportables (para ajustar desde el editor) ---
+@export var bullet_scene: PackedScene = preload("res://Prefabs/Bullet.tscn")
 @export var climb_speed: float = 50.0       # Velocidad de patrulla vertical
 @export var patrol_distance: float = 65.0  # Distancia que sube y baja desde su punto inicial
 @export var attack_cooldown: float = 2.0    # Tiempo entre ataques
-@export var bullet_dir: Vector2 = Vector2.RIGHT
+@export var bullet_dir: Vector2
 
 # --- Referencias a Nodos ---
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -100,7 +101,35 @@ func take_damage() -> void:
 		emit_signal("add_points", points)
 		
 
+func _on_attack_timer_timeout() -> void:
+	# Esta función se llama cada vez que el reloj llega a 0
+	if state == State.ACTIVE and is_alive:
+		print("PASO POR EL SHOOT")
+		shoot()
+		
 
+func shoot() -> void:
+	var bullet = bullet_scene.instantiate() 
+	
+	if projectile_spawn_point.global_position.y > global_position.y:
+		# El Marker está a la DERECHA del centro del enemigo
+		bullet_dir = Vector2.LEFT
+	else:
+		# El Marker está a la IZQUIERDA del centro del enemigo
+		bullet_dir = Vector2.RIGHT
+		
+	shoot_sound.play()
+	if bullet.has_method("set_shooter"):
+		bullet.set_shooter(self)
+		
+	if bullet.has_method("set_mask"):
+		bullet.set_mask(2) 
+	 
+	if bullet.has_method("set_direction"):
+		bullet.set_direction( bullet_dir)
+	
+	bullet.position = position + bullet_offset
+	get_tree().current_scene.add_child(bullet)
 
 func _on_detection_area_body_entered(body: Node2D) -> void:
 	# Esta función se ejecuta cuando algo entra en el área de detección.
