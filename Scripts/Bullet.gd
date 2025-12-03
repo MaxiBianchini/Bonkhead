@@ -12,8 +12,6 @@ var shooter: Node = null
 var mask: int = 1
 
 func _ready() -> void:
-	
-	
 	set_collision_mask_value(mask,true)
 	life_timer.start(time)
 	await life_timer.timeout
