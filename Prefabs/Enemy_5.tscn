@@ -197,7 +197,6 @@ _data = {
 process_mode = 1
 collision_layer = 4
 script = ExtResource("1_c752w")
-bullet_dir = Vector2(-1, 0)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_vkrtj")
