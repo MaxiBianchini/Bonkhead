@@ -151,11 +151,11 @@ position = Vector2(155, 222)
 unique_name_in_owner = true
 process_mode = 1
 z_index = 1
-position = Vector2(3871, 2409)
+position = Vector2(3354, 2266)
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(3871, 2409)
+position = Vector2(3354, 2266)
 script = ExtResource("10_6dp3p")
 priority = 1
 follow_mode = 2
@@ -194,7 +194,7 @@ bus = &"Music"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
-position = Vector2(3871, 2409)
+position = Vector2(3354, 2266)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
@@ -219,7 +219,7 @@ shape = SubResource("RectangleShape2D_dt5mq")
 
 [node name="PhantomCamera2D" parent="Phantom_Area" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(3871, 2409)
+position = Vector2(3354, 2266)
 follow_mode = 2
 follow_target = NodePath("../../Player")
 zoom = Vector2(3, 3)
@@ -330,7 +330,7 @@ position = Vector2(168, 2)
 shape = SubResource("RectangleShape2D_ua0uu")
 
 [node name="Enemy_7" parent="." instance=ExtResource("23_nm3nn")]
-position = Vector2(2807, 2429)
+position = Vector2(3016, 2717)
 
 [node name="Enemy_8" parent="." instance=ExtResource("21_6dp3p")]
 position = Vector2(1296, 1463)
@@ -441,6 +441,9 @@ position = Vector2(7083, 3120)
 
 [node name="Enemy_16" parent="." instance=ExtResource("21_6dp3p")]
 position = Vector2(7626, 2975)
+
+[node name="Enemy_17" parent="." instance=ExtResource("17_6fdmn")]
+position = Vector2(2905, 2448)
 
 [editable path="Page_Comic"]
 [editable path="Phantom_Area"]
