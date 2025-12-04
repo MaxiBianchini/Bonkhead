@@ -12,7 +12,7 @@ extends CharacterBody2D
 var direction: int = 1
 var is_driving: bool = false
 var points: float = 35
-var speed: float = 250
+var speed: float = 285
 
 signal add_points
 
