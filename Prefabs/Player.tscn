@@ -759,12 +759,12 @@ animations = [{
 "speed": 6.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sro4f"]
-size = Vector2(15, 31.5)
-
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m4vyk"]
 radius = 8.0
-height = 34.0
+height = 32.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sro4f"]
+size = Vector2(17, 32.5)
 
 [sub_resource type="Animation" id="Animation_5finp"]
 resource_name = "Hurt"
@@ -815,7 +815,7 @@ process_mode = 1
 z_index = -1
 material = SubResource("ShaderMaterial_c5nj1")
 sprite_frames = SubResource("SpriteFrames_l1tm1")
-animation = &"BFall"
+animation = &"SIdle with Gun"
 offset = Vector2(10, -7)
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
@@ -833,15 +833,15 @@ animation = &"SIdle with Gun"
 offset = Vector2(10, -7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 0.25)
-shape = SubResource("RectangleShape2D_sro4f")
+shape = SubResource("CapsuleShape2D_m4vyk")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 2
 collision_mask = 28
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("CapsuleShape2D_m4vyk")
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0.5, 0.75)
+shape = SubResource("RectangleShape2D_sro4f")
 
 [node name="Raycast_wall" type="RayCast2D" parent="."]
 target_position = Vector2(15, 0)
