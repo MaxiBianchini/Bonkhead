@@ -1,7 +1,7 @@
 extends AnimatableBody2D
 
 var direction: int = 1
-var speed: float = 100.0
+@export var speed: float = 100.0
 var start_position: Vector2
 var target_position: Vector2
 
