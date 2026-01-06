@@ -427,16 +427,72 @@ z_index = 1
 position = Vector2(8442, 3153)
 texture = ExtResource("52_wlebf")
 
+[node name="Locker1" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(7185, 1420)
+texture = ExtResource("52_kclu0")
+
+[node name="Locker2" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(7211, 1419)
+texture = ExtResource("53_m3o7n")
+
+[node name="Flag2" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(7231, 1567)
+texture = ExtResource("34_v7d8o")
+
+[node name="Barrel6" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(8286, 2260)
+texture = ExtResource("40_s7kxy")
+
+[node name="Barrel7" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(8320, 2260)
+texture = ExtResource("41_y707i")
+
+[node name="Barrel8" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(8272, 2260)
+texture = ExtResource("45_3sr2a")
+
+[node name="Barrel9" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(8304, 2260)
+texture = ExtResource("54_fl2ps")
+
+[node name="Bench" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(7171, 1455)
+texture = ExtResource("55_v7d8o")
+
+[node name="Bench2" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(7205, 1455)
+texture = ExtResource("55_v7d8o")
+
+[node name="Flag3" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(2923, 1469)
+texture = ExtResource("34_v7d8o")
+
+[node name="Flag4" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(5856, 1758)
+texture = ExtResource("34_v7d8o")
+
+[node name="Flag5" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(9807, 988)
+texture = ExtResource("34_v7d8o")
+
+[node name="Pointer2" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(9245, 1489)
+texture = ExtResource("56_u6gia")
+
+[node name="Pointer3" type="Sprite2D" parent="TileMaps/Decorations"]
+position = Vector2(9256, 977)
+texture = ExtResource("56_u6gia")
+
 [node name="GUI" parent="." instance=ExtResource("39_4rjef")]
 
 [node name="Player" parent="." instance=ExtResource("40_31dam")]
 unique_name_in_owner = true
 z_index = 1
-position = Vector2(10797, 592)
+position = Vector2(10800, 590)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
-position = Vector2(10786.667, 592)
+position = Vector2(10786.667, 590)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
@@ -453,7 +509,7 @@ metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(10786.667, 592)
+position = Vector2(10786.667, 590)
 script = ExtResource("42_ffm0v")
 priority = 1
 follow_mode = 2
@@ -1088,7 +1144,7 @@ shape = SubResource("RectangleShape2D_rgs6y")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area3" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(10797, 592)
+position = Vector2(10800, 590)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -1102,7 +1158,7 @@ shape = SubResource("RectangleShape2D_mfbgy")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area4" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(10797, 592)
+position = Vector2(10800, 590)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -1117,7 +1173,7 @@ shape = SubResource("RectangleShape2D_q17hi")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area5" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(10797, 592)
+position = Vector2(10800, 590)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -1214,62 +1270,6 @@ metadata/_edit_lock_ = true
 
 [node name="AudioStreamPlayer2D" parent="Page_Comic" index="2"]
 metadata/_edit_lock_ = true
-
-[node name="Locker1" type="Sprite2D" parent="."]
-position = Vector2(7185, 1420)
-texture = ExtResource("52_kclu0")
-
-[node name="Locker2" type="Sprite2D" parent="."]
-position = Vector2(7211, 1419)
-texture = ExtResource("53_m3o7n")
-
-[node name="Flag" type="Sprite2D" parent="."]
-position = Vector2(7231, 1567)
-texture = ExtResource("34_v7d8o")
-
-[node name="Barrel1" type="Sprite2D" parent="."]
-position = Vector2(8286, 2260)
-texture = ExtResource("40_s7kxy")
-
-[node name="Barrel2" type="Sprite2D" parent="."]
-position = Vector2(8320, 2260)
-texture = ExtResource("41_y707i")
-
-[node name="Barrel3" type="Sprite2D" parent="."]
-position = Vector2(8272, 2260)
-texture = ExtResource("45_3sr2a")
-
-[node name="Barrel4" type="Sprite2D" parent="."]
-position = Vector2(8304, 2260)
-texture = ExtResource("54_fl2ps")
-
-[node name="Bench" type="Sprite2D" parent="."]
-position = Vector2(7171, 1455)
-texture = ExtResource("55_v7d8o")
-
-[node name="Bench2" type="Sprite2D" parent="."]
-position = Vector2(7205, 1455)
-texture = ExtResource("55_v7d8o")
-
-[node name="Flag2" type="Sprite2D" parent="."]
-position = Vector2(2923, 1469)
-texture = ExtResource("34_v7d8o")
-
-[node name="Flag3" type="Sprite2D" parent="."]
-position = Vector2(5856, 1758)
-texture = ExtResource("34_v7d8o")
-
-[node name="Flag4" type="Sprite2D" parent="."]
-position = Vector2(9807, 988)
-texture = ExtResource("34_v7d8o")
-
-[node name="Pointer2" type="Sprite2D" parent="."]
-position = Vector2(9245, 1489)
-texture = ExtResource("56_u6gia")
-
-[node name="Pointer3" type="Sprite2D" parent="."]
-position = Vector2(9256, 977)
-texture = ExtResource("56_u6gia")
 
 [editable path="Dead_Areas/Dead_Area"]
 [editable path="Dead_Areas/Dead_Area2"]
