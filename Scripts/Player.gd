@@ -64,6 +64,7 @@ var dash_power_activated: bool = false
 var double_jump_power_activated: bool = false
 var first_jump_completed: bool = false
 var is_alive: bool = true
+var is_invincible: bool = false
 
 var lives: int = 5
 var can_shoot: bool = true
@@ -118,7 +119,7 @@ func _ready() -> void:
 		double_jump_power_activated = true
 	
 	# Nivel 3: Se obtiene el Dash
-	if current_level >= 1:#3
+	if current_level >= 3:#3
 		dash_power_activated = true
 	
 	# Nivel 4: Se obtiene el Agarre en Pared
@@ -496,23 +497,31 @@ func hide_all_sprites() -> void:
 
 
 func handle_double_jump() -> void:
-	# Si el poder no está activado, salimos de la función.
+	# Si el poder no está activado, salimos.
 	if not double_jump_power_activated:
 		return
 	
-	# Si estamos en el suelo, siempre reseteamos el estado.
+	# Si estamos en el suelo, reseteamos.
 	if is_on_floor():
 		double_jump_enabled = false
 		first_jump_completed = false
 		return
 
-	# Si estamos en el aire y tocamos una pared "saltable", CONCEDEMOS el permiso.
-	# No lo quitamos aquí, solo lo damos.
-	if not double_jump_enabled and raycast_wall.is_colliding():
+	# Lógica de "Jumpeable Wall" corregida
+	if raycast_wall.is_colliding():
 		var collider = raycast_wall.get_collider()
+		
 		if collider and collider.is_in_group("Jumpeable Wall"):
+			# Estamos tocando la pared: CONCEDEMOS permiso
 			double_jump_enabled = true
 			first_jump_completed = true
+		else:
+			# Chocamos con algo, pero NO es la pared especial: QUITAMOS permiso
+			double_jump_enabled = false
+			
+	else:
+		# No estamos chocando con nada (aire libre): QUITAMOS permiso
+		double_jump_enabled = false
 
 
 func shoot_bullet() -> void:
@@ -586,28 +595,47 @@ func change_weapon() -> void:
 		set_ammo_type(AmmoType.NORMAL)
 
 
-func take_damage() -> void:
-	# Evita recibir daño si ya estás aturdido o muerto
-	if is_stunned or not is_alive:
+func take_damage(force_death: bool = false) -> void:
+	if (is_invincible and not force_death) or not is_alive:
 		return
 
-	audio_hurts.play()
-	lives -= 1
+	if force_death:
+		lives = 0
+	else:
+		lives -= 1
+		audio_hurts.play()
+	
 	emit_signal("change_UI_lives", lives)
 	
+	# LÓGICA DE MUERTE VS HERIDA
 	if lives <= 0:
 		is_alive = false
 		state = State.DEAD
 		call_deferred("disable_player_collision")
 		dead_timer.start()
+		
+		animation_player.stop() 
+		
+		if animation_player.has_animation("RESET"):
+			animation_player.play("RESET")
+		
 	else:
-		# Activamos el aturdimiento y el temporizador
+		# 1. Activamos la invencibilidad LARGA (ej: 1.5 segundos)
+		is_invincible = true
+		hurt_timer.start(1) 
+		
+		# 2. Activamos el stun (bloqueo de movimiento)
 		is_stunned = true
-		hurt_timer.start(0.5) # Duración del aturdimiento
-
-		# Aplicamos el retroceso y la animación de flash
 		velocity.y = hurt_jump_force
 		animation_player.play("Hurt")
+		
+		# 3. Esperamos un tiempo CORTO para el stun (ej: 0.4 segundos)
+		# Esto no detiene el juego, solo detiene esta función y el cambio de estado
+		await get_tree().create_timer(0.5).timeout
+		
+		# 4. Devolvemos el control al jugador, AUNQUE siga invencible
+		is_stunned = false
+		
 
 func increase_life() -> bool:
 	if lives < 5:
@@ -687,11 +715,11 @@ func _on_dead_timer_timeout() -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("Dead"):
-		lives = 0
-		take_damage()
+		take_damage(true)
 
 func _on_hurt_timer_timeout() -> void:
-	is_stunned = false
+	is_invincible = false
+	is_stunned = false # Por seguridad
 
 func _on_shoot_cooldown_timer_timeout() -> void:
 	can_shoot = true # Permitimos que el jugador vuelva a disparar

@@ -866,7 +866,6 @@ wait_time = 0.1
 one_shot = true
 
 [node name="ShootCooldownTimer" type="Timer" parent="."]
-wait_time = 0.5
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
