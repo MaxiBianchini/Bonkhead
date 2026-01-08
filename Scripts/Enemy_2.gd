@@ -78,6 +78,7 @@ func take_damage() -> void:
 		return
 	
 	lives -= 1
+	emit_signal("add_points", points)
 	
 	if lives <= 0:
 		is_alive = false
@@ -87,7 +88,6 @@ func take_damage() -> void:
 		
 		queue_free()
 	else:
-		animation_player.play("Hurt")
 		emit_signal("add_points", points)
 		
 		can_shoot = false

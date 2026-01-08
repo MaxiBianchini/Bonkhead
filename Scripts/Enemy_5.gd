@@ -76,13 +76,14 @@ func take_damage() -> void:
 	if not is_alive: return
 	
 	lives -= 1
+	emit_signal("add_points", points)
+	
 	if lives <= 0:
 		is_alive = false
 		velocity.x = 0
 		state = State.DEAD
 	else:
 		animation_player.play("Hurt")
-		emit_signal("add_points", points)
 
 func _on_attack_timer_timeout() -> void:
 	if state == State.ACTIVE and is_alive:
