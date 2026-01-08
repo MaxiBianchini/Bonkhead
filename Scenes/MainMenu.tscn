@@ -1,9 +1,12 @@
-[gd_scene load_steps=20 format=3 uid="uid://b61e2qh88myfb"]
+[gd_scene load_steps=23 format=3 uid="uid://b61e2qh88myfb"]
 
 [ext_resource type="Script" uid="uid://dk5bo8f5w4fu8" path="res://Scripts/Main_Menu.gd" id="1_2x1g0"]
-[ext_resource type="Texture2D" uid="uid://cn16ddildslab" path="res://Graphics/Zonas/Exclusion-zone/2 Background/Day/Fondo.png" id="2_riqfo"]
+[ext_resource type="Texture2D" uid="uid://cn16ddildslab" path="res://Graphics/Zonas/Exclusion-zone/2 Background/Day/B_LEVEL1.png" id="2_riqfo"]
+[ext_resource type="Texture2D" uid="uid://cb0eemrd8wjx5" path="res://Graphics/Zonas/Green-zone/2 Background/Day/B_LEVEL2.png" id="3_pjscj"]
 [ext_resource type="Texture2D" uid="uid://df3eaw8ttv2l6" path="res://Graphics/GUI/Windows/1-4.png" id="3_yxkem"]
 [ext_resource type="FontFile" uid="uid://c88rb6dh1ub4j" path="res://Graphics/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="4_7v4os"]
+[ext_resource type="Texture2D" uid="uid://cr0fsmb08eq1m" path="res://Graphics/Zonas/Industrial-zone/2 Background/B_LEVEL3.png" id="4_m7n2d"]
+[ext_resource type="Texture2D" uid="uid://b5lku5b7nidt3" path="res://Graphics/Zonas/Station-zone/2 Background/Day/B_LEVEL4.png" id="5_65hh5"]
 [ext_resource type="Texture2D" uid="uid://b3degqy5uf8ea" path="res://Graphics/GUI/Buttons/7-1.png" id="5_pjscj"]
 [ext_resource type="Texture2D" uid="uid://bdn1sk233bncw" path="res://Graphics/GUI/Buttons/7-3.png" id="6_m7n2d"]
 [ext_resource type="Texture2D" uid="uid://b2bod7ibmudmv" path="res://Graphics/GUI/Buttons/7-2.png" id="7_65hh5"]
@@ -29,6 +32,7 @@ font_size = 30
 [node name="MainMenu" type="CanvasLayer"]
 process_mode = 3
 script = ExtResource("1_2x1g0")
+level_backgrounds = Array[Texture2D]([ExtResource("2_riqfo"), ExtResource("3_pjscj"), ExtResource("4_m7n2d"), ExtResource("5_65hh5")])
 
 [node name="Background" type="TextureRect" parent="."]
 anchors_preset = 15
@@ -627,4 +631,5 @@ bus = &"Music"
 [connection signal="pressed" from="ButtonsContainer/OptionButton" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="ButtonsContainer/CreditsButton" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="ExitButton" to="." method="_on_exit_pressed"]
+[connection signal="toggled" from="OthersMenu/Options/HBoxContainer/FullScreen/CheckButton" to="." method="_on_fullscreen_checkbutton_toggled"]
 [connection signal="pressed" from="OthersMenu/BackButtonContainer/BackButton" to="." method="_on_back_pressed"]

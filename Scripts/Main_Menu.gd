@@ -1,8 +1,12 @@
 extends CanvasLayer
 
 @onready var Exit_Button = $ExitButton
+@onready var main_background: TextureRect = $Background
 @onready var Button_background = $ButtonsBackground
 @onready var Resume_Button = $ButtonsContainer/ResumeButton
+
+# --- Lista para cargar las imágenes de los niveles ---
+@export var level_backgrounds: Array[Texture2D]
 
 @onready var audio_click = $AudioStreamPlayer
 @onready var audio_entered = $AudioStreamPlayer2
@@ -40,7 +44,32 @@ func _ready():
 		$ButtonsContainer.size.y = 480.0
 		$ButtonsContainer.position.y = 416.0
 		
+	
+	update_menu_background()
 	music_main.play()
+
+# --- NUEVO: Función para cambiar el fondo ---
+func update_menu_background() -> void:
+	# Obtenemos el nivel actual del SceneManager
+	var current_lvl = SceneManager.current_level
+	
+	# Si por algún motivo es 0 o menor (primera vez), forzamos que sea 1
+	if current_lvl < 1:
+		current_lvl = 1
+	
+	# Los Arrays empiezan en 0, pero tus niveles en 1.
+	# Restamos 1 para obtener el índice correcto.
+	var bg_index = current_lvl - 1
+	
+	# Verificamos que tengamos una imagen cargada para ese nivel para evitar errores
+	if bg_index < level_backgrounds.size():
+		if level_backgrounds[bg_index] != null:
+			main_background.texture = level_backgrounds[bg_index]
+	else:
+		# Si estamos en el nivel 10 pero solo pusiste 5 imágenes,
+		# cargamos la última disponible o la del nivel 1 por defecto.
+		if level_backgrounds.size() > 0:
+			main_background.texture = level_backgrounds[0]
 
 func _on_master_volume_changed(value: float) -> void:
 	set_bus_volume(MASTER_BUS_NAME, value)
@@ -169,8 +198,10 @@ func show_main_menu(enter: bool):
 
 func _on_fullscreen_checkbutton_toggled(toggled_on: bool) -> void:
 	if toggled_on:
+		print("PASAPOR")
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
+		print("PASAPOR2")
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
 
 func _on_mouse_entered() -> void:
