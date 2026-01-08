@@ -90,16 +90,17 @@ func _input(event):
 func on_player_died():
 	# El jugador ha perdido sus 5 vidas, así que le restamos un paquete.
 	life_packs -= 1
-	save_game_data() # Guardamos el progreso para que no pierda los puntos ganados.
 	
 	if life_packs <= 0:
 		# ¡GAME OVER REAL! El jugador ha perdido todos sus paquetes.
+		delete_saved_game()
 		# Según el GDD, debe empezar la partida desde cero. [cite: 46]
 		if gui: gui.visible = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		show_game_over_menu() # Este menú ahora significa "perdiste todo"
 	else:
 		# Aún le quedan paquetes. Hacemos "respawn".
+		save_game_data() # Guardamos el progreso para que no pierda los puntos ganados.
 		respawn_player()
 
 func respawn_player():
@@ -196,6 +197,7 @@ func save_game_data() -> void:
 	if file:
 		file.store_string(JSON.stringify(data))
 		file.close()
+		has_saved_game = true
 		print("Datos guardados correctamente")
 	else:
 		print("Error al guardar datos")
@@ -226,3 +228,13 @@ func start_new_game() -> void:
 	current_level = 1
 	life_packs = 3
 	save_game_data()
+
+func delete_saved_game() -> void:
+	# Verificamos si existe el archivo
+	if FileAccess.file_exists("user://save_data.json"):
+		# Lo borramos usando DirAccess
+		DirAccess.remove_absolute("user://save_data.json")
+	
+	# Actualizamos la variable para que el Menú sepa que no hay nada
+	has_saved_game = false
+	print("Partida eliminada por Game Over")
