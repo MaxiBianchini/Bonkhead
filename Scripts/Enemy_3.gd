@@ -3,7 +3,6 @@ extends CharacterBody2D
 @onready var shoot_timer: Timer = $Timer
 @onready var raycast_wall: RayCast2D = $RayCast2D
 @onready var raycast_floor: RayCast2D = $RayCast2D2
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
@@ -147,6 +146,14 @@ func take_damage() -> void:
 	lives -= 1
 	emit_signal("add_points", points)
 	
+	# EFECTO DE DAÑO POR CÓDIGO
+	var tween = create_tween()
+	animated_sprite.modulate = Color(1, 0, 0, 1) # Rojo puro
+	
+	# Volviendo a blanco en 0.2 segundos
+	# set_trans(Tween.TRANS_SINE) hace que se vea suave
+	tween.tween_property(animated_sprite, "modulate", Color(1, 1, 1, 1), 0.2).set_trans(Tween.TRANS_SINE)
+	
 	if lives <= 0:
 		is_alive = false
 		animated_sprite.play("Death")
@@ -155,8 +162,6 @@ func take_damage() -> void:
 		death_sound.play()
 		await animated_sprite.animation_finished
 		queue_free()
-	else:
-		animation_player.play("Hurt")
 		
 		can_shoot = false
 		if shoot_timer.time_left > 0:

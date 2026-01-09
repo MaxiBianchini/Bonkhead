@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://b3kr0bfr4cu0h"]
+[gd_scene load_steps=30 format=3 uid="uid://b3kr0bfr4cu0h"]
 
 [ext_resource type="Script" uid="uid://hosxwmtamu6i" path="res://Scripts/Enemy_5.gd" id="1_c752w"]
 [ext_resource type="Shader" uid="uid://3eyyqpjc4awp" path="res://Shaders/Hurts_effect.tres" id="2_7ig2e"]
@@ -156,43 +156,6 @@ animations = [{
 resource_local_to_scene = true
 radius = 84.006
 
-[sub_resource type="Animation" id="Animation_7ig2e"]
-resource_name = "Hurt"
-length = 2.6
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/Enabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [true, false, true, false, true, false, true, false, true, false, true, false, true, false]
-}
-
-[sub_resource type="Animation" id="Animation_vkrtj"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:material:shader_parameter/Enabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_6nj7n"]
-_data = {
-&"Hurt": SubResource("Animation_7ig2e"),
-&"RESET": SubResource("Animation_vkrtj")
-}
-
 [node name="Enemy_5" type="CharacterBody2D" groups=["Enemy"]]
 process_mode = 1
 collision_layer = 4
@@ -221,11 +184,6 @@ wait_time = 2.0
 
 [node name="ProjectileSpawnPoint" type="Marker2D" parent="."]
 position = Vector2(15, 0)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_6nj7n")
-}
 
 [node name="AudioStream_Activated" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_xecgg")

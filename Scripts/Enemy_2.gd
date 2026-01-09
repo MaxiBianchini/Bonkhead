@@ -1,7 +1,6 @@
 extends CharacterBody2D
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var shoot_timer: Timer = $Timer
 @onready var area2d: Area2D = $Area2D
 
@@ -79,6 +78,14 @@ func take_damage() -> void:
 	
 	lives -= 1
 	emit_signal("add_points", points)
+	
+	# EFECTO DE DAÑO POR CÓDIGO
+	var tween = create_tween()
+	animated_sprite.modulate = Color(1, 0, 0, 1) # Rojo puro
+	
+	# Volviendo a blanco en 0.2 segundos
+	# set_trans(Tween.TRANS_SINE) hace que se vea suave
+	tween.tween_property(animated_sprite, "modulate", Color(1, 1, 1, 1), 0.2).set_trans(Tween.TRANS_SINE)
 	
 	if lives <= 0:
 		is_alive = false

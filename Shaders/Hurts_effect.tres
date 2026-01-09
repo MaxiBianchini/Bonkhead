@@ -63,6 +63,7 @@ void fragment() {
 "
 mode = 1
 flags/light_only = false
+preview_params/Tint = "Color(0.6846731, 0.0069361106, 2.8878452e-07, 1)"
 nodes/fragment/0/position = Vector2(660, 160)
 nodes/fragment/2/node = SubResource("VisualShaderNodeColorParameter_n3qe2")
 nodes/fragment/2/position = Vector2(40, 360)

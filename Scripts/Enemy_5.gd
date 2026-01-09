@@ -19,7 +19,6 @@ var state: State = State.INACTIVE
 @onready var detection_area: Area2D = $DetectionArea
 @onready var attack_timer: Timer = $AttackTimer
 @onready var projectile_spawn_point: Marker2D = $ProjectileSpawnPoint
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 @onready var shoot_sound: AudioStreamPlayer2D = $AudioStream_Shoot
 @onready var activ_sound: AudioStreamPlayer2D = $AudioStream_Activated
@@ -78,12 +77,18 @@ func take_damage() -> void:
 	lives -= 1
 	emit_signal("add_points", points)
 	
+	# EFECTO DE DAÑO POR CÓDIGO
+	var tween = create_tween()
+	animated_sprite.modulate = Color(1, 0, 0, 1) # Rojo puro
+	
+	# Volviendo a blanco en 0.2 segundos
+	# set_trans(Tween.TRANS_SINE) hace que se vea suave
+	tween.tween_property(animated_sprite, "modulate", Color(1, 1, 1, 1), 0.2).set_trans(Tween.TRANS_SINE)
+	
 	if lives <= 0:
 		is_alive = false
 		velocity.x = 0
 		state = State.DEAD
-	else:
-		animation_player.play("Hurt")
 
 func _on_attack_timer_timeout() -> void:
 	if state == State.ACTIVE and is_alive:
