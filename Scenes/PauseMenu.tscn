@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://uivhim05lh6f" path="res://Graphics/GUI/Buttons/11-1.png" id="7_mys0b"]
 [ext_resource type="Texture2D" uid="uid://duy6x83y07ptt" path="res://Graphics/GUI/Buttons/11-2.png" id="8_c7c70"]
 [ext_resource type="Texture2D" uid="uid://b50anxboht7j5" path="res://Graphics/GUI/Buttons/11-3.png" id="9_pmvjn"]
-[ext_resource type="AudioStream" uid="uid://kffjcdwavdni" path="res://SFX/New/Buttons_Clicks.mp3" id="10_mys0b"]
+[ext_resource type="AudioStream" uid="uid://kffjcdwavdni" path="res://SFX/Others/Buttons_Clicks.mp3" id="10_mys0b"]
 [ext_resource type="AudioStream" uid="uid://cm5jcqpgvsjcl" path="res://SFX/mouse/button over.mp3" id="11_c7c70"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_m8v84"]

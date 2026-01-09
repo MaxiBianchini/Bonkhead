@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://beqnac4chs2lj" path="res://Graphics/GUI/Status/1-4.png" id="1_l6agx"]
 [ext_resource type="Script" uid="uid://ybo7j4ho56m5" path="res://Scripts/Live_Up.gd" id="1_o0alv"]
-[ext_resource type="AudioStream" uid="uid://dakcdwm18fstd" path="res://SFX/New/Live_Up.mp3" id="3_fuwrp"]
+[ext_resource type="AudioStream" uid="uid://dakcdwm18fstd" path="res://SFX/Others/Live_Up.mp3" id="3_fuwrp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_o0alv"]
 

@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://duy6x83y07ptt" path="res://Graphics/GUI/Buttons/11-2.png" id="12_iqn0u"]
 [ext_resource type="Texture2D" uid="uid://b50anxboht7j5" path="res://Graphics/GUI/Buttons/11-3.png" id="13_3u44c"]
 [ext_resource type="Texture2D" uid="uid://brc5fi5763mdw" path="res://Graphics/GUI/Godot Logo.png" id="14_bxv1r"]
-[ext_resource type="AudioStream" uid="uid://kffjcdwavdni" path="res://SFX/New/Buttons_Clicks.mp3" id="15_ux20s"]
+[ext_resource type="AudioStream" uid="uid://kffjcdwavdni" path="res://SFX/Others/Buttons_Clicks.mp3" id="15_ux20s"]
 [ext_resource type="AudioStream" uid="uid://cm5jcqpgvsjcl" path="res://SFX/mouse/button over.mp3" id="16_ke15f"]
 [ext_resource type="AudioStream" uid="uid://djqdcm641i0ny" path="res://Music/MainMenuMusic.mp3" id="17_riqfo"]
 
