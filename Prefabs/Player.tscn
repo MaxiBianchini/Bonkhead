@@ -1,4 +1,4 @@
-[gd_scene load_steps=124 format=3 uid="uid://cdqlmgh2vxout"]
+[gd_scene load_steps=125 format=3 uid="uid://cdqlmgh2vxout"]
 
 [ext_resource type="Script" uid="uid://bbt48srafskvx" path="res://Scripts/Player.gd" id="1_y8i6y"]
 [ext_resource type="Texture2D" uid="uid://c4fc75o86mwdi" path="res://Graphics/Character/Player Original Animations/Double Jump.png" id="2_3kxgr"]
@@ -27,6 +27,7 @@
 [ext_resource type="AudioStream" uid="uid://ch2bfifn0sss4" path="res://SFX/Player/Player_Landing.mp3" id="26_fd4tb"]
 [ext_resource type="AudioStream" uid="uid://dmbm25l72f7ou" path="res://SFX/Player/Player_Dash.mp3" id="27_2wlbw"]
 [ext_resource type="AudioStream" uid="uid://d3wbph5ler5ry" path="res://SFX/Player/Player_Hurts.mp3" id="28_406my"]
+[ext_resource type="AudioStream" uid="uid://bp0gyhlllq17v" path="res://SFX/Others/Pack_UP.wav" id="28_fd4tb"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c5nj1"]
 shader = ExtResource("2_b3bx2")
@@ -810,6 +811,14 @@ script = ExtResource("1_y8i6y")
 metadata/_edit_horizontal_guides_ = [-4.0]
 metadata/_edit_vertical_guides_ = [0.0]
 
+[node name="RayCast_Edge_Left" type="RayCast2D" parent="."]
+position = Vector2(-3, 0)
+target_position = Vector2(0, 23)
+
+[node name="RayCast_Edge_Right" type="RayCast2D" parent="."]
+position = Vector2(3, 0)
+target_position = Vector2(0, 23)
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 process_mode = 1
 z_index = -1
@@ -894,6 +903,12 @@ bus = &"SFX"
 
 [node name="AudioStream_Hurts" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("28_406my")
+bus = &"SFX"
+
+[node name="AudioStream_PackUp" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("28_fd4tb")
+volume_db = -8.0
+attenuation = 2.297397
 bus = &"SFX"
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_entered"]

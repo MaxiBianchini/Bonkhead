@@ -26,6 +26,8 @@ var state: State = State.IDLE
 var animated_sprites: Array[AnimatedSprite2D] = []
 
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
+@onready var raycast_edge_left: RayCast2D = $RayCast_Edge_Left
+@onready var raycast_edge_right: RayCast2D = $RayCast_Edge_Right
 @onready var raycast_floor: RayCast2D = $Raycast_floor
 @onready var raycast_wall: RayCast2D = $Raycast_wall
 @onready var area2D: Area2D = $Area2D
@@ -35,6 +37,7 @@ var animated_sprites: Array[AnimatedSprite2D] = []
 @onready var audio_hurts: AudioStreamPlayer2D = $AudioStream_Hurts
 @onready var audio_shoot: AudioStreamPlayer2D = $AudioStream_Shoot
 @onready var audio_landing: AudioStreamPlayer2D = $AudioStream_Landing
+@onready var audio_packUp: AudioStreamPlayer2D = $AudioStream_PackUp
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
@@ -50,6 +53,9 @@ var animated_sprites: Array[AnimatedSprite2D] = []
 signal player_died
 signal change_UI_lives(change_lives)
 signal ammo_changed(new_ammo_type)
+
+# Variable para controlar la velocidad del resbalón
+@export var slip_speed: float = 100.0
 
 var gravity: int = 2000
 var jump_force: float = -550
@@ -236,6 +242,38 @@ func _physics_process(delta) -> void:
 		State.IDLE:
 			velocity.y += gravity * delta
 			velocity.x = 0
+			
+			# --- LÓGICA DE RESBALAR (EDGE SLIP) ---
+			# Verificamos si debemos resbalar ANTES de poner velocity.x = 0
+			
+			var is_center_supported = raycast_floor.is_colliding()
+			var is_left_supported = raycast_edge_left.is_colliding()
+			var is_right_supported = raycast_edge_right.is_colliding()
+			
+			# Si estoy en el suelo (según move_and_slide) PERO mi centro está en el aire...
+			if is_on_floor() and not is_center_supported:
+				
+				if is_left_supported and not is_right_supported:
+					# Estoy colgado del lado DERECHO (pie izq apoyado, centro aire)
+					# Resbalamos hacia la derecha
+					velocity.x = slip_speed
+					# Opcional: Reproducir animación de desequilibrio si tienes una
+					# animated_sprite.play("Teeter") 
+					
+				elif is_right_supported and not is_left_supported:
+					# Estoy colgado del lado IZQUIERDO (pie der apoyado, centro aire)
+					# Resbalamos hacia la izquierda
+					velocity.x = -slip_speed
+					
+				else:
+					# Caso raro o apoyado en ambos extremos (puente), nos quedamos quietos
+					velocity.x = 0
+			else:
+				# Comportamiento normal de IDLE (frenado)
+				velocity.x = 0
+			
+			# --- FIN LÓGICA RESBALAR ---
+			
 			if Input.is_action_pressed("ui_down") and is_jump_pressed and raycast_floor.is_colliding() and raycast_floor.get_collider().is_in_group("Platform"):
 				ignore_platform_collision()
 			elif is_jump_pressed:
@@ -641,9 +679,27 @@ func increase_life() -> bool:
 	if lives < 5:
 		lives += 1
 		emit_signal("change_UI_lives", lives)
+		print("NUEVA VIDA!")
 		return true
+	# 2. CASO PREMIO (NUEVO): Si ya tengo 5 vidas, verificamos los Packs.
 	else:
-		return false
+		# Verificamos si faltan packs (asumiendo que 3 es el máximo)
+		if SceneManager.life_packs < 3:
+			
+			SceneManager.life_packs += 1
+			print("¡Premio! Pack recuperado. Total: ", SceneManager.life_packs)
+			
+			# IMPORTANTE: Guardamos el dato para que no se pierda el pack ganado
+			SceneManager.save_game_data() 
+			
+			# Emitimos la señal de nuevo. 
+			# Como SceneManager.update_lives actualiza AMBOS (vidas y packs),
+			# esto refrescará visualmente el pack nuevo en la pantalla.
+			emit_signal("change_UI_lives", lives)
+			audio_packUp.play()
+			return true
+		else:
+			return false
 
 # --- FUNCIONES DEL MODO RÁFAGA ---
 
