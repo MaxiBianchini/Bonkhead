@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dh1nh7gxjxtks"]
+[gd_scene load_steps=15 format=3 uid="uid://dh1nh7gxjxtks"]
 
 [ext_resource type="FontFile" uid="uid://c88rb6dh1ub4j" path="res://Graphics/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="1_888sp"]
 [ext_resource type="Script" uid="uid://b2w0cu3x4d8o0" path="res://Scripts/LoreScene.gd" id="1_fiyw2"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bdn1sk233bncw" path="res://Graphics/GUI/Buttons/7-3.png" id="3_6hop8"]
 [ext_resource type="Texture2D" uid="uid://dioecmjwret5l" path="res://Graphics/Zonas/LoreScene/ComicArtist.jpeg" id="4_53m27"]
 [ext_resource type="Texture2D" uid="uid://b2bod7ibmudmv" path="res://Graphics/GUI/Buttons/7-2.png" id="4_feaa0"]
+[ext_resource type="AudioStream" uid="uid://lcvdfisb4kti" path="res://SFX/Others/Single_mechanical.wav" id="6_53m27"]
 [ext_resource type="PackedScene" uid="uid://ccpbm1qpal8m0" path="res://Scenes/TypewriterLabel.tscn" id="9_2p7ni"]
 
 [sub_resource type="Animation" id="Animation_feaa0"]
@@ -190,6 +191,7 @@ offset_right = 0.0
 offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 0
+typing_sound = ExtResource("6_53m27")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

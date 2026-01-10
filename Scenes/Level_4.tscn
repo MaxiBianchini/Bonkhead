@@ -13,7 +13,6 @@
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="10_6dp3p"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="11_nm3nn"]
 [ext_resource type="PackedScene" uid="uid://d1i3yjdbq4dmk" path="res://Prefabs/Page_Comic.tscn" id="12_asykx"]
-[ext_resource type="AudioStream" uid="uid://b8f133nc8swer" path="res://Music/Silent Corridor (mp3cut.net) - LOOP.mp3" id="13_ua0uu"]
 [ext_resource type="PackedScene" uid="uid://fxla73vs5hxe" path="res://Prefabs/Phantom_Area.tscn" id="14_i3wgq"]
 [ext_resource type="PackedScene" uid="uid://qp428qv0oe33" path="res://Prefabs/Moving_Platform_3.tscn" id="15_dt5mq"]
 [ext_resource type="PackedScene" uid="uid://d0lv1t50yhwap" path="res://Prefabs/Enemy_1.tscn" id="17_6fdmn"]
@@ -50,6 +49,7 @@
 [ext_resource type="Texture2D" uid="uid://b48j6eu7ahhqt" path="res://Graphics/Zonas/Station-zone/3 Objects/2 Decoration/13.png" id="47_7t6ia"]
 [ext_resource type="Texture2D" uid="uid://ds0asrryulpa4" path="res://Graphics/Zonas/Station-zone/3 Objects/2 Decoration/1.png" id="48_24gro"]
 [ext_resource type="Texture2D" uid="uid://cfuygh8nd0bku" path="res://Graphics/Zonas/Station-zone/3 Objects/1 Tube/8.png" id="49_x3kxw"]
+[ext_resource type="AudioStream" uid="uid://bqm3nmsvgpjyg" path="res://Music/Level_4.mp3" id="49_ykt34"]
 [ext_resource type="Texture2D" uid="uid://bfs3yf43nf7o" path="res://Graphics/Zonas/Station-zone/3 Objects/1 Tube/7.png" id="50_7lovr"]
 [ext_resource type="Texture2D" uid="uid://c6poijopceimw" path="res://Graphics/Zonas/Station-zone/3 Objects/1 Tube/11.png" id="51_wgybn"]
 [ext_resource type="Texture2D" uid="uid://c1jtev1xf1jl6" path="res://Graphics/Zonas/Station-zone/3 Objects/1 Tube/6.png" id="52_itngx"]
@@ -648,8 +648,8 @@ position = Vector2(6096, 2213)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
-limit_right = 14500
-limit_bottom = 3260
+limit_right = 8900
+limit_bottom = 2810
 editor_draw_limits = true
 metadata/_edit_lock_ = true
 
@@ -692,7 +692,7 @@ metadata/_edit_lock_ = true
 metadata/_edit_lock_ = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("13_ua0uu")
+stream = ExtResource("49_ykt34")
 volume_db = -5.0
 autoplay = true
 mix_target = 2

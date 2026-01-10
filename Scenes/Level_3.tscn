@@ -53,8 +53,8 @@
 [ext_resource type="Texture2D" uid="uid://d4gf8t3oyy60u" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Locker2.png" id="53_m3o7n"]
 [ext_resource type="PackedScene" uid="uid://d1i3yjdbq4dmk" path="res://Prefabs/Page_Comic.tscn" id="54_763rg"]
 [ext_resource type="Texture2D" uid="uid://bncitmopx44ji" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Barrel4.png" id="54_fl2ps"]
+[ext_resource type="AudioStream" uid="uid://uo8cg6k1mv6s" path="res://Music/Level_3.mp3" id="54_kclu0"]
 [ext_resource type="Texture2D" uid="uid://bmo2fmbnq5wqy" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Bench.png" id="55_v7d8o"]
-[ext_resource type="AudioStream" uid="uid://cphpe1giw4pxl" path="res://Music/Level1_Music (mp3cut.net) LOOP.mp3" id="56_l4u0w"]
 [ext_resource type="Texture2D" uid="uid://ddl6k1njkbk68" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Pointer2.png" id="56_u6gia"]
 
 [sub_resource type="Resource" id="Resource_5toea"]
@@ -641,9 +641,6 @@ metadata/_edit_lock_ = true
 position = Vector2(-138.80078, 3.5)
 shape = SubResource("RectangleShape2D_ks2qj")
 
-[node name="AnimationPlayer" parent="Enemies/Enemy_14" index="3"]
-root_node = NodePath("../../Enemy_14")
-
 [node name="Enemy_15" parent="Enemies" instance=ExtResource("8_qlmpr")]
 position = Vector2(5886, 2064)
 metadata/_edit_lock_ = true
@@ -691,9 +688,6 @@ metadata/_edit_lock_ = true
 position = Vector2(-170, 5)
 shape = SubResource("RectangleShape2D_fddji")
 
-[node name="AnimationPlayer" parent="Enemies/Enemy_24" index="3"]
-root_node = NodePath("../../Enemy_24")
-
 [node name="Enemy_25" parent="Enemies" instance=ExtResource("10_8e1fl")]
 position = Vector2(7094, 1997)
 metadata/_edit_lock_ = true
@@ -721,9 +715,6 @@ metadata/_edit_lock_ = true
 [node name="CollisionShape2D" parent="Enemies/Enemy_30/Area2D" index="0"]
 shape = SubResource("CircleShape2D_gxv86")
 
-[node name="AnimationPlayer" parent="Enemies/Enemy_30" index="5"]
-root_node = NodePath("../../Enemy_24")
-
 [node name="Enemy_31" parent="Enemies" instance=ExtResource("9_vf011")]
 position = Vector2(10800, 1097)
 metadata/_edit_lock_ = true
@@ -731,9 +722,6 @@ metadata/_edit_lock_ = true
 [node name="CollisionShape2D" parent="Enemies/Enemy_31/Area2D" index="0"]
 position = Vector2(-148.5, 5)
 shape = SubResource("RectangleShape2D_l8qeq")
-
-[node name="AnimationPlayer" parent="Enemies/Enemy_31" index="3"]
-root_node = NodePath("../../Enemy_24")
 
 [node name="Enemy_32" parent="Enemies" instance=ExtResource("7_a1204")]
 position = Vector2(8736, 1469)
@@ -1249,7 +1237,7 @@ position = Vector2(5736, 1814)
 position = Vector2(9681, 1006)
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("56_l4u0w")
+stream = ExtResource("54_kclu0")
 volume_db = -5.0
 autoplay = true
 mix_target = 2

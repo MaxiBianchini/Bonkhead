@@ -39,7 +39,7 @@
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="34_ww1bt"]
 [ext_resource type="PackedScene" uid="uid://fxla73vs5hxe" path="res://Prefabs/Phantom_Area.tscn" id="36_qaamm"]
 [ext_resource type="PackedScene" uid="uid://d1i3yjdbq4dmk" path="res://Prefabs/Page_Comic.tscn" id="45_ww1bt"]
-[ext_resource type="AudioStream" uid="uid://b8f133nc8swer" path="res://Music/Silent Corridor (mp3cut.net) - LOOP.mp3" id="46_d1n4i"]
+[ext_resource type="AudioStream" uid="uid://b8f133nc8swer" path="res://Music/Level_1.mp3" id="46_d1n4i"]
 [ext_resource type="PackedScene" uid="uid://bh3h363wnt1mt" path="res://Prefabs/Signpost.tscn" id="50_ceuot"]
 [ext_resource type="PackedScene" uid="uid://blucmwrqfrted" path="res://Prefabs/Moving_Platform.tscn" id="52_fdbj4"]
 [ext_resource type="PackedScene" uid="uid://cfdnwh558m6i2" path="res://Prefabs/Falling_Platform.tscn" id="54_kd73b"]
