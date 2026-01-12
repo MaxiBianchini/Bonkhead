@@ -234,10 +234,9 @@ text = "[WASD] to move
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
 position = Vector2(227, -28)
-offset = Vector2(3.7613766, -1.1727414)
+offset = Vector2(1.3021226, 5.11851)
 ignore_rotation = false
 zoom = Vector2(1.5, 1.5)
-process_callback = 0
 editor_draw_limits = true
 
 [node name="PhantomCameraHost" type="Node" parent="Camera2D"]

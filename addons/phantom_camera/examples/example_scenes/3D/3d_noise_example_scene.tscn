@@ -1,7 +1,7 @@
 [gd_scene load_steps=21 format=3 uid="uid://d0fyuvesb472p"]
 
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="1_25rmy"]
-[ext_resource type="Script" uid="uid://x5g7kf5k2mac" path="res://addons/phantom_camera/examples/scripts/3D/player_controller_first_person.gd" id="2_7nd2u"]
+[ext_resource type="Script" uid="uid://b3n22atuw76sm" path="res://addons/phantom_camera/examples/scripts/3D/player_controller_first_person.gd" id="2_7nd2u"]
 [ext_resource type="Script" uid="uid://cuffvge5ad4aa" path="res://addons/phantom_camera/scripts/resources/phantom_camera_noise_3d.gd" id="3_t4fhv"]
 [ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="4_tnm2f"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="5_4webr"]
