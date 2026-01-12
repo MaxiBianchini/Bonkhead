@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b61e2qh88myfb"]
+[gd_scene load_steps=24 format=3 uid="uid://b61e2qh88myfb"]
 
 [ext_resource type="Script" uid="uid://dk5bo8f5w4fu8" path="res://Scripts/Main_Menu.gd" id="1_2x1g0"]
 [ext_resource type="Texture2D" uid="uid://cn16ddildslab" path="res://Graphics/Zonas/Exclusion-zone/2 Background/Day/B_LEVEL1.png" id="2_riqfo"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cr0fsmb08eq1m" path="res://Graphics/Zonas/Industrial-zone/2 Background/B_LEVEL3.png" id="4_m7n2d"]
 [ext_resource type="Texture2D" uid="uid://b5lku5b7nidt3" path="res://Graphics/Zonas/Station-zone/2 Background/Day/B_LEVEL4.png" id="5_65hh5"]
 [ext_resource type="Texture2D" uid="uid://b3degqy5uf8ea" path="res://Graphics/GUI/Buttons/7-1.png" id="5_pjscj"]
+[ext_resource type="Texture2D" uid="uid://dcesrsflnny5g" path="res://Graphics/Zonas/Basement-zone/2 Background/Day/Fondo.png" id="6_65hh5"]
 [ext_resource type="Texture2D" uid="uid://bdn1sk233bncw" path="res://Graphics/GUI/Buttons/7-3.png" id="6_m7n2d"]
 [ext_resource type="Texture2D" uid="uid://b2bod7ibmudmv" path="res://Graphics/GUI/Buttons/7-2.png" id="7_65hh5"]
 [ext_resource type="Texture2D" uid="uid://cecrno5ffpubr" path="res://Graphics/GUI/Buttons/1-1.png" id="8_6byu3"]
@@ -32,7 +33,7 @@ font_size = 30
 [node name="MainMenu" type="CanvasLayer"]
 process_mode = 3
 script = ExtResource("1_2x1g0")
-level_backgrounds = Array[Texture2D]([ExtResource("2_riqfo"), ExtResource("3_pjscj"), ExtResource("4_m7n2d"), ExtResource("5_65hh5")])
+level_backgrounds = Array[Texture2D]([ExtResource("2_riqfo"), ExtResource("3_pjscj"), ExtResource("4_m7n2d"), ExtResource("5_65hh5"), ExtResource("6_65hh5")])
 
 [node name="Background" type="TextureRect" parent="."]
 anchors_preset = 15
