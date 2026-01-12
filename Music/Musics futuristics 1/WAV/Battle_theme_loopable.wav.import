@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dnxdv1soiy78a"
+path="res://.godot/imported/Battle_theme_loopable.wav-9b93b432f2fc1c8951a32fafe9aee3d1.sample"
+
+[deps]
+
+source_file="res://Music/Musics futuristics 1/WAV/Battle_theme_loopable.wav"
+dest_files=["res://.godot/imported/Battle_theme_loopable.wav-9b93b432f2fc1c8951a32fafe9aee3d1.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

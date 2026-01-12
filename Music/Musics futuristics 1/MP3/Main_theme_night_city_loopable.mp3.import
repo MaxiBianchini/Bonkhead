@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://d0dc2e2vlqfsc"
+path="res://.godot/imported/Main_theme_night_city_loopable.mp3-046c557c3ec24dbfea5c6623d0b64837.mp3str"
+
+[deps]
+
+source_file="res://Music/Musics futuristics 1/MP3/Main_theme_night_city_loopable.mp3"
+dest_files=["res://.godot/imported/Main_theme_night_city_loopable.mp3-046c557c3ec24dbfea5c6623d0b64837.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cv0yqs34dy3l4"
+path="res://.godot/imported/Airobike_walk.wav-fb9562f9c1ff67a0e7deb2ca307fc96c.sample"
+
+[deps]
+
+source_file="res://SFX/Sounds futuristics 1/Airobike_walk.wav"
+dest_files=["res://.godot/imported/Airobike_walk.wav-fb9562f9c1ff67a0e7deb2ca307fc96c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

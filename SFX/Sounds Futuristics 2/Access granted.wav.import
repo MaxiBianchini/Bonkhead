@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dt4r6vn1tdkpn"
+path="res://.godot/imported/Access granted.wav-67b0d1920883fb52304ebb061b956150.sample"
+
+[deps]
+
+source_file="res://SFX/Sounds Futuristics 2/Access granted.wav"
+dest_files=["res://.godot/imported/Access granted.wav-67b0d1920883fb52304ebb061b956150.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

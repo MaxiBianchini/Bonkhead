@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://p2rhuowyypxb"
+path="res://.godot/imported/Track Lab.mp3-6f897819331cc81be942c5fbbff0d31c.mp3str"
+
+[deps]
+
+source_file="res://Music/Musics  Futuristics 2/MP3/Track Lab.mp3"
+dest_files=["res://.godot/imported/Track Lab.mp3-6f897819331cc81be942c5fbbff0d31c.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

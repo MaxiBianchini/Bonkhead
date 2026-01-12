@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c8t5sup2tcpbi"
+path="res://.godot/imported/Neon_1.wav-f293e12ed74cec7ed3b424852a3623a1.sample"
+
+[deps]
+
+source_file="res://SFX/Sounds futuristics 1/Neon_1.wav"
+dest_files=["res://.godot/imported/Neon_1.wav-f293e12ed74cec7ed3b424852a3623a1.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

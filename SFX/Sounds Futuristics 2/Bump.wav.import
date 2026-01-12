@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ga46fa1fkdi4"
+path="res://.godot/imported/Bump.wav-0180c9d008f72b319f9304ba863940cf.sample"
+
+[deps]
+
+source_file="res://SFX/Sounds Futuristics 2/Bump.wav"
+dest_files=["res://.godot/imported/Bump.wav-0180c9d008f72b319f9304ba863940cf.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

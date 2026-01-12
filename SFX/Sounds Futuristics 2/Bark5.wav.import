@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bcd7jvvuq0qrq"
+path="res://.godot/imported/Bark5.wav-efccd46c6234a5297f47e99c87e17410.sample"
+
+[deps]
+
+source_file="res://SFX/Sounds Futuristics 2/Bark5.wav"
+dest_files=["res://.godot/imported/Bark5.wav-efccd46c6234a5297f47e99c87e17410.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

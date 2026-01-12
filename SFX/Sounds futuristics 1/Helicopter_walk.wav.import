@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b0nqym7erjh5k"
+path="res://.godot/imported/Helicopter_walk.wav-6ad8e278b5d4d72bdb6b28dc5d34950a.sample"
+
+[deps]
+
+source_file="res://SFX/Sounds futuristics 1/Helicopter_walk.wav"
+dest_files=["res://.godot/imported/Helicopter_walk.wav-6ad8e278b5d4d72bdb6b28dc5d34950a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

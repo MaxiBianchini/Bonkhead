@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://op1sseb0sdre"
+path="res://.godot/imported/Main_theme_loopable.mp3-d7247d2616976fbb454a915ed52703c1.mp3str"
+
+[deps]
+
+source_file="res://Music/Musics futuristics 1/MP3/Main_theme_loopable.mp3"
+dest_files=["res://.godot/imported/Main_theme_loopable.mp3-d7247d2616976fbb454a915ed52703c1.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c7p57f1ya1hpg"
+path="res://.godot/imported/Track Intro.mp3-6a42fd3ec4487904487d17b2045ee13b.mp3str"
+
+[deps]
+
+source_file="res://Music/Musics  Futuristics 2/MP3/Track Intro.mp3"
+dest_files=["res://.godot/imported/Track Intro.mp3-6a42fd3ec4487904487d17b2045ee13b.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
