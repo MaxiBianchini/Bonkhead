@@ -205,59 +205,60 @@ size = Vector2(189, 76)
 [node name="ParallaxBackground" type="ParallaxBackground" parent="Background"]
 follow_viewport_scale = 15.0
 scroll_base_scale = Vector2(0.1, 0.1)
+scroll_ignore_camera_zoom = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="Background/ParallaxBackground"]
 motion_scale = Vector2(0.3, 0.1)
 motion_offset = Vector2(0, -50)
-motion_mirroring = Vector2(691.2, 0)
+motion_mirroring = Vector2(2016, 0)
 
 [node name="Background1" type="Sprite2D" parent="Background/ParallaxBackground/ParallaxLayer"]
 texture_filter = 1
-scale = Vector2(2, 2)
+scale = Vector2(3.5, 3.5)
 texture = ExtResource("1_2svyu")
 centered = false
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="Background/ParallaxBackground"]
 motion_scale = Vector2(0.6, 0.2)
 motion_offset = Vector2(0, -50)
-motion_mirroring = Vector2(691.2, 0)
+motion_mirroring = Vector2(2016, 0)
 
 [node name="Background2" type="Sprite2D" parent="Background/ParallaxBackground/ParallaxLayer2"]
 texture_filter = 1
-scale = Vector2(2, 2)
+scale = Vector2(3.5, 3.5)
 texture = ExtResource("2_i3wgq")
 centered = false
 
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="Background/ParallaxBackground"]
 motion_scale = Vector2(0.9, 0.3)
 motion_offset = Vector2(0, -50)
-motion_mirroring = Vector2(691.2, 0)
+motion_mirroring = Vector2(2016, 0)
 
 [node name="Background3" type="Sprite2D" parent="Background/ParallaxBackground/ParallaxLayer3"]
 texture_filter = 1
-scale = Vector2(2, 2)
+scale = Vector2(3.5, 3.5)
 texture = ExtResource("3_dt5mq")
 centered = false
 
 [node name="ParallaxLayer4" type="ParallaxLayer" parent="Background/ParallaxBackground"]
 motion_scale = Vector2(1.2, 0.4)
 motion_offset = Vector2(0, -50)
-motion_mirroring = Vector2(691.2, 0)
+motion_mirroring = Vector2(2016, 0)
 
 [node name="Background4" type="Sprite2D" parent="Background/ParallaxBackground/ParallaxLayer4"]
 texture_filter = 1
-scale = Vector2(2, 2)
+scale = Vector2(3.5, 3.5)
 texture = ExtResource("4_jloha")
 centered = false
 
 [node name="ParallaxLayer5" type="ParallaxLayer" parent="Background/ParallaxBackground"]
 motion_scale = Vector2(1.5, 0.5)
 motion_offset = Vector2(0, -50)
-motion_mirroring = Vector2(691.2, 0)
+motion_mirroring = Vector2(2016, 0)
 
 [node name="Background5" type="Sprite2D" parent="Background/ParallaxBackground/ParallaxLayer5"]
 texture_filter = 1
-scale = Vector2(2, 2)
+scale = Vector2(3.5, 3.5)
 texture = ExtResource("5_6fdmn")
 centered = false
 
@@ -640,16 +641,16 @@ texture = ExtResource("25_kx8cd")
 unique_name_in_owner = true
 process_mode = 1
 z_index = 1
-position = Vector2(6096, 2213)
+position = Vector2(14410, 888)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
-position = Vector2(6096, 2213)
+position = Vector2(14286.667, 888)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
-limit_right = 8900
-limit_bottom = 2810
+limit_right = 14500
+limit_bottom = 3260
 editor_draw_limits = true
 metadata/_edit_lock_ = true
 
@@ -661,7 +662,7 @@ metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(6096, 2213)
+position = Vector2(14286.667, 888)
 script = ExtResource("10_6dp3p")
 priority = 1
 follow_mode = 2
@@ -679,10 +680,10 @@ metadata/_edit_lock_ = true
 
 [node name="Page_Comic" parent="." instance=ExtResource("12_asykx")]
 position = Vector2(14448.001, 889.00006)
-scale = Vector2(0.3, 0.3)
+scale = Vector2(0.5, 0.5)
 
 [node name="Sprite2D" parent="Page_Comic" index="0"]
-scale = Vector2(0.03, 0.04)
+scale = Vector2(0.033, 0.036)
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" parent="Page_Comic" index="1"]
@@ -779,7 +780,7 @@ shape = SubResource("RectangleShape2D_dt5mq")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(6096, 2213)
+position = Vector2(14410, 888)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -806,7 +807,7 @@ shape = SubResource("RectangleShape2D_0vjb6")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area3" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(6096, 2213)
+position = Vector2(14410, 888)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 limit_right = 35000
@@ -827,7 +828,7 @@ shape = SubResource("RectangleShape2D_vannl")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area5" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(6096, 2213)
+position = Vector2(14410, 888)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 
@@ -840,7 +841,7 @@ shape = SubResource("RectangleShape2D_cerdw")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area6" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(6096, 2213)
+position = Vector2(14410, 888)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 
@@ -853,7 +854,7 @@ shape = SubResource("RectangleShape2D_1d2jw")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area7" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(6096, 1580)
+position = Vector2(14410, 1470)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 limit_top = 1200
