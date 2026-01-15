@@ -640,7 +640,7 @@ texture = ExtResource("25_kx8cd")
 unique_name_in_owner = true
 process_mode = 1
 z_index = 1
-position = Vector2(14410, 888)
+position = Vector2(14399, 888)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
@@ -779,7 +779,7 @@ shape = SubResource("RectangleShape2D_dt5mq")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(14410, 888)
+position = Vector2(14399, 888)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -806,7 +806,7 @@ shape = SubResource("RectangleShape2D_0vjb6")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area3" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(14410, 888)
+position = Vector2(14399, 888)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 limit_right = 35000
@@ -827,7 +827,7 @@ shape = SubResource("RectangleShape2D_vannl")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area5" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(14410, 888)
+position = Vector2(14399, 888)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 
@@ -840,7 +840,7 @@ shape = SubResource("RectangleShape2D_cerdw")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area6" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(14410, 888)
+position = Vector2(14399, 888)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 
@@ -853,7 +853,7 @@ shape = SubResource("RectangleShape2D_1d2jw")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area7" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(14410, 1470)
+position = Vector2(14399, 1470)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 limit_top = 1200
