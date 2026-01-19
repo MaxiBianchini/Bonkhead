@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://cqanoql23fnk7"]
+[gd_scene load_steps=27 format=4 uid="uid://cqanoql23fnk7"]
 
 [ext_resource type="Script" uid="uid://c0wim6pfyt7kg" path="res://Scripts/Level_5.gd" id="1_7gvow"]
 [ext_resource type="Texture2D" uid="uid://3a3scdft5fu7" path="res://Graphics/Zonas/Basement-zone/2 Background/Day/1.png" id="1_kp6x5"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://d2fpq7nxaiblh" path="res://Prefabs/Dead_Area.tscn" id="16_lpe2j"]
 [ext_resource type="PackedScene" uid="uid://cuuql85rnkjo6" path="res://Prefabs/Falling_Platform_4.tscn" id="17_43geq"]
 [ext_resource type="PackedScene" uid="uid://cjs4t4cu2dreb" path="res://Prefabs/SpikesX1.tscn" id="19_kon3q"]
+[ext_resource type="PackedScene" uid="uid://rrb4ynsksejq" path="res://Prefabs/Final_Boss.tscn" id="20_vw5ax"]
 
 [sub_resource type="Resource" id="Resource_n4me6"]
 script = ExtResource("11_tfk8e")
@@ -156,12 +157,12 @@ tile_set = ExtResource("6_43geq")
 unique_name_in_owner = true
 process_mode = 1
 z_index = 1
-position = Vector2(1359, 1630)
+position = Vector2(1365, 1679)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
 top_level = true
-position = Vector2(1359, 1630)
+position = Vector2(1365, 1679)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 420
@@ -178,7 +179,7 @@ metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(1359, 1630)
+position = Vector2(1365, 1679)
 script = ExtResource("10_h33cd")
 priority = 1
 follow_mode = 2
@@ -231,7 +232,6 @@ position = Vector2(0, 896)
 
 [node name="Dead_Area" parent="." instance=ExtResource("16_lpe2j")]
 position = Vector2(1608, 1796)
-monitorable = false
 
 [node name="CollisionShape2D" parent="Dead_Area" index="0"]
 position = Vector2(258.25, 105.5)
@@ -333,7 +333,7 @@ shape = SubResource("RectangleShape2D_kp6x5")
 
 [node name="PhantomCamera2D" parent="Phantom_Area/Phantom_Area2" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(1359, 1550)
+position = Vector2(1365, 1599)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3.5, 3.5)
@@ -362,6 +362,9 @@ monitorable = false
 [node name="CollisionShape2D" parent="Dead_Area2" index="0"]
 position = Vector2(21.5, 11)
 shape = SubResource("RectangleShape2D_kon3q")
+
+[node name="Final_Boss" parent="." instance=ExtResource("20_vw5ax")]
+position = Vector2(1866, 1555)
 
 [connection signal="body_entered" from="GatesArea" to="." method="_on_gates_area_body_entered"]
 
