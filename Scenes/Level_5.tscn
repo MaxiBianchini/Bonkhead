@@ -25,7 +25,7 @@
 script = ExtResource("11_tfk8e")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lpe2j"]
-size = Vector2(74, 207)
+size = Vector2(34, 207)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8rwkh"]
 resource_local_to_scene = true
@@ -43,8 +43,9 @@ size = Vector2(686, 196)
 resource_local_to_scene = true
 size = Vector2(775, 42)
 
-[node name="Level_5" type="Node2D"]
+[node name="Level_5" type="Node2D" node_paths=PackedStringArray("final_boss")]
 script = ExtResource("1_7gvow")
+final_boss = NodePath("Final_Boss")
 
 [node name="Background" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
@@ -221,7 +222,7 @@ position = Vector2(144, 1176)
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GatesArea" groups=["Gates"]]
-position = Vector2(1403, 476.5)
+position = Vector2(1548, 477)
 shape = SubResource("RectangleShape2D_lpe2j")
 
 [node name="MovingPlatform" parent="." instance=ExtResource("8_8rwkh")]
@@ -237,69 +238,71 @@ position = Vector2(1608, 1796)
 position = Vector2(258.25, 105.5)
 shape = SubResource("RectangleShape2D_8rwkh")
 
-[node name="Platform_Group" type="Node2D" parent="."]
+[node name="Platform_Fase1" type="Node2D" parent="."]
 
-[node name="FallingPlatform" parent="Platform_Group" instance=ExtResource("17_43geq")]
-position = Vector2(1600, 1645)
-
-[node name="FallingPlatform2" parent="Platform_Group" instance=ExtResource("17_43geq")]
-position = Vector2(1672, 1565)
-
-[node name="FallingPlatform3" parent="Platform_Group" instance=ExtResource("17_43geq")]
-position = Vector2(1780, 1220)
-
-[node name="FallingPlatform4" parent="Platform_Group" instance=ExtResource("17_43geq")]
-position = Vector2(1595, 1253)
-
-[node name="FallingPlatform5" parent="Platform_Group" instance=ExtResource("17_43geq")]
-position = Vector2(2072, 1565)
-
-[node name="FallingPlatform6" parent="Platform_Group" instance=ExtResource("17_43geq")]
+[node name="FallingPlatform6" parent="Platform_Fase1" instance=ExtResource("17_43geq")]
 position = Vector2(2032, 1700)
 
-[node name="FallingPlatform7" parent="Platform_Group" instance=ExtResource("17_43geq")]
-position = Vector2(2144, 1645)
-
-[node name="FallingPlatform8" parent="Platform_Group" instance=ExtResource("17_43geq")]
-position = Vector2(1964, 1220)
-
-[node name="FallingPlatform9" parent="Platform_Group" instance=ExtResource("17_43geq")]
-position = Vector2(2149, 1253)
-
-[node name="FallingPlatform10" parent="Platform_Group" instance=ExtResource("17_43geq")]
-position = Vector2(1592, 1500)
-
-[node name="FallingPlatform11" parent="Platform_Group" instance=ExtResource("17_43geq")]
-position = Vector2(2152, 1500)
-
-[node name="FallingPlatform12" parent="Platform_Group" instance=ExtResource("17_43geq")]
-position = Vector2(1672, 1176)
-
-[node name="FallingPlatform13" parent="Platform_Group" instance=ExtResource("17_43geq")]
-position = Vector2(2072, 1176)
-
-[node name="FallingPlatform14" parent="Platform_Group" instance=ExtResource("17_43geq")]
-position = Vector2(1873, 799)
-
-[node name="FallingPlatform15" parent="Platform_Group" instance=ExtResource("17_43geq")]
-position = Vector2(1728, 897)
-
-[node name="FallingPlatform16" parent="Platform_Group" instance=ExtResource("17_43geq")]
-position = Vector2(2016, 897)
-
-[node name="FallingPlatform17" parent="Platform_Group" instance=ExtResource("17_43geq")]
-position = Vector2(1613, 780)
-
-[node name="FallingPlatform18" parent="Platform_Group" instance=ExtResource("17_43geq")]
-position = Vector2(2137, 780)
-
-[node name="FallingPlatform19" parent="Platform_Group" instance=ExtResource("17_43geq")]
+[node name="FallingPlatform19" parent="Platform_Fase1" instance=ExtResource("17_43geq")]
 position = Vector2(1712, 1700)
 
-[node name="FallingPlatform20" parent="Platform_Group" instance=ExtResource("17_43geq")]
+[node name="Platform_Fase2" type="Node2D" parent="."]
+
+[node name="FallingPlatform" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+position = Vector2(1600, 1645)
+
+[node name="FallingPlatform2" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+position = Vector2(1672, 1565)
+
+[node name="FallingPlatform3" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+position = Vector2(1780, 1220)
+
+[node name="FallingPlatform4" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+position = Vector2(1595, 1253)
+
+[node name="FallingPlatform5" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+position = Vector2(2072, 1565)
+
+[node name="FallingPlatform7" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+position = Vector2(2144, 1645)
+
+[node name="FallingPlatform8" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+position = Vector2(1964, 1220)
+
+[node name="FallingPlatform9" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+position = Vector2(2149, 1253)
+
+[node name="FallingPlatform10" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+position = Vector2(1592, 1500)
+
+[node name="FallingPlatform11" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+position = Vector2(2152, 1500)
+
+[node name="FallingPlatform12" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+position = Vector2(1672, 1176)
+
+[node name="FallingPlatform13" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+position = Vector2(2072, 1176)
+
+[node name="FallingPlatform14" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+position = Vector2(1873, 799)
+
+[node name="FallingPlatform15" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+position = Vector2(1728, 897)
+
+[node name="FallingPlatform16" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+position = Vector2(2016, 897)
+
+[node name="FallingPlatform17" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+position = Vector2(1613, 780)
+
+[node name="FallingPlatform18" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+position = Vector2(2137, 780)
+
+[node name="FallingPlatform20" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
 position = Vector2(1736, 1112)
 
-[node name="FallingPlatform21" parent="Platform_Group" instance=ExtResource("17_43geq")]
+[node name="FallingPlatform21" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
 position = Vector2(2008, 1112)
 
 [node name="Phantom_Area" type="Node2D" parent="."]
@@ -364,7 +367,7 @@ position = Vector2(21.5, 11)
 shape = SubResource("RectangleShape2D_kon3q")
 
 [node name="Final_Boss" parent="." instance=ExtResource("20_vw5ax")]
-position = Vector2(1866, 1555)
+position = Vector2(2130, 1714)
 
 [connection signal="body_entered" from="GatesArea" to="." method="_on_gates_area_body_entered"]
 
