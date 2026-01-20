@@ -1,11 +1,14 @@
 extends Node2D
 
 # --- Referencias ---
-@onready var platforms_container: Node2D = $Platform_Group
+@onready var platforms_1: Node2D = $Platform_Fase1
+@onready var platforms_2: Node2D = $Platform_Fase2
 @onready var molten_rock: TileMapLayer = $"TileMaps/Molten Rock 2"
 @onready var dead_area: Area2D = $Dead_Area2
 @onready var gates: TileMapLayer = $TileMaps/Gates
 @onready var gates_trigger: Area2D = $GatesArea
+
+@export var final_boss: CharacterBody2D
 
 # --- Configuración Inicial ---
 func _ready() -> void:
@@ -13,24 +16,27 @@ func _ready() -> void:
 	set_molten_rock_active(false)
 	
 	# Aseguramos que las plataformas arranquen invisibles y sin colisión
-	platforms_container.visible = false
-	platforms_container.modulate.a = 0.0
-	_set_platform_collision(false)
+	platforms_1.visible = false
+	platforms_1.modulate.a = 0.0
+	platforms_2.visible = false
+	platforms_2.modulate.a = 0.0
+	_set_platform_collision(false,1)
+	_set_platform_collision(false,2)
 	
 	open_gates()
 	
-	print("--- TEST INICIADO ---")
+	#print("--- TEST INICIADO ---")
 	
 	# Esperamos un poco antes de empezar la secuencia
 	await get_tree().create_timer(5.0).timeout
 	
 	# 1. APARECER: Parpadeo -> Sólido
 	print("Fase 2: Iniciando aparición de plataformas...")
-	await blink_and_show_platforms() 
+	await blink_and_show_platforms(1) 
 	print("Plataformas listas y sólidas.")
 	
 	# Mantenemos las plataformas un rato (Simulando la fase)
-	await get_tree().create_timer(5.0).timeout
+	#await get_tree().create_timer(5.0).timeout
 	
 	# 2. DESAPARECER: Parpadeo -> Invisible
 	print("Fase 2 terminada: Las plataformas se van...")
@@ -40,7 +46,14 @@ func _ready() -> void:
 	#open_gates()
 
 # --- LÓGICA DE APARICIÓN (Blink In) ---
-func blink_and_show_platforms() -> void:
+func blink_and_show_platforms(grup_plat) -> void:
+	var platforms_container
+	match grup_plat:
+		1:
+			platforms_container = platforms_1
+		2: 
+			platforms_container = platforms_2
+	
 	platforms_container.visible = true
 	var tween = create_tween()
 	
@@ -54,12 +67,18 @@ func blink_and_show_platforms() -> void:
 	
 	# Esperamos a que termine la animación visual para activar la física
 	await tween.finished
-	_set_platform_collision(true)
+	_set_platform_collision(true,grup_plat)
 	#await get_tree().create_timer(2.0).timeout
 	#set_molten_rock_active(true)
 
 # --- LÓGICA DE DESAPARICIÓN (Blink Out) ---
-func blink_and_hide_platforms() -> void:
+func blink_and_hide_platforms(grup_plat) -> void:
+	var platforms_container
+	match grup_plat:
+		1:
+			platforms_container = platforms_1
+		2: 
+			platforms_container = platforms_2
 	var tween = create_tween()
 	
 	# Parpadeo de advertencia (más lento para que el jugador se prepare)
@@ -73,11 +92,18 @@ func blink_and_hide_platforms() -> void:
 	
 	await tween.finished
 	platforms_container.visible = false
-	_set_platform_collision(false)
+	_set_platform_collision(false,grup_plat)
 	set_molten_rock_active(false)
 
 # --- FUNCIÓN AUXILIAR DE FÍSICA ---
-func _set_platform_collision(is_active: bool) -> void:
+func _set_platform_collision(is_active: bool, grup_plat: int) -> void:
+	var platforms_container
+	match grup_plat:
+		1:
+			platforms_container = platforms_1
+		2: 
+			platforms_container = platforms_2
+	
 	for platform in platforms_container.get_children():
 		if platform.has_node("CollisionShape2D"):
 			var shape = platform.get_node("CollisionShape2D")
@@ -95,7 +121,53 @@ func set_molten_rock_active(is_active: bool) -> void:
 
 func _on_gates_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("Player"):
-		close_gates()
+		# Solo activamos la secuencia si las puertas estaban abiertas (para que no pase dos veces)
+		if gates.visible == false: 
+			start_boss_cinematic(body)
+
+func start_boss_cinematic(player_node):
+	print("--- INICIANDO CINEMÁTICA DEL JEFE ---")
+	
+	# CERRAR PUERTAS
+	close_gates()
+	
+	# QUITAR EL CONTROL PERO DEJAMOS LA GRAVEDAD
+	# Verificar si el script del player tiene la variable que creamos
+	if "is_cutscene" in player_node:
+		player_node.is_cutscene = true
+	
+	# ESPERAR A QUE CAIGA AL SUELO
+	# Usamos un bucle que revisa en cada frame si ya tocó el piso
+	while not player_node.is_on_floor():
+		await get_tree().process_frame # Espera un frame y vuelve a preguntar
+	
+	# FRENAR Y PONER IDLE
+	player_node.velocity = Vector2.ZERO
+	if player_node.has_node("AnimatedSprite2D"):
+		player_node.get_node("AnimatedSprite2D").play("SIdle with Gun")
+	
+	# PAUSA DRAMÁTICA
+	await get_tree().create_timer(2.5).timeout
+	
+	# DEVOLVER EL CONTROL
+	if "is_cutscene" in player_node:
+		player_node.is_cutscene = false
+	
+	# APARICIÓN DEL JEFE
+	# Usamos 'await' para que el nivel espere a que el jefe termine de brillar
+	if final_boss:
+		await final_boss.play_intro_sequence()
+	
+	# PAUSA DE TENSIÓN (Boss visible, mirándose fijamente)
+	await get_tree().create_timer(1.0).timeout
+	
+	# INICIAR COMBATE
+	# Devolvemos el control al jugador
+	player_node.set_physics_process(true)
+	
+	# Activar al jefe
+	if final_boss:
+		final_boss.start_battle()
 
 func close_gates():
 	gates.enabled = true 
