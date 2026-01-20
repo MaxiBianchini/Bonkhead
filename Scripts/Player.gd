@@ -71,6 +71,7 @@ var double_jump_power_activated: bool = false
 var first_jump_completed: bool = false
 var is_alive: bool = true
 var is_invincible: bool = false
+var is_cutscene: bool = false
 
 var lives: int = 5
 var can_shoot: bool = true
@@ -228,8 +229,12 @@ func _physics_process(delta) -> void:
 	var is_dash_pressed = false
 	var is_shoot_pressed = false
 
+	if is_cutscene:
+		# SI HAY CINEMÁTICA: Frenamos el movimiento horizontal automáticamente
+		velocity.x = move_toward(velocity.x, 0, movement_velocity)
+
 	# Solo leemos los controles si el jugador NO está aturdido
-	if not is_stunned:
+	if not is_stunned and not is_cutscene:
 		input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 		is_jump_pressed = Input.is_action_just_pressed("ui_jump")
 		is_dash_pressed = Input.is_action_just_pressed("Dash")
