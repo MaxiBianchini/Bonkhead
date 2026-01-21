@@ -278,31 +278,33 @@ position = Vector2(1592, 1500)
 [node name="FallingPlatform11" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
 position = Vector2(2152, 1500)
 
-[node name="FallingPlatform12" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+[node name="Platform_Fase3" type="Node2D" parent="."]
+
+[node name="FallingPlatform12" parent="Platform_Fase3" instance=ExtResource("17_43geq")]
 position = Vector2(1672, 1176)
 
-[node name="FallingPlatform13" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+[node name="FallingPlatform13" parent="Platform_Fase3" instance=ExtResource("17_43geq")]
 position = Vector2(2072, 1176)
 
-[node name="FallingPlatform14" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+[node name="FallingPlatform14" parent="Platform_Fase3" instance=ExtResource("17_43geq")]
 position = Vector2(1873, 799)
 
-[node name="FallingPlatform15" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+[node name="FallingPlatform15" parent="Platform_Fase3" instance=ExtResource("17_43geq")]
 position = Vector2(1728, 897)
 
-[node name="FallingPlatform16" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+[node name="FallingPlatform16" parent="Platform_Fase3" instance=ExtResource("17_43geq")]
 position = Vector2(2016, 897)
 
-[node name="FallingPlatform17" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+[node name="FallingPlatform17" parent="Platform_Fase3" instance=ExtResource("17_43geq")]
 position = Vector2(1613, 780)
 
-[node name="FallingPlatform18" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+[node name="FallingPlatform18" parent="Platform_Fase3" instance=ExtResource("17_43geq")]
 position = Vector2(2137, 780)
 
-[node name="FallingPlatform20" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+[node name="FallingPlatform20" parent="Platform_Fase3" instance=ExtResource("17_43geq")]
 position = Vector2(1736, 1112)
 
-[node name="FallingPlatform21" parent="Platform_Fase2" instance=ExtResource("17_43geq")]
+[node name="FallingPlatform21" parent="Platform_Fase3" instance=ExtResource("17_43geq")]
 position = Vector2(2008, 1112)
 
 [node name="Phantom_Area" type="Node2D" parent="."]
