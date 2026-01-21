@@ -7,6 +7,7 @@
 radius = 45.0
 
 [node name="Final_Boss" type="CharacterBody2D" groups=["Enemy"]]
+collision_layer = 4
 script = ExtResource("1_ka5p3")
 
 [node name="MechanicalClaw" type="Node2D" parent="."]
@@ -20,25 +21,10 @@ frame_progress = 0.9927335
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_o1ywp")
-animation = &"Idle"
-frame_progress = 0.33831757
+animation = &"Attack"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_7qo4r")
-
-[node name="HitBox" type="Area2D" parent="."]
-collision_layer = 4
-
-[node name="HurtBox" type="Area2D" parent="."]
-collision_layer = 4
-
-[node name="StateMachine" type="Node" parent="."]
-
-[node name="Phase1_Ground" type="Node" parent="StateMachine"]
-
-[node name="Phase2_Air" type="Node" parent="StateMachine"]
-
-[node name="Phase3_Chaos" type="Node" parent="StateMachine"]
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
