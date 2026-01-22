@@ -638,14 +638,14 @@ func change_weapon() -> void:
 		set_ammo_type(AmmoType.NORMAL)
 
 
-func take_damage(force_death: bool = false) -> void:
+func take_damage(force_death: bool = false, damage: int = 1) -> void:
 	if (is_invincible and not force_death) or not is_alive:
 		return
 
 	if force_death:
 		lives = 0
 	else:
-		lives -= 1
+		lives -= damage
 		audio_hurts.play()
 	
 	emit_signal("change_UI_lives", lives)
