@@ -1,0 +1,142 @@
+[gd_scene load_steps=21 format=3 uid="uid://dvk8m7c1o0gaw"]
+
+[ext_resource type="Texture2D" uid="uid://d0p7snhvb4ehb" path="res://Graphics/Bosses/3 Machine operator/BOOM.png" id="1_66hey"]
+[ext_resource type="Script" uid="uid://2ukys8x3k2ly" path="res://Scripts/Bomb.gd" id="1_yihlx"]
+[ext_resource type="Texture2D" uid="uid://bxe80efd13873" path="res://Graphics/Bosses/3 Machine operator/Bomb.png" id="2_yihlx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rery2"]
+atlas = ExtResource("1_66hey")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g345b"]
+atlas = ExtResource("1_66hey")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o65at"]
+atlas = ExtResource("1_66hey")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwa20"]
+atlas = ExtResource("1_66hey")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wfm23"]
+atlas = ExtResource("1_66hey")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wxb1d"]
+atlas = ExtResource("1_66hey")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kylvn"]
+atlas = ExtResource("1_66hey")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yf775"]
+atlas = ExtResource("1_66hey")
+region = Rect2(336, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idvhw"]
+atlas = ExtResource("2_yihlx")
+region = Rect2(0, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iudga"]
+atlas = ExtResource("2_yihlx")
+region = Rect2(10, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8wkgx"]
+atlas = ExtResource("2_yihlx")
+region = Rect2(20, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_87nbe"]
+atlas = ExtResource("2_yihlx")
+region = Rect2(30, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qasxe"]
+atlas = ExtResource("2_yihlx")
+region = Rect2(40, 0, 10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6x0v3"]
+atlas = ExtResource("2_yihlx")
+region = Rect2(50, 0, 10, 10)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4ll1p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rery2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g345b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o65at")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fwa20")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wfm23")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wxb1d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kylvn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yf775")
+}],
+"loop": false,
+"name": &"Explotion",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idvhw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iudga")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8wkgx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_87nbe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qasxe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6x0v3")
+}],
+"loop": false,
+"name": &"Idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_66hey"]
+radius = 5.3041167
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yihlx"]
+radius = 12.517302
+
+[node name="Bomb" type="CharacterBody2D"]
+scale = Vector2(1.52, 1.52)
+collision_layer = 4
+script = ExtResource("1_yihlx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_4ll1p")
+animation = &"Explotion"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_66hey")
+
+[node name="ExplosionArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea"]
+light_mask = 2
+shape = SubResource("CircleShape2D_yihlx")
