@@ -12,7 +12,7 @@ size = Vector2(48, 16)
 size = Vector2(48, 12)
 
 [node name="FallingPlatform" type="RigidBody2D" groups=["Floor"]]
-collision_mask = 0
+collision_layer = 32
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_kxa1t")

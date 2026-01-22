@@ -242,9 +242,11 @@ shape = SubResource("RectangleShape2D_8rwkh")
 
 [node name="FallingPlatform6" parent="Platform_Fase1" instance=ExtResource("17_43geq")]
 position = Vector2(2032, 1700)
+collision_mask = 0
 
 [node name="FallingPlatform19" parent="Platform_Fase1" instance=ExtResource("17_43geq")]
 position = Vector2(1712, 1700)
+collision_mask = 0
 
 [node name="Platform_Fase2" type="Node2D" parent="."]
 
