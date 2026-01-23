@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://rrb4ynsksejq"]
+[gd_scene load_steps=6 format=3 uid="uid://rrb4ynsksejq"]
 
-[ext_resource type="Script" uid="uid://cmgamix85msi1" path="res://Prefabs/Boss.gd" id="1_ka5p3"]
+[ext_resource type="Script" uid="uid://cmgamix85msi1" path="res://Scripts/Boss.gd" id="1_ka5p3"]
 [ext_resource type="SpriteFrames" uid="uid://d1xnibx0sfcdh" path="res://Prefabs/Final_Boss_AS.tres" id="1_o1ywp"]
 [ext_resource type="PackedScene" uid="uid://dvk8m7c1o0gaw" path="res://Prefabs/Bomb.tscn" id="2_j21dr"]
+[ext_resource type="PackedScene" uid="uid://dyxdcycua33ik" path="res://Prefabs/Bullet.tscn" id="2_yr172"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7qo4r"]
 radius = 45.0
@@ -11,11 +12,9 @@ radius = 45.0
 collision_layer = 4
 script = ExtResource("1_ka5p3")
 dash_speed = 500.0
-air_patrol_speed = 250.0
-hover_height = 1540.0
+bullet_scene = ExtResource("2_yr172")
 bomb_scene = ExtResource("2_j21dr")
 min_mode_duration = 10.0
-max_mode_duration = 35.0
 
 [node name="MechanicalClaw" type="Node2D" parent="."]
 visible = false

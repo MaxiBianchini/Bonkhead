@@ -119,7 +119,7 @@ animations = [{
 radius = 5.3041167
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yihlx"]
-radius = 12.517302
+radius = 17.105263
 
 [node name="Bomb" type="CharacterBody2D"]
 scale = Vector2(1.52, 1.52)

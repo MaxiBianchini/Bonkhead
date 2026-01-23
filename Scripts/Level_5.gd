@@ -14,9 +14,12 @@ func _ready() -> void:
 	
 	# 2. CONEXIÓN DE SEÑALES DEL JEFE
 	if final_boss:
+		# Conectamos la nueva señal
+		final_boss.toggle_hazards.connect(_on_boss_toggle_hazards)
+		
 		# Conectamos la señal 'phase_changed' del jefe a una función nuestra
-		if not final_boss.phase_changed.is_connected(_on_boss_phase_changed):
-			final_boss.phase_changed.connect(_on_boss_phase_changed)
+		#if not final_boss.phase_changed.is_connected(_on_boss_phase_changed):
+			#final_boss.phase_changed.connect(_on_boss_phase_changed)
 	else:
 		print("ERROR: ¡No has asignado el Final Boss en el Inspector del Nivel 5!")
 	
@@ -174,12 +177,24 @@ func start_boss_cinematic(player_node):
 	if final_boss:
 		final_boss.start_battle()
 
+func _on_boss_toggle_hazards(is_active: bool) -> void:
+	if is_active:
+		print("Nivel 5: ¡ACTIVANDO TRAMPAS!")
+		blink_and_show_platforms(2)
+		# Esperamos un poco para la lava si quieres desincronizarlo
+		await get_tree().create_timer(1.0).timeout
+		set_molten_rock_active(true)
+	else:
+		print("Nivel 5: Desactivando Trampas...")
+		blink_and_hide_platforms(2)
+		set_molten_rock_active(false)
+
 # --- ESTA ES LA FUNCIÓN QUE RESPONDE AL CAMBIO DE FASE ---
-func _on_boss_phase_changed(new_phase: int) -> void:
-	print("Nivel 5: El Jefe cambió a Fase ", new_phase)
-	await get_tree().create_timer(5).timeout
-	# Llamamos a tu función con parpadeo
-	blink_and_show_platforms(new_phase)
+#func _on_boss_phase_changed(new_phase: int) -> void:
+	#print("Nivel 5: El Jefe cambió a Fase ", new_phase)
+	#await get_tree().create_timer(5).timeout
+	## Llamamos a tu función con parpadeo
+	#blink_and_show_platforms(new_phase)
 	
 
 func close_gates():

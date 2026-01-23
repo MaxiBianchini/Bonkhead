@@ -40,6 +40,9 @@ func _on_body_entered(body) -> void:
 func set_mask(number: int) -> void:
 	mask = number
 
+func delete_mask(number: int) -> void:
+	set_collision_mask_value(number, false)
+
 func set_shooter(_shooter: Node) -> void:
 	shooter = _shooter
 

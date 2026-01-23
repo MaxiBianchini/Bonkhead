@@ -3,6 +3,7 @@ extends CharacterBody2D
 # --- SEÑALES ---
 signal health_changed(new_health)
 signal phase_changed(new_phase)
+signal toggle_hazards(is_active) # Avisa al nivel para prender/apagar lava y plataformas
 
 # --- CONFIGURACIÓN GENERAL ---
 @export_group("Stats")
@@ -12,23 +13,32 @@ var current_health: int
 @export_group("Velocidades")
 @export var ground_speed: float = 100.0
 @export var dash_speed: float = 400.0
-@export var air_patrol_speed: float = 150.0
+@export var air_patrol_speed: float = 350.0
 @export var stomp_speed: float = 600.0
 
 # --- CONFIGURACIÓN FASE 2 (AIRE) ---
 @export_group("Fase 2: Configuración")
-@export var hover_height: float = 200.0 # Altura Y a la que vuela (ajusta según tu nivel)
+@export var hover_height: float = 1540 # Altura Y a la que vuela (ajusta según tu nivel)
 @export var patrol_min_x: float = 1600.0 # Límite Izquierdo de la pantalla
 @export var patrol_max_x: float = 2145.0 # Límite Derecho de la pantalla
+@export var high_hover_height: float = 1350 # Altura máxima para la fase de disparo (más arriba)
+@export var bullet_scene: PackedScene # Arrastra aquí tu escena de bala/proyectil
 @export var bomb_scene: PackedScene # ¡ARRASTRA TU ESCENA BOMB.TSCN AQUÍ!
 
+# Sub-Estados de la Fase 2
+enum Phase2SubState { LOW_ATTACK, TRANSITION_UP, HIGH_SHOOTING, TRANSITION_DOWN }
+var p2_sub_state: Phase2SubState = Phase2SubState.LOW_ATTACK
+
+var is_invulnerable: bool = false # Para cuando sube
+var next_low_attack_mode: AttackModes = AttackModes.STOMP_MODE # Para alternar
+
 # Tiempos de ataque (Frecuencia de disparos/golpes)
-@export var min_attack_cooldown: float = 2.0
-@export var max_attack_cooldown: float = 4.0
+@export var min_attack_cooldown: float = 1.0
+@export var max_attack_cooldown: float = 2.0
 
 # Tiempos de Modo (Cuánto dura la estrategia de solo aplastar o solo bombas)
-@export var min_mode_duration: float = 20.0
-@export var max_mode_duration: float = 45.0
+@export var min_mode_duration: float = 15.0
+@export var max_mode_duration: float = 35.0
 
 # --- VARIABLES INTERNAS ---
 var player: Node2D = null
@@ -110,25 +120,13 @@ func change_state(new_state: States):
 			print(">> FASE 1: TIERRA <<")
 		
 		States.PHASE_2_AIR:
-			print(">> FASE 2: AIRE <<")
+			
+			print(">> FASE 2: SECUENCIA AÉREA <<")
 			emit_signal("phase_changed", 2)
 			
-			# Configurar Timer de Frecuencia de Ataque
-			attack_cooldown_timer = Timer.new()
-			attack_cooldown_timer.one_shot = true
-			attack_cooldown_timer.timeout.connect(_on_attack_timer_timeout)
-			add_child(attack_cooldown_timer)
-			
-			# Configurar Timer de Cambio de Modo (Estrategia)
-			mode_switch_timer = Timer.new()
-			mode_switch_timer.one_shot = true
-			mode_switch_timer.timeout.connect(_swap_attack_mode)
-			add_child(mode_switch_timer)
-			
-			# Iniciamos el primer modo y la subida
-			_swap_attack_mode()
-			fly_to_hover_position()
-			
+			# Arrancamos con el ataque bajo
+			start_low_attack_sequence()
+		
 		States.PHASE_3_CHAOS:
 			print(">> FASE 3: CAOS <<")
 			emit_signal("phase_changed", 3)
@@ -188,61 +186,162 @@ func start_dash_attack():
 #                     FASE 2: AIRE
 # ========================================================
 func _process_phase_2(_delta):
-	# Si está atacando o subiendo, no patrulla
-	if is_attacking or not is_hovering:
+	# Máquina de estados interna de la Fase 2
+	match p2_sub_state:
+		Phase2SubState.LOW_ATTACK:
+			# Comportamiento normal: Patrulla de izquierda a derecha
+			_handle_patrol_movement()
+			
+		Phase2SubState.HIGH_SHOOTING:
+			# El jefe se queda quieto arriba o sigue suavemente al player
+			# Aquí haremos que solo dispare, quieto en X o movimiento muy lento
+			velocity = Vector2.ZERO
+			move_and_slide()
+
+
+# --- FUNCIONES DE CONTROL DEL CICLO ---
+
+func start_low_attack_sequence():
+	p2_sub_state = Phase2SubState.LOW_ATTACK
+	is_invulnerable = false # Ya se le puede pegar
+	
+	# Volamos a la altura baja (hover_height normal)
+	fly_to_height(hover_height)
+	await get_tree().create_timer(2.0).timeout # Esperar a que baje
+	
+	print("Fase 2: Iniciando ataque tipo ", "APLASTAR" if next_low_attack_mode == AttackModes.STOMP_MODE else "BOMBAS")
+	
+	# Iniciamos el Timer que decide cuánto dura esta fase de ataque antes de activar la lava
+	# Usamos el timer de modos que ya tenías o creamos uno temporal
+	var duration = randf_range(min_mode_duration, max_mode_duration)
+	get_tree().create_timer(duration).timeout.connect(start_high_hazard_sequence)
+	
+	# Iniciamos el timer de los ataques individuales
+	start_attack_loop()
+
+func start_high_hazard_sequence():
+	if current_state != States.PHASE_2_AIR: return
+	
+	print("Fase 2: ¡SUBIENDO! Activando Lava y Plataformas.")
+	p2_sub_state = Phase2SubState.TRANSITION_UP
+	is_invulnerable = true # ¡Escudo activado!
+	
+	# 1. Avisar al Nivel
+	emit_signal("toggle_hazards", true)
+	
+	# 2. Subir a la altura alta
+	await fly_to_height(high_hover_height)
+	
+	# 3. Empezar a Disparar
+	p2_sub_state = Phase2SubState.HIGH_SHOOTING
+	start_shooting_loop()
+	
+	# 4. Duración de la fase de lava (Ej: 8 segundos)
+	await get_tree().create_timer(8.0).timeout
+	
+	# 5. Bajar
+	end_high_hazard_sequence()
+
+func end_high_hazard_sequence():
+	if current_state != States.PHASE_2_AIR: return
+	
+	print("Fase 2: BAJANDO. Desactivando Lava.")
+	p2_sub_state = Phase2SubState.TRANSITION_DOWN
+	
+	# 1. Avisar al Nivel
+	emit_signal("toggle_hazards", false)
+	
+	# 2. Cambiar el modo de ataque para la próxima bajada
+	if next_low_attack_mode == AttackModes.STOMP_MODE:
+		next_low_attack_mode = AttackModes.BOMB_MODE
+	else:
+		next_low_attack_mode = AttackModes.STOMP_MODE
+	
+	# 3. Reiniciar ciclo
+	start_low_attack_sequence()
+
+# --- LÓGICA DE ATAQUES (Loops) ---
+
+func start_attack_loop():
+	# Este timer controla los ataques individuales (stomp/bomb) mientras está abajo
+	if p2_sub_state == Phase2SubState.LOW_ATTACK:
+		# Ejecutamos ataque
+		if next_low_attack_mode == AttackModes.STOMP_MODE:
+			perform_stomp_attack()
+		else:
+			perform_bomb_attack()
+		
+		# Esperar cooldown y repetir si seguimos en estado LOW
+		var cooldown = randf_range(min_attack_cooldown, max_attack_cooldown)
+		await get_tree().create_timer(cooldown).timeout
+		if p2_sub_state == Phase2SubState.LOW_ATTACK:
+			start_attack_loop()
+
+func start_shooting_loop():
+	# Este loop controla los disparos mientras está ARRIBA
+	if p2_sub_state == Phase2SubState.HIGH_SHOOTING:
+		shoot_bullet_at_player()
+		
+		# Dispara rápido (cada 1 segundo)
+		await get_tree().create_timer(1.0).timeout
+		if p2_sub_state == Phase2SubState.HIGH_SHOOTING:
+			start_shooting_loop()
+
+func shoot_bullet_at_player():
+	if not bullet_scene: 
+		print("ERROR: No has asignado la Bullet Scene en el Inspector del Boss")
+		return
+	
+	# 1. Instanciar la bala
+	var bullet = bullet_scene.instantiate() as Area2D
+	bullet.global_position = global_position # La bala sale del centro del jefe
+	
+	# 2. Configurar quién dispara (IMPORTANTE para que tu script sepa que es Enemy)
+	if bullet.has_method("set_shooter"):
+		bullet.set_shooter(self)
+	
+	if player:
+		# 3. Calcular la dirección normalizada hacia el jugador
+		
+		var bullet_dir = global_position.direction_to(player.global_position)
+		
+		# 4. Pasar la dirección a tu bala
+		if bullet.has_method("set_direction"):
+			bullet.set_direction( bullet_dir)
+		
+		if bullet.has_method("set_mask"):
+			bullet.set_mask(2)
+			
+	# 5. Añadir al mundo (fuera del jefe)
+	get_parent().add_child(bullet)
+	
+	if bullet.has_meta("delete_mask"):
+			bullet.delete_mask(1)
+
+# --- UTILIDADES ---
+func _handle_patrol_movement():
+	# Tu lógica de patrulla existente (izquierda/derecha)
+	# Solo se ejecuta cuando está abajo
+	if is_attacking: # Si está haciendo Stomp/Bomb, no moverse
 		move_and_slide()
 		return
 
-	# Patrulla simple
 	if moving_right:
 		velocity.x = air_patrol_speed
 		animated_sprite.play("Right")
-		# Si llegamos al límite derecho, cambiamos dirección
-		if global_position.x >= patrol_max_x:
-			moving_right = false
+		if global_position.x >= patrol_max_x: moving_right = false
 	else:
 		velocity.x = -air_patrol_speed
 		animated_sprite.play("Left")
-		# Si llegamos al límite izquierdo, cambiamos dirección
-		if global_position.x <= patrol_min_x:
-			moving_right = true
-			
+		if global_position.x <= patrol_min_x: moving_right = true
+	
 	velocity.y = 0
-	
 	move_and_slide()
-	
-	# Iniciar timer de ataque con tiempo aleatorio si no está corriendo
-	if attack_cooldown_timer.is_stopped():
-		var random_time = randf_range(min_attack_cooldown, max_attack_cooldown)
-		attack_cooldown_timer.wait_time = random_time
-		attack_cooldown_timer.start()
 
-# --- Lógica de Cambio de Modos (Aplastar vs Bombas) ---
-func _swap_attack_mode():
-	if current_state != States.PHASE_2_AIR: return
-	
-	# Alternar modo
-	if current_attack_mode == AttackModes.STOMP_MODE:
-		current_attack_mode = AttackModes.BOMB_MODE
-		print("Modo: BOMBARDEO")
-	else:
-		current_attack_mode = AttackModes.STOMP_MODE
-		print("Modo: APLASTAR")
-	
-	# Configurar duración aleatoria de este modo
-	var random_duration = randf_range(min_mode_duration, max_mode_duration)
-	mode_switch_timer.wait_time = random_duration
-	mode_switch_timer.start()
-
-# --- Ejecutar ataque según el modo actual ---
-func _on_attack_timer_timeout():
-	if current_state != States.PHASE_2_AIR: return
-	if not player: return
-	
-	if current_attack_mode == AttackModes.STOMP_MODE:
-		perform_stomp_attack()
-	else:
-		perform_bomb_attack()
+func fly_to_height(target_y: float):
+	var tween = create_tween()
+	tween.tween_property(self, "position", Vector2(1850, target_y), 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	await tween.finished
 
 # --- Ataque 1: Aplastar ---
 func perform_stomp_attack():
@@ -310,7 +409,7 @@ func _process_phase_3(_delta):
 #                     DAÑO Y VIDA
 # ========================================================
 func take_damage():
-	if not is_alive:
+	if not is_alive or is_invulnerable:
 		return
 	
 	current_health -= 10
@@ -350,12 +449,3 @@ func check_for_phase_change():
 	# Cambio a Fase 2 (66% vida)
 	elif pct < 0.66 and current_state == States.PHASE_1_GROUND:
 		change_state(States.PHASE_2_AIR)
-
-func die():
-	print("Jefe Derrotado")
-	animated_sprite.play("Death")
-	set_physics_process(false)
-	$CollisionShape2D.set_deferred("disabled", true)
-	# Detener timers si existen
-	if attack_cooldown_timer: attack_cooldown_timer.stop()
-	if mode_switch_timer: mode_switch_timer.stop()

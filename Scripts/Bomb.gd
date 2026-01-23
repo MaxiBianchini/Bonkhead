@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var fuse_time: float = 2.0 # Tiempo hasta explotar
+@export var fuse_time: float = 1.0 # Tiempo hasta explotar
 @export var damage: int = 2 # Daño al jugador
 
 @onready var explosion_area: Area2D = $ExplosionArea
@@ -52,5 +52,5 @@ func explode() -> void:
 	
 	# 4. Limpieza
 	# Esperamos un poquito para asegurar que el daño se procese o la animación termine
-	await get_tree().create_timer(0.2).timeout
+	await sprite.animation_finished
 	queue_free()
