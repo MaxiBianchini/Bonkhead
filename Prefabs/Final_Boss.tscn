@@ -22,8 +22,7 @@ position = Vector2(0, 88)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MechanicalClaw"]
 sprite_frames = ExtResource("1_o1ywp")
-animation = &"Claw_Idle"
-frame_progress = 0.9927335
+animation = &"Attack"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_o1ywp")

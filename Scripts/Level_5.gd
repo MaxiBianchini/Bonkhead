@@ -16,7 +16,7 @@ func _ready() -> void:
 	if final_boss:
 		# Conectamos la nueva señal
 		final_boss.toggle_hazards.connect(_on_boss_toggle_hazards)
-		
+		final_boss.boss_die.connect(open_gates)
 		# Conectamos la señal 'phase_changed' del jefe a una función nuestra
 		#if not final_boss.phase_changed.is_connected(_on_boss_phase_changed):
 			#final_boss.phase_changed.connect(_on_boss_phase_changed)
