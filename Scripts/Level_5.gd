@@ -16,7 +16,7 @@ func _ready() -> void:
 	if final_boss:
 		# Conectamos la nueva señal
 		final_boss.toggle_hazards.connect(_on_boss_toggle_hazards)
-		final_boss.boss_die.connect(open_gates)
+		final_boss.boss_die.connect(_on_boss_die)
 		# Conectamos la señal 'phase_changed' del jefe a una función nuestra
 		#if not final_boss.phase_changed.is_connected(_on_boss_phase_changed):
 			#final_boss.phase_changed.connect(_on_boss_phase_changed)
@@ -196,6 +196,10 @@ func _on_boss_toggle_hazards(is_active: bool) -> void:
 	## Llamamos a tu función con parpadeo
 	#blink_and_show_platforms(new_phase)
 	
+
+func _on_boss_die():
+	set_molten_rock_active(false)
+	open_gates()
 
 func close_gates():
 	gates.enabled = true 

@@ -64,6 +64,7 @@ var p3_target_position: Vector2 = Vector2.ZERO # Para el movimiento errático
 var spiral_angle: float = 0.0 # Para el patrón de disparo
 var p3_timer: float = 0.0 # Control manual de tiempo
 var p3_point_timeout: float = 0.0 # Variable nueva: Paciencia para llegar al punto
+var p3_is_waiting: bool = false # Para saber si está en la pausa de 1 segundo
 
 # --- VARIABLES INTERNAS ---
 var player: Node2D = null
@@ -475,18 +476,47 @@ func _process_phase_3(delta):
 
 		# --- ESTADO 2: MOVIMIENTO ERRÁTICO (VULNERABLE) ---
 		Phase3SubState.ERRATIC_CHASE:
-			# Moverse hacia el punto objetivo actual
+			# Si estamos esperando, no hacemos nada de movimiento
+			if p3_is_waiting:
+				velocity = Vector2.ZERO
+				move_and_slide()
+				return
+			
+			# 1. Moverse hacia el punto
 			var direction = global_position.direction_to(p3_target_position)
 			velocity = direction * erratic_speed
 			move_and_slide()
 			
-			# Si llegamos cerca del punto, elegimos otro inmediatamente
-			if global_position.distance_to(p3_target_position) < 50.0:
-				pick_random_erratic_point()
+			# 2. Restar tiempo de paciencia (para que no se atasque)
+			p3_point_timeout -= delta
+			
+			# 3. CONDICIÓN DE LLEGADA (O Tiempo agotado)
+			var distance = global_position.distance_to(p3_target_position)
+			if distance < 50.0 or p3_point_timeout <= 0:
+				# EN LUGAR DE ELEGIR PUNTO DIRECTAMENTE, LLAMAMOS A LA PAUSA
+				_wait_and_reposition()
 			
 			# Animación
 			if velocity.x > 0: animated_sprite.play("Right")
 			else: animated_sprite.play("Left")
+
+func _wait_and_reposition():
+	p3_is_waiting = true # Bloqueamos el movimiento en _process
+	velocity = Vector2.ZERO # Frenado total
+	
+	# Opcional: Poner animación de Idle o de "Jadeo/Cansancio"
+	animated_sprite.play("Idle") 
+	
+	# Esperamos 1 segundo
+	await get_tree().create_timer(1.0).timeout
+	
+	# Verificación de seguridad (por si murió o cambió fase en ese segundo)
+	if current_state != States.PHASE_3_CHAOS or p3_sub_state != Phase3SubState.ERRATIC_CHASE:
+		return
+		
+	# Elegimos nuevo punto y liberamos el bloqueo
+	pick_random_erratic_point()
+	p3_is_waiting = false
 
 # --- INICIO DE SUB-FASES ---
 
@@ -504,12 +534,13 @@ func start_p3_bullet_hell():
 func start_p3_erratic_chase():
 	print("Fase 3: ¡PERSECUCIÓN! (Vulnerable)")
 	p3_sub_state = Phase3SubState.ERRATIC_CHASE
-	is_invulnerable = false # ¡AHORA SE LE PUEDE PEGAR!
+	is_invulnerable = false 
+	p3_is_waiting = false # <--- RESETEAR AQUÍ
 	
-	# Elegir primer punto
+	# Apagamos colisión con paredes (Capa 1)
+	set_collision_mask_value(1, false) 
+	
 	pick_random_erratic_point()
-	
-	# Configurar tiempo
 	p3_timer = chaos_duration_chasing
 
 # --- UTILIDADES FASE 3 ---
@@ -602,6 +633,7 @@ func check_for_phase_change():
 
 func die():
 	is_alive = false
+	set_collision_mask_value(1, true)
 	print("Jefe Derrotado")
 	animated_sprite.play("Death")
 	emit_signal("boss_die")

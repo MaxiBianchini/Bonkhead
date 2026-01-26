@@ -639,8 +639,6 @@ func change_weapon() -> void:
 
 
 func take_damage(force_death: bool = false, damage: int = 1) -> void:
-	return
-	
 	if (is_invincible and not force_death) or not is_alive:
 		return
 
