@@ -3,7 +3,6 @@ extends Node2D
 # --- Referencias ---
 @onready var platforms_1: Node2D = $Platform_Fase1
 @onready var platforms_2: Node2D = $Platform_Fase2
-@onready var platforms_3: Node2D = $Platform_Fase3
 @onready var molten_rock: TileMapLayer = $"TileMaps/Molten Rock 2"
 @onready var dead_area: Area2D = $Dead_Area2
 @onready var gates: TileMapLayer = $TileMaps/Gates
@@ -17,12 +16,9 @@ func _ready() -> void:
 		# Conectamos la nueva señal
 		final_boss.toggle_hazards.connect(_on_boss_toggle_hazards)
 		final_boss.boss_die.connect(_on_boss_die)
-		# Conectamos la señal 'phase_changed' del jefe a una función nuestra
-		#if not final_boss.phase_changed.is_connected(_on_boss_phase_changed):
-			#final_boss.phase_changed.connect(_on_boss_phase_changed)
+		
 	else:
 		print("ERROR: ¡No has asignado el Final Boss en el Inspector del Nivel 5!")
-	
 	
 	# Estado inicial
 	set_molten_rock_active(false)
@@ -30,23 +26,13 @@ func _ready() -> void:
 	# Aseguramos que las plataformas de la fase 2 y 3 arranquen invisibles y sin colisión
 	platforms_2.visible = false
 	platforms_2.modulate.a = 0.0
-	_set_platform_collision(false,2)
-	
-	platforms_3.visible = false
-	platforms_3.modulate.a = 0.0
-	_set_platform_collision(false,3)
+	_set_platform_collision(false)
 	
 	open_gates()
 
 # --- LÓGICA DE APARICIÓN (Blink In) ---
-func blink_and_show_platforms(grup_plat) -> void:
-	var platforms_container
-	match grup_plat:
-		2:
-			platforms_container = platforms_2
-		3: 
-			platforms_container = platforms_3
-	
+func blink_and_show_platforms() -> void:
+	var platforms_container = platforms_2
 	platforms_container.visible = true
 	var tween = create_tween()
 	
@@ -60,19 +46,13 @@ func blink_and_show_platforms(grup_plat) -> void:
 	
 	# Esperamos a que termine la animación visual para activar la física
 	await tween.finished
-	_set_platform_collision(true,grup_plat)
-	if grup_plat == 2:
-		await get_tree().create_timer(2.0).timeout
-		#set_molten_rock_active(true)
+	_set_platform_collision(true)
+	await get_tree().create_timer(2.0).timeout
+	#set_molten_rock_active(true)
 
 # --- LÓGICA DE DESAPARICIÓN (Blink Out) ---
-func blink_and_hide_platforms(grup_plat) -> void:
-	var platforms_container
-	match grup_plat:
-		2:
-			platforms_container = platforms_2
-		3: 
-			platforms_container = platforms_3
+func blink_and_hide_platforms() -> void:
+	var platforms_container = platforms_2
 	var tween = create_tween()
 	
 	# Parpadeo de advertencia (más lento para que el jugador se prepare)
@@ -86,17 +66,12 @@ func blink_and_hide_platforms(grup_plat) -> void:
 	
 	await tween.finished
 	platforms_container.visible = false
-	_set_platform_collision(false,grup_plat)
+	_set_platform_collision(false)
 	set_molten_rock_active(false)
 
 # --- FUNCIÓN AUXILIAR DE FÍSICA ---
-func _set_platform_collision(is_active: bool, grup_plat: int) -> void:
-	var platforms_container
-	match grup_plat:
-		2:
-			platforms_container = platforms_2
-		3: 
-			platforms_container = platforms_3
+func _set_platform_collision(is_active: bool) -> void:
+	var platforms_container = platforms_2
 	
 	for platform in platforms_container.get_children():
 		if platform.has_node("CollisionShape2D"):
@@ -180,21 +155,14 @@ func start_boss_cinematic(player_node):
 func _on_boss_toggle_hazards(is_active: bool) -> void:
 	if is_active:
 		print("Nivel 5: ¡ACTIVANDO TRAMPAS!")
-		blink_and_show_platforms(2)
+		blink_and_show_platforms()
 		# Esperamos un poco para la lava si quieres desincronizarlo
 		await get_tree().create_timer(1.0).timeout
 		set_molten_rock_active(true)
 	else:
 		print("Nivel 5: Desactivando Trampas...")
-		blink_and_hide_platforms(2)
+		blink_and_hide_platforms()
 		set_molten_rock_active(false)
-
-# --- ESTA ES LA FUNCIÓN QUE RESPONDE AL CAMBIO DE FASE ---
-#func _on_boss_phase_changed(new_phase: int) -> void:
-	#print("Nivel 5: El Jefe cambió a Fase ", new_phase)
-	#await get_tree().create_timer(5).timeout
-	## Llamamos a tu función con parpadeo
-	#blink_and_show_platforms(new_phase)
 	
 
 func _on_boss_die():
