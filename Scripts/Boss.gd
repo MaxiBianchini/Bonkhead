@@ -54,8 +54,8 @@ var next_low_attack_mode: AttackModes = AttackModes.STOMP_MODE
 @export var chaos_duration_chasing: float = 10.0 # Tiempo persiguiendo
 @export var erratic_speed: float = 600.0 # Velocidad al perseguir
 
-@export var p3_area_min: Vector2 = Vector2(1600, 1000) # La esquina SUPERIOR IZQUIERDA del rectángulo
-@export var p3_area_max: Vector2 = Vector2(2100, 1400) # La esquina INFERIOR DERECHA del rectángulo
+@export var p3_area_min: Vector2 = Vector2(1600, 1150) # La esquina SUPERIOR IZQUIERDA del rectángulo
+@export var p3_area_max: Vector2 = Vector2(2145, 1600) # La esquina INFERIOR DERECHA del rectángulo
 
 # Variables internas Fase 3
 enum Phase3SubState { BULLET_HELL, ERRATIC_CHASE }
@@ -65,6 +65,13 @@ var spiral_angle: float = 0.0 # Para el patrón de disparo
 var p3_timer: float = 0.0 # Control manual de tiempo
 var p3_point_timeout: float = 0.0 # Variable nueva: Paciencia para llegar al punto
 var p3_is_waiting: bool = false # Para saber si está en la pausa de 1 segundo
+
+enum BulletPatterns { SPIRAL, NOVA, AIMED }
+var current_bullet_pattern: BulletPatterns = BulletPatterns.SPIRAL
+
+# Variables para controlar la cadencia según el patrón
+var shoot_timer: float = 0.0
+var shoot_delay: float = 0.1 # Tiempo entre disparos
 
 # --- VARIABLES INTERNAS ---
 var player: Node2D = null
@@ -460,19 +467,22 @@ func _process_phase_3(delta):
 	match p3_sub_state:
 		# --- ESTADO 1: DISPAROS DESDE EL CENTRO (INVULNERABLE) ---
 		Phase3SubState.BULLET_HELL:
-			# El jefe se queda quieto en el centro
 			velocity = Vector2.ZERO
 			move_and_slide()
 			
-			# LÓGICA DE DISPARO EN ESPIRAL
-			# Rotamos el ángulo constantemente
-			spiral_angle += 5.0 * delta # Velocidad de rotación
-			
-			# Disparar cada ciertos frames (ej: cada 0.1s)
-			# Usamos un truco matemático simple: (Time.get_ticks_msec() % 100)
-			if Time.get_ticks_msec() % 150 < 20: # Ajusta 150 para disparar mas/menos rapido
-				shoot_spiral_bullet(spiral_angle)
-				shoot_spiral_bullet(spiral_angle + PI) # Dispara doble (atrás y adelante)
+			# Gestión del disparo
+			shoot_timer -= delta
+			if shoot_timer <= 0:
+				shoot_timer = shoot_delay # Reiniciar timer
+				
+				# Ejecutar el patrón seleccionado
+				match current_bullet_pattern:
+					BulletPatterns.SPIRAL:
+						perform_spiral_pattern(delta)
+					BulletPatterns.NOVA:
+						perform_nova_pattern()
+					BulletPatterns.AIMED:
+						perform_aimed_pattern()
 
 		# --- ESTADO 2: MOVIMIENTO ERRÁTICO (VULNERABLE) ---
 		Phase3SubState.ERRATIC_CHASE:
@@ -518,6 +528,61 @@ func _wait_and_reposition():
 	pick_random_erratic_point()
 	p3_is_waiting = false
 
+# --- PATRÓN 1: ESPIRAL (Como el que tenías, pero doble) ---
+func perform_spiral_pattern(delta):
+	# Rotamos el ángulo
+	spiral_angle += 5.0 * delta # Ajusta el 5.0 para girar más rápido/lento
+	
+	# Disparamos 3 brazos de espiral separados por 120 grados
+	shoot_bullet_angle(spiral_angle)
+	shoot_bullet_angle(spiral_angle + deg_to_rad(120))
+	shoot_bullet_angle(spiral_angle + deg_to_rad(240))
+
+# --- PATRÓN 2: NOVA (Anillo explosivo) ---
+func perform_nova_pattern():
+	var bullets_amount = 12 # Cantidad de balas en el anillo
+	var angle_step = TAU / bullets_amount # TAU es 2*PI (360 grados)
+	
+	# Creamos un anillo completo
+	for i in range(bullets_amount):
+		var angle = i * angle_step
+		# Opcional: Sumar un pequeño offset aleatorio para que los huecos no estén siempre igual
+		# angle += randf_range(-0.1, 0.1) 
+		shoot_bullet_angle(angle)
+
+# --- PATRÓN 3: AIMED (Escopeta al jugador) ---
+func perform_aimed_pattern():
+	if not player: return
+	
+	# Calcular ángulo hacia el jugador
+	var dir_to_player = global_position.direction_to(player.global_position)
+	var base_angle = dir_to_player.angle()
+	
+	# Disparar 1 bala central
+	shoot_bullet_angle(base_angle)
+	
+	# Disparar 2 balas a los costados (Spread de 15 grados)
+	shoot_bullet_angle(base_angle + deg_to_rad(15))
+	shoot_bullet_angle(base_angle - deg_to_rad(15))
+
+# Función genérica para disparar una bala en un ángulo específico
+func shoot_bullet_angle(angle_rad: float):
+	if not bullet_scene: return
+	
+	var bullet = bullet_scene.instantiate()
+	bullet.global_position = global_position
+	
+	if bullet.has_method("set_shooter"): bullet.set_shooter(self)
+	
+	# Vector dirección a partir del ángulo
+	var dir = Vector2(cos(angle_rad), sin(angle_rad))
+	
+	if bullet.has_method("set_direction"): bullet.set_direction(dir)
+	if bullet.has_method("set_mask"): bullet.set_mask(2)
+	
+	get_parent().add_child(bullet)
+	if bullet.has_meta("delete_mask"): bullet.delete_mask(1)
+
 # --- INICIO DE SUB-FASES ---
 
 func start_p3_bullet_hell():
@@ -527,9 +592,26 @@ func start_p3_bullet_hell():
 	
 	# Subir al centro protegido
 	await fly_to_position(center_position)
+	# --- ELECCIÓN DE PATRÓN ---
+	# Elegimos uno de los 3 patrones al azar
+	var random_pick = randi() % 4
+	print("RANDOM: ", random_pick)
+	current_bullet_pattern = random_pick as BulletPatterns
 	
-	# Configurar tiempo
+	# Configuración específica para cada patrón
+	match current_bullet_pattern:
+		BulletPatterns.SPIRAL:
+			print("Patrón: ESPIRAL")
+			shoot_delay = 0.1 # Muy rápido
+		BulletPatterns.NOVA:
+			print("Patrón: NOVA (Anillos)")
+			shoot_delay = 0.8 # Más lento, son muchas balas
+		BulletPatterns.AIMED:
+			print("Patrón: DIRIGIDO")
+			shoot_delay = 0.8 # Medio
+			
 	p3_timer = chaos_duration_shooting
+	shoot_timer = 0.0 # Reset del timer de disparo
 
 func start_p3_erratic_chase():
 	print("Fase 3: ¡PERSECUCIÓN! (Vulnerable)")
@@ -598,13 +680,6 @@ func fly_to_position(target: Vector2):
 # ========================================================
 #                     DAÑO
 # ========================================================
-func _draw():
-	# Solo dibujamos esto si estamos en modo debug o en el editor
-	if Engine.is_editor_hint() or OS.is_debug_build():
-		# Dibuja el rectángulo de la Fase 3 en color VERDE semi-transparente
-		var rect = Rect2(p3_area_min, p3_area_max - p3_area_min)
-		draw_rect(rect, Color(0, 1, 0, 0.3), true)
-
 
 func take_damage():
 	if not is_alive or is_invulnerable: return
