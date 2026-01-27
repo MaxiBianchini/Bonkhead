@@ -2,10 +2,9 @@ extends CharacterBody2D
 
 # --- SEÑALES ---
 signal health_changed(new_health)
-signal phase_changed(new_phase)
 signal toggle_hazards(is_active)
-signal boss_die()
 signal add_points(amount)
+signal boss_die()
 
 # --- CONFIGURACIÓN GENERAL ---
 @export_group("Stats")
@@ -15,7 +14,7 @@ var current_health: int
 @export_group("Velocidades")
 @export var ground_speed: float = 100.0
 @export var dash_speed: float = 400.0
-@export var air_patrol_speed: float = 550.0
+@export var air_patrol_speed: float = 650.0
 @export var stomp_speed: float = 1300.0
 
 # --- CONFIGURACIÓN FASE 2 (AIRE) ---
@@ -161,13 +160,10 @@ func change_state(new_state: States):
 			
 		States.PHASE_2_AIR:
 			print(">> FASE 2: SECUENCIA AÉREA <<")
-			emit_signal("phase_changed", 2)
 			start_low_attack_sequence()
 			
 		States.PHASE_3_CHAOS:
 			print(">> FASE 3: CAOS TOTAL <<")
-			emit_signal("phase_changed", 3)
-			
 			# 1. Activamos Lava y Plataformas PERMANENTEMENTE
 			emit_signal("toggle_hazards", true)
 			
@@ -176,8 +172,7 @@ func change_state(new_state: States):
 
 # Utility para detener timers pendientes y evitar bugs al cambiar fase
 func cleanup_timers():
-	# En Godot 4, los timers creados con create_timer son SceneTreeTimers y no se pueden detener manualmente.
-	# La estrategia es usar banderas de estado (current_state) dentro de los awaits para abortar la lógica.
+	# Usar banderas de estado (current_state) dentro de los awaits para abortar la lógica.
 	# Resetear banderas lógicas:
 	is_attacking = false
 	is_dashing = false
@@ -205,7 +200,7 @@ func _process_phase_1(_delta):
 	else:
 		# Movimiento lento
 		velocity.x = direction_to_player.x * 50
-		velocity.y += 980 * _delta # Gravedad básica por si salta o cae
+		velocity.y = 0 # No aplicar Gravedad
 		move_and_slide()
 
 func start_dash_attack():
@@ -594,7 +589,7 @@ func start_p3_bullet_hell():
 	await fly_to_position(center_position)
 	# --- ELECCIÓN DE PATRÓN ---
 	# Elegimos uno de los 3 patrones al azar
-	var random_pick = randi() % 4
+	var random_pick = randi() % 3
 	print("RANDOM: ", random_pick)
 	current_bullet_pattern = random_pick as BulletPatterns
 	
@@ -617,7 +612,7 @@ func start_p3_erratic_chase():
 	print("Fase 3: ¡PERSECUCIÓN! (Vulnerable)")
 	p3_sub_state = Phase3SubState.ERRATIC_CHASE
 	is_invulnerable = false 
-	p3_is_waiting = false # <--- RESETEAR AQUÍ
+	p3_is_waiting = false
 	
 	# Apagamos colisión con paredes (Capa 1)
 	set_collision_mask_value(1, false) 
@@ -644,7 +639,7 @@ func pick_random_erratic_point():
 	
 	p3_target_position = Vector2(random_x, random_y)
 	
-	# Mantenemos el timer de paciencia por si acaso se traba con el player
+	# Timer de paciencia por si acaso se traba con el player
 	p3_point_timeout = 2.0
 
 func shoot_spiral_bullet(angle_rad: float):
