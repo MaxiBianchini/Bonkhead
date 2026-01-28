@@ -9,6 +9,18 @@ extends Node2D
 @onready var gates_trigger: Area2D = $GatesArea
 @export var final_boss: CharacterBody2D
 
+@onready var tilemap = $TileMaps # (O como se llame tu nodo padre del escenario)
+@onready var warning_label = $Signpost # Ajusta la ruta a tu UI
+@onready var camera = $Camera2D # Si tienes acceso a la cámara para vibrar
+
+# Asegúrate de tener esta variable definida al principio del script
+var blink_tween: Tween
+
+# Color normal (Blanco = sin tinte)
+var normal_color = Color(1, 1, 1, 1)
+# Color de Alerta (Rojo Intenso)
+var danger_color = Color(1, 0.5, 0.5, 1)
+
 func _ready() -> void:
 	
 	# 2. CONEXIÓN DE SEÑALES DEL JEFE
@@ -154,13 +166,56 @@ func start_boss_cinematic(player_node):
 
 func _on_boss_toggle_hazards(is_active: bool) -> void:
 	if is_active:
-		print("Nivel 5: ¡ACTIVANDO TRAMPAS!")
+		# --- SECUENCIA DE ACTIVACIÓN ---
+		print("Nivel 5: ¡ALERTA DE LAVA!")
+		
+		# 1. Mostrar Advertencia (Estática, sin parpadeo)
+		if warning_label:
+			warning_label.visible = true
+			warning_label.modulate.a = 1.0 # Aseguramos que sea visible
+
+		# 2. Parpadeo del Tilemap
+		if tilemap:
+			if blink_tween: blink_tween.kill() # Limpieza preventiva
+			blink_tween = create_tween()
+			
+			# Hacemos que parpadee 4 veces (ida y vuelta) = aprox 2 segundos total
+			blink_tween.set_loops(4)
+			
+			# Ciclo: Ir a Rojo -> Volver a Blanco
+			blink_tween.tween_property(tilemap, "modulate", danger_color, 0.25)
+			blink_tween.tween_property(tilemap, "modulate", normal_color, 0.25)
+		
+		# 3. Esperar un momento mientras parpadea (1.5 segundos)
+		await get_tree().create_timer(1.5).timeout
+		
+		# --- PUNTO CLAVE: PLATAFORMAS ANTES DEL FINAL ---
+		# Activamos las plataformas para que el player tenga a donde ir
 		blink_and_show_platforms()
-		# Esperamos un poco para la lava si quieres desincronizarlo
+		
+		# 4. Esperar el resto del tiempo (0.5 segundos más) para completar los 2s
 		await get_tree().create_timer(1.0).timeout
-		set_molten_rock_active(true)
+		
+		# 5. FINAL DE LA SECUENCIA
+		set_molten_rock_active(true) # Sube la lava
+		
+		if warning_label:
+			warning_label.visible = false # Se va el cartel ("sale el warning_label")
+	
 	else:
-		print("Nivel 5: Desactivando Trampas...")
+		# --- SECUENCIA DE DESACTIVACIÓN ---
+		print("Nivel 5: Calma...")
+		
+		# 1. Resetear UI y Tweens
+		if warning_label: warning_label.visible = false
+		if blink_tween: blink_tween.kill()
+
+		# 2. Restaurar Color del Nivel
+		if tilemap:
+			var reset_tween = create_tween()
+			reset_tween.tween_property(tilemap, "modulate", normal_color, 0.5)
+
+		# 3. Desactivar mecánicas
 		blink_and_hide_platforms()
 		set_molten_rock_active(false)
 	

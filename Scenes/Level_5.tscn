@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://cqanoql23fnk7"]
+[gd_scene load_steps=28 format=4 uid="uid://cqanoql23fnk7"]
 
 [ext_resource type="Script" uid="uid://c0wim6pfyt7kg" path="res://Scripts/Level_5.gd" id="1_7gvow"]
 [ext_resource type="Texture2D" uid="uid://3a3scdft5fu7" path="res://Graphics/Zonas/Basement-zone/2 Background/Day/1.png" id="1_kp6x5"]
@@ -18,8 +18,8 @@
 [ext_resource type="AudioStream" uid="uid://bqm3nmsvgpjyg" path="res://Music/Level_4.mp3" id="13_ie7ld"]
 [ext_resource type="PackedScene" uid="uid://d2fpq7nxaiblh" path="res://Prefabs/Dead_Area.tscn" id="16_lpe2j"]
 [ext_resource type="PackedScene" uid="uid://cuuql85rnkjo6" path="res://Prefabs/Falling_Platform_4.tscn" id="17_43geq"]
-[ext_resource type="PackedScene" uid="uid://b4cpcj4lu40ob" path="res://Prefabs/ArmorPickup_BURST.tscn" id="20_q2y8u"]
 [ext_resource type="PackedScene" uid="uid://rrb4ynsksejq" path="res://Prefabs/Final_Boss.tscn" id="20_vw5ax"]
+[ext_resource type="PackedScene" uid="uid://bh3h363wnt1mt" path="res://Prefabs/Signpost.tscn" id="21_q2y8u"]
 
 [sub_resource type="Resource" id="Resource_n4me6"]
 script = ExtResource("11_tfk8e")
@@ -42,6 +42,10 @@ size = Vector2(686, 196)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kon3q"]
 resource_local_to_scene = true
 size = Vector2(775, 42)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h33cd"]
+resource_local_to_scene = true
+size = Vector2(588, 43.5)
 
 [node name="Level_5" type="Node2D" node_paths=PackedStringArray("final_boss")]
 script = ExtResource("1_7gvow")
@@ -333,8 +337,20 @@ shape = SubResource("RectangleShape2D_kon3q")
 [node name="Final_Boss" parent="." instance=ExtResource("20_vw5ax")]
 position = Vector2(2130, 1714)
 
-[node name="AmmoPickup_BURTS" parent="." instance=ExtResource("20_q2y8u")]
-position = Vector2(2145, 1600)
+[node name="Page_Comic2" parent="." instance=ExtResource("12_p23to")]
+position = Vector2(2862, 1697)
+
+[node name="Signpost" parent="." instance=ExtResource("21_q2y8u")]
+visible = false
+position = Vector2(1870, 1733)
+
+[node name="CollisionShape2D" parent="Signpost" index="0"]
+position = Vector2(4, -4.25)
+shape = SubResource("RectangleShape2D_h33cd")
+
+[node name="Label" parent="Signpost" index="2"]
+text = "¡DANGER!
+UP! UP!"
 
 [connection signal="body_entered" from="GatesArea" to="." method="_on_gates_area_body_entered"]
 
@@ -343,3 +359,4 @@ position = Vector2(2145, 1600)
 [editable path="Phantom_Area/Phantom_Area"]
 [editable path="Phantom_Area/Phantom_Area2"]
 [editable path="Dead_Area2"]
+[editable path="Signpost"]
