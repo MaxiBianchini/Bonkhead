@@ -16,17 +16,9 @@ bullet_scene = ExtResource("2_yr172")
 bomb_scene = ExtResource("2_j21dr")
 min_mode_duration = 10.0
 
-[node name="MechanicalClaw" type="Node2D" parent="."]
-visible = false
-position = Vector2(0, 88)
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MechanicalClaw"]
-sprite_frames = ExtResource("1_o1ywp")
-animation = &"Attack"
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_o1ywp")
-animation = &"Attack"
+animation = &"Still"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
