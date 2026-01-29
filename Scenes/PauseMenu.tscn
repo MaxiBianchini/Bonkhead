@@ -321,7 +321,7 @@ text = "Move Left: "
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_425uk")
 theme_override_font_sizes/font_size = 20
-text = "Left Arrow"
+text = "A      "
 
 [node name="MoveRight" type="HBoxContainer" parent="OptionsMenu/Options/VBoxContainer"]
 layout_mode = 2
@@ -340,7 +340,7 @@ text = "Move Right: "
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_425uk")
 theme_override_font_sizes/font_size = 20
-text = "Right Arrow"
+text = "D       "
 
 [node name="MoveDown" type="HBoxContainer" parent="OptionsMenu/Options/VBoxContainer"]
 layout_mode = 2
@@ -359,7 +359,26 @@ text = "Move Down: "
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_425uk")
 theme_override_font_sizes/font_size = 20
-text = "Down Arrow"
+text = "S      "
+
+[node name="MoveUP" type="HBoxContainer" parent="OptionsMenu/Options/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="OptionsMenu/Options/VBoxContainer/MoveUP"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="OptionsMenu/Options/VBoxContainer/MoveUP"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 20
+text = "   Up:"
+
+[node name="Label2" type="Label" parent="OptionsMenu/Options/VBoxContainer/MoveUP"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_425uk")
+theme_override_font_sizes/font_size = 20
+text = " W  "
 
 [node name="Jump" type="HBoxContainer" parent="OptionsMenu/Options/VBoxContainer"]
 layout_mode = 2
@@ -378,7 +397,7 @@ text = "Jump: "
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_425uk")
 theme_override_font_sizes/font_size = 20
-text = "S    "
+text = "H "
 
 [node name="Shoot" type="HBoxContainer" parent="OptionsMenu/Options/VBoxContainer"]
 layout_mode = 2
@@ -397,7 +416,7 @@ text = "Shoot: "
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_425uk")
 theme_override_font_sizes/font_size = 20
-text = "A     "
+text = "J  "
 
 [node name="Dash" type="HBoxContainer" parent="OptionsMenu/Options/VBoxContainer"]
 layout_mode = 2
@@ -416,7 +435,7 @@ text = "Dash: "
 layout_mode = 2
 theme_override_fonts/font = ExtResource("5_425uk")
 theme_override_font_sizes/font_size = 20
-text = "Shift"
+text = "K "
 
 [node name="BackButtonContainer" type="VBoxContainer" parent="OptionsMenu"]
 process_mode = 3
