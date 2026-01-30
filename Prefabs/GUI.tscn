@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dch15up2fk0ht"]
+[gd_scene load_steps=15 format=3 uid="uid://dch15up2fk0ht"]
 
 [ext_resource type="Texture2D" uid="uid://1y0p34ksxrjo" path="res://Graphics/GUI/Status/Contenedor Vidas.png" id="1_1r6vs"]
 [ext_resource type="Texture2D" uid="uid://30mchi3gi365" path="res://Graphics/GUI/Other/3 Skill icons/Skillicon7_16.png" id="2_apbyh"]
@@ -7,7 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://08prew2yytlt" path="res://Graphics/GUI/Icons/Icon_11.png" id="4_wlkr0"]
 [ext_resource type="FontFile" uid="uid://c88rb6dh1ub4j" path="res://Graphics/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="5_tcnxb"]
 [ext_resource type="Texture2D" uid="uid://cthae01aake71" path="res://Graphics/GUI/Status/Timer.png" id="6_ajp3r"]
+[ext_resource type="Texture2D" uid="uid://cg2qecn64y80y" path="res://Graphics/GUI/Logo/Logo3.png" id="8_7vwet"]
 [ext_resource type="Texture2D" uid="uid://durgtlyrl3rrf" path="res://Graphics/GUI/Frames/Frame_37.png" id="8_wlkr0"]
+[ext_resource type="Texture2D" uid="uid://sxj0tffmroxi" path="res://Graphics/1_14.png" id="9_c22wm"]
 [ext_resource type="Texture2D" uid="uid://cty5kt2sfp2jq" path="res://Graphics/GUI/Bullets Icon/1.png" id="9_wlkr0"]
 [ext_resource type="Texture2D" uid="uid://c72adf683r3c7" path="res://Graphics/GUI/Bullets Icon/2.png" id="10_srqre"]
 [ext_resource type="Texture2D" uid="uid://bafcnkyba50w3" path="res://Graphics/GUI/Bullets Icon/3.png" id="11_7vwet"]
@@ -131,6 +133,22 @@ theme_override_fonts/font = ExtResource("5_tcnxb")
 theme_override_font_sizes/font_size = 17
 horizontal_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="FinalBossContainer" type="Sprite2D" parent="HBoxContainer"]
+texture_filter = 1
+position = Vector2(960, 1046)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("8_7vwet")
+
+[node name="BossHealthBar" type="TextureProgressBar" parent="HBoxContainer/FinalBossContainer"]
+visible = false
+offset_left = -186.6667
+offset_top = -36.666668
+offset_right = 191.33333
+offset_bottom = 3.333332
+max_value = 300.0
+nine_patch_stretch = true
+texture_progress = ExtResource("9_c22wm")
 
 [node name="BulletIcon" type="Sprite2D" parent="HBoxContainer"]
 position = Vector2(460, 68)
