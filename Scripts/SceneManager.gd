@@ -11,6 +11,9 @@ var bullet_type: Array = []
 var comic_page: Node = null
 var player: Node = null
 var gui: Node = null
+# En las variables del principio
+var boss_health_bar: TextureProgressBar = null
+var boss_health_container:Sprite2D = null
 
 var pause_menu: Node = null
 var game_over_menu: Node = null
@@ -46,6 +49,14 @@ func initialize_scene() -> void:
 			time_label = gui.get_node("HBoxContainer/TimeLabel/Text")
 			points_label = gui.get_node("HBoxContainer/PointsLabel/Text")
 			
+			# 1. BUSCAR LA BARRA DEL JEFE EN LA GUI
+			# Ajusta la ruta "Container/BossHealthBar" según donde la hayas puesto en tu escena GUI
+			if gui.has_node("HBoxContainer/FinalBossContainer/BossHealthBar"): 
+				boss_health_container = gui.get_node("HBoxContainer/FinalBossContainer")
+				boss_health_container.visible = false # Oculta por defecto
+				boss_health_bar = gui.get_node("HBoxContainer/FinalBossContainer/BossHealthBar")
+				boss_health_bar.visible = false # Oculta por defecto
+			
 			var bullet_type_container = gui.get_node("HBoxContainer/BulletIcon")
 			bullet_type = bullet_type_container.get_children()
 			# Ocultamos todos los íconos por defecto al cargar
@@ -59,6 +70,33 @@ func initialize_scene() -> void:
 			for i in range(len(packs_sprites)):
 				packs_sprites[i].visible = i < life_packs
 		
+		# 2. BUSCAR AL JEFE EN EL NIVEL (Para conectar la señal)
+		# Asumimos que el nodo del jefe se llama "Boss" en la escena del Nivel 5
+		if current_scene.has_node("Final_Boss"):
+			var boss = current_scene.get_node("Final_Boss")
+		
+		# Conectar señal de vida
+			if boss.has_signal("health_changed"):
+				if not boss.health_changed.is_connected(update_boss_health):
+					boss.health_changed.connect(update_boss_health)
+		
+			# Conectar señal de muerte (para ocultar la barra al ganar)
+			if boss.has_signal("boss_die"):
+				if not boss.boss_die.is_connected(hide_boss_bar):
+					boss.boss_die.connect(hide_boss_bar)
+		
+			# 3. CONFIGURAR Y MOSTRAR LA BARRA
+			if boss_health_bar:
+				boss_health_container.visible = true
+				boss_health_bar.max_value = boss.max_health
+				boss_health_bar.value = 0 # Empezamos en 0 para hacer efecto de llenado
+				boss_health_bar.visible = true
+			
+				# EFECTO RETRO: La barra se llena poco a poco al empezar (Estilo Mega Man)
+				var fill_tween = create_tween()
+				fill_tween.tween_property(boss_health_bar, "value", boss.current_health, 1.5)\
+				.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+			
 		if current_scene.has_node("Page_Comic"):
 			comic_page = current_scene.get_node("Page_Comic")
 			if comic_page.has_signal("winLevel") and not comic_page.winLevel.is_connected(pass_to_nextlevel):
@@ -92,12 +130,24 @@ func on_player_died():
 	life_packs -= 1
 	
 	if life_packs <= 0:
-		# ¡GAME OVER REAL! El jugador ha perdido todos sus paquetes.
-		delete_saved_game()
-		# Según el GDD, debe empezar la partida desde cero. [cite: 46]
-		if gui: gui.visible = false
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-		show_game_over_menu() # Este menú ahora significa "perdiste todo"
+		if current_level == 5:
+			print("Muerte en Boss: Activando Checkpoint")
+			# NO borramos la partida.
+			# Restauramos los packs a 3 (o el máximo) para guardar el estado "listo para reintentar"
+			life_packs = 3 
+			save_game_data() 
+			
+			if gui: gui.visible = false
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			show_game_over_menu()
+		else:
+			# ¡GAME OVER REAL! El jugador ha perdido todos sus paquetes.
+			delete_saved_game()
+			# Según el GDD, debe empezar la partida desde cero. [cite: 46]
+			if gui: gui.visible = false
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			show_game_over_menu() # Este menú ahora significa "perdiste todo"
+		
 	else:
 		# Aún le quedan paquetes. Hacemos "respawn".
 		save_game_data() # Guardamos el progreso para que no pierda los puntos ganados.
@@ -124,12 +174,24 @@ func update_ammo_icon(ammo_type_index: int) -> void:
 
 # En la función restart_gameplay(), asegúrate de que reinicie el juego desde cero.
 func restart_gameplay() -> void:
-	# Esta función es llamada desde el menú de Game Over.
-	# Ahora significa empezar una partida completamente nueva.
-	start_new_game() # Esto reiniciará puntos, nivel 1 y life_packs a 3.
-	get_tree().paused = false
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-	ScenesTransitions.change_scene("res://Scenes/Level_1.tscn") # Siempre al nivel 1
+	if current_level == 5:
+		# Lógica de Reintentar Jefe
+		print("Reintentando Boss Fight...")
+		life_packs = 3 # Aseguramos vidas llenas
+		game_time = 0.0 # Opcional: Resetear tiempo
+		
+		get_tree().paused = false
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+		
+		# Recargamos el Nivel 5 directamente
+		ScenesTransitions.change_scene("res://Scenes/Level_5.tscn")
+	else:
+		# Esta función es llamada desde el menú de Game Over.
+		# Ahora significa empezar una partida completamente nueva.
+		start_new_game() # Esto reiniciará puntos, nivel 1 y life_packs a 3.
+		get_tree().paused = false
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+		ScenesTransitions.change_scene("res://Scenes/Level_1.tscn") # Siempre al nivel 1
 
 func add_new_points(value: int):
 	points += value
@@ -170,10 +232,20 @@ func show_pause_menu() -> void:
 func show_game_over_menu() -> void:
 	get_tree().paused = true
 	game_over_menu = preload("res://Scenes/GameOverMenu.tscn").instantiate()
+	
+	# Conexiones existentes...
 	if not game_over_menu.press_playagain.is_connected(restart_gameplay):
 		game_over_menu.press_playagain.connect(restart_gameplay)
+	
 	if not game_over_menu.press_mainmenu.is_connected(go_to_mainmenu):
 		game_over_menu.press_mainmenu.connect(go_to_mainmenu)
+	
+	# --- NUEVO: Configurar texto del botón ---
+	# Si tu menú tiene un script con un método para configurar textos, lo llamamos.
+	# Si no, simplemente agregamos el nodo. (Ver paso 2 para el script del menú)
+	if game_over_menu.has_method("set_checkpoint_mode"):
+		game_over_menu.set_checkpoint_mode(current_level == 5)
+		
 	get_tree().current_scene.add_child(game_over_menu)
 
 func resuem_gameplay() -> void:
@@ -228,6 +300,29 @@ func start_new_game() -> void:
 	current_level = 1
 	life_packs = 3
 	save_game_data()
+
+# Se llama cada vez que el Boss recibe daño
+func update_boss_health(new_health: int) -> void:
+	if boss_health_bar:
+		# Opción A: Cambio instantáneo (Más preciso)
+		boss_health_bar.value = new_health
+		
+		# Opción B: Cambio suave (Más moderno/jugoso)
+		#var tween = create_tween()
+		#tween.tween_property(boss_health_bar, "value", new_health, 0.2)\
+			#.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+# Se llama cuando el Boss muere
+func hide_boss_bar() -> void:
+	if boss_health_bar:
+		# Esperamos un poco para ver el golpe final y luego desvanecemos
+		var tween = create_tween()
+		tween.tween_interval(2.0) # Espera 2 segundos
+		tween.tween_property(boss_health_bar, "modulate:a", 0.0, 1.0) # Desvanece
+		await tween.finished
+		boss_health_container.visible = false
+		boss_health_bar.visible = false
+		boss_health_bar.modulate.a = 1.0 # Reset para la próxima
 
 func delete_saved_game() -> void:
 	# Verificamos si existe el archivo
