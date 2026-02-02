@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://cqanoql23fnk7"]
+[gd_scene load_steps=29 format=4 uid="uid://cqanoql23fnk7"]
 
 [ext_resource type="Script" uid="uid://c0wim6pfyt7kg" path="res://Scripts/Level_5.gd" id="1_7gvow"]
 [ext_resource type="Texture2D" uid="uid://3a3scdft5fu7" path="res://Graphics/Zonas/Basement-zone/2 Background/Day/1.png" id="1_kp6x5"]
@@ -18,6 +18,7 @@
 [ext_resource type="AudioStream" uid="uid://bqm3nmsvgpjyg" path="res://Music/Level_4.mp3" id="13_ie7ld"]
 [ext_resource type="PackedScene" uid="uid://d2fpq7nxaiblh" path="res://Prefabs/Dead_Area.tscn" id="16_lpe2j"]
 [ext_resource type="PackedScene" uid="uid://cuuql85rnkjo6" path="res://Prefabs/Falling_Platform_4.tscn" id="17_43geq"]
+[ext_resource type="Texture2D" uid="uid://ony40jv6npo1" path="res://Graphics/Comic Pages/PortadaComic2.png" id="20_q2y8u"]
 [ext_resource type="PackedScene" uid="uid://rrb4ynsksejq" path="res://Prefabs/Final_Boss.tscn" id="20_vw5ax"]
 [ext_resource type="PackedScene" uid="uid://bh3h363wnt1mt" path="res://Prefabs/Signpost.tscn" id="21_q2y8u"]
 
@@ -162,12 +163,12 @@ tile_set = ExtResource("6_43geq")
 unique_name_in_owner = true
 process_mode = 1
 z_index = 1
-position = Vector2(1438, 1671)
+position = Vector2(2445, 1713)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
 top_level = true
-position = Vector2(1438, 1671)
+position = Vector2(2445, 1713)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 420
@@ -184,7 +185,7 @@ metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(1438, 1671)
+position = Vector2(2445, 1713)
 script = ExtResource("10_h33cd")
 priority = 1
 follow_mode = 2
@@ -198,20 +199,6 @@ limit_top = 420
 limit_right = 3000
 limit_bottom = 2000
 metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
-metadata/_edit_lock_ = true
-
-[node name="Page_Comic" parent="." instance=ExtResource("12_p23to")]
-position = Vector2(14448.001, 889.00006)
-scale = Vector2(0.3, 0.3)
-
-[node name="Sprite2D" parent="Page_Comic" index="0"]
-scale = Vector2(0.03, 0.04)
-metadata/_edit_lock_ = true
-
-[node name="CollisionShape2D" parent="Page_Comic" index="1"]
-metadata/_edit_lock_ = true
-
-[node name="AudioStreamPlayer2D" parent="Page_Comic" index="2"]
 metadata/_edit_lock_ = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
@@ -299,7 +286,7 @@ shape = SubResource("RectangleShape2D_7itn1")
 
 [node name="PhantomCamera2D" parent="Phantom_Area/Phantom_Area" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(1875, 1625)
+position = Vector2(1900, 1625)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(2.4, 2.4)
@@ -318,7 +305,7 @@ shape = SubResource("RectangleShape2D_kp6x5")
 
 [node name="PhantomCamera2D" parent="Phantom_Area/Phantom_Area2" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(1438, 1591)
+position = Vector2(2445, 1633)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3.5, 3.5)
@@ -337,8 +324,16 @@ shape = SubResource("RectangleShape2D_kon3q")
 [node name="Final_Boss" parent="." instance=ExtResource("20_vw5ax")]
 position = Vector2(2130, 1714)
 
-[node name="Page_Comic2" parent="." instance=ExtResource("12_p23to")]
+[node name="Page_Comic" parent="." instance=ExtResource("12_p23to")]
 position = Vector2(2862, 1697)
+
+[node name="Sprite2D" parent="Page_Comic" index="0"]
+position = Vector2(14, 25.1)
+scale = Vector2(0.058823533, 0.050976563)
+texture = ExtResource("20_q2y8u")
+
+[node name="CollisionShape2D" parent="Page_Comic" index="1"]
+position = Vector2(15.5, 25)
 
 [node name="Signpost" parent="." instance=ExtResource("21_q2y8u")]
 visible = false
@@ -354,9 +349,9 @@ UP! UP!"
 
 [connection signal="body_entered" from="GatesArea" to="." method="_on_gates_area_body_entered"]
 
-[editable path="Page_Comic"]
 [editable path="Dead_Area"]
 [editable path="Phantom_Area/Phantom_Area"]
 [editable path="Phantom_Area/Phantom_Area2"]
 [editable path="Dead_Area2"]
+[editable path="Page_Comic"]
 [editable path="Signpost"]
