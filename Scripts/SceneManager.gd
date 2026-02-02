@@ -70,11 +70,15 @@ func initialize_scene() -> void:
 				if gui.has_node("HBoxContainer/FinalBossContainer/BossHealthBar"):
 					boss_health_bar = gui.get_node("HBoxContainer/FinalBossContainer/BossHealthBar")
 			
-		# --- LÓGICA DE CÓMIC ---
-		if current_scene.has_node("Page_Comic"):
-			comic_page = current_scene.get_node("Page_Comic")
-			if comic_page.has_signal("winLevel") and not comic_page.winLevel.is_connected(pass_to_nextlevel):
-				comic_page.winLevel.connect(pass_to_nextlevel)
+		# Dentro de initialize_scene()
+		if current_scene.has_node("Page_Comic"): # 
+			comic_page = current_scene.get_node("Page_Comic") # [cite: 238]
+			if comic_page.has_signal("winLevel"): # [cite: 239]
+				if not comic_page.winLevel.is_connected(pass_to_nextlevel):
+					comic_page.winLevel.connect(pass_to_nextlevel) # [cite: 240]
+					print("SceneManager: Conectada señal winLevel de Page_Comic")
+		else:
+			print("ADVERTENCIA: No se encontró el nodo Page_Comic en esta escena.")
 		
 		# --- LÓGICA DEL JUGADOR ---
 		if current_scene.has_node("Player"):
@@ -111,7 +115,7 @@ func initialize_scene() -> void:
 					boss.boss_intro_started.connect(show_boss_bar_animated)
 			
 			
-			# Si NO encontramos un jefe en esta escena, nos aseguramos de ocultar la barra
+			# Si NO hay un jefe en esta escena, nos aseguramos de ocultar la barra
 			if not boss_found and boss_health_bar:
 				boss_health_bar.visible = false
 				boss_health_container.visible = false
@@ -202,6 +206,13 @@ func check_saved_game() -> void:
 	has_saved_game = FileAccess.file_exists("user://save_data.json")
 
 func pass_to_nextlevel():
+	# Si el nivel actual es el 5 (el Jefe Final), vamos al lore de cierre
+	if current_level == 5:
+		save_game_data() # Guardamos el progreso final [cite: 343]
+		ScenesTransitions.change_scene("res://Scenes/FinalLoreScene.tscn")
+		return
+	
+	# Lógica normal para los niveles anteriores
 	current_level += 1
 	save_game_data()
 	game_time = 0.0
@@ -341,7 +352,7 @@ func show_boss_bar_animated() -> void:
 		boss_health_bar.value = 0 # Empieza vacía
 		boss_health_bar.visible = true # ¡Ahora aparece!
 		
-		# Animación de llenado (Estilo Retro)
+		# Animación de llenado
 		var fill_tween = create_tween()
 		fill_tween.tween_property(boss_health_bar, "value", boss.current_health, 1.5)\
 			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)

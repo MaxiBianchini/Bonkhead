@@ -1,16 +1,16 @@
-[gd_scene load_steps=16 format=3 uid="uid://dh1nh7gxjxtks"]
+[gd_scene load_steps=16 format=3 uid="uid://bher8kxrx67l2"]
 
-[ext_resource type="FontFile" uid="uid://c88rb6dh1ub4j" path="res://Graphics/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="1_888sp"]
-[ext_resource type="Script" uid="uid://b2w0cu3x4d8o0" path="res://Scripts/LoreScene.gd" id="1_fiyw2"]
-[ext_resource type="Texture2D" uid="uid://df8k3sbykb7eq" path="res://Graphics/Zonas/LoreScene/Awakening.jpeg" id="2_2p7ni"]
-[ext_resource type="Texture2D" uid="uid://b3degqy5uf8ea" path="res://Graphics/GUI/Buttons/7-1.png" id="2_fiyw2"]
-[ext_resource type="Texture2D" uid="uid://dhulhlqi6wkkm" path="res://Graphics/Zonas/LoreScene/ComicPage (2).jpeg" id="3_2p7ni"]
-[ext_resource type="Texture2D" uid="uid://bdn1sk233bncw" path="res://Graphics/GUI/Buttons/7-3.png" id="3_6hop8"]
-[ext_resource type="Texture2D" uid="uid://dioecmjwret5l" path="res://Graphics/Zonas/LoreScene/ComicArtist.jpeg" id="4_53m27"]
-[ext_resource type="Texture2D" uid="uid://b2bod7ibmudmv" path="res://Graphics/GUI/Buttons/7-2.png" id="4_feaa0"]
-[ext_resource type="AudioStream" uid="uid://lcvdfisb4kti" path="res://SFX/Others/Single_mechanical.wav" id="6_53m27"]
-[ext_resource type="PackedScene" uid="uid://ccpbm1qpal8m0" path="res://Scenes/TypewriterLabel.tscn" id="9_2p7ni"]
-[ext_resource type="AudioStream" uid="uid://dhtdffauvafci" path="res://SFX/mouse/click.mp3" id="11_kf25c"]
+[ext_resource type="Script" uid="uid://bghqf7keyl2yo" path="res://FinalLoreScene.gd" id="1_qwyng"]
+[ext_resource type="Texture2D" uid="uid://2gnrdtqg8di" path="res://Graphics/Zonas/LoreScene/Gemini_Generated_Image_be31a1be31a1be31.png" id="2_qwyng"]
+[ext_resource type="Texture2D" uid="uid://s5rmvwwdwiib" path="res://Graphics/Zonas/LoreScene/Final2.png" id="3_24axi"]
+[ext_resource type="Texture2D" uid="uid://bwge3hrvokl1y" path="res://Graphics/Zonas/LoreScene/Final1.png" id="4_4lubk"]
+[ext_resource type="PackedScene" uid="uid://ccpbm1qpal8m0" path="res://Scenes/TypewriterLabel.tscn" id="5_f0nhm"]
+[ext_resource type="AudioStream" uid="uid://lcvdfisb4kti" path="res://SFX/Others/Single_mechanical.wav" id="6_vq1m4"]
+[ext_resource type="Texture2D" uid="uid://b3degqy5uf8ea" path="res://Graphics/GUI/Buttons/7-1.png" id="7_kjnr2"]
+[ext_resource type="Texture2D" uid="uid://bdn1sk233bncw" path="res://Graphics/GUI/Buttons/7-3.png" id="8_6joof"]
+[ext_resource type="Texture2D" uid="uid://b2bod7ibmudmv" path="res://Graphics/GUI/Buttons/7-2.png" id="9_1xjan"]
+[ext_resource type="FontFile" uid="uid://c88rb6dh1ub4j" path="res://Graphics/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="10_1oxxi"]
+[ext_resource type="AudioStream" uid="uid://dhtdffauvafci" path="res://SFX/mouse/click.mp3" id="11_24axi"]
 
 [sub_resource type="Animation" id="Animation_feaa0"]
 resource_name = "IntroSequence"
@@ -126,12 +126,12 @@ _data = {
 &"RESET": SubResource("Animation_bsqbw")
 }
 
-[sub_resource type="LabelSettings" id="LabelSettings_2p7ni"]
-font = ExtResource("1_888sp")
+[sub_resource type="LabelSettings" id="LabelSettings_u2yiw"]
+font = ExtResource("10_1oxxi")
 font_size = 30
 
 [node name="CanvasLayer" type="CanvasLayer"]
-script = ExtResource("1_fiyw2")
+script = ExtResource("1_qwyng")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 15
@@ -154,7 +154,7 @@ offset_bottom = 2160.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_2p7ni")
+texture = ExtResource("2_qwyng")
 
 [node name="ComicPage" type="TextureRect" parent="Assets"]
 anchors_preset = 8
@@ -167,7 +167,7 @@ offset_bottom = 2160.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("3_2p7ni")
+texture = ExtResource("3_24axi")
 
 [node name="ComicArtist" type="TextureRect" parent="Assets"]
 anchors_preset = 8
@@ -180,9 +180,9 @@ offset_bottom = 2160.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("4_53m27")
+texture = ExtResource("4_4lubk")
 
-[node name="TypewriterLabel" parent="." instance=ExtResource("9_2p7ni")]
+[node name="TypewriterLabel" parent="." instance=ExtResource("5_f0nhm")]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -192,7 +192,7 @@ offset_right = 0.0
 offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 0
-typing_sound = ExtResource("6_53m27")
+typing_sound = ExtResource("6_vq1m4")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -208,9 +208,9 @@ offset_top = 950.0
 offset_right = 1887.0
 offset_bottom = 1033.0
 size_flags_vertical = 3
-texture_normal = ExtResource("2_fiyw2")
-texture_pressed = ExtResource("3_6hop8")
-texture_hover = ExtResource("4_feaa0")
+texture_normal = ExtResource("7_kjnr2")
+texture_pressed = ExtResource("8_6joof")
+texture_hover = ExtResource("9_1xjan")
 stretch_mode = 0
 
 [node name="Label" type="Label" parent="ContinueButton"]
@@ -228,12 +228,12 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "CONTINUE"
-label_settings = SubResource("LabelSettings_2p7ni")
+label_settings = SubResource("LabelSettings_u2yiw")
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_lock_ = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("11_kf25c")
+stream = ExtResource("11_24axi")
 
-[connection signal="pressed" from="ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="toggled" from="ContinueButton" to="." method="_on_continue_button_pressed"]
