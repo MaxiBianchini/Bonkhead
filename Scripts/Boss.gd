@@ -5,6 +5,7 @@ signal health_changed(new_health)
 signal toggle_hazards(is_active)
 signal add_points(amount)
 signal boss_die()
+signal boss_intro_started()
 
 @export_group("Stats")
 @export var max_health: int = 300
@@ -103,7 +104,10 @@ func _ready():
 
 func play_intro_sequence():
 	visible = true
-
+	
+	# Esto le avisará al SceneManager que muestre la barra AHORA.
+	emit_signal("boss_intro_started")
+	
 	if current_tween: current_tween.kill()
 	current_tween = create_tween()
 	

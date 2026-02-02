@@ -11,6 +11,7 @@ var bullet_type: Array = []
 var comic_page: Node = null
 var player: Node = null
 var gui: Node = null
+
 # En las variables del principio
 var boss_health_bar: TextureProgressBar = null
 var boss_health_container:Sprite2D = null
@@ -38,6 +39,7 @@ func initialize_scene() -> void:
 	var current_scene = get_tree().current_scene
 	
 	if current_scene:
+		# --- LÓGICA DE ENEMIGOS ---
 		if current_scene.has_node("Enemies"):
 			enemies_node = current_scene.get_node("Enemies")
 			for enemy in enemies_node.get_children():
@@ -49,70 +51,70 @@ func initialize_scene() -> void:
 			time_label = gui.get_node("HBoxContainer/TimeLabel/Text")
 			points_label = gui.get_node("HBoxContainer/PointsLabel/Text")
 			
-			# 1. BUSCAR LA BARRA DEL JEFE EN LA GUI
-			# Ajusta la ruta "Container/BossHealthBar" según donde la hayas puesto en tu escena GUI
-			if gui.has_node("HBoxContainer/FinalBossContainer/BossHealthBar"): 
-				boss_health_container = gui.get_node("HBoxContainer/FinalBossContainer")
-				boss_health_container.visible = false # Oculta por defecto
-				boss_health_bar = gui.get_node("HBoxContainer/FinalBossContainer/BossHealthBar")
-				boss_health_bar.visible = false # Oculta por defecto
-			
+			#Bullet
 			var bullet_type_container = gui.get_node("HBoxContainer/BulletIcon")
 			bullet_type = bullet_type_container.get_children()
-			# Ocultamos todos los íconos por defecto al cargar
-			for icon in bullet_type:
-				icon.visible = false
-				
+			
+			#Lives
 			var lives_container = gui.get_node("HBoxContainer/LivesLabel/HBoxContainer")
 			lives_sprites = lives_container.get_children()
 			var packs_container = gui.get_node("HBoxContainer/LifePacks/HBoxContainer")
 			packs_sprites = packs_container.get_children()
 			for i in range(len(packs_sprites)):
 				packs_sprites[i].visible = i < life_packs
-		
-		# 2. BUSCAR AL JEFE EN EL NIVEL (Para conectar la señal)
-		# Asumimos que el nodo del jefe se llama "Boss" en la escena del Nivel 5
-		if current_scene.has_node("Final_Boss"):
-			var boss = current_scene.get_node("Final_Boss")
-		
-		# Conectar señal de vida
-			if boss.has_signal("health_changed"):
-				if not boss.health_changed.is_connected(update_boss_health):
-					boss.health_changed.connect(update_boss_health)
-		
-			# Conectar señal de muerte (para ocultar la barra al ganar)
-			if boss.has_signal("boss_die"):
-				if not boss.boss_die.is_connected(hide_boss_bar):
-					boss.boss_die.connect(hide_boss_bar)
-		
-			# 3. CONFIGURAR Y MOSTRAR LA BARRA
-			if boss_health_bar:
-				boss_health_container.visible = true
-				boss_health_bar.max_value = boss.max_health
-				boss_health_bar.value = 0 # Empezamos en 0 para hacer efecto de llenado
-				boss_health_bar.visible = true
 			
-				# EFECTO RETRO: La barra se llena poco a poco al empezar (Estilo Mega Man)
-				var fill_tween = create_tween()
-				fill_tween.tween_property(boss_health_bar, "value", boss.current_health, 1.5)\
-				.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+			# BUSCAR LA BARRA DEL JEFE EN LA GUI
+			# Ajusta la ruta "Container/BossHealthBar" según donde la hayas puesto en tu escena GUI
+			if gui.has_node("HBoxContainer/FinalBossContainer"): 
+				boss_health_container = gui.get_node("HBoxContainer/FinalBossContainer")
+				if gui.has_node("HBoxContainer/FinalBossContainer/BossHealthBar"):
+					boss_health_bar = gui.get_node("HBoxContainer/FinalBossContainer/BossHealthBar")
 			
+		# --- LÓGICA DE CÓMIC ---
 		if current_scene.has_node("Page_Comic"):
 			comic_page = current_scene.get_node("Page_Comic")
 			if comic_page.has_signal("winLevel") and not comic_page.winLevel.is_connected(pass_to_nextlevel):
 				comic_page.winLevel.connect(pass_to_nextlevel)
 		
+		# --- LÓGICA DEL JUGADOR ---
 		if current_scene.has_node("Player"):
 			player = current_scene.get_node("Player")
 			if player:
+				# Las conexiones comprueban is_connected, así que esto es seguro ejecutarlo muchas veces
 				if not player.player_died.is_connected(on_player_died):
 					player.player_died.connect(on_player_died)
 				if not player.change_UI_lives.is_connected(update_lives):
 					player.change_UI_lives.connect(update_lives)
 				if not player.ammo_changed.is_connected(update_ammo_icon):
 					player.ammo_changed.connect(update_ammo_icon)
-				# Actualizamos el ícono una vez al inicio con la munición actual del jugador
-				update_ammo_icon(player.current_ammo_type)
+					update_ammo_icon(player.current_ammo_type)
+		
+		# --- LÓGICA DEL JEFE (BOSS) ---
+		# Usamos una bandera para saber si encontramos al jefe
+		var boss_found = false
+		
+		if current_scene.has_node("Final_Boss"):
+			boss_found = true
+			var boss = current_scene.get_node("Final_Boss")
+			
+			if boss.has_signal("health_changed"):
+				if not boss.health_changed.is_connected(update_boss_health):
+					boss.health_changed.connect(update_boss_health)
+				
+			if boss.has_signal("boss_die"):
+				if not boss.boss_die.is_connected(hide_boss_bar):
+					boss.boss_die.connect(hide_boss_bar)
+			
+			if boss.has_signal("boss_intro_started"):
+				# Conectamos la señal a una función nueva que crearemos abajo
+				if not boss.boss_intro_started.is_connected(show_boss_bar_animated):
+					boss.boss_intro_started.connect(show_boss_bar_animated)
+			
+			
+			# Si NO encontramos un jefe en esta escena, nos aseguramos de ocultar la barra
+			if not boss_found and boss_health_bar:
+				boss_health_bar.visible = false
+				boss_health_container.visible = false
 
 func _process(delta):
 	if gui and gui.visible:
@@ -177,8 +179,7 @@ func restart_gameplay() -> void:
 	if current_level == 5:
 		# Lógica de Reintentar Jefe
 		print("Reintentando Boss Fight...")
-		life_packs = 3 # Aseguramos vidas llenas
-		game_time = 0.0 # Opcional: Resetear tiempo
+		life_packs = 3
 		
 		get_tree().paused = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
@@ -225,8 +226,10 @@ func show_pause_menu() -> void:
 	pause_menu = preload("res://Scenes/PauseMenu.tscn").instantiate()
 	if not pause_menu.press_resume.is_connected(resuem_gameplay):
 		pause_menu.press_resume.connect(resuem_gameplay)
+	
 	if not pause_menu.press_mainmenu.is_connected(go_to_mainmenu):
 		pause_menu.press_mainmenu.connect(go_to_mainmenu)
+		
 	get_tree().current_scene.add_child(pause_menu)
 
 func show_game_over_menu() -> void:
@@ -240,9 +243,6 @@ func show_game_over_menu() -> void:
 	if not game_over_menu.press_mainmenu.is_connected(go_to_mainmenu):
 		game_over_menu.press_mainmenu.connect(go_to_mainmenu)
 	
-	# --- NUEVO: Configurar texto del botón ---
-	# Si tu menú tiene un script con un método para configurar textos, lo llamamos.
-	# Si no, simplemente agregamos el nodo. (Ver paso 2 para el script del menú)
 	if game_over_menu.has_method("set_checkpoint_mode"):
 		game_over_menu.set_checkpoint_mode(current_level == 5)
 		
@@ -304,13 +304,10 @@ func start_new_game() -> void:
 # Se llama cada vez que el Boss recibe daño
 func update_boss_health(new_health: int) -> void:
 	if boss_health_bar:
-		# Opción A: Cambio instantáneo (Más preciso)
-		boss_health_bar.value = new_health
-		
-		# Opción B: Cambio suave (Más moderno/jugoso)
-		#var tween = create_tween()
-		#tween.tween_property(boss_health_bar, "value", new_health, 0.2)\
-			#.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		# Cambio suave (Más moderno/jugoso)
+		var tween = create_tween()
+		tween.tween_property(boss_health_bar, "value", new_health, 0.2)\
+			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 # Se llama cuando el Boss muere
 func hide_boss_bar() -> void:
@@ -323,6 +320,31 @@ func hide_boss_bar() -> void:
 		boss_health_container.visible = false
 		boss_health_bar.visible = false
 		boss_health_bar.modulate.a = 1.0 # Reset para la próxima
+
+func show_boss_bar_animated() -> void:
+	# Verificamos que tengamos la barra y el boss
+	if not boss_health_bar: return
+	
+	# Buscamos al boss para saber su vida máxima actual
+	var current_scene = get_tree().current_scene
+	if not current_scene or not current_scene.has_node("Final_Boss"): return
+	var boss = current_scene.get_node("Final_Boss")
+	
+	# Solo ejecutamos si la barra estaba oculta (para evitar reinicios por disparos)
+	if not boss_health_container.visible:
+		print("SceneManager: Mostrando barra de vida del Boss")
+		
+		# Configuración inicial
+		boss_health_container.visible = true
+		
+		boss_health_bar.max_value = boss.max_health
+		boss_health_bar.value = 0 # Empieza vacía
+		boss_health_bar.visible = true # ¡Ahora aparece!
+		
+		# Animación de llenado (Estilo Retro)
+		var fill_tween = create_tween()
+		fill_tween.tween_property(boss_health_bar, "value", boss.current_health, 1.5)\
+			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 func delete_saved_game() -> void:
 	# Verificamos si existe el archivo
