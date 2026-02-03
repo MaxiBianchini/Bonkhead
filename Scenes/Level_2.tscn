@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=4 uid="uid://62rpf654fvo6"]
+[gd_scene load_steps=72 format=4 uid="uid://62rpf654fvo6"]
 
 [ext_resource type="Texture2D" uid="uid://vr4vltjsdl0o" path="res://Graphics/Zonas/Green-zone/2 Background/Day/1.png" id="1_xbslt"]
 [ext_resource type="Texture2D" uid="uid://okpnwlqcy00" path="res://Graphics/Zonas/Green-zone/2 Background/Day/2.png" id="2_q8wyw"]
@@ -107,6 +107,10 @@ script = ExtResource("54_m2s7e")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_asqm0"]
 size = Vector2(260, 35)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m2s7e"]
+resource_local_to_scene = true
+size = Vector2(40, 36)
 
 [node name="Level_2" type="Node2D"]
 metadata/_edit_horizontal_guides_ = [1795.0]
@@ -493,12 +497,12 @@ texture = ExtResource("31_bp6cg")
 [node name="Player" parent="." instance=ExtResource("20_j1y0e")]
 unique_name_in_owner = true
 z_index = 1
-position = Vector2(8313, 1264)
+position = Vector2(8353, 1264)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
 top_level = true
-position = Vector2(8313, 1264)
+position = Vector2(8353, 1264)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
@@ -515,7 +519,7 @@ metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(8313, 1264)
+position = Vector2(8353, 1264)
 script = ExtResource("53_v40af")
 priority = 1
 follow_mode = 2
@@ -881,7 +885,7 @@ shape = SubResource("RectangleShape2D_ssyor")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(8313, 1264)
+position = Vector2(8353, 1264)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -905,7 +909,7 @@ shape = SubResource("RectangleShape2D_bdg83")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area3" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(8313, 1264)
+position = Vector2(8353, 1264)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -980,11 +984,11 @@ position = Vector2(8389, 1261)
 scale = Vector2(0.5, 0.5)
 
 [node name="Sprite2D" parent="Page_Comic" index="0"]
-scale = Vector2(0.03, 0.04)
+scale = Vector2(0.033, 0.037)
 texture = ExtResource("55_m2s7e")
-metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" parent="Page_Comic" index="1"]
+shape = SubResource("RectangleShape2D_m2s7e")
 metadata/_edit_lock_ = true
 
 [node name="AudioStreamPlayer2D" parent="Page_Comic" index="2"]

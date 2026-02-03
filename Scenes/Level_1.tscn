@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=4 uid="uid://mwhbup6tnnqo"]
+[gd_scene load_steps=60 format=4 uid="uid://mwhbup6tnnqo"]
 
 [ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://TileSets/TileSets.tres" id="1_c1dvb"]
 [ext_resource type="PackedScene" uid="uid://cdqlmgh2vxout" path="res://Prefabs/Player.tscn" id="2_72p7r"]
@@ -39,6 +39,7 @@
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="34_ww1bt"]
 [ext_resource type="PackedScene" uid="uid://fxla73vs5hxe" path="res://Prefabs/Phantom_Area.tscn" id="36_qaamm"]
 [ext_resource type="PackedScene" uid="uid://d1i3yjdbq4dmk" path="res://Prefabs/Page_Comic.tscn" id="45_ww1bt"]
+[ext_resource type="Texture2D" uid="uid://dlh6e0oy21ncc" path="res://Graphics/Comic Pages/ComicPage1.png" id="46_atmdf"]
 [ext_resource type="AudioStream" uid="uid://b8f133nc8swer" path="res://Music/Level_1.mp3" id="46_d1n4i"]
 [ext_resource type="PackedScene" uid="uid://bh3h363wnt1mt" path="res://Prefabs/Signpost.tscn" id="50_ceuot"]
 [ext_resource type="PackedScene" uid="uid://blucmwrqfrted" path="res://Prefabs/Moving_Platform.tscn" id="52_fdbj4"]
@@ -86,6 +87,10 @@ script = ExtResource("34_ww1bt")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fhjai"]
 resource_local_to_scene = true
 size = Vector2(716, 410)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d1n4i"]
+resource_local_to_scene = true
+size = Vector2(36, 36)
 
 [node name="Level_1" type="Node2D"]
 process_mode = 3
@@ -381,6 +386,7 @@ position = Vector2(1476, 1264)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
+top_level = true
 position = Vector2(1476, 1264)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
@@ -619,10 +625,12 @@ scale = Vector2(0.5, 0.5)
 metadata/_edit_lock_ = true
 
 [node name="Sprite2D" parent="Page_Comic" index="0"]
-scale = Vector2(0.033, 0.036)
+scale = Vector2(0.033, 0.033)
+texture = ExtResource("46_atmdf")
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" parent="Page_Comic" index="1"]
+shape = SubResource("RectangleShape2D_d1n4i")
 metadata/_edit_lock_ = true
 
 [node name="AudioStreamPlayer2D" parent="Page_Comic" index="2"]

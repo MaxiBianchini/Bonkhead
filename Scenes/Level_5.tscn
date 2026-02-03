@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=4 uid="uid://cqanoql23fnk7"]
+[gd_scene load_steps=30 format=4 uid="uid://cqanoql23fnk7"]
 
 [ext_resource type="Script" uid="uid://c0wim6pfyt7kg" path="res://Scripts/Level_5.gd" id="1_7gvow"]
 [ext_resource type="Texture2D" uid="uid://3a3scdft5fu7" path="res://Graphics/Zonas/Basement-zone/2 Background/Day/1.png" id="1_kp6x5"]
@@ -43,6 +43,10 @@ size = Vector2(686, 196)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kon3q"]
 resource_local_to_scene = true
 size = Vector2(775, 42)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q2y8u"]
+resource_local_to_scene = true
+size = Vector2(22, 34.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h33cd"]
 resource_local_to_scene = true
@@ -163,12 +167,12 @@ tile_set = ExtResource("6_43geq")
 unique_name_in_owner = true
 process_mode = 1
 z_index = 1
-position = Vector2(2445, 1713)
+position = Vector2(2846, 1743)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
 top_level = true
-position = Vector2(2445, 1713)
+position = Vector2(2786.6667, 1743)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 420
@@ -185,7 +189,7 @@ metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(2445, 1713)
+position = Vector2(2786.6667, 1743)
 script = ExtResource("10_h33cd")
 priority = 1
 follow_mode = 2
@@ -305,7 +309,7 @@ shape = SubResource("RectangleShape2D_kp6x5")
 
 [node name="PhantomCamera2D" parent="Phantom_Area/Phantom_Area2" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(2445, 1633)
+position = Vector2(2725.7144, 1663)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3.5, 3.5)
@@ -325,15 +329,15 @@ shape = SubResource("RectangleShape2D_kon3q")
 position = Vector2(2130, 1714)
 
 [node name="Page_Comic" parent="." instance=ExtResource("12_p23to")]
-position = Vector2(2862, 1697)
+position = Vector2(2900, 1742)
 
 [node name="Sprite2D" parent="Page_Comic" index="0"]
-position = Vector2(14, 25.1)
-scale = Vector2(0.058823533, 0.050976563)
+scale = Vector2(0.032, 0.032)
 texture = ExtResource("20_q2y8u")
 
 [node name="CollisionShape2D" parent="Page_Comic" index="1"]
-position = Vector2(15.5, 25)
+position = Vector2(0, -0.25)
+shape = SubResource("RectangleShape2D_q2y8u")
 
 [node name="Signpost" parent="." instance=ExtResource("21_q2y8u")]
 visible = false

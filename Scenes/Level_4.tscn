@@ -1,4 +1,4 @@
-[gd_scene load_steps=97 format=4 uid="uid://sxgwiq6ofxqj"]
+[gd_scene load_steps=99 format=4 uid="uid://sxgwiq6ofxqj"]
 
 [ext_resource type="Texture2D" uid="uid://ca62wvqrospf" path="res://Graphics/Zonas/Station-zone/2 Background/Day/1.png" id="1_2svyu"]
 [ext_resource type="Texture2D" uid="uid://dtmsyhl6e0ouc" path="res://Graphics/Zonas/Station-zone/2 Background/Day/2.png" id="2_i3wgq"]
@@ -48,6 +48,7 @@
 [ext_resource type="Texture2D" uid="uid://b2c65ry2xr263" path="res://Graphics/Zonas/Station-zone/3 Objects/2 Decoration/14.png" id="46_pavmp"]
 [ext_resource type="Texture2D" uid="uid://b48j6eu7ahhqt" path="res://Graphics/Zonas/Station-zone/3 Objects/2 Decoration/13.png" id="47_7t6ia"]
 [ext_resource type="Texture2D" uid="uid://ds0asrryulpa4" path="res://Graphics/Zonas/Station-zone/3 Objects/2 Decoration/1.png" id="48_24gro"]
+[ext_resource type="Texture2D" uid="uid://bjj7ipmtva1dp" path="res://Graphics/Comic Pages/ComicPage4.png" id="49_h56nn"]
 [ext_resource type="Texture2D" uid="uid://cfuygh8nd0bku" path="res://Graphics/Zonas/Station-zone/3 Objects/1 Tube/8.png" id="49_x3kxw"]
 [ext_resource type="AudioStream" uid="uid://bqm3nmsvgpjyg" path="res://Music/Level_4.mp3" id="49_ykt34"]
 [ext_resource type="Texture2D" uid="uid://bfs3yf43nf7o" path="res://Graphics/Zonas/Station-zone/3 Objects/1 Tube/7.png" id="50_7lovr"]
@@ -65,6 +66,10 @@
 
 [sub_resource type="Resource" id="Resource_a534q"]
 script = ExtResource("11_nm3nn")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h56nn"]
+resource_local_to_scene = true
+size = Vector2(36.000977, 40.00006)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jlilh"]
 resource_local_to_scene = true
@@ -644,6 +649,7 @@ position = Vector2(14399, 888)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
+top_level = true
 position = Vector2(14286.667, 888)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
@@ -682,10 +688,12 @@ position = Vector2(14448.001, 889.00006)
 scale = Vector2(0.5, 0.5)
 
 [node name="Sprite2D" parent="Page_Comic" index="0"]
-scale = Vector2(0.033, 0.036)
+scale = Vector2(0.033, 0.037)
+texture = ExtResource("49_h56nn")
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" parent="Page_Comic" index="1"]
+shape = SubResource("RectangleShape2D_h56nn")
 metadata/_edit_lock_ = true
 
 [node name="AudioStreamPlayer2D" parent="Page_Comic" index="2"]
