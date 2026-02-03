@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://bher8kxrx67l2"]
+[gd_scene load_steps=17 format=3 uid="uid://bher8kxrx67l2"]
 
-[ext_resource type="Script" uid="uid://bghqf7keyl2yo" path="res://FinalLoreScene.gd" id="1_qwyng"]
-[ext_resource type="Texture2D" uid="uid://2gnrdtqg8di" path="res://Graphics/Zonas/LoreScene/Gemini_Generated_Image_be31a1be31a1be31.png" id="2_qwyng"]
-[ext_resource type="Texture2D" uid="uid://s5rmvwwdwiib" path="res://Graphics/Zonas/LoreScene/Final2.png" id="3_24axi"]
-[ext_resource type="Texture2D" uid="uid://bwge3hrvokl1y" path="res://Graphics/Zonas/LoreScene/Final1.png" id="4_4lubk"]
+[ext_resource type="Script" uid="uid://bghqf7keyl2yo" path="res://Scripts/FinalLoreScene.gd" id="1_qwyng"]
+[ext_resource type="Texture2D" uid="uid://ugyx4e488ae3" path="res://Graphics/Zonas/LoreScene/Final_4.png" id="2_4lubk"]
+[ext_resource type="Texture2D" uid="uid://est2x2oqtdrj" path="res://Graphics/Zonas/LoreScene/Final_3.png" id="3_4n2yx"]
+[ext_resource type="Texture2D" uid="uid://dpmhpgm17byhp" path="res://Graphics/Zonas/LoreScene/Final_2.png" id="4_f0nhm"]
 [ext_resource type="PackedScene" uid="uid://ccpbm1qpal8m0" path="res://Scenes/TypewriterLabel.tscn" id="5_f0nhm"]
+[ext_resource type="Texture2D" uid="uid://c8jku3dbhks6d" path="res://Graphics/Zonas/LoreScene/Final_1.png" id="5_vq1m4"]
 [ext_resource type="AudioStream" uid="uid://lcvdfisb4kti" path="res://SFX/Others/Single_mechanical.wav" id="6_vq1m4"]
 [ext_resource type="Texture2D" uid="uid://b3degqy5uf8ea" path="res://Graphics/GUI/Buttons/7-1.png" id="7_kjnr2"]
 [ext_resource type="Texture2D" uid="uid://bdn1sk233bncw" path="res://Graphics/GUI/Buttons/7-3.png" id="8_6joof"]
@@ -22,7 +23,7 @@ tracks/0/path = NodePath("Assets/ArtistSleeping:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 10),
+"times": PackedFloat32Array(7.5, 12.6),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -34,7 +35,7 @@ tracks/1/path = NodePath("Assets/WakeUp:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(10, 19),
+"times": PackedFloat32Array(12.633333, 19),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -80,6 +81,18 @@ tracks/3/keys = {
 "method": &"show_continue_button"
 }]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Assets/Win:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 7.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
 
 [sub_resource type="Animation" id="Animation_bsqbw"]
 length = 0.001
@@ -114,6 +127,18 @@ tracks/2/path = NodePath("Assets/ComicUp:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Assets/Win:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -154,7 +179,7 @@ offset_bottom = 2160.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_qwyng")
+texture = ExtResource("2_4lubk")
 
 [node name="WakeUp" type="TextureRect" parent="Assets"]
 anchors_preset = 8
@@ -167,7 +192,7 @@ offset_bottom = 2160.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("3_24axi")
+texture = ExtResource("3_4n2yx")
 
 [node name="ArtistSleeping" type="TextureRect" parent="Assets"]
 anchors_preset = 8
@@ -180,7 +205,20 @@ offset_bottom = 2160.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("4_4lubk")
+texture = ExtResource("4_f0nhm")
+
+[node name="Win" type="TextureRect" parent="Assets"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 3840.0
+offset_bottom = 2160.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_vq1m4")
 
 [node name="TypewriterLabel" parent="." instance=ExtResource("5_f0nhm")]
 anchors_preset = 12

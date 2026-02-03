@@ -618,7 +618,7 @@ func fly_to_position(target: Vector2):
 func take_damage():
 	if not is_alive or is_invulnerable: return
 	
-	current_health -= 10
+	current_health -= 2
 	emit_signal("add_points", points)
 	emit_signal("health_changed", current_health)
 	
