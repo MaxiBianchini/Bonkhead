@@ -76,9 +76,6 @@ func initialize_scene() -> void:
 			if comic_page.has_signal("winLevel"): # [cite: 239]
 				if not comic_page.winLevel.is_connected(pass_to_nextlevel):
 					comic_page.winLevel.connect(pass_to_nextlevel) # [cite: 240]
-					print("SceneManager: Conectada señal winLevel de Page_Comic")
-		else:
-			print("ADVERTENCIA: No se encontró el nodo Page_Comic en esta escena.")
 		
 		# --- LÓGICA DEL JUGADOR ---
 		if current_scene.has_node("Player"):
@@ -137,7 +134,6 @@ func on_player_died():
 	
 	if life_packs <= 0:
 		if current_level == 5:
-			print("Muerte en Boss: Activando Checkpoint")
 			# NO borramos la partida.
 			# Restauramos los packs a 3 (o el máximo) para guardar el estado "listo para reintentar"
 			life_packs = 3 
@@ -182,7 +178,6 @@ func update_ammo_icon(ammo_type_index: int) -> void:
 func restart_gameplay() -> void:
 	if current_level == 5:
 		# Lógica de Reintentar Jefe
-		print("Reintentando Boss Fight...")
 		life_packs = 3
 		
 		get_tree().paused = false
@@ -281,26 +276,18 @@ func save_game_data() -> void:
 		file.store_string(JSON.stringify(data))
 		file.close()
 		has_saved_game = true
-		print("Datos guardados correctamente")
-	else:
-		print("Error al guardar datos")
-	
 
 func load_game_data() -> void:
 	var file = FileAccess.open("user://save_data.json", FileAccess.READ)
 	if file and FileAccess.file_exists("user://save_data.json"):
 		var data = JSON.parse_string(file.get_as_text())
-		print("PACKS: ", data.get("life_packs"))
+
 		if data:
 			points = data["score"]
 			current_level = data["level"]
 			life_packs = data.get("life_packs", 3)
-			print("Datos cargados correctamente")
-		else:
-			print("Error al parsear los datos")
 		file.close()
 	else:
-		print("No hay datos guardados, usando valores por defecto")
 		current_level = 1
 		game_time = 0.0
 		life_packs = 3
@@ -343,8 +330,6 @@ func show_boss_bar_animated() -> void:
 	
 	# Solo ejecutamos si la barra estaba oculta (para evitar reinicios por disparos)
 	if not boss_health_container.visible:
-		print("SceneManager: Mostrando barra de vida del Boss")
-		
 		# Configuración inicial
 		boss_health_container.visible = true
 		
@@ -365,4 +350,3 @@ func delete_saved_game() -> void:
 	
 	# Actualizamos la variable para que el Menú sepa que no hay nada
 	has_saved_game = false
-	print("Partida eliminada por Game Over")

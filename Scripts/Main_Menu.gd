@@ -198,10 +198,8 @@ func show_main_menu(enter: bool):
 
 func _on_fullscreen_checkbutton_toggled(toggled_on: bool) -> void:
 	if toggled_on:
-		print("PASAPOR")
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	else:
-		print("PASAPOR2")
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_MAXIMIZED)
 
 func _on_mouse_entered() -> void:

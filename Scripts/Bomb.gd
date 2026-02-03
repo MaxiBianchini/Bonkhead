@@ -46,10 +46,6 @@ func explode() -> void:
 		if body.is_in_group("Player") and body.has_method("take_damage"):
 			body.take_damage(false, damage)
 	
-	# 3. Efectos Visuales (Instanciar partículas o animación de explosión)
-	# Aquí podrías instanciar una escena de "ExplosionEffect" si tienes una
-	print("¡BOOM!") 
-	
 	# 4. Limpieza
 	# Esperamos un poquito para asegurar que el daño se procese o la animación termine
 	await sprite.animation_finished

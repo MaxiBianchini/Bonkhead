@@ -119,7 +119,6 @@ func play_intro_sequence():
 	await current_tween.finished
 
 func start_battle():
-	print("Jefe: ¡Hora de luchar!")
 	set_physics_process(true)
 	$CollisionShape2D.set_deferred("disabled", false)
 	change_state(States.PHASE_1_GROUND)
@@ -148,13 +147,10 @@ func change_state(new_state: States):
 	
 	match current_state:
 		States.PHASE_1_GROUND:
-			print(">> FASE 1: TIERRA <<")
 			set_physics_process(true) 
 		States.PHASE_2_AIR:
-			print(">> FASE 2: SECUENCIA AÉREA <<")
 			start_low_attack_sequence()
 		States.PHASE_3_CHAOS:
-			print(">> FASE 3: CAOS TOTAL <<")
 			emit_signal("toggle_hazards", true)
 			start_p3_bullet_hell()
 
@@ -229,9 +225,7 @@ func start_low_attack_sequence():
 	is_invulnerable = false
 	
 	await fly_to_height(hover_height)
-	if current_state != States.PHASE_2_AIR: return 
-	
-	print("Fase 2: Iniciando ataque tipo ", "APLASTAR" if next_low_attack_mode == AttackModes.STOMP_MODE else "BOMBAS")
+	if current_state != States.PHASE_2_AIR: return
 	var duration = randf_range(min_mode_duration, max_mode_duration)
 	
 	get_tree().create_timer(duration).timeout.connect(start_high_hazard_sequence)
@@ -240,7 +234,6 @@ func start_low_attack_sequence():
 func start_high_hazard_sequence():
 	if current_state != States.PHASE_2_AIR: return
 	
-	print("Fase 2: ¡SUBIENDO! Activando Lava.")
 	p2_sub_state = Phase2SubState.TRANSITION_UP
 	is_invulnerable = true
 	emit_signal("toggle_hazards", true)
@@ -257,7 +250,6 @@ func start_high_hazard_sequence():
 func end_high_hazard_sequence():
 	if current_state != States.PHASE_2_AIR: return
 	
-	print("Fase 2: BAJANDO.")
 	p2_sub_state = Phase2SubState.TRANSITION_DOWN
 	emit_signal("toggle_hazards", false)
 	
@@ -349,7 +341,6 @@ func perform_stomp_attack():
 	is_attacking = true
 	velocity = Vector2.ZERO
 	
-	print("¡Ataque Aplastar!")
 	animated_sprite.play("Attack")
 	await get_tree().create_timer(0.5).timeout
 	
@@ -358,7 +349,6 @@ func perform_stomp_attack():
 	p2_sub_state = Phase2SubState.STOMP_FALLING
 
 func _on_stomp_impact():
-	print("¡PUM!")
 	p2_sub_state = Phase2SubState.STOMP_RECOVERING 
 	velocity = Vector2.ZERO
 	
@@ -372,7 +362,6 @@ func perform_bomb_attack():
 	is_attacking = true
 	velocity = Vector2.ZERO
 	
-	print("¡Ataque Bombas!")
 	animated_sprite.play("Attack 2")
 	await get_tree().create_timer(0.5).timeout
 	
@@ -537,13 +526,11 @@ func get_next_pattern_from_bag() -> int:
 			# Intercambiamos el primero con el último de la bolsa nueva
 			var first = pattern_bag.pop_front()
 			pattern_bag.push_back(first)
-			print("Ajuste de bolsa realizado para evitar repetición")
 
 	# 3. Sacamos el siguiente ataque de la bolsa
 	return pattern_bag.pop_front()
 
 func start_p3_bullet_hell():
-	print("Fase 3: ¡BULLET HELL! (Invulnerable)")
 	p3_sub_state = Phase3SubState.BULLET_HELL
 	is_invulnerable = true
 	
@@ -566,31 +553,23 @@ func start_p3_bullet_hell():
 	# --- CONFIGURACIÓN ESPECÍFICA ---
 	match current_bullet_pattern:
 		BulletPatterns.SPIRAL:
-			print("Patrón: ESPIRAL (Random Bag)")
 			shoot_delay = 0.1 
 		BulletPatterns.NOVA:
-			print("Patrón: NOVA (Random Bag)")
 			shoot_delay = 0.8 
 		BulletPatterns.AIMED:
-			print("Patrón: AIMED (Random Bag)")
 			shoot_delay = 1.0
 			
 	p3_timer = chaos_duration_shooting
 	shoot_timer = 0.0
 
 func start_p3_erratic_chase():
-	print("Fase 3: ¡PERSECUCIÓN! (Vulnerable)")
 	p3_sub_state = Phase3SubState.ERRATIC_CHASE
 	is_invulnerable = false 
 	p3_is_waiting = false
 	
-
 	set_collision_mask_value(1, false) 
-	
 	pick_random_erratic_point()
 	p3_timer = chaos_duration_chasing
-
-
 
 func _swap_p3_sub_state():
 	if current_state != States.PHASE_3_CHAOS: return
@@ -664,7 +643,6 @@ func check_for_phase_change():
 func die():
 	is_alive = false
 	set_collision_mask_value(1, true)
-	print("Jefe Derrotado")
 	animated_sprite.play("Death")
 	emit_signal("boss_die")
 	

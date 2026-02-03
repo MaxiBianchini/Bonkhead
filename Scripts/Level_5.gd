@@ -29,8 +29,6 @@ func _ready() -> void:
 		final_boss.toggle_hazards.connect(_on_boss_toggle_hazards)
 		final_boss.boss_die.connect(_on_boss_die)
 		
-	else:
-		print("ERROR: ¡No has asignado el Final Boss en el Inspector del Nivel 5!")
 	
 	# Estado inicial
 	set_molten_rock_active(false)
@@ -108,8 +106,6 @@ func set_molten_rock_active(is_active: bool) -> void:
 		var bodies = dead_area.get_overlapping_bodies()
 		for body in bodies:
 			if body.is_in_group("Player"):
-				print("Detectado jugador dentro de la lava al activarse")
-				
 				# Forzar la llamada a SU función de señal manualmente
 				if body.has_method("_on_area_entered"):
 					body._on_area_entered(dead_area)
@@ -121,8 +117,6 @@ func _on_gates_area_body_entered(body: Node2D) -> void:
 			start_boss_cinematic(body)
 
 func start_boss_cinematic(player_node):
-	print("--- INICIANDO CINEMÁTICA DEL JEFE ---")
-	
 	# CERRAR PUERTAS
 	close_gates()
 	
@@ -167,8 +161,6 @@ func start_boss_cinematic(player_node):
 func _on_boss_toggle_hazards(is_active: bool) -> void:
 	if is_active:
 		# --- SECUENCIA DE ACTIVACIÓN ---
-		print("Nivel 5: ¡ALERTA DE LAVA!")
-		
 		# 1. Mostrar Advertencia (Estática, sin parpadeo)
 		if warning_label:
 			warning_label.visible = true
@@ -204,8 +196,6 @@ func _on_boss_toggle_hazards(is_active: bool) -> void:
 	
 	else:
 		# --- SECUENCIA DE DESACTIVACIÓN ---
-		print("Nivel 5: Calma...")
-		
 		# 1. Resetear UI y Tweens
 		if warning_label: warning_label.visible = false
 		if blink_tween: blink_tween.kill()
