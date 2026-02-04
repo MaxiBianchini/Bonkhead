@@ -7,12 +7,10 @@ extends CanvasLayer
 
 # --- Textos de la Narración Final (en Inglés) ---
 var story_texts: Array[String] = [
-	"The battle is over. The ink of the chaos has finally dried.",
-	"With the final page recovered, the comic is finally complete.",
-	"The artist wakes up to the morning light, 
-holding his masterpiece in his hands.",
-	"He survived his own creation... and Bonkhead is now a legend.",
-	"Thank you for playing!"
+	"The ink of chaos has finally settled. \nThe nightmare within the pages is over.", # Para Final_1 (Victoria)
+	"With the recovered cover, the artist's \nmasterpiece has reached its true conclusion.", # Para Final_2 (Paz/Sueño)
+	"Reality returns as the artist wakes up at his desk, \nleaving behind the world of paper.", # Para Final_3 (Despertar)
+	"The legend of Bonkhead is now written. \nThank you for completing the journey!" # Para Final_4 (Celebración)
 ]
 
 func _ready() -> void:

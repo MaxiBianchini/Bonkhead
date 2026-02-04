@@ -1,11 +1,11 @@
 [gd_scene load_steps=17 format=3 uid="uid://bher8kxrx67l2"]
 
 [ext_resource type="Script" uid="uid://bghqf7keyl2yo" path="res://Scripts/FinalLoreScene.gd" id="1_qwyng"]
-[ext_resource type="Texture2D" uid="uid://ugyx4e488ae3" path="res://Graphics/Zonas/LoreScene/Final_4.png" id="2_4lubk"]
-[ext_resource type="Texture2D" uid="uid://est2x2oqtdrj" path="res://Graphics/Zonas/LoreScene/Final_3.png" id="3_4n2yx"]
-[ext_resource type="Texture2D" uid="uid://dpmhpgm17byhp" path="res://Graphics/Zonas/LoreScene/Final_2.png" id="4_f0nhm"]
+[ext_resource type="Texture2D" uid="uid://dmty7w7yc6nru" path="res://Graphics/Zonas/LoreScene/Final_4.png" id="2_4lubk"]
+[ext_resource type="Texture2D" uid="uid://cw5lvi35adsb7" path="res://Graphics/Zonas/LoreScene/Final_3.png" id="3_4n2yx"]
+[ext_resource type="Texture2D" uid="uid://dbq7nikdh2f2s" path="res://Graphics/Zonas/LoreScene/Final_2.png" id="4_f0nhm"]
 [ext_resource type="PackedScene" uid="uid://ccpbm1qpal8m0" path="res://Scenes/TypewriterLabel.tscn" id="5_f0nhm"]
-[ext_resource type="Texture2D" uid="uid://c8jku3dbhks6d" path="res://Graphics/Zonas/LoreScene/Final_1.png" id="5_vq1m4"]
+[ext_resource type="Texture2D" uid="uid://cnjcxs2s7rf52" path="res://Graphics/Zonas/LoreScene/Final_1.png" id="5_vq1m4"]
 [ext_resource type="AudioStream" uid="uid://lcvdfisb4kti" path="res://SFX/Others/Single_mechanical.wav" id="6_vq1m4"]
 [ext_resource type="Texture2D" uid="uid://b3degqy5uf8ea" path="res://Graphics/GUI/Buttons/7-1.png" id="7_kjnr2"]
 [ext_resource type="Texture2D" uid="uid://bdn1sk233bncw" path="res://Graphics/GUI/Buttons/7-3.png" id="8_6joof"]
@@ -23,7 +23,7 @@ tracks/0/path = NodePath("Assets/ArtistSleeping:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(7.5, 12.6),
+"times": PackedFloat32Array(7.6, 14),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -35,7 +35,7 @@ tracks/1/path = NodePath("Assets/WakeUp:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(12.633333, 19),
+"times": PackedFloat32Array(14, 21),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -47,7 +47,7 @@ tracks/2/path = NodePath("Assets/ComicUp:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(19),
+"times": PackedFloat32Array(21),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
@@ -59,8 +59,8 @@ tracks/3/path = NodePath(".")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0.5, 7.6, 12.5, 19, 27, 35.9333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0.5, 7.6, 14, 21, 26),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "values": [{
 "args": [0],
 "method": &"start_new_text"
@@ -74,9 +74,6 @@ tracks/3/keys = {
 "args": [3],
 "method": &"start_new_text"
 }, {
-"args": [4],
-"method": &"start_new_text"
-}, {
 "args": [],
 "method": &"show_continue_button"
 }]
@@ -88,7 +85,7 @@ tracks/4/path = NodePath("Assets/Win:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
-"times": PackedFloat32Array(0, 7.5),
+"times": PackedFloat32Array(0, 7.6),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
