@@ -203,7 +203,9 @@ func check_saved_game() -> void:
 func pass_to_nextlevel():
 	# Si el nivel actual es el 5 (el Jefe Final), vamos al lore de cierre
 	if current_level == 5:
-		save_game_data() # Guardamos el progreso final [cite: 343]
+		# Borramos el archivo de guardado y ponemos has_saved_game en false
+		delete_saved_game()
+		current_level = 1
 		ScenesTransitions.change_scene("res://Scenes/FinalLoreScene.tscn")
 		return
 	
