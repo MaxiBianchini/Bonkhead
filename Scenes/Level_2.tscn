@@ -613,7 +613,7 @@ position = Vector2(593, 2217)
 position = Vector2(7712, 1264)
 
 [node name="Enemy_14" parent="Enemies" instance=ExtResource("27_go0cy")]
-position = Vector2(7378, 1416)
+position = Vector2(7378, 1417)
 
 [node name="CollisionShape2D" parent="Enemies/Enemy_14/Area2D" index="0"]
 position = Vector2(-134, 4)
