@@ -6,12 +6,16 @@ extends Area2D
 @export var speed: float = 245
 @export var acceleration: float = 300
 @export var time: float = 1.3
+
+var texture_to_apply: Texture2D = null
 var direction: Vector2
 
 var shooter: Node = null
 var mask: int = 1
 
 func _ready() -> void:
+	if texture_to_apply != null:
+		sprite.texture = texture_to_apply
 	set_collision_mask_value(mask,true)
 	life_timer.start(time)
 	await life_timer.timeout
@@ -20,6 +24,9 @@ func _ready() -> void:
 func _physics_process(delta) -> void:
 	speed += acceleration * delta
 	position += direction * speed * delta
+
+func set_sprite(texture: Texture2D):
+	texture_to_apply = texture
 
 func _on_body_entered(body) -> void:
 	if body == shooter:

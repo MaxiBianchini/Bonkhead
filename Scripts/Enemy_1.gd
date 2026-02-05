@@ -25,6 +25,7 @@ var lives: int = 3
 var is_alive: bool = true
 var enemy_is_near: bool = false
 
+@export var bullet_sprite: Texture2D # Aquí arrastras el asset específico de este enemigo
 var bullet_scene = preload("res://Prefabs/Bullet.tscn")
 var bullet_offset: Vector2
 var bullet_dir: Vector2
@@ -86,6 +87,9 @@ func update_sprite_direction(is_facing_left: bool) -> void:
 
 func shoot_bullet() -> void:
 	var bullet = bullet_scene.instantiate() as Area2D
+	if bullet.has_method("set_sprite"):
+		bullet.set_sprite(bullet_sprite)
+	
 	if bullet.has_method("set_shooter"):
 		bullet.set_shooter(self)
 		

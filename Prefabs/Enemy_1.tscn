@@ -1,7 +1,8 @@
-[gd_scene load_steps=41 format=3 uid="uid://d0lv1t50yhwap"]
+[gd_scene load_steps=42 format=3 uid="uid://d0lv1t50yhwap"]
 
 [ext_resource type="Script" uid="uid://ddvjjllkxfhm2" path="res://Scripts/Enemy_1.gd" id="1_xnerr"]
 [ext_resource type="Shader" uid="uid://3eyyqpjc4awp" path="res://Shaders/Hurts_effect.tres" id="2_5735i"]
+[ext_resource type="Texture2D" uid="uid://dcep2ihtx6tvh" path="res://Graphics/Guns & Bullets/Big Guns/Bullets/9.png" id="2_q5gec"]
 [ext_resource type="Texture2D" uid="uid://bsrpvg7b3h605" path="res://Graphics/Enemy 1/Angry.png" id="2_vjile"]
 [ext_resource type="Texture2D" uid="uid://bhshkogrww1g8" path="res://Graphics/Enemy 1/Idle.png" id="2_xj8j7"]
 [ext_resource type="Texture2D" uid="uid://cl46eu0j0e5pq" path="res://Graphics/Enemy 1/Walk.png" id="3_3ngs0"]
@@ -236,6 +237,7 @@ size = Vector2(306.063, 20)
 process_mode = 1
 collision_layer = 4
 script = ExtResource("1_xnerr")
+bullet_sprite = ExtResource("2_q5gec")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_eln1y")

@@ -10,6 +10,7 @@ extends CharacterBody2D
 
 @onready var player = get_tree().current_scene.get_node_or_null("%Player")
 
+@export var bullet_sprite: Texture2D # Aquí arrastras el asset específico de este enemigo
 var bullet_scene: PackedScene = preload("res://Prefabs/Bullet.tscn")
 var bullet_offset: Vector2
 var bullet_dir: Vector2 
@@ -60,6 +61,9 @@ func _physics_process(_delta: float) -> void:
 func shoot_bullet() -> void:
 	var bullet = bullet_scene.instantiate() as Area2D
 	shoot_sound.play()
+	if bullet.has_method("set_sprite"):
+		bullet.set_sprite(bullet_sprite)
+		
 	if bullet.has_method("set_shooter"):
 		bullet.set_shooter(self)
 		

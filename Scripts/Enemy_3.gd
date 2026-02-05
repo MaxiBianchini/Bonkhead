@@ -12,6 +12,7 @@ extends CharacterBody2D
 
 @onready var player = get_tree().current_scene.get_node_or_null("%Player") # Encuentra al jugador en la escena
 
+@export var bullet_sprite: Texture2D # Aquí arrastras el asset específico de este enemigo
 var bullet_scene: PackedScene = preload("res://Prefabs/Bullet.tscn")
 var bullet_offset: Vector2
 var bullet_dir: Vector2
@@ -73,6 +74,7 @@ func chase_player(delta: float) -> void:
 	else:
 		velocity.x = 0
 		animated_sprite.flip_h = (dx < 0.0)
+		bullet_offset = Vector2(-10,15) if (dx < 0.0) else Vector2(10,15)
 		if can_shoot:
 			shoot_bullet()
 			shoot_sound.play()
@@ -110,6 +112,9 @@ func shoot_bullet() -> void:
 		return
 
 	var bullet = bullet_scene.instantiate()
+	
+	if bullet.has_method("set_sprite"):
+		bullet.set_sprite(bullet_sprite)
 	
 	# 1. Calculamos la dirección normalizada desde el enemigo hacia el jugador.
 	var direction_to_player = (player.global_position - global_position).normalized()

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bn78h6rfs4tpm"]
 
 [ext_resource type="Script" uid="uid://jf0746nl1bj3" path="res://Scripts/PiercingBullet.gd" id="1_twam3"]
-[ext_resource type="Texture2D" uid="uid://ci553rf3v5so5" path="res://Graphics/Guns & Bullets/Small Guns/Bullets/Bullets (7).png" id="2_jaj1y"]
+[ext_resource type="Texture2D" uid="uid://c5ipo3cmb6qhd" path="res://Graphics/Guns & Bullets/Small Guns/Bullets/Bullets (5).png" id="2_jaj1y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_twam3"]
 size = Vector2(4, 2)

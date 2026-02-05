@@ -1,9 +1,10 @@
-[gd_scene load_steps=125 format=3 uid="uid://cdqlmgh2vxout"]
+[gd_scene load_steps=126 format=3 uid="uid://cdqlmgh2vxout"]
 
 [ext_resource type="Script" uid="uid://bbt48srafskvx" path="res://Scripts/Player.gd" id="1_y8i6y"]
 [ext_resource type="Texture2D" uid="uid://c4fc75o86mwdi" path="res://Graphics/Character/Player Original Animations/Double Jump.png" id="2_3kxgr"]
 [ext_resource type="Texture2D" uid="uid://hf4gmm0gyijh" path="res://Graphics/Character/Player Original Animations/Dash.png" id="2_a22uy"]
 [ext_resource type="Shader" uid="uid://3eyyqpjc4awp" path="res://Shaders/Hurts_effect.tres" id="2_b3bx2"]
+[ext_resource type="Texture2D" uid="uid://cv85nnv8lf48y" path="res://Graphics/Guns & Bullets/Small Guns/Bullets/Bullets (4).png" id="2_fd4tb"]
 [ext_resource type="Texture2D" uid="uid://dv4ligaohgdx0" path="res://Graphics/Character/Player Original Animations/Death.png" id="3_jmmxa"]
 [ext_resource type="Texture2D" uid="uid://ccw8oq1fyrten" path="res://Graphics/Character/Player with Guns Animations/Big Gun/Idle/Idle Shooting Up.png" id="5_2wlbw"]
 [ext_resource type="Texture2D" uid="uid://ffqup17vhfhy" path="res://Graphics/Character/Player with Guns Animations/Big Gun/Fall/Fall with Gun.png" id="6_b2t0f"]
@@ -809,6 +810,7 @@ collision_layer = 2
 collision_mask = 33
 floor_max_angle = 0.872665
 script = ExtResource("1_y8i6y")
+bullet_sprite = ExtResource("2_fd4tb")
 metadata/_edit_horizontal_guides_ = [-4.0]
 metadata/_edit_vertical_guides_ = [0.0]
 

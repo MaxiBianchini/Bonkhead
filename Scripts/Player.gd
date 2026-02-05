@@ -84,6 +84,7 @@ var ammo_scenes: Dictionary = {
 }
 var current_ammo_type: AmmoType = AmmoType.NORMAL
 
+@export var bullet_sprite: Texture2D # Aquí arrastras el asset específico de este enemigo
 var bullet_dir: Vector2 = Vector2.RIGHT
 var bullet_offset: Vector2 = Vector2(32, -9)
 var gun_type: String ="Small"
@@ -579,7 +580,9 @@ func shoot_bullet() -> void:
 	# 2. Obtenemos la escena de la bala a instanciar
 	var bullet_scene_to_spawn = ammo_scenes[ammo_type_to_spawn]
 	var bullet = bullet_scene_to_spawn.instantiate() as Area2D
-	
+	if (ammo_type_to_spawn == AmmoType.NORMAL or AmmoType.BURST):
+		if bullet.has_method("set_sprite"):
+			bullet.set_sprite(bullet_sprite)
 	# 3. El resto de tu función de configuración de la bala...
 	if bullet.has_method("set_shooter"):
 		bullet.set_shooter(self)

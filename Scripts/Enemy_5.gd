@@ -29,6 +29,7 @@ var points: int = 20
 signal add_points
 
 # --- Variables Internas ---
+@export var bullet_sprite: Texture2D # Aquí arrastras el asset específico de este enemigo
 var bullet_scene: PackedScene = preload("res://Prefabs/Bullet.tscn")
 var initial_position: Vector2
 var patrol_direction: int = 1
@@ -97,6 +98,8 @@ func _on_attack_timer_timeout() -> void:
 
 func shoot() -> void:
 	var bullet = bullet_scene.instantiate() 
+	if bullet.has_method("set_sprite"):
+		bullet.set_sprite(bullet_sprite)
 	
 	# 1. POSICIÓN: Usamos la posición GLOBAL del Marker.
 	bullet.global_position = projectile_spawn_point.global_position

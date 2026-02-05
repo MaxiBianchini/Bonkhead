@@ -1,7 +1,8 @@
-[gd_scene load_steps=45 format=3 uid="uid://cp6k1o6rfgevf"]
+[gd_scene load_steps=46 format=3 uid="uid://cp6k1o6rfgevf"]
 
 [ext_resource type="Script" uid="uid://dc0i8cnuwwsjs" path="res://Scripts/Enemy_3.gd" id="1_3nub3"]
 [ext_resource type="Texture2D" uid="uid://b74g7x87p8xwx" path="res://Graphics/Enemy 3/Death.png" id="1_wwflq"]
+[ext_resource type="Texture2D" uid="uid://cs8qkpsnj5wx4" path="res://Graphics/Guns & Bullets/Big Guns/Bullets/Bullet (7).png" id="2_26vi2"]
 [ext_resource type="Shader" uid="uid://3eyyqpjc4awp" path="res://Shaders/Hurts_effect.tres" id="2_ie02j"]
 [ext_resource type="Texture2D" uid="uid://bn7gpjmkr2grm" path="res://Graphics/Enemy 3/Idle.png" id="2_q31nm"]
 [ext_resource type="Texture2D" uid="uid://ci2ltketr4q06" path="res://Graphics/Enemy 3/Scan.png" id="3_44nhp"]
@@ -265,6 +266,7 @@ radius = 210.0857
 process_mode = 1
 collision_layer = 4
 script = ExtResource("1_3nub3")
+bullet_sprite = ExtResource("2_26vi2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_xixlf")
