@@ -1,4 +1,4 @@
-[gd_scene load_steps=103 format=4 uid="uid://sxgwiq6ofxqj"]
+[gd_scene load_steps=100 format=4 uid="uid://sxgwiq6ofxqj"]
 
 [ext_resource type="Texture2D" uid="uid://ca62wvqrospf" path="res://Graphics/Zonas/Station-zone/2 Background/Day/1.png" id="1_2svyu"]
 [ext_resource type="Texture2D" uid="uid://dtmsyhl6e0ouc" path="res://Graphics/Zonas/Station-zone/2 Background/Day/2.png" id="2_i3wgq"]
@@ -63,10 +63,7 @@
 [ext_resource type="Texture2D" uid="uid://vdfosbp41xp7" path="res://Graphics/Zonas/Station-zone/3 Objects/2 Decoration/15.png" id="59_x6hl7"]
 [ext_resource type="Texture2D" uid="uid://cvkp2hmkmcpos" path="res://Graphics/Zonas/Station-zone/3 Objects/2 Decoration/10.png" id="60_81pbw"]
 [ext_resource type="Texture2D" uid="uid://6ca3swj0chfu" path="res://Graphics/Zonas/Station-zone/3 Objects/2 Decoration/9.png" id="61_xt6ev"]
-[ext_resource type="PackedScene" uid="uid://b4cpcj4lu40ob" path="res://Prefabs/ArmorPickup_BURST.tscn" id="64_gtp4k"]
-[ext_resource type="PackedScene" uid="uid://bbu0g0dewdj" path="res://Prefabs/ArmorPickup_MORTAR.tscn" id="65_0x2xl"]
-[ext_resource type="PackedScene" uid="uid://bhjfw0ywdedtn" path="res://Prefabs/ArmorPickup_NORMAL.tscn" id="66_qfc27"]
-[ext_resource type="PackedScene" uid="uid://7e1qrcgq1n1v" path="res://Prefabs/ArmorPickup_PIERCING.tscn" id="67_5go6c"]
+[ext_resource type="PackedScene" uid="uid://7e1qrcgq1n1v" path="res://Prefabs/ArmorPickup.tscn" id="67_5go6c"]
 
 [sub_resource type="Resource" id="Resource_a534q"]
 script = ExtResource("11_nm3nn")
@@ -592,7 +589,7 @@ position = Vector2(13748, 1633)
 texture = ExtResource("26_gtp4k")
 
 [node name="70" type="Sprite2D" parent="TileMaps/Decorations"]
-position = Vector2(13911, 1634)
+position = Vector2(13911, 1633)
 texture = ExtResource("26_gtp4k")
 
 [node name="71" type="Sprite2D" parent="TileMaps/Decorations"]
@@ -649,12 +646,12 @@ texture = ExtResource("25_kx8cd")
 unique_name_in_owner = true
 process_mode = 1
 z_index = 1
-position = Vector2(14090, 1648)
+position = Vector2(14412, 878)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
 top_level = true
-position = Vector2(14090, 1648)
+position = Vector2(14286.667, 878)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
@@ -671,7 +668,7 @@ metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(14090, 1648)
+position = Vector2(14286.667, 878)
 script = ExtResource("10_6dp3p")
 priority = 1
 follow_mode = 2
@@ -791,7 +788,7 @@ shape = SubResource("RectangleShape2D_dt5mq")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(14090, 1648)
+position = Vector2(14412, 878)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -818,7 +815,7 @@ shape = SubResource("RectangleShape2D_0vjb6")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area3" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(14090, 1648)
+position = Vector2(14412, 878)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 limit_right = 35000
@@ -839,7 +836,7 @@ shape = SubResource("RectangleShape2D_vannl")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area5" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(14090, 1648)
+position = Vector2(14412, 878)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 
@@ -852,7 +849,7 @@ shape = SubResource("RectangleShape2D_cerdw")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area6" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(14090, 1648)
+position = Vector2(14412, 878)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 
@@ -865,7 +862,7 @@ shape = SubResource("RectangleShape2D_1d2jw")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area7" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(14090, 1580)
+position = Vector2(14412, 1470)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 limit_top = 1200
@@ -1715,32 +1712,20 @@ Unlocked: Wall Slide
 (Keep moving against 
 the wall)"
 
-[node name="AmmoPickup_BURTS" parent="." instance=ExtResource("64_gtp4k")]
-position = Vector2(14316, 1649)
+[node name="AmmoPickup" parent="." instance=ExtResource("67_5go6c")]
+position = Vector2(14142, 1654)
 
-[node name="AmmoPickup_BURTS2" parent="." instance=ExtResource("64_gtp4k")]
-position = Vector2(14194, 1651)
+[node name="AmmoPickup2" parent="." instance=ExtResource("67_5go6c")]
+position = Vector2(14181, 1653)
+grants_ammo = 1
 
-[node name="AmmoPickup_MORTAR" parent="." instance=ExtResource("65_0x2xl")]
-position = Vector2(14225, 1651)
+[node name="AmmoPickup3" parent="." instance=ExtResource("67_5go6c")]
+position = Vector2(14224, 1653)
+grants_ammo = 2
 
-[node name="AmmoPickup_NORMAL" parent="." instance=ExtResource("66_qfc27")]
-position = Vector2(14025, 1653)
-
-[node name="AmmoPickup_PIERCING" parent="." instance=ExtResource("67_5go6c")]
-position = Vector2(14132, 1652)
-
-[node name="AmmoPickup_PIERCING2" parent="." instance=ExtResource("67_5go6c")]
-position = Vector2(13902, 1647)
-
-[node name="AmmoPickup_NORMAL2" parent="." instance=ExtResource("66_qfc27")]
-position = Vector2(13825, 1645)
-
-[node name="AmmoPickup_MORTAR2" parent="." instance=ExtResource("65_0x2xl")]
-position = Vector2(13856, 1649)
-
-[node name="AmmoPickup_BURTS3" parent="." instance=ExtResource("64_gtp4k")]
-position = Vector2(14063, 1651)
+[node name="AmmoPickup4" parent="." instance=ExtResource("67_5go6c")]
+position = Vector2(14263, 1654)
+grants_ammo = 3
 
 [editable path="Page_Comic"]
 [editable path="DeadAreas/Dead_Area2"]

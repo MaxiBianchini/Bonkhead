@@ -26,6 +26,7 @@ var current_health: int
 @export var bullet_scene: PackedScene
 @export var bomb_scene: PackedScene
 
+@export var bullet_sprite: Texture2D 
 
 enum Phase2SubState { 
 	LOW_ATTACK, 
@@ -287,6 +288,7 @@ func shoot_bullet_at_player():
 	
 	var bullet = bullet_scene.instantiate() as Area2D
 	bullet.global_position = global_position
+	if bullet.has_method("set_sprite"): bullet.set_sprite(bullet_sprite)
 	
 	if bullet.has_method("set_shooter"): bullet.set_shooter(self)
 	
@@ -500,6 +502,7 @@ func shoot_bullet_angle(angle_rad: float):
 	if not bullet_scene: return
 	
 	var bullet = bullet_scene.instantiate()
+	if bullet.has_method("set_sprite"): bullet.set_sprite(bullet_sprite)
 	bullet.global_position = global_position
 	
 	if bullet.has_method("set_shooter"): bullet.set_shooter(self)
@@ -591,7 +594,7 @@ func shoot_spiral_bullet(angle_rad: float):
 	
 	var bullet = bullet_scene.instantiate()
 	bullet.global_position = global_position
-	
+	if bullet.has_method("set_sprite"): bullet.set_sprite(bullet_sprite)
 	if bullet.has_method("set_shooter"): bullet.set_shooter(self)
 	
 	var dir = Vector2(cos(angle_rad), sin(angle_rad))

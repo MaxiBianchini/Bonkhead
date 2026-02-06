@@ -1,9 +1,25 @@
 extends Area2D
 
-## Esta variable nos permitirá elegir qué tipo de munición otorga este ítem
-## desde el editor de Godot.
 @export var grants_ammo: Player.AmmoType
 
+@onready var sprite: Sprite2D = $Sprite2D
+
+@export var tex_normal: Texture2D
+@export var tex_piercing: Texture2D
+@export var tex_mortar: Texture2D
+@export var tex_burst: Texture2D
+
+func _ready() -> void:
+	match grants_ammo:
+		Player.AmmoType.NORMAL: 
+			sprite.texture = tex_normal
+		Player.AmmoType.MORTAR: 
+			sprite.texture = tex_mortar
+		Player.AmmoType.PIERCING: 
+			sprite.texture = tex_piercing
+		Player.AmmoType.BURST: 
+			sprite.texture = tex_burst
+	
 func _on_body_entered(body: Node2D) -> void:
 	# Comprobamos si el cuerpo que entró en nuestra área es el jugador.
 	if body.is_in_group("Player"):

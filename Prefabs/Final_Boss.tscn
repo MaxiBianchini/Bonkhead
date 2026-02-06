@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://rrb4ynsksejq"]
+[gd_scene load_steps=7 format=3 uid="uid://rrb4ynsksejq"]
 
 [ext_resource type="Script" uid="uid://cmgamix85msi1" path="res://Scripts/Boss.gd" id="1_ka5p3"]
 [ext_resource type="SpriteFrames" uid="uid://d1xnibx0sfcdh" path="res://Prefabs/Final_Boss_AS.tres" id="1_o1ywp"]
 [ext_resource type="PackedScene" uid="uid://dvk8m7c1o0gaw" path="res://Prefabs/Bomb.tscn" id="2_j21dr"]
 [ext_resource type="PackedScene" uid="uid://dyxdcycua33ik" path="res://Prefabs/Bullet.tscn" id="2_yr172"]
+[ext_resource type="Texture2D" uid="uid://dcep2ihtx6tvh" path="res://Graphics/Guns & Bullets/Big Guns/Bullets/9.png" id="4_opa5v"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7qo4r"]
 radius = 45.0
@@ -14,6 +15,7 @@ script = ExtResource("1_ka5p3")
 dash_speed = 500.0
 bullet_scene = ExtResource("2_yr172")
 bomb_scene = ExtResource("2_j21dr")
+bullet_sprite = ExtResource("4_opa5v")
 min_mode_duration = 10.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

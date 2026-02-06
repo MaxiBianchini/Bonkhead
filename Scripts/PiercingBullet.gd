@@ -43,7 +43,6 @@ func _on_body_entered(body: Node2D) -> void:
 	elif shooter.is_in_group("Player"):
 		if body.is_in_group("Enemy") and body.has_method("take_damage"):
 			body.take_damage()
-			queue_free()
 		
 		# Reducimos el contador de perforaciones.
 		max_pierces -= 1

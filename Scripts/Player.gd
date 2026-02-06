@@ -607,20 +607,25 @@ func set_ammo_type(new_type: AmmoType) -> void:
 		return
 
 	current_ammo_type = new_type
+	
+	# Al cambiar de tipo, siempre desactivamos el modo ráfaga por seguridad
+	# (a menos que el nuevo tipo sea BURST, que lo reactivará abajo)
+	is_burst_mode_active = false 
 
 	# Usamos un 'match' para manejar la lógica de cada tipo
 	match current_ammo_type:
 		AmmoType.NORMAL, AmmoType.MORTAR, AmmoType.PIERCING:
-			# Si cambiamos a cualquier bala normal, volvemos al arma "Small"
 			if gun_type == "Big":
-				change_weapon()
+				gun_type = "Small"
 		
 		AmmoType.BURST:
 			# Activamos el modo ráfaga
+			is_burst_mode_active = true # Aseguramos la bandera
 			burst_charges_left = TOTAL_BURST_CHARGES
-			# Cambiamos al arma "Big"
+			
+			# Cambiamos al arma "Big" si es necesario
 			if gun_type == "Small":
-				change_weapon()
+				gun_type = "Big"
 	
 	# Emitimos la señal para que el SceneManager actualice la UI
 	ammo_changed.emit(current_ammo_type)
