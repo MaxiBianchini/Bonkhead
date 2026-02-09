@@ -24,8 +24,7 @@ His mission was clear: recover them all!"
 
 func _ready() -> void:
 	Input.set_custom_mouse_cursor(preload("res://Graphics/GUI/Cursors/1.png"))
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	continue_button.visible = false
 	
 	animation_player.play("IntroSequence")
@@ -41,8 +40,11 @@ func start_new_text(text_index: int) -> void:
 func show_continue_button() -> void:
 	typewriter_label.visible = false
 	continue_button.visible = true
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	
 
 func _on_continue_button_pressed() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	# Ahora, en lugar de saltar la animación, saltamos el efecto de tecleo.
 	if typewriter_label._is_typing:
 		typewriter_label.skip()
