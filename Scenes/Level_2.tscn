@@ -497,12 +497,12 @@ texture = ExtResource("31_bp6cg")
 [node name="Player" parent="." instance=ExtResource("20_j1y0e")]
 unique_name_in_owner = true
 z_index = 1
-position = Vector2(8354, 1256)
+position = Vector2(17, 720)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
 top_level = true
-position = Vector2(8354, 1256)
+position = Vector2(198.33333, 720)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
@@ -519,7 +519,7 @@ metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(8354, 1256)
+position = Vector2(198.33333, 720)
 script = ExtResource("53_v40af")
 priority = 1
 follow_mode = 2
@@ -885,7 +885,7 @@ shape = SubResource("RectangleShape2D_ssyor")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(8354, 1256)
+position = Vector2(17, 720)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -909,7 +909,7 @@ shape = SubResource("RectangleShape2D_bdg83")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area3" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(8354, 1256)
+position = Vector2(17, 720)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -925,18 +925,17 @@ position = Vector2(-44, 1)
 shape = SubResource("RectangleShape2D_asqm0")
 
 [node name="Sprite2D" parent="Signpost2" index="1"]
-position = Vector2(-34, -46)
-scale = Vector2(0.941936, 1.26829)
+position = Vector2(-21.000023, -46)
+scale = Vector2(1.1096777, 1.26829)
 
 [node name="Label" parent="Signpost2" index="2"]
 offset_left = -104.0
 offset_top = -63.0
-offset_right = 66.0001
+offset_right = 86.76315
 offset_bottom = -27.0
 scale = Vector2(0.870189, 0.972294)
-text = "You collected a 
-lost page! New 
-ability unlocked: Double Jump"
+text = "You collected a lost page!
+New ability unlocked: Endless Wall Jump"
 
 [node name="Signpost" parent="." instance=ExtResource("59_u5cqn")]
 z_index = 2
@@ -944,7 +943,7 @@ position = Vector2(1226, 677)
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" parent="Signpost" index="0"]
-position = Vector2(-3.5, 1)
+position = Vector2(-52, 3)
 shape = SubResource("RectangleShape2D_asqm0")
 
 [node name="Sprite2D" parent="Signpost" index="1"]

@@ -167,12 +167,12 @@ tile_set = ExtResource("6_43geq")
 unique_name_in_owner = true
 process_mode = 1
 z_index = 1
-position = Vector2(28, 741)
+position = Vector2(28, 751)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
 top_level = true
-position = Vector2(198.33333, 741)
+position = Vector2(198.33333, 751)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 420
@@ -189,7 +189,7 @@ metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(198.33333, 741)
+position = Vector2(198.33333, 751)
 script = ExtResource("10_h33cd")
 priority = 1
 follow_mode = 2
@@ -290,7 +290,7 @@ shape = SubResource("RectangleShape2D_7itn1")
 
 [node name="PhantomCamera2D" parent="Phantom_Area/Phantom_Area" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(1875, 741)
+position = Vector2(1875, 751)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(2.4, 2.4)
@@ -309,7 +309,7 @@ shape = SubResource("RectangleShape2D_kp6x5")
 
 [node name="PhantomCamera2D" parent="Phantom_Area/Phantom_Area2" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(28, 661)
+position = Vector2(28, 671)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3.5, 3.5)

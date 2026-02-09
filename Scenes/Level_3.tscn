@@ -489,12 +489,12 @@ texture = ExtResource("56_u6gia")
 [node name="Player" parent="." instance=ExtResource("40_31dam")]
 unique_name_in_owner = true
 z_index = 1
-position = Vector2(10758, 582)
+position = Vector2(13, 944)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
 top_level = true
-position = Vector2(10758, 582)
+position = Vector2(198.33333, 944)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
@@ -511,7 +511,7 @@ metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(10758, 582)
+position = Vector2(198.33333, 944)
 script = ExtResource("42_ffm0v")
 priority = 1
 follow_mode = 2
@@ -1134,7 +1134,7 @@ shape = SubResource("RectangleShape2D_rgs6y")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area3" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(10758, 582)
+position = Vector2(13, 944)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -1148,7 +1148,7 @@ shape = SubResource("RectangleShape2D_mfbgy")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area4" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(10758, 582)
+position = Vector2(13, 944)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -1163,7 +1163,7 @@ shape = SubResource("RectangleShape2D_q17hi")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area5" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(10758, 582)
+position = Vector2(13, 944)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -1185,7 +1185,7 @@ offset_left = 44.0
 offset_top = -127.5
 offset_right = 308.0
 offset_bottom = -70.0
-text = " Press SHIFT to Dash forward! 
+text = " Press K to Dash forward! 
 
 Pro Tip: Use it while jumping to cross wide gaps"
 
