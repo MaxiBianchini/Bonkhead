@@ -1,12 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://dch15up2fk0ht"]
+[gd_scene load_steps=14 format=3 uid="uid://dch15up2fk0ht"]
 
 [ext_resource type="Texture2D" uid="uid://1y0p34ksxrjo" path="res://Graphics/GUI/Status/Contenedor Vidas.png" id="1_1r6vs"]
-[ext_resource type="Texture2D" uid="uid://30mchi3gi365" path="res://Graphics/GUI/Other/3 Skill icons/Skillicon7_16.png" id="2_apbyh"]
+[ext_resource type="Texture2D" uid="uid://beqnac4chs2lj" path="res://Graphics/GUI/Status/1-4.png" id="2_c22wm"]
 [ext_resource type="Texture2D" uid="uid://ccv10fc17chx" path="res://Graphics/GUI/Status/Points.png" id="3_dd2ji"]
-[ext_resource type="Texture2D" uid="uid://fug3ay3d53cs" path="res://Graphics/GUI/Icons/Icon_09.png" id="4_apbyh"]
-[ext_resource type="Texture2D" uid="uid://08prew2yytlt" path="res://Graphics/GUI/Icons/Icon_11.png" id="4_wlkr0"]
-[ext_resource type="FontFile" uid="uid://c88rb6dh1ub4j" path="res://Graphics/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="5_tcnxb"]
+[ext_resource type="Texture2D" uid="uid://bh27a30sq5k8q" path="res://Graphics/GUI/Other/3 Skill icons/Skillicon7_18.png" id="4_c22wm"]
 [ext_resource type="Texture2D" uid="uid://cthae01aake71" path="res://Graphics/GUI/Status/Timer.png" id="6_ajp3r"]
+[ext_resource type="PackedScene" uid="uid://ojwtewgtoefn" path="res://Scenes/Display Digital.tscn" id="7_avql4"]
 [ext_resource type="Texture2D" uid="uid://cg2qecn64y80y" path="res://Graphics/GUI/Logo/Logo3.png" id="8_7vwet"]
 [ext_resource type="Texture2D" uid="uid://durgtlyrl3rrf" path="res://Graphics/GUI/Frames/Frame_37.png" id="8_wlkr0"]
 [ext_resource type="Texture2D" uid="uid://sxj0tffmroxi" path="res://Graphics/1_14.png" id="9_c22wm"]
@@ -39,29 +38,29 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="HBoxContainer/LivesLabel/HBoxContainer"]
 texture_filter = 1
-position = Vector2(12, -8.25)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_apbyh")
+position = Vector2(12, -8.5)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_c22wm")
 
 [node name="Sprite2D2" type="Sprite2D" parent="HBoxContainer/LivesLabel/HBoxContainer"]
-position = Vector2(29.5, -8.25)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_apbyh")
+position = Vector2(29.5, -8.5)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_c22wm")
 
 [node name="Sprite2D3" type="Sprite2D" parent="HBoxContainer/LivesLabel/HBoxContainer"]
-position = Vector2(47, -8.25)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_apbyh")
+position = Vector2(47, -8.5)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_c22wm")
 
 [node name="Sprite2D4" type="Sprite2D" parent="HBoxContainer/LivesLabel/HBoxContainer"]
-position = Vector2(64.5, -8.25)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_apbyh")
+position = Vector2(64.5, -8.5)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_c22wm")
 
 [node name="Sprite2D5" type="Sprite2D" parent="HBoxContainer/LivesLabel/HBoxContainer"]
-position = Vector2(82, -8.25)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_apbyh")
+position = Vector2(82, -8.5)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_c22wm")
 
 [node name="LifePacks" type="Sprite2D" parent="HBoxContainer"]
 texture_filter = 1
@@ -81,17 +80,20 @@ metadata/_edit_use_anchors_ = true
 [node name="Sprite2D" type="Sprite2D" parent="HBoxContainer/LifePacks/HBoxContainer"]
 texture_filter = 1
 position = Vector2(27.75, -9)
-texture = ExtResource("4_apbyh")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_c22wm")
 
 [node name="Sprite2D2" type="Sprite2D" parent="HBoxContainer/LifePacks/HBoxContainer"]
 texture_filter = 1
 position = Vector2(48, -9)
-texture = ExtResource("4_apbyh")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_c22wm")
 
 [node name="Sprite2D3" type="Sprite2D" parent="HBoxContainer/LifePacks/HBoxContainer"]
 texture_filter = 1
 position = Vector2(68, -8.75)
-texture = ExtResource("4_apbyh")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_c22wm")
 
 [node name="PointsLabel" type="Sprite2D" parent="HBoxContainer"]
 z_as_relative = false
@@ -100,20 +102,10 @@ position = Vector2(1712, 68)
 scale = Vector2(4, 4)
 texture = ExtResource("3_dd2ji")
 
-[node name="Sprite2D" type="Sprite2D" parent="HBoxContainer/PointsLabel"]
-position = Vector2(-34, 1)
-texture = ExtResource("4_wlkr0")
-
-[node name="Text" type="Label" parent="HBoxContainer/PointsLabel"]
-offset_left = -5.0
-offset_top = -2.835
-offset_right = -4.0
-offset_bottom = 14.165
-scale = Vector2(0.5, 0.5)
-theme_override_fonts/font = ExtResource("5_tcnxb")
-theme_override_font_sizes/font_size = 17
-horizontal_alignment = 1
-metadata/_edit_use_anchors_ = true
+[node name="PointersCounter" parent="HBoxContainer/PointsLabel" instance=ExtResource("7_avql4")]
+offset_top = -16.0
+offset_right = -96.0
+offset_bottom = -16.0
 
 [node name="TimeLabel" type="Sprite2D" parent="HBoxContainer"]
 texture_filter = 1
@@ -121,18 +113,10 @@ position = Vector2(960, 80)
 scale = Vector2(5, 5)
 texture = ExtResource("6_ajp3r")
 
-[node name="Text" type="Label" parent="HBoxContainer/TimeLabel"]
-offset_left = -20.0
-offset_top = -2.0
-offset_right = -19.0
-offset_bottom = 14.0
-scale = Vector2(0.5, 0.5)
-size_flags_horizontal = 4
-theme_override_constants/shadow_offset_x = 10
-theme_override_fonts/font = ExtResource("5_tcnxb")
-theme_override_font_sizes/font_size = 17
-horizontal_alignment = 1
-metadata/_edit_use_anchors_ = true
+[node name="TimeCounter" parent="HBoxContainer/TimeLabel" instance=ExtResource("7_avql4")]
+offset_top = -16.0
+offset_right = -96.0
+offset_bottom = -16.0
 
 [node name="FinalBossContainer" type="Sprite2D" parent="HBoxContainer"]
 visible = false

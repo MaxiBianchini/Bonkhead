@@ -3,8 +3,8 @@ extends Node
 var life_packs: int
 
 var enemies_node: Node = null
-var time_label: Label = null
-var points_label: Label = null
+var time_counter: HBoxContainer = null
+var points_counter: HBoxContainer = null
 var lives_sprites: Array = []
 var packs_sprites: Array = []
 var bullet_type: Array = []
@@ -48,8 +48,11 @@ func initialize_scene() -> void:
 		
 		if current_scene.has_node("GUI"):
 			gui = current_scene.get_node("GUI")
-			time_label = gui.get_node("HBoxContainer/TimeLabel/Text")
-			points_label = gui.get_node("HBoxContainer/PointsLabel/Text")
+			if gui.has_node("HBoxContainer/TimeLabel/TimeCounter"):
+				time_counter = gui.get_node("HBoxContainer/TimeLabel/TimeCounter")
+			 
+			if gui.has_node("HBoxContainer/PointsLabel/PointersCounter"):
+				points_counter = gui.get_node("HBoxContainer/PointsLabel/PointersCounter")
 			
 			#Bullet
 			var bullet_type_container = gui.get_node("HBoxContainer/BulletIcon")
@@ -216,11 +219,27 @@ func pass_to_nextlevel():
 	ScenesTransitions.change_scene("res://Scenes/Level_" + str(current_level) + ".tscn")
 
 func update_ui():
-	if time_label and points_label:
-		var minuts = float(game_time) / 60
-		var seconds = int(game_time) % 60
-		time_label.text = "%02d:%02d" % [minuts, seconds]
-		points_label.text = str(points)
+	
+	# Calculamos el tiempo igual que antes
+	var minuts = float(game_time) / 60
+	var seconds = int(game_time) % 60
+	
+	# Formateamos el string igual que antes
+	var time_str = "%02d:%02d" % [minuts, seconds]
+	var points_str = str(points)
+	
+	# En lugar de .text =, llamamos a nuestra función .set_text()
+	if time_counter:
+		time_counter.set_text(time_str)
+		
+	if points_counter:
+		points_counter.set_text(points_str)
+	
+	#if time_label and points_label:
+		#var minuts = float(game_time) / 60
+		#var seconds = int(game_time) % 60
+		#time_label.text = "%02d:%02d" % [minuts, seconds]
+		#points_label.text = str(points)
 
 func update_lives(lives):
 	for i in range(len(lives_sprites)):
