@@ -382,12 +382,12 @@ metadata/_edit_lock_ = true
 unique_name_in_owner = true
 process_mode = 1
 z_index = 1
-position = Vector2(1476, 1264)
+position = Vector2(1496, 1248)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
 top_level = true
-position = Vector2(1476, 1264)
+position = Vector2(1496, 1248)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 480
@@ -404,7 +404,7 @@ metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(1476, 1264)
+position = Vector2(1496, 1248)
 script = ExtResource("33_dtfje")
 priority = 1
 follow_mode = 2
