@@ -52,7 +52,7 @@ func _ready():
 func update_menu_background() -> void:
 	# Obtenemos el nivel actual del SceneManager
 	var current_lvl = SceneManager.current_level
-	
+	print("currentLevel: ", current_lvl)
 	# Si por algún motivo es 0 o menor (primera vez), forzamos que sea 1
 	if current_lvl < 1:
 		current_lvl = 1
@@ -140,7 +140,7 @@ func _on_new_game_pressed():
 	await  audio_click.finished
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	SceneManager.start_new_game()
-	var scene_path = "res://Scenes/LoreScene.tscn"#"res://Scenes/LoreScene.tscn"
+	var scene_path = "res://Scenes/LoreScene.tscn"
 	ScenesTransitions.change_scene(scene_path)
 
 func _on_options_pressed():

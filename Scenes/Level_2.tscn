@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=4 uid="uid://62rpf654fvo6"]
+[gd_scene load_steps=73 format=4 uid="uid://62rpf654fvo6"]
 
 [ext_resource type="Texture2D" uid="uid://vr4vltjsdl0o" path="res://Graphics/Zonas/Green-zone/2 Background/Day/1.png" id="1_xbslt"]
 [ext_resource type="Texture2D" uid="uid://okpnwlqcy00" path="res://Graphics/Zonas/Green-zone/2 Background/Day/2.png" id="2_q8wyw"]
@@ -55,6 +55,7 @@
 [ext_resource type="Texture2D" uid="uid://cf2xm4pu4utul" path="res://Graphics/Comic Pages/ComicPage2.png" id="55_m2s7e"]
 [ext_resource type="Texture2D" uid="uid://fa75u2xkk2xt" path="res://Graphics/Zonas/Green-zone/3 Objects/Fence/5.png" id="55_w37ya"]
 [ext_resource type="AudioStream" uid="uid://cphpe1giw4pxl" path="res://Music/Level_2.mp3" id="56_m2s7e"]
+[ext_resource type="PackedScene" uid="uid://cb8ivf7pn64iq" path="res://Prefabs/CheckPoint.tscn" id="57_5toea"]
 [ext_resource type="PackedScene" uid="uid://bh3h363wnt1mt" path="res://Prefabs/Signpost.tscn" id="59_u5cqn"]
 
 [sub_resource type="Resource" id="Resource_5toea"]
@@ -100,7 +101,7 @@ script = ExtResource("54_m2s7e")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bdg83"]
 resource_local_to_scene = true
-size = Vector2(1175, 396.5)
+size = Vector2(1175, 309.25)
 
 [sub_resource type="Resource" id="Resource_n4ncl"]
 script = ExtResource("54_m2s7e")
@@ -497,12 +498,12 @@ texture = ExtResource("31_bp6cg")
 [node name="Player" parent="." instance=ExtResource("20_j1y0e")]
 unique_name_in_owner = true
 z_index = 1
-position = Vector2(17, 720)
+position = Vector2(4765, 2452)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
 top_level = true
-position = Vector2(198.33333, 720)
+position = Vector2(4765, 2452)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
@@ -519,7 +520,7 @@ metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(198.33333, 720)
+position = Vector2(4765, 2452)
 script = ExtResource("53_v40af")
 priority = 1
 follow_mode = 2
@@ -885,7 +886,7 @@ shape = SubResource("RectangleShape2D_ssyor")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(17, 720)
+position = Vector2(4765, 2452)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -905,11 +906,12 @@ tween_resource = SubResource("Resource_m2s7e")
 position = Vector2(5928, 2418)
 
 [node name="CollisionShape2D" parent="PhantomAreas/Phantom_Area3" index="0"]
+position = Vector2(0, -43.625)
 shape = SubResource("RectangleShape2D_bdg83")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area3" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(17, 720)
+position = Vector2(4765, 2452)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -999,6 +1001,9 @@ volume_db = -5.0
 autoplay = true
 mix_target = 2
 bus = &"Music"
+
+[node name="CheckPoint" parent="." instance=ExtResource("57_5toea")]
+position = Vector2(4870, 2476)
 
 [editable path="Dead_Areas/Dead_Area"]
 [editable path="Dead_Areas/Dead_Area2"]

@@ -1,0 +1,85 @@
+[gd_scene load_steps=12 format=3 uid="uid://cb8ivf7pn64iq"]
+
+[ext_resource type="Script" uid="uid://fkb0q7bfvx5u" path="res://Scripts/CheckPoint.gd" id="1_46fwg"]
+[ext_resource type="Texture2D" uid="uid://dtioj8fgax1is" path="res://Graphics/Zonas/CheckPoints.png" id="2_u8cho"]
+[ext_resource type="Texture2D" uid="uid://ciclxwjk67qi1" path="res://Graphics/GUI/Windows/8-2.png" id="3_47ou6"]
+[ext_resource type="FontFile" uid="uid://c88rb6dh1ub4j" path="res://Graphics/Fonts/Press_Start_2P/PressStart2P-Regular.ttf" id="4_585y1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o1x0k"]
+atlas = ExtResource("2_u8cho")
+region = Rect2(0, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_602mf"]
+atlas = ExtResource("2_u8cho")
+region = Rect2(32, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jduc5"]
+atlas = ExtResource("2_u8cho")
+region = Rect2(64, 0, 32, 42)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_adfyk"]
+atlas = ExtResource("2_u8cho")
+region = Rect2(96, 0, 32, 42)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2gus6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o1x0k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_602mf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jduc5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_adfyk")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o3shx"]
+size = Vector2(22, 36)
+
+[sub_resource type="LabelSettings" id="LabelSettings_1h84b"]
+font = ExtResource("4_585y1")
+font_size = 9
+
+[node name="CheckPoint" type="Area2D"]
+collision_mask = 2
+script = ExtResource("1_46fwg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_2gus6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 3)
+shape = SubResource("RectangleShape2D_o3shx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -61)
+texture = ExtResource("3_47ou6")
+
+[node name="Label" type="Label" parent="Sprite2D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -155.0
+offset_top = -42.5
+offset_bottom = 1.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "PAGE SAVED"
+label_settings = SubResource("LabelSettings_1h84b")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
