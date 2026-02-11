@@ -67,7 +67,7 @@ grow_vertical = 2
 theme_override_constants/separation = 35
 alignment = 1
 
-[node name="PlayButton" type="TextureButton" parent="VBoxContainer"]
+[node name="RestartLevelButton" type="TextureButton" parent="VBoxContainer"]
 process_mode = 3
 texture_filter = 1
 custom_minimum_size = Vector2(250, 0)
@@ -78,7 +78,7 @@ texture_pressed = ExtResource("4_mdt18")
 texture_hover = ExtResource("5_anb84")
 stretch_mode = 0
 
-[node name="Label" type="Label" parent="VBoxContainer/PlayButton"]
+[node name="Label" type="Label" parent="VBoxContainer/RestartLevelButton"]
 process_mode = 3
 layout_mode = 1
 anchors_preset = 8
@@ -92,8 +92,8 @@ offset_right = 75.0
 offset_bottom = 27.5
 grow_horizontal = 2
 grow_vertical = 2
-text = "PLAY
-AGAIN"
+text = "RESTART
+LEVEL"
 label_settings = SubResource("LabelSettings_m8v84")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -135,7 +135,7 @@ volume_db = -10.0
 [node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("8_1kcw6")
 
-[connection signal="mouse_entered" from="VBoxContainer/PlayButton" to="." method="_on_mouse_entered"]
-[connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_playagain_pressed"]
+[connection signal="mouse_entered" from="VBoxContainer/RestartLevelButton" to="." method="_on_mouse_entered"]
+[connection signal="pressed" from="VBoxContainer/RestartLevelButton" to="." method="_on_restartlevel_pressed"]
 [connection signal="mouse_entered" from="VBoxContainer/MainMenuButton" to="." method="_on_mouse_entered"]
 [connection signal="pressed" from="VBoxContainer/MainMenuButton" to="." method="_on_mainmenu_pressed"]

@@ -13,6 +13,7 @@ var player: Node = null
 var gui: Node = null
 var boss_health_bar: TextureProgressBar = null
 var boss_health_container: Sprite2D = null
+var dash_bar: TextureProgressBar = null
 var pause_menu: Node = null
 var game_over_menu: Node = null
 
@@ -61,6 +62,12 @@ func initialize_scene() -> void:
 			time_counter = gui.get_node("HBoxContainer/TimeLabel/TimeCounter")
 		if gui.has_node("HBoxContainer/PointsLabel/PointersCounter"):
 			points_counter = gui.get_node("HBoxContainer/PointsLabel/PointersCounter")
+		# BUSCAMOS LA BARRA DE DASH (Ajusta la ruta a donde la hayas puesto)
+		# Ejemplo: Si la pusiste dentro de un contenedor llamado StaminaContainer
+		if gui.has_node("HBoxContainer/DashBar/TextureProgressBar"):
+			dash_bar = gui.get_node("HBoxContainer/DashBar/TextureProgressBar")
+			# Aseguramos que empiece llena
+			dash_bar.value = dash_bar.max_value
 		
 		var bullet_type_container = gui.get_node("HBoxContainer/BulletIcon")
 		bullet_type = bullet_type_container.get_children()
@@ -206,39 +213,40 @@ func update_ammo_icon(ammo_type_index: int) -> void:
 	if ammo_type_index >= 0 and ammo_type_index < bullet_type.size():
 		bullet_type[ammo_type_index].visible = true
 
+#///////////////////////////////////////////////
+
 # --- FLUJO DE JUEGO: REINICIAR (Play Again) ---
 func restart_gameplay() -> void:
+# 1. Configuración común (quitar pausa, ocultar mouse)
 	get_tree().paused = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	
-	# Prioridad 1: Tenemos Checkpoint (en memoria)
-	if has_active_checkpoint:
-		print("SceneManager: Reintentando desde Checkpoint.")
-		life_packs = 3 # Restauramos vidas completas
-		points = 0     # Reiniciamos puntaje acumulado post-checkpoint
-		game_time = 0.0
-		# Forzamos recarga de escena. initialize_scene detectará el cambio de ID
-		# y posicionará al jugador.
-		ScenesTransitions.change_scene("res://Scenes/Level_" + str(current_level) + ".tscn")
-		return
-
-	# Prioridad 2: Jefe Final (Fallback)
-	if current_level == 5:
-		life_packs = 3
-		points = 0
-		game_time = 0.0
-		ScenesTransitions.change_scene("res://Scenes/Level_5.tscn")
-		return
+	# 2. Restablecer Valores Iniciales
+	life_packs = 3       # Vidas llenas
+	points = 0           # Puntos a 0 (Nueva partida limpia)
+	game_time = 0.0      # Reloj a 0
 	
-	# Prioridad 3: Nueva Partida desde cero
-	start_new_game()
-
-func add_new_points(value: int):
-	points += value
-	update_ui()
-
-func check_saved_game() -> void:
-	has_saved_game = FileAccess.file_exists("user://save_data.json")
+	# 3. ELIMINAR CHECKPOINT (Tu petición específica)
+	# "Por más que tenga checkpoint o no... quiero que arranque desde el level 1"
+	# Al poner esto en false, borramos cualquier rastro de progreso intermedio en memoria.
+	has_active_checkpoint = false
+	active_checkpoint_pos = Vector2.ZERO
+	
+	ScenesTransitions.change_scene("res://Scenes/Level_" + str(current_level) + ".tscn")
+	
+	# 4. DECISIÓN DE NIVEL
+	
+	# Mantenemos la Excepción del Jefe Final (Nivel 5) que pediste antes:
+	# Si mueres contra el jefe, reinicias contra el jefe.
+	#if current_level == 5:
+		#ScenesTransitions.change_scene("res://Scenes/Level_5.tscn")
+		
+	#else:
+		## PARA TODOS LOS DEMÁS NIVELES (1 al 4):
+		## Forzamos el reinicio absoluto al Nivel 1.
+		#current_level = 1 
+		#ScenesTransitions.change_scene("res://Scenes/Level_1.tscn")
+		#start_new_game()
 
 func pass_to_nextlevel():
 	# Si el nivel actual es el 5 (el Jefe Final), vamos al lore de cierre
@@ -250,10 +258,89 @@ func pass_to_nextlevel():
 		return
 	
 	# Lógica normal para los niveles anteriores
+	has_active_checkpoint = false
+	active_checkpoint_pos = Vector2.ZERO
 	current_level += 1
-	save_game_data()
 	game_time = 0.0
+	save_game_data()
 	ScenesTransitions.change_scene("res://Scenes/Level_" + str(current_level) + ".tscn")
+
+func go_to_mainmenu() -> void:
+	load_game_data()
+	game_time = 0.0
+	get_tree().paused = false
+	ScenesTransitions.change_scene("res://Scenes/MainMenu.tscn")
+
+func save_game_data() -> void:
+	var data = {
+		"current_level": current_level,
+		"points": points,
+		"life_packs": life_packs,
+	}
+	var file = FileAccess.open("user://save_data.json", FileAccess.WRITE)
+	if file:
+		file.store_string(JSON.stringify(data))
+		file.close()
+		has_saved_game = true
+		print("Partida guardada en nivel: ", current_level)
+
+func load_game_data():
+	if FileAccess.file_exists("user://save_data.json"):
+		var file = FileAccess.open("user://save_data.json", FileAccess.READ)
+		var text = file.get_as_text()
+		var data = JSON.parse_string(text)
+		file.close()
+		
+		# Cargar datos básicos
+		current_level = data.get("current_level", 1)
+		points = data.get("points", 0)
+		life_packs = data.get("life_packs", 3)
+		has_saved_game = true
+	else:
+		has_saved_game = false
+
+# --- FLUJO DE JUEGO: NUEVA PARTIDA (New Game) ---
+func start_new_game():
+	points = 0
+	life_packs = 3
+	game_time = 0.0
+	current_level = 1
+	
+	# Borrado explícito de checkpoint
+	has_active_checkpoint = false 
+	active_checkpoint_pos = Vector2.ZERO
+	
+	# Borrar archivo físico si existe para evitar conflictos
+	delete_saved_game()
+	
+	#ScenesTransitions.change_scene("res://Scenes/Level_1.tscn")
+
+func delete_saved_game() -> void:
+	# Verificamos si existe el archivo
+	if FileAccess.file_exists("user://save_data.json"):
+		# Lo borramos usando DirAccess
+		DirAccess.remove_absolute("user://save_data.json")
+	
+	# Actualizamos la variable para que el Menú sepa que no hay nada
+	has_saved_game = false
+
+# --- GUARDADO Y CARGA ---
+func activate_checkpoint(pos: Vector2, current_points: int) -> void:
+	active_checkpoint_pos = pos
+	checkpoint_points = current_points
+	has_active_checkpoint = true
+	player_positioned = true
+	# Guardamos inmediatamente para que funcione el "Resume" desde menú
+	save_game_data()
+
+#///////////////////////////////////////////////
+
+func add_new_points(value: int):
+	points += value
+	update_ui()
+
+func check_saved_game() -> void:
+	has_saved_game = FileAccess.file_exists("user://save_data.json")
 
 func update_ui():
 	# Calculamos el tiempo igual que antes
@@ -270,6 +357,31 @@ func update_ui():
 		
 	if points_counter:
 		points_counter.set_text(points_str)
+	
+	if dash_bar and player:
+		# 1. ¿El jugador está en COOLDOWN (recargando)?
+		if not player.dash_cool_down_timer.is_stopped():
+			# Calculamos cuánto falta para terminar.
+			# Fórmula: (1 - (TiempoRestante / TiempoTotal)) * ValorMáximo
+			var time_left = player.dash_cool_down_timer.time_left
+			var wait_time = player.dash_cool_down_timer.wait_time
+			
+			# Esto hace que la barra vaya subiendo de 0 a 100 suavemente
+			dash_bar.value = (1.0 - (time_left / wait_time)) * dash_bar.max_value
+			
+		# 2. ¿El jugador está DASHING (gastando la energía)?
+		elif not player.dash_duration_timer.is_stopped():
+			# Hacemos que la barra baje rápido mientras dura el impulso
+			var time_left = player.dash_duration_timer.time_left
+			var wait_time = player.dash_duration_timer.wait_time
+			
+			# Esto hace que baje de 100 a 0
+			dash_bar.value = (time_left / wait_time) * dash_bar.max_value
+			
+		# 3. ¿Está listo para usar?
+		elif player.can_dash:
+			# Barra llena y lista
+			dash_bar.value = dash_bar.max_value
 
 func update_lives(lives):
 	for i in range(len(lives_sprites)):
@@ -294,14 +406,11 @@ func show_game_over_menu() -> void:
 	game_over_menu = preload("res://Scenes/GameOverMenu.tscn").instantiate()
 	
 	# Conexiones existentes...
-	if not game_over_menu.press_playagain.is_connected(restart_gameplay):
-		game_over_menu.press_playagain.connect(restart_gameplay)
+	if not game_over_menu.press_restartlevel.is_connected(restart_gameplay):
+		game_over_menu.press_restartlevel.connect(restart_gameplay)
 	
 	if not game_over_menu.press_mainmenu.is_connected(go_to_mainmenu):
 		game_over_menu.press_mainmenu.connect(go_to_mainmenu)
-	
-	if game_over_menu.has_method("set_checkpoint_mode"):
-		game_over_menu.set_checkpoint_mode(current_level == 5)
 		
 	get_tree().current_scene.add_child(game_over_menu)
 
@@ -310,91 +419,27 @@ func resuem_gameplay() -> void:
 	get_tree().paused = false
 	if gui: gui.visible = true
 
-func go_to_mainmenu() -> void:
-	load_game_data()
-	game_time = 0.0
-	get_tree().paused = false
-	ScenesTransitions.change_scene("res://Scenes/MainMenu.tscn")
-
-func save_game_data() -> void:
-	var data = {
-		"current_level": current_level,
-		"points": points,
-		"life_packs": life_packs,
-		"game_time": game_time,
-		# --- DATOS DEL CHECKPOINT ---
-		"has_checkpoint": has_active_checkpoint,
-		"checkpoint_points": checkpoint_points,
-		"checkpoint_x": active_checkpoint_pos.x,
-		"checkpoint_y": active_checkpoint_pos.y
-	}
-	var file = FileAccess.open("user://save_data.json", FileAccess.WRITE)
-	if file:
-		file.store_string(JSON.stringify(data))
-		file.close()
-		has_saved_game = true
-		print("Partida guardada con Checkpoint en nivel: ", current_level)
-
-func load_game_data():
-	if FileAccess.file_exists("user://save_data.json"):
-		var file = FileAccess.open("user://save_data.json", FileAccess.READ)
-		var text = file.get_as_text()
-		var data = JSON.parse_string(text)
-		file.close()
-		
-		# Cargar datos básicos
-		current_level = data.get("current_level", 1)
-		points = data.get("points", 0)
-		life_packs = data.get("life_packs", 3)
-		game_time = data.get("game_time", 0.0)
-		
-		# --- CARGAR DATOS DEL CHECKPOINT ---
-		has_active_checkpoint = data.get("has_checkpoint", false)
-		checkpoint_points = data.get("checkpoint_points", 0)
-		
-		var cx = data.get("checkpoint_x", 0)
-		var cy = data.get("checkpoint_y", 0)
-		active_checkpoint_pos = Vector2(cx, cy)
-		
-		has_saved_game = true
-	else:
-		has_saved_game = false
-
-func retry_from_checkpoint():
-	# Restauramos las vidas para que pueda seguir jugando
-	life_packs = 3
-	
-	# Lógica solicitada: Si murió del todo, pierde los puntos acumulados
-	points = 0 
-	# (Opcional: si quieres que conserve los puntos que tenía al tocar el check, usa: points = checkpoint_points)
-	
-	# Si tiene checkpoint, recargamos la escena actual
-	if has_active_checkpoint:
-		print("Reintentando desde Checkpoint...")
-		# Al recargar, initialize_scene() leerá 'active_checkpoint_pos' y moverá al player
-		ScenesTransitions.change_scene("res://Scenes/Level_" + str(current_level) + ".tscn")
-	else:
-		# Si no tenía checkpoint, reinicia desde el nivel 1
-		start_new_game()
-
-# --- FLUJO DE JUEGO: NUEVA PARTIDA (New Game) ---
-func start_new_game():
-	points = 0
-	life_packs = 3
-	game_time = 0.0
-	current_level = 1
-	
-	# Borrado explícito de checkpoint
-	has_active_checkpoint = false 
-	active_checkpoint_pos = Vector2.ZERO
-	
-	# Borrar archivo físico si existe para evitar conflictos
-	delete_saved_game()
-	
-	ScenesTransitions.change_scene("res://Scenes/Level_1.tscn")
 
 
-# Se llama cada vez que el Boss recibe daño
+
+
+#func retry_from_checkpoint():
+	## Restauramos las vidas para que pueda seguir jugando
+	#life_packs = 3
+	#
+	## Lógica solicitada: Si murió del todo, pierde los puntos acumulados
+	#points = 0 
+	## (Opcional: si quieres que conserve los puntos que tenía al tocar el check, usa: points = checkpoint_points)
+	#
+	## Si tiene checkpoint, recargamos la escena actual
+	#if has_active_checkpoint:
+		#print("Reintentando desde Checkpoint...")
+		## Al recargar, initialize_scene() leerá 'active_checkpoint_pos' y moverá al player
+		#ScenesTransitions.change_scene("res://Scenes/Level_" + str(current_level) + ".tscn")
+	#else:
+		## Si no tenía checkpoint, reinicia desde el nivel 1
+		#start_new_game()
+
 func update_boss_health(new_health: int) -> void:
 	if boss_health_bar:
 		# Cambio suave (Más moderno/jugoso)
@@ -402,7 +447,6 @@ func update_boss_health(new_health: int) -> void:
 		tween.tween_property(boss_health_bar, "value", new_health, 0.2)\
 			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
-# Se llama cuando el Boss muere
 func hide_boss_bar() -> void:
 	if boss_health_bar:
 		# Esperamos un poco para ver el golpe final y luego desvanecemos
@@ -436,21 +480,3 @@ func show_boss_bar_animated() -> void:
 		var fill_tween = create_tween()
 		fill_tween.tween_property(boss_health_bar, "value", boss.current_health, 1.5)\
 			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-
-func delete_saved_game() -> void:
-	# Verificamos si existe el archivo
-	if FileAccess.file_exists("user://save_data.json"):
-		# Lo borramos usando DirAccess
-		DirAccess.remove_absolute("user://save_data.json")
-	
-	# Actualizamos la variable para que el Menú sepa que no hay nada
-	has_saved_game = false
-
-# --- GUARDADO Y CARGA ---
-func activate_checkpoint(pos: Vector2, current_points: int) -> void:
-	active_checkpoint_pos = pos
-	checkpoint_points = current_points
-	has_active_checkpoint = true
-	player_positioned = true
-	# Guardamos inmediatamente para que funcione el "Resume" desde menú
-	save_game_data()

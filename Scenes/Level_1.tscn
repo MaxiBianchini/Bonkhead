@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=4 uid="uid://mwhbup6tnnqo"]
+[gd_scene load_steps=62 format=4 uid="uid://mwhbup6tnnqo"]
 
 [ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://TileSets/TileSets.tres" id="1_c1dvb"]
 [ext_resource type="PackedScene" uid="uid://cdqlmgh2vxout" path="res://Prefabs/Player.tscn" id="2_72p7r"]
@@ -41,6 +41,7 @@
 [ext_resource type="PackedScene" uid="uid://d1i3yjdbq4dmk" path="res://Prefabs/Page_Comic.tscn" id="45_ww1bt"]
 [ext_resource type="Texture2D" uid="uid://dlh6e0oy21ncc" path="res://Graphics/Comic Pages/ComicPage1.png" id="46_atmdf"]
 [ext_resource type="AudioStream" uid="uid://b8f133nc8swer" path="res://Music/Level_1.mp3" id="46_d1n4i"]
+[ext_resource type="PackedScene" uid="uid://cb8ivf7pn64iq" path="res://Prefabs/CheckPoint.tscn" id="48_0iu3r"]
 [ext_resource type="PackedScene" uid="uid://bh3h363wnt1mt" path="res://Prefabs/Signpost.tscn" id="50_ceuot"]
 [ext_resource type="PackedScene" uid="uid://blucmwrqfrted" path="res://Prefabs/Moving_Platform.tscn" id="52_fdbj4"]
 [ext_resource type="PackedScene" uid="uid://cfdnwh558m6i2" path="res://Prefabs/Falling_Platform.tscn" id="54_kd73b"]
@@ -659,6 +660,9 @@ volume_db = -5.0
 autoplay = true
 mix_target = 2
 bus = &"Music"
+
+[node name="CheckPoint" parent="." instance=ExtResource("48_0iu3r")]
+position = Vector2(1537, 1259)
 
 [editable path="Enemies/Enemy_2"]
 [editable path="Enemies/Enemy_6"]

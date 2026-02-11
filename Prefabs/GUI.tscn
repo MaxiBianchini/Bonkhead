@@ -95,6 +95,20 @@ position = Vector2(68, -8.75)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("4_c22wm")
 
+[node name="DashBar" type="Sprite2D" parent="HBoxContainer"]
+position = Vector2(138, 256)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("3_dd2ji")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="HBoxContainer/DashBar"]
+offset_left = -43.199997
+offset_top = -5.5999985
+offset_right = 42.799995
+offset_bottom = 8.0
+value = 100.0
+nine_patch_stretch = true
+texture_progress = ExtResource("9_c22wm")
+
 [node name="PointsLabel" type="Sprite2D" parent="HBoxContainer"]
 z_as_relative = false
 texture_filter = 1
