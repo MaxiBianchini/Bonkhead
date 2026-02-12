@@ -653,6 +653,7 @@ func take_damage(force_death: bool = false, damage: int = 1) -> void:
 		lives = 0
 	else:
 		lives -= damage
+		SceneManager.current_hp = lives # AGREGAR ESTO
 		audio_hurts.play()
 	
 	emit_signal("change_UI_lives", lives)
@@ -690,6 +691,7 @@ func take_damage(force_death: bool = false, damage: int = 1) -> void:
 func increase_life() -> bool:
 	if lives < 5:
 		lives += 1
+		SceneManager.current_hp = lives # AGREGAR ESTO
 		emit_signal("change_UI_lives", lives)
 		return true
 	# 2. CASO PREMIO (NUEVO): Si ya tengo 5 vidas, verificamos los Packs.

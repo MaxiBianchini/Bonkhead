@@ -128,10 +128,21 @@ func load_settings() -> void:
 
 func _on_continue_pressed():
 	audio_click.play()
-	await  audio_click.finished
+	await audio_click.finished
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	
+	# --- CORRECCIÓN DEL GLITCH ---
+	# Solo cargamos del disco si NO tenemos un checkpoint activo en memoria.
+	# Si tenemos checkpoint, confiamos en los datos de la RAM (que ya tienen restada la vida perdida).
+	
+	if not SceneManager.has_active_checkpoint:
+		SceneManager.load_game_data()
+	else:
+		print("Resumiendo desde Checkpoint (RAM). Se ignoran datos del disco.")
+
 	var tween = create_tween()
 	tween.tween_property(music_main, "volume_db", -80, 2)
+	
 	var scene_path = "res://Scenes/Level_" + str(SceneManager.current_level) + ".tscn"
 	ScenesTransitions.change_scene(scene_path)
 

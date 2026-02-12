@@ -115,7 +115,7 @@ func _on_body_entered(body: Node) -> void:
 func _on_body_exited(body: Node) -> void:
 	if body.is_in_group("Player") and is_alive:
 		animated_sprite.play("Idle")
-		walk_sound.play()
+		#walk_sound.play()
 		enemy_is_near = false
 
 func _on_shoot_timer_timeout() -> void:
