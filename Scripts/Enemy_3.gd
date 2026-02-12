@@ -141,7 +141,7 @@ func _on_body_entered(body: Node) -> void:
 func _on_body_exited(body: Node) -> void:
 	if body.is_in_group("Player") and is_alive:
 		animated_sprite.play("Walk Scan")
-		walk_sound.play()
+#		walk_sound.play()
 		follow_player = false
 
 func take_damage() -> void:

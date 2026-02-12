@@ -23,15 +23,9 @@ var game_time: float
 var points: int
 var has_saved_game: bool = false
 
-# --- NUEVO: PERSISTENCIA DE HP (VIDAS INDIVIDUALES) ---
-var saved_hp: int = 5      # HP guardado en disco (Inicio del nivel)
-var current_hp: int = 5    # HP actual en tiempo real
-
-# --- VARIABLES DE CHECKPOINT (MEMORIA RAM) ---
+# --- VARIABLES DE CHECKPOINT (SOLO MEMORIA RAM) ---
 var active_checkpoint_pos: Vector2 = Vector2.ZERO
 var checkpoint_points: int = 0
-var checkpoint_life_packs: int = 0
-var checkpoint_hp: int = 5 # Nuevo: HP guardado en el checkpoint
 var has_active_checkpoint: bool = false
 
 # --- CONTROL DE ESCENA ---
@@ -55,7 +49,7 @@ func initialize_scene() -> void:
 		last_scene_id = current_scene.get_instance_id()
 		player_positioned = false 
 
-	# --- 1. LÓGICA DE GUI y HUD ---
+	# --- 1. CARGA DE UI ---
 	if current_scene.has_node("GUI"):
 		gui = current_scene.get_node("GUI")
 		if gui.has_node("HBoxContainer/TimeLabel/TimeCounter"):
@@ -74,67 +68,67 @@ func initialize_scene() -> void:
 		var packs_container = gui.get_node("HBoxContainer/LifePacks/HBoxContainer")
 		packs_sprites = packs_container.get_children()
 		
-		update_lives(player.lives if player else 5)
-		
 		if gui.has_node("HBoxContainer/FinalBossContainer/BossHealthBar"):
 			boss_health_container = gui.get_node("HBoxContainer/FinalBossContainer")
 			boss_health_bar = gui.get_node("HBoxContainer/FinalBossContainer/BossHealthBar")
 
-	# --- 2. LÓGICA DE ENEMIGOS ---
+	# --- 2. LÓGICA DE ENEMIGOS Y CÓMIC ---
 	if current_scene.has_node("Enemies"):
 		enemies_node = current_scene.get_node("Enemies")
 		for enemy in enemies_node.get_children():
 			if enemy.has_signal("add_points") and not enemy.add_points.is_connected(add_new_points):
 				enemy.add_points.connect(add_new_points)
 
-	# --- 3. LÓGICA DEL CÓMIC ---
 	if current_scene.has_node("Page_Comic"):
 		comic_page = current_scene.get_node("Page_Comic")
 		if comic_page.has_signal("winLevel") and not comic_page.winLevel.is_connected(pass_to_nextlevel):
 			comic_page.winLevel.connect(pass_to_nextlevel)
 
-	# --- 4. LÓGICA DEL JUGADOR ---
+	# --- 3. LÓGICA DEL JUGADOR ---
 	if current_scene.has_node("Player"):
 		player = current_scene.get_node("Player")
 		
-		# --- CORRECCIÓN CLAVE ---
-		# Envolvemos TODO en este if. 
-		# Así, si 'player_positioned' ya es true (porque ya cargamos el nivel), 
-		# ignoramos este bloque aunque nazcan balas o enemigos.
+		# --- BLOQUEO DE SEGURIDAD ---
+		# Asegura que la vida, posición y UI se inicialicen UNA SOLA VEZ al cargar el nivel.
 		if not player_positioned:
 			
 			if has_active_checkpoint:
 				# CASO A: RESPAWN EN CHECKPOINT (RAM)
 				player.global_position = active_checkpoint_pos
-				
-				# Restauramos datos del checkpoint
-				points = checkpoint_points
-				player.lives = checkpoint_hp 
-				current_hp = checkpoint_hp
+				# Restauramos los puntos guardados en la RAM del checkpoint
+				points = checkpoint_points 
 				
 			else:
-				# CASO B: INICIO DE NIVEL (O Restart Level)
-				# Aquí aplicamos el HP guardado (o regenerado a 5 si fue Game Over)
-				player.lives = saved_hp
-				current_hp = saved_hp
+				# CASO B: INICIO DE NIVEL (Spawn normal o Respawn sin check)
+				
+				# 1. Restauramos HP (Regla: siempre 5 al aparecer)
+				player.lives = 5
+				
+				# 2. CORRECCIÓN DE PUNTOS:
+				# Si morimos y volvimos al inicio, reseteamos puntos leyendo el disco.
+				points = get_saved_points_from_disk()
 
-			# Actualizamos la UI inmediatamente para que se vea la vida correcta
+			# --- CORRECCIÓN UI ---
+			update_lives(player.lives)
+			
+			# Forzamos la señal para asegurar sincronización
 			player.emit_signal("change_UI_lives", player.lives)
 			
-			# ¡Marcamos que el jugador ya está listo!
-			# Esto cierra el candado para que las balas no reseteen la vida.
-			player_positioned = true
-		
-		# B. Conexiones
+			# Cerramos el candado
+			player_positioned = true 
+
+		# B. CONEXIONES
 		if not player.player_died.is_connected(on_player_died):
 			player.player_died.connect(on_player_died)
 		if not player.change_UI_lives.is_connected(update_lives):
 			player.change_UI_lives.connect(update_lives)
 		if not player.ammo_changed.is_connected(update_ammo_icon):
 			player.ammo_changed.connect(update_ammo_icon)
+		
+		# Actualizar ícono de arma
 		update_ammo_icon(player.current_ammo_type)
 
-	# --- 5. LÓGICA DEL BOSS ---
+	# --- 4. LÓGICA DEL BOSS ---
 	var boss_found = false
 	if current_scene.has_node("Final_Boss"):
 		boss_found = true
@@ -160,74 +154,32 @@ func _input(event):
 		gui.visible = false
 		show_pause_menu()
 
-# --- LÓGICA DE MUERTE Y GAME OVER ---
+# --- MUERTE Y RESPAWN ---
 func on_player_died():
-	# El jugador perdió 5 HP, restamos un paquete
+	# REGLA: Al morir perdemos un paquete
 	life_packs -= 1
 	
 	if life_packs <= 0:
-		# --- GAME OVER (0 Paquetes) ---
-		
-		# Lógica especial Nivel 5 (Jefe)
-		if current_level == 5:
-			# En el jefe, permitimos reintentar rápido con 3 vidas.
-			# (Esto es una excepción a la regla general para no frustrar en el final)
-			life_packs = 3 
-			save_game_data() 
-			if gui: gui.visible = false
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-			show_game_over_menu()
-			return
-
-		# --- REGLA GDD: GAME OVER EN NIVELES NORMALES ---
-		# "En el caso de tener un checkpoint activo pero perder todos los paquetes... el nuevo punto guardado pasa a ser el inicio del nivel."
-		
-		# 1. Borramos el Checkpoint de la MEMORIA (se pierde al morir definitivamente)
-		has_active_checkpoint = false
-		active_checkpoint_pos = Vector2.ZERO
-		
-		# 2. NO borramos el archivo de guardado del disco.
-		# Esto permite que si van a Main Menu, "Resume" cargue el inicio del nivel actual.
-		
+		#if current_level == 5:
+			#life_packs = 3
+			## Guardamos inmediatamente en disco que tiene 3 vidas.
+			## Así, si cierra el juego o da a Restart, siempre carga con vidas llenas.
+			#save_game_data()
+		# --- GAME OVER ---
 		if gui: gui.visible = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		show_game_over_menu()
-
 	else:
-		# --- RESPAWN TÁCTICO (Aún quedan paquetes) ---
-		# Reaparece en checkpoint (si tiene) o inicio (si no tiene), gestionado por initialize_scene
+		# --- RESPAWN TÁCTICO ---
 		respawn_player()
 
 func respawn_player():
 	get_tree().paused = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-	# Al respawnear dentro del mismo intento, el tiempo sigue corriendo o se puede resetear, 
-	# pero generalmente en checkpoints NO se resetea a 0, sigue contando. 
-	# Si prefieres resetearlo por intento, descomenta:
-	# game_time = 0.0 
+	# Recargamos escena
 	ScenesTransitions.change_scene(get_tree().current_scene.scene_file_path)
 
-# --- FLUJO DE JUEGO: RESTART LEVEL (Botón Game Over) ---
-func restart_gameplay() -> void:
-	get_tree().paused = false
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-
-	# 1. Cargamos datos del disco (Nivel, Puntos base)
-	load_game_data() 
-	
-	# 2. AQUÍ APLICAMOS MI RECOMENDACIÓN DE DISEÑO:
-	# Aunque cargamos los datos, FORZAMOS que la vida sea 5 para el reintento.
-	# Si prefieres tu idea "Hardcore" (mantener el HP bajo), borra la línea de abajo.
-	saved_hp = 5 
-	
-	# Reiniciamos contadores de nivel
-	game_time = 0.0
-	has_active_checkpoint = false
-	
-	# Recargamos
-	ScenesTransitions.change_scene("res://Scenes/Level_" + str(current_level) + ".tscn")
-
-# --- FLUJO DE JUEGO: PASAR DE NIVEL ---
+# --- TRANSICIÓN DE NIVEL ---
 func pass_to_nextlevel():
 	if current_level == 5:
 		delete_saved_game()
@@ -235,49 +187,83 @@ func pass_to_nextlevel():
 		ScenesTransitions.change_scene("res://Scenes/FinalLoreScene.tscn")
 		return
 
-	# GDD: "Si el jugador tiene un checkpoint... y pasa a un nuevo nivel, ese checkpoint se descarta."
+	# REGLA: Pasar de nivel elimina el checkpoint anterior
 	has_active_checkpoint = false
 	active_checkpoint_pos = Vector2.ZERO
 	
 	current_level += 1
 	game_time = 0.0
 	
-	# ANTES DE GUARDAR, LEEMOS EL HP FINAL DEL PLAYER
-	if player:
-		current_hp = player.lives
-	
-	# Ahora save_game_data guardará este 'current_hp' en 'saved_hp' dentro del JSON
+	# Guardamos el progreso (Nivel Nuevo, Packs Actuales, Puntos Actuales)
 	save_game_data()
 	
 	ScenesTransitions.change_scene("res://Scenes/Level_" + str(current_level) + ".tscn")
 
-# --- FLUJO DE JUEGO: NUEVA PARTIDA ---
+# --- NUEVA PARTIDA ---
 func start_new_game():
 	points = 0
 	life_packs = 3
-	saved_hp = 5 # Empezamos frescos
-	current_hp = 5
 	game_time = 0.0
 	current_level = 1
 	
 	has_active_checkpoint = false
+	active_checkpoint_pos = Vector2.ZERO
+	
 	save_game_data()
 	ScenesTransitions.change_scene("res://Scenes/Level_1.tscn")
 
-# --- PERSISTENCIA (GUARDADO EN DISCO) ---
+# --- BOTÓN RESTART LEVEL (GAME OVER) ---
+func restart_gameplay() -> void:
+	get_tree().paused = false
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+
+	# REGLA: Resetear condiciones para reintento de nivel
+	life_packs = 3
+	points = 0
+	game_time = 0.0
+	
+	has_active_checkpoint = false
+	active_checkpoint_pos = Vector2.ZERO
+	
+	# Guardamos este estado de reinicio en el disco
+	save_game_data()
+	
+	ScenesTransitions.change_scene("res://Scenes/Level_" + str(current_level) + ".tscn")
+
+# --- IR AL MENÚ PRINCIPAL ---
+func go_to_mainmenu() -> void:
+	# REGLA: Salir al menú limpia el checkpoint de la sesión actual
+	has_active_checkpoint = false
+	active_checkpoint_pos = Vector2.ZERO
+	
+	if life_packs <= 0:
+		# CASO: GAME OVER -> MAIN MENU
+		# Guardamos estado de reinicio para que "Resume" funcione como Restart Level
+		life_packs = 3
+		points = 0
+		save_game_data()
+	else:
+		# CASO: PAUSA -> MAIN MENU
+		# No guardamos nada. Se mantiene el guardado del inicio del nivel.
+		pass
+
+	game_time = 0.0
+	get_tree().paused = false
+	ScenesTransitions.change_scene("res://Scenes/MainMenu.tscn")
+
+# --- SISTEMA DE GUARDADO/CARGA (DISCO) ---
 func save_game_data() -> void:
 	var data = {
 		"current_level": current_level,
 		"points": points,
-		"life_packs": life_packs, # Guarda las vidas actuales
-		"saved_hp": current_hp # GUARDAMOS EL HP ACTUAL (Sea 1, 2 o 5)
+		"life_packs": life_packs,
 	}
 	var file = FileAccess.open("user://save_data.json", FileAccess.WRITE)
 	if file:
 		file.store_string(JSON.stringify(data))
 		file.close()
 	has_saved_game = true
-	print("Partida guardada en disco. Nivel: ", current_level, " Vidas: ", life_packs)
+	print("Guardado en disco. Nivel:", current_level, " Packs:", life_packs)
 
 func load_game_data():
 	if FileAccess.file_exists("user://save_data.json"):
@@ -289,9 +275,6 @@ func load_game_data():
 		current_level = data.get("current_level", 1)
 		points = data.get("points", 0)
 		life_packs = data.get("life_packs", 3)
-		# CARGAMOS EL HP GUARDADO
-		# Si no existe (archivo viejo), por defecto es 5
-		saved_hp = data.get("saved_hp", 5) 
 		
 		has_saved_game = true
 	else:
@@ -302,34 +285,14 @@ func delete_saved_game() -> void:
 		DirAccess.remove_absolute("user://save_data.json")
 	has_saved_game = false
 
-# --- CHECKPOINTS (SOLO MEMORIA) ---
+# --- ACTIVAR CHECKPOINT (RAM) ---
 func activate_checkpoint(pos: Vector2, current_points: int) -> void:
 	active_checkpoint_pos = pos
 	checkpoint_points = current_points
-	checkpoint_life_packs = life_packs
-	
-	# GUARDAMOS EL HP ACTUAL EN LA MEMORIA DEL CHECKPOINT
-	if player:
-		checkpoint_hp = player.lives
-	else:
-		checkpoint_hp = 5 # Fallback por seguridad
-		
 	has_active_checkpoint = true
-	player_positioned = true
-	print("Checkpoint activado (RAM). HP: ", checkpoint_hp)
-	print("Checkpoint activado (RAM). Pos: ", pos)
+	print("Checkpoint RAM activado.")
 
-# --- SISTEMA DE MENÚS ---
-func go_to_mainmenu() -> void:
-	# Cargar datos aquí asegura que si el Menú Principal quisiera mostrar
-	# "Nivel Actual: 3" o "Puntaje: 500", mostraría los datos guardados y no los de la muerte.
-	load_game_data() 
-	
-	game_time = 0.0
-	get_tree().paused = false
-	ScenesTransitions.change_scene("res://Scenes/MainMenu.tscn")
-
-# ... (El resto de funciones auxiliares como add_new_points, update_ui, etc. siguen igual)
+# --- UI Y UTILIDADES ---
 func add_new_points(value: int):
 	points += value
 	update_ui()
@@ -361,6 +324,7 @@ func update_ui():
 func update_lives(lives):
 	for i in range(len(lives_sprites)):
 		lives_sprites[i].visible = i < lives
+	
 	for i in range(len(packs_sprites)):
 		packs_sprites[i].visible = i < life_packs
 
@@ -376,7 +340,6 @@ func show_pause_menu() -> void:
 func show_game_over_menu() -> void:
 	get_tree().paused = true
 	game_over_menu = preload("res://Scenes/GameOverMenu.tscn").instantiate()
-	# Asegúrate de que tu GameOverMenu emita la señal "press_restartlevel" (antes playagain)
 	if not game_over_menu.press_restartlevel.is_connected(restart_gameplay):
 		game_over_menu.press_restartlevel.connect(restart_gameplay)
 	if not game_over_menu.press_mainmenu.is_connected(go_to_mainmenu):
@@ -403,6 +366,16 @@ func hide_boss_bar() -> void:
 		boss_health_container.visible = false
 		boss_health_bar.visible = false
 		boss_health_bar.modulate.a = 1.0
+
+# Función auxiliar para leer SOLO los puntos del archivo de guardado
+func get_saved_points_from_disk() -> int:
+	if FileAccess.file_exists("user://save_data.json"):
+		var file = FileAccess.open("user://save_data.json", FileAccess.READ)
+		var text = file.get_as_text()
+		var data = JSON.parse_string(text)
+		file.close()
+		return data.get("points", 0)
+	return 0
 
 func show_boss_bar_animated() -> void:
 	if not boss_health_bar: return
