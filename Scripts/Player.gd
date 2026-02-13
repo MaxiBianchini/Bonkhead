@@ -407,6 +407,10 @@ func update_sprite_direction() -> void:
 	var offset := 10
 	var dir_mult := 1 if player_dir == "RIGHT" else -1
 	
+	# --- CORRECCIÓN: Definimos offsets para los raycasts de borde ---
+	# Ajusta este valor (10) según qué tan separados del centro deban estar
+	var edge_offset_x = 10
+	
 	if state == State.WALL_GRAB:
 		# Flip en pared
 		animated_sprite.flip_h = (player_dir == "RIGHT")
@@ -437,6 +441,18 @@ func update_sprite_direction() -> void:
 	raycast_floor.position.x = offset
 	collision_shape.position.x = offset
 	area2D.position.x = offset
+	
+	# --- AQUÍ ESTABA EL ERROR: FALTABA ACTUALIZAR LOS BORDES ---
+	# Mantenemos su posición Y relativa, pero invertimos o desplazamos la X
+	# Asumiendo que en el editor los pusiste en posiciones simétricas o necesitas moverlos con el 'offset'
+	
+	# Opción A: Si son hijos directos y quieres que se muevan con el offset del cuerpo:
+	raycast_edge_left.position.x = offset - edge_offset_x # Borde izquierdo relativo al centro desplazado
+	raycast_edge_right.position.x = offset + edge_offset_x # Borde derecho relativo al centro desplazado
+	
+	# Si tus raycasts en el editor ya están configurados en posiciones fijas (ej: -10 y 10),
+	# entonces al mover todo el "cuerpo" visual con 'offset', estos deberían moverse también.
+	# Pero como estamos moviendo nodos individuales manualmente, debemos mover estos también.
 	
 func update_animation() -> void:
 	match state:
@@ -646,6 +662,7 @@ func change_weapon() -> void:
 		set_ammo_type(AmmoType.NORMAL)
 
 func take_damage(force_death: bool = false, damage: int = 1) -> void:
+	return
 	if (is_invincible and not force_death) or not is_alive:
 		return
 
@@ -653,7 +670,6 @@ func take_damage(force_death: bool = false, damage: int = 1) -> void:
 		lives = 0
 	else:
 		lives -= damage
-		#SceneManager.current_hp = lives # AGREGAR ESTO
 		audio_hurts.play()
 	
 	emit_signal("change_UI_lives", lives)

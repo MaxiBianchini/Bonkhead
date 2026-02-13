@@ -645,12 +645,12 @@ texture = ExtResource("25_kx8cd")
 unique_name_in_owner = true
 process_mode = 1
 z_index = 1
-position = Vector2(14388, 880)
+position = Vector2(14, 1520)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 physics_interpolation_mode = 1
 top_level = true
-position = Vector2(14286.667, 880)
+position = Vector2(198.33333, 1520)
 zoom = Vector2(4.5, 4.5)
 limit_left = -15
 limit_top = 450
@@ -667,7 +667,7 @@ metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(14286.667, 880)
+position = Vector2(198.33333, 1520)
 script = ExtResource("10_6dp3p")
 priority = 1
 follow_mode = 2
@@ -787,7 +787,7 @@ shape = SubResource("RectangleShape2D_dt5mq")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(14388, 880)
+position = Vector2(305, 1520)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
@@ -814,7 +814,7 @@ shape = SubResource("RectangleShape2D_0vjb6")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area3" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(14388, 880)
+position = Vector2(14, 1520)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 limit_right = 35000
@@ -835,7 +835,7 @@ shape = SubResource("RectangleShape2D_vannl")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area5" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(14388, 880)
+position = Vector2(14, 1520)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 
@@ -848,7 +848,7 @@ shape = SubResource("RectangleShape2D_cerdw")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area6" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(14388, 880)
+position = Vector2(14, 1520)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 
@@ -861,7 +861,7 @@ shape = SubResource("RectangleShape2D_1d2jw")
 
 [node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area7" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(14388, 1470)
+position = Vector2(14, 1520)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 limit_top = 1200

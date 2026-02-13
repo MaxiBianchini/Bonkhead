@@ -160,6 +160,7 @@ func take_damage() -> void:
 	tween.tween_property(animated_sprite, "modulate", Color(1, 1, 1, 1), 0.2).set_trans(Tween.TRANS_SINE)
 	
 	if lives <= 0:
+		set_collision_layer_value(3,false)
 		is_alive = false
 		animated_sprite.play("Death")
 		collision_shape.position.y = 9

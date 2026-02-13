@@ -13,6 +13,7 @@ var player: Node = null
 var gui: Node = null
 var boss_health_bar: TextureProgressBar = null
 var boss_health_container: Sprite2D = null
+var dash_bar_caontainer: Sprite2D = null
 var dash_bar: TextureProgressBar = null
 var pause_menu: Node = null
 var game_over_menu: Node = null
@@ -58,6 +59,13 @@ func initialize_scene() -> void:
 			points_counter = gui.get_node("HBoxContainer/PointsLabel/PointersCounter")
 		if gui.has_node("HBoxContainer/DashBar/TextureProgressBar"):
 			dash_bar = gui.get_node("HBoxContainer/DashBar/TextureProgressBar")
+			if gui.has_node("HBoxContainer/DashBar"):
+				dash_bar_caontainer = gui.get_node("HBoxContainer/DashBar")
+				
+			if current_level < 3: 
+				dash_bar_caontainer.visible = false
+			else: 
+				dash_bar_caontainer.visible = true
 			dash_bar.value = dash_bar.max_value
 		
 		var bullet_type_container = gui.get_node("HBoxContainer/BulletIcon")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://d4iwr8icvtwr6"]
+[gd_scene load_steps=15 format=3 uid="uid://d4iwr8icvtwr6"]
 
 [ext_resource type="Script" uid="uid://dqbyb0sth55en" path="res://Scripts/PauseMenu.gd" id="1_425uk"]
 [ext_resource type="Texture2D" uid="uid://df3eaw8ttv2l6" path="res://Graphics/GUI/Windows/1-4.png" id="1_siy43"]
@@ -15,6 +15,10 @@
 [sub_resource type="LabelSettings" id="LabelSettings_m8v84"]
 font = ExtResource("5_425uk")
 font_size = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_c7c70"]
+font = ExtResource("5_425uk")
+font_size = 10
 
 [sub_resource type="LabelSettings" id="LabelSettings_1363l"]
 font = ExtResource("5_425uk")
@@ -143,6 +147,18 @@ grow_vertical = 2
 text = "MAIN
 MENU"
 label_settings = SubResource("LabelSettings_m8v84")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="VBoxContainer/MainMenuButton"]
+layout_mode = 0
+offset_left = -7.0
+offset_top = 103.0
+offset_right = 253.0
+offset_bottom = 126.0
+text = "Press to reset checkpoint 
+Level progress stays saved"
+label_settings = SubResource("LabelSettings_c7c70")
 horizontal_alignment = 1
 vertical_alignment = 1
 
