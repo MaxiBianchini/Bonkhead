@@ -156,7 +156,7 @@ offset_left = -7.0
 offset_top = 103.0
 offset_right = 253.0
 offset_bottom = 126.0
-text = "Press to reset checkpoint 
+text = "Press to reset checkpoint
 Level progress stays saved"
 label_settings = SubResource("LabelSettings_c7c70")
 horizontal_alignment = 1
