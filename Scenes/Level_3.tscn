@@ -1247,6 +1247,21 @@ offset_right = 105.0
 offset_bottom = -48.0
 text = "This red bar represents your Dash energy and  refills after each use"
 
+[node name="Chekpoint" type="Node2D" parent="."]
+
+[node name="CheckPoint" parent="Chekpoint" instance=ExtResource("57_m3o7n")]
+position = Vector2(3191, 524)
+flip = true
+
+[node name="Sprite2D" parent="Chekpoint/CheckPoint" index="2"]
+position = Vector2(19, 50)
+
+[node name="CheckPoint2" parent="Chekpoint" instance=ExtResource("57_m3o7n")]
+position = Vector2(4977, 2124)
+
+[node name="CheckPoint3" parent="Chekpoint" instance=ExtResource("57_m3o7n")]
+position = Vector2(7852, 1356)
+
 [node name="Live_Ups" type="Node2D" parent="."]
 
 [node name="Live_Up" parent="Live_Ups" instance=ExtResource("25_dimxf")]
@@ -1288,19 +1303,6 @@ metadata/_edit_lock_ = true
 [node name="AudioStreamPlayer2D" parent="Page_Comic" index="2"]
 metadata/_edit_lock_ = true
 
-[node name="CheckPoint" parent="." instance=ExtResource("57_m3o7n")]
-position = Vector2(3191, 524)
-flip = true
-
-[node name="Sprite2D" parent="CheckPoint" index="2"]
-position = Vector2(19, 50)
-
-[node name="CheckPoint2" parent="." instance=ExtResource("57_m3o7n")]
-position = Vector2(4977, 2124)
-
-[node name="CheckPoint3" parent="." instance=ExtResource("57_m3o7n")]
-position = Vector2(7852, 1356)
-
 [editable path="Dead_Areas/Dead_Area"]
 [editable path="Dead_Areas/Dead_Area2"]
 [editable path="Dead_Areas/Dead_Area3"]
@@ -1326,5 +1328,5 @@ position = Vector2(7852, 1356)
 [editable path="Signpost/Signpost"]
 [editable path="Signpost/Signpost3"]
 [editable path="Signpost/Signpost4"]
+[editable path="Chekpoint/CheckPoint"]
 [editable path="Page_Comic"]
-[editable path="CheckPoint"]

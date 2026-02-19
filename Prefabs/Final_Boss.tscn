@@ -1,10 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://rrb4ynsksejq"]
+[gd_scene load_steps=11 format=3 uid="uid://rrb4ynsksejq"]
 
 [ext_resource type="Script" uid="uid://cmgamix85msi1" path="res://Scripts/Boss.gd" id="1_ka5p3"]
 [ext_resource type="SpriteFrames" uid="uid://d1xnibx0sfcdh" path="res://Prefabs/Final_Boss_AS.tres" id="1_o1ywp"]
 [ext_resource type="PackedScene" uid="uid://dvk8m7c1o0gaw" path="res://Prefabs/Bomb.tscn" id="2_j21dr"]
 [ext_resource type="PackedScene" uid="uid://dyxdcycua33ik" path="res://Prefabs/Bullet.tscn" id="2_yr172"]
 [ext_resource type="Texture2D" uid="uid://dcep2ihtx6tvh" path="res://Graphics/Guns & Bullets/Big Guns/Bullets/9.png" id="4_opa5v"]
+[ext_resource type="AudioStream" uid="uid://cnfg71l80m838" path="res://SFX/FinalBoss/Shoot.mp3" id="6_5mb26"]
+[ext_resource type="AudioStream" uid="uid://c7ujx0ntgkdes" path="res://SFX/FinalBoss/DashFBOSS.wav" id="6_7nfn4"]
+[ext_resource type="AudioStream" uid="uid://v5k2wr0gji5j" path="res://SFX/FinalBoss/Epic_Death.mp3" id="8_2y3gl"]
+[ext_resource type="AudioStream" uid="uid://075poru2e6dr" path="res://SFX/FinalBoss/Heavy_Slam.mp3" id="9_jsofe"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7qo4r"]
 radius = 45.0
@@ -20,10 +24,28 @@ min_mode_duration = 10.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_o1ywp")
-animation = &"Still"
+animation = &"Attack"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_7qo4r")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
+
+[node name="AudioStream_Shoot" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_5mb26")
+bus = &"SFX"
+
+[node name="AudioStream_Dash" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_7nfn4")
+bus = &"SFX"
+
+[node name="AudioStream_Death" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_2y3gl")
+volume_db = -10.0
+max_distance = 300.0
+bus = &"SFX"
+
+[node name="AudioStream_Slam" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_jsofe")
+bus = &"SFX"

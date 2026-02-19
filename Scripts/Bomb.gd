@@ -5,6 +5,7 @@ extends CharacterBody2D
 
 @onready var explosion_area: Area2D = $ExplosionArea
 @onready var sprite = $AnimatedSprite2D # O AnimatedSprite2D
+@onready var sound = $AudioStream_Exploit
 
 # Gravedad estándar
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
@@ -33,6 +34,7 @@ func explode() -> void:
 	
 	# 1. Congelar movimiento
 	set_physics_process(false)
+	sound.play()
 	sprite.play("Explotion")
 	
 	# 2. Activar Área de Daño (Explosión)

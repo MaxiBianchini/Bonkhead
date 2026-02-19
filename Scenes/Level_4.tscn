@@ -68,10 +68,6 @@
 [sub_resource type="Resource" id="Resource_a534q"]
 script = ExtResource("11_nm3nn")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_h56nn"]
-resource_local_to_scene = true
-size = Vector2(36.000977, 40.00006)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jlilh"]
 resource_local_to_scene = true
 size = Vector2(346.5, 298)
@@ -131,6 +127,10 @@ size = Vector2(909, 823)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1d2jw"]
 resource_local_to_scene = true
 size = Vector2(1148, 555)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4wlwo"]
+resource_local_to_scene = true
+size = Vector2(622, 435)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_nm3nn"]
 resource_local_to_scene = true
@@ -200,9 +200,9 @@ size = Vector2(367.203, 46)
 resource_local_to_scene = true
 size = Vector2(189, 76)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4wlwo"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h56nn"]
 resource_local_to_scene = true
-size = Vector2(622, 435)
+size = Vector2(36.000977, 40.00006)
 
 [node name="Level_4" type="Node2D"]
 
@@ -688,29 +688,6 @@ limit_bottom = 3260
 metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
 metadata/_edit_lock_ = true
 
-[node name="Page_Comic" parent="." instance=ExtResource("12_asykx")]
-position = Vector2(14448.001, 889.00006)
-scale = Vector2(0.5, 0.5)
-
-[node name="Sprite2D" parent="Page_Comic" index="0"]
-scale = Vector2(0.033, 0.037)
-texture = ExtResource("49_h56nn")
-metadata/_edit_lock_ = true
-
-[node name="CollisionShape2D" parent="Page_Comic" index="1"]
-shape = SubResource("RectangleShape2D_h56nn")
-metadata/_edit_lock_ = true
-
-[node name="AudioStreamPlayer2D" parent="Page_Comic" index="2"]
-metadata/_edit_lock_ = true
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("49_ykt34")
-volume_db = -5.0
-autoplay = true
-mix_target = 2
-bus = &"Music"
-
 [node name="DeadAreas" type="Node2D" parent="."]
 position = Vector2(248, 1691)
 metadata/_edit_lock_ = true
@@ -857,6 +834,15 @@ follow_target = NodePath("../../../Player")
 limit_top = 1200
 limit_right = 7000
 limit_bottom = 1850
+
+[node name="Phantom_Area" parent="PhantomAreas" instance=ExtResource("14_i3wgq")]
+position = Vector2(-5850, 12)
+
+[node name="CollisionShape2D" parent="PhantomAreas/Phantom_Area" index="0"]
+shape = SubResource("RectangleShape2D_4wlwo")
+
+[node name="PhantomCamera2D" parent="PhantomAreas/Phantom_Area" index="1"]
+zoom = Vector2(2.5, 2.5)
 
 [node name="Enemies" type="Node2D" parent="."]
 process_mode = 3
@@ -1409,6 +1395,12 @@ position = Vector2(14451, 1225)
 [node name="Marker2D" type="Marker2D" parent="MovingPlatform/MovingPlatform38"]
 position = Vector2(0, 215)
 
+[node name="MovingPlatform39" parent="MovingPlatform" instance=ExtResource("15_dt5mq")]
+position = Vector2(13085, 676)
+
+[node name="Marker2D" type="Marker2D" parent="MovingPlatform/MovingPlatform39"]
+position = Vector2(123, 0)
+
 [node name="FallingPlatform" type="Node2D" parent="."]
 process_mode = 3
 metadata/_edit_lock_ = true
@@ -1532,6 +1524,12 @@ position = Vector2(6412, 1572)
 
 [node name="FallingPlatform39" parent="FallingPlatform" instance=ExtResource("7_jloha")]
 position = Vector2(14237, 1357)
+
+[node name="FallingPlatform37" parent="FallingPlatform" instance=ExtResource("7_jloha")]
+position = Vector2(11962, 2121)
+
+[node name="FallingPlatform42" parent="FallingPlatform" instance=ExtResource("7_jloha")]
+position = Vector2(5162, 1326)
 
 [node name="Spikes" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
@@ -1678,6 +1676,21 @@ position = Vector2(11089, 2861)
 [node name="Live_Up10" parent="LivesUp" instance=ExtResource("19_k40la")]
 position = Vector2(3648, 2350)
 
+[node name="CheckPoint" type="Node2D" parent="."]
+
+[node name="CheckPoint" parent="CheckPoint" instance=ExtResource("65_2o2n3")]
+position = Vector2(5117, 1996)
+
+[node name="CheckPoint2" parent="CheckPoint" instance=ExtResource("65_2o2n3")]
+position = Vector2(5693, 1324)
+
+[node name="CheckPoint3" parent="CheckPoint" instance=ExtResource("65_2o2n3")]
+position = Vector2(11914, 1812)
+flip = true
+
+[node name="CheckPoint4" parent="CheckPoint" instance=ExtResource("65_2o2n3")]
+position = Vector2(5824, 3148)
+
 [node name="Signpost" parent="." instance=ExtResource("26_a534q")]
 position = Vector2(115, 1513)
 metadata/_edit_lock_ = true
@@ -1700,41 +1713,29 @@ Unlocked: Wall Slide
 (Keep moving against 
 the wall)"
 
-[node name="CheckPoint" parent="." instance=ExtResource("65_2o2n3")]
-position = Vector2(5117, 1996)
+[node name="Page_Comic" parent="." instance=ExtResource("12_asykx")]
+position = Vector2(14448.001, 889.00006)
+scale = Vector2(0.5, 0.5)
 
-[node name="CheckPoint2" parent="." instance=ExtResource("65_2o2n3")]
-position = Vector2(5693, 1324)
+[node name="Sprite2D" parent="Page_Comic" index="0"]
+scale = Vector2(0.033, 0.037)
+texture = ExtResource("49_h56nn")
+metadata/_edit_lock_ = true
 
-[node name="CheckPoint3" parent="." instance=ExtResource("65_2o2n3")]
-position = Vector2(11914, 1812)
-flip = true
+[node name="CollisionShape2D" parent="Page_Comic" index="1"]
+shape = SubResource("RectangleShape2D_h56nn")
+metadata/_edit_lock_ = true
 
-[node name="FallingPlatform2" parent="." instance=ExtResource("7_jloha")]
-position = Vector2(11962, 2121)
+[node name="AudioStreamPlayer2D" parent="Page_Comic" index="2"]
+metadata/_edit_lock_ = true
 
-[node name="Phantom_Area" parent="." instance=ExtResource("14_i3wgq")]
-position = Vector2(4807, 1109)
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("49_ykt34")
+volume_db = -5.0
+autoplay = true
+mix_target = 2
+bus = &"Music"
 
-[node name="CollisionShape2D" parent="Phantom_Area" index="0"]
-shape = SubResource("RectangleShape2D_4wlwo")
-
-[node name="PhantomCamera2D" parent="Phantom_Area" index="1"]
-zoom = Vector2(2.5, 2.5)
-
-[node name="FallingPlatform3" parent="." instance=ExtResource("7_jloha")]
-position = Vector2(5162, 1326)
-
-[node name="MovingPlatform2" parent="." instance=ExtResource("15_dt5mq")]
-position = Vector2(13085, 676)
-
-[node name="Marker2D" type="Marker2D" parent="MovingPlatform2"]
-position = Vector2(123, 0)
-
-[node name="CheckPoint4" parent="." instance=ExtResource("65_2o2n3")]
-position = Vector2(5824, 3148)
-
-[editable path="Page_Comic"]
 [editable path="DeadAreas/Dead_Area2"]
 [editable path="DeadAreas/Dead_Area"]
 [editable path="DeadAreas/Dead_Area3"]
@@ -1750,6 +1751,7 @@ position = Vector2(5824, 3148)
 [editable path="PhantomAreas/Phantom_Area5"]
 [editable path="PhantomAreas/Phantom_Area6"]
 [editable path="PhantomAreas/Phantom_Area7"]
+[editable path="PhantomAreas/Phantom_Area"]
 [editable path="Enemies/Enemy_5"]
 [editable path="Enemies/Enemy_2"]
 [editable path="Enemies/Enemy_19"]
@@ -1767,4 +1769,4 @@ position = Vector2(5824, 3148)
 [editable path="Enemies/Enemy_60"]
 [editable path="Enemies/Enemy_62"]
 [editable path="Signpost"]
-[editable path="Phantom_Area"]
+[editable path="Page_Comic"]

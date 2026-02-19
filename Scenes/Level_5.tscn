@@ -15,22 +15,12 @@
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="10_h33cd"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="11_tfk8e"]
 [ext_resource type="PackedScene" uid="uid://d1i3yjdbq4dmk" path="res://Prefabs/Page_Comic.tscn" id="12_p23to"]
-[ext_resource type="AudioStream" uid="uid://bqm3nmsvgpjyg" path="res://Music/Level_4.mp3" id="13_ie7ld"]
 [ext_resource type="PackedScene" uid="uid://d2fpq7nxaiblh" path="res://Prefabs/Dead_Area.tscn" id="16_lpe2j"]
 [ext_resource type="PackedScene" uid="uid://cuuql85rnkjo6" path="res://Prefabs/Falling_Platform_4.tscn" id="17_43geq"]
+[ext_resource type="AudioStream" uid="uid://c2odln2x3qrac" path="res://Music/Final Stage_ Byte Reckoning.mp3" id="20_h33cd"]
 [ext_resource type="Texture2D" uid="uid://ony40jv6npo1" path="res://Graphics/Comic Pages/PortadaComic2.png" id="20_q2y8u"]
 [ext_resource type="PackedScene" uid="uid://rrb4ynsksejq" path="res://Prefabs/Final_Boss.tscn" id="20_vw5ax"]
 [ext_resource type="PackedScene" uid="uid://bh3h363wnt1mt" path="res://Prefabs/Signpost.tscn" id="21_q2y8u"]
-
-[sub_resource type="Resource" id="Resource_n4me6"]
-script = ExtResource("11_tfk8e")
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lpe2j"]
-size = Vector2(34, 207)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8rwkh"]
-resource_local_to_scene = true
-size = Vector2(775.5, 231)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7itn1"]
 resource_local_to_scene = true
@@ -39,6 +29,13 @@ size = Vector2(731, 1575)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kp6x5"]
 resource_local_to_scene = true
 size = Vector2(686, 196)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lpe2j"]
+size = Vector2(34, 207)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8rwkh"]
+resource_local_to_scene = true
+size = Vector2(775.5, 231)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kon3q"]
 resource_local_to_scene = true
@@ -51,6 +48,9 @@ size = Vector2(22, 34.5)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h33cd"]
 resource_local_to_scene = true
 size = Vector2(588, 43.5)
+
+[sub_resource type="Resource" id="Resource_n4me6"]
+script = ExtResource("11_tfk8e")
 
 [node name="Level_5" type="Node2D" node_paths=PackedStringArray("final_boss")]
 script = ExtResource("1_7gvow")
@@ -161,78 +161,6 @@ tile_set = ExtResource("6_43geq")
 [node name="Bidirectional Platforms" type="TileMapLayer" parent="TileMaps" groups=["Platform"]]
 tile_set = ExtResource("6_43geq")
 
-[node name="GUI" parent="." instance=ExtResource("7_kon3q")]
-
-[node name="Player" parent="." instance=ExtResource("8_vw5ax")]
-unique_name_in_owner = true
-process_mode = 1
-z_index = 1
-position = Vector2(28, 751)
-
-[node name="Camera2D" type="Camera2D" parent="."]
-physics_interpolation_mode = 1
-top_level = true
-position = Vector2(198.33333, 751)
-zoom = Vector2(4.5, 4.5)
-limit_left = -15
-limit_top = 420
-limit_right = 3000
-limit_bottom = 2000
-editor_draw_limits = true
-metadata/_edit_lock_ = true
-
-[node name="PhantomCameraHost" type="Node" parent="Camera2D"]
-process_priority = 300
-process_physics_priority = 300
-script = ExtResource("9_q2y8u")
-metadata/_custom_type_script = "uid://bd046eokvcnu2"
-
-[node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
-top_level = true
-position = Vector2(198.33333, 751)
-script = ExtResource("10_h33cd")
-priority = 1
-follow_mode = 2
-follow_target = NodePath("../Player")
-zoom = Vector2(4.5, 4.5)
-tween_resource = SubResource("Resource_n4me6")
-tween_on_load = false
-draw_limits = true
-limit_left = -15
-limit_top = 420
-limit_right = 3000
-limit_bottom = 2000
-metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
-metadata/_edit_lock_ = true
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("13_ie7ld")
-volume_db = -5.0
-autoplay = true
-mix_target = 2
-bus = &"Music"
-
-[node name="GatesArea" type="Area2D" parent="." groups=["Gates"]]
-position = Vector2(144, 1176)
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GatesArea" groups=["Gates"]]
-position = Vector2(1548, 477)
-shape = SubResource("RectangleShape2D_lpe2j")
-
-[node name="MovingPlatform" parent="." instance=ExtResource("8_8rwkh")]
-position = Vector2(1135, 776)
-
-[node name="Marker2D" type="Marker2D" parent="MovingPlatform"]
-position = Vector2(0, 896)
-
-[node name="Dead_Area" parent="." instance=ExtResource("16_lpe2j")]
-position = Vector2(1608, 1796)
-
-[node name="CollisionShape2D" parent="Dead_Area" index="0"]
-position = Vector2(258.25, 105.5)
-shape = SubResource("RectangleShape2D_8rwkh")
-
 [node name="Platform_Fase1" type="Node2D" parent="."]
 
 [node name="FallingPlatform12" parent="Platform_Fase1" instance=ExtResource("17_43geq")]
@@ -290,7 +218,7 @@ shape = SubResource("RectangleShape2D_7itn1")
 
 [node name="PhantomCamera2D" parent="Phantom_Area/Phantom_Area" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(1875, 751)
+position = Vector2(1875, 752)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(2.4, 2.4)
@@ -309,12 +237,27 @@ shape = SubResource("RectangleShape2D_kp6x5")
 
 [node name="PhantomCamera2D" parent="Phantom_Area/Phantom_Area2" index="1" node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(28, 671)
+position = Vector2(28, 672)
 follow_mode = 2
 follow_target = NodePath("../../../Player")
 zoom = Vector2(3.5, 3.5)
 follow_offset = Vector2(0, -80)
 limit_right = 3000
+
+[node name="GatesArea" type="Area2D" parent="." groups=["Gates"]]
+position = Vector2(1672, 1645)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GatesArea" groups=["Gates"]]
+shape = SubResource("RectangleShape2D_lpe2j")
+metadata/_edit_lock_ = true
+
+[node name="Dead_Area" parent="." instance=ExtResource("16_lpe2j")]
+position = Vector2(1608, 1796)
+
+[node name="CollisionShape2D" parent="Dead_Area" index="0"]
+position = Vector2(258.25, 105.5)
+shape = SubResource("RectangleShape2D_8rwkh")
 
 [node name="Dead_Area2" parent="." instance=ExtResource("16_lpe2j")]
 position = Vector2(1860, 1732)
@@ -324,9 +267,6 @@ monitorable = false
 [node name="CollisionShape2D" parent="Dead_Area2" index="0"]
 position = Vector2(21.5, 11)
 shape = SubResource("RectangleShape2D_kon3q")
-
-[node name="Final_Boss" parent="." instance=ExtResource("20_vw5ax")]
-position = Vector2(2130, 1714)
 
 [node name="Page_Comic" parent="." instance=ExtResource("12_p23to")]
 position = Vector2(2900, 1742)
@@ -351,11 +291,71 @@ shape = SubResource("RectangleShape2D_h33cd")
 text = "¡DANGER!
 UP! UP!"
 
+[node name="MovingPlatform" parent="." instance=ExtResource("8_8rwkh")]
+position = Vector2(1135, 1680)
+speed = 150.0
+
+[node name="Marker2D" type="Marker2D" parent="MovingPlatform"]
+position = Vector2(0, -896)
+
+[node name="GUI" parent="." instance=ExtResource("7_kon3q")]
+
+[node name="Player" parent="." instance=ExtResource("8_vw5ax")]
+unique_name_in_owner = true
+process_mode = 1
+z_index = 1
+position = Vector2(28, 752)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+physics_interpolation_mode = 1
+top_level = true
+position = Vector2(198.33333, 752)
+zoom = Vector2(4.5, 4.5)
+limit_left = -15
+limit_top = 420
+limit_right = 3000
+limit_bottom = 2000
+editor_draw_limits = true
+metadata/_edit_lock_ = true
+
+[node name="PhantomCameraHost" type="Node" parent="Camera2D"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("9_q2y8u")
+metadata/_custom_type_script = "uid://bd046eokvcnu2"
+
+[node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
+top_level = true
+position = Vector2(198.33333, 752)
+script = ExtResource("10_h33cd")
+priority = 1
+follow_mode = 2
+follow_target = NodePath("../Player")
+zoom = Vector2(4.5, 4.5)
+tween_resource = SubResource("Resource_n4me6")
+tween_on_load = false
+draw_limits = true
+limit_left = -15
+limit_top = 420
+limit_right = 3000
+limit_bottom = 2000
+metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
+metadata/_edit_lock_ = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("20_h33cd")
+volume_db = -5.0
+mix_target = 2
+bus = &"Music"
+
+[node name="Final_Boss" parent="." instance=ExtResource("20_vw5ax")]
+position = Vector2(2130, 1714)
+
 [connection signal="body_entered" from="GatesArea" to="." method="_on_gates_area_body_entered"]
 
-[editable path="Dead_Area"]
 [editable path="Phantom_Area/Phantom_Area"]
 [editable path="Phantom_Area/Phantom_Area2"]
+[editable path="Dead_Area"]
 [editable path="Dead_Area2"]
 [editable path="Page_Comic"]
 [editable path="Signpost"]

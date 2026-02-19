@@ -1,8 +1,9 @@
-[gd_scene load_steps=21 format=3 uid="uid://dvk8m7c1o0gaw"]
+[gd_scene load_steps=22 format=3 uid="uid://dvk8m7c1o0gaw"]
 
 [ext_resource type="Texture2D" uid="uid://d0p7snhvb4ehb" path="res://Graphics/Bosses/3 Machine operator/BOOM.png" id="1_66hey"]
 [ext_resource type="Script" uid="uid://2ukys8x3k2ly" path="res://Scripts/Bomb.gd" id="1_yihlx"]
 [ext_resource type="Texture2D" uid="uid://bxe80efd13873" path="res://Graphics/Bosses/3 Machine operator/Bomb.png" id="2_yihlx"]
+[ext_resource type="AudioStream" uid="uid://xf1waita3me4" path="res://SFX/FinalBoss/bomb.mp3" id="4_rery2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rery2"]
 atlas = ExtResource("1_66hey")
@@ -140,3 +141,9 @@ collision_mask = 3
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea"]
 light_mask = 2
 shape = SubResource("CircleShape2D_yihlx")
+
+[node name="AudioStream_Exploit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_rery2")
+volume_db = 6.5
+autoplay = true
+bus = &"SFX"

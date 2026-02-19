@@ -57,6 +57,11 @@ var next_low_attack_mode: AttackModes = AttackModes.STOMP_MODE
 @export var p3_area_min: Vector2 = Vector2(1600, 1150) 
 @export var p3_area_max: Vector2 = Vector2(2145, 1600) 
 
+@onready var audio_shoot = $AudioStream_Shoot
+@onready var audio_dash = $AudioStream_Dash
+@onready var audio_death = $AudioStream_Death
+@onready var audio_slam = $AudioStream_Slam
+
 
 enum Phase3SubState { BULLET_HELL, ERRATIC_CHASE }
 var p3_sub_state: Phase3SubState = Phase3SubState.BULLET_HELL
@@ -181,6 +186,7 @@ func _process_phase_1(_delta):
 		move_and_slide()
 
 func start_dash_attack():
+	audio_dash.play()
 	can_attack = false
 	velocity = Vector2.ZERO
 	
@@ -285,7 +291,7 @@ func start_shooting_loop():
 
 func shoot_bullet_at_player():
 	if not bullet_scene or not is_instance_valid(player): return
-	
+	audio_shoot.play()
 	var bullet = bullet_scene.instantiate() as Area2D
 	bullet.global_position = global_position
 	if bullet.has_method("set_sprite"): bullet.set_sprite(bullet_sprite)
@@ -343,6 +349,7 @@ func perform_stomp_attack():
 	is_attacking = true
 	velocity = Vector2.ZERO
 	
+	audio_slam.play()
 	animated_sprite.play("Attack")
 	await get_tree().create_timer(0.5).timeout
 	
@@ -500,7 +507,7 @@ func perform_aimed_pattern():
 
 func shoot_bullet_angle(angle_rad: float):
 	if not bullet_scene: return
-	
+	audio_shoot.play()
 	var bullet = bullet_scene.instantiate()
 	if bullet.has_method("set_sprite"): bullet.set_sprite(bullet_sprite)
 	bullet.global_position = global_position
@@ -591,7 +598,7 @@ func pick_random_erratic_point():
 
 func shoot_spiral_bullet(angle_rad: float):
 	if not bullet_scene: return
-	
+	audio_shoot.play()
 	var bullet = bullet_scene.instantiate()
 	bullet.global_position = global_position
 	if bullet.has_method("set_sprite"): bullet.set_sprite(bullet_sprite)
@@ -645,6 +652,7 @@ func check_for_phase_change():
 
 func die():
 	is_alive = false
+	audio_death.play()
 	set_collision_mask_value(1, true)
 	animated_sprite.play("Death")
 	emit_signal("boss_die")

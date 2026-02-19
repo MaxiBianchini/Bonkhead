@@ -125,6 +125,7 @@ func start_boss_cinematic(player_node):
 	
 	if final_boss:
 		final_boss.start_battle()
+		$AudioStreamPlayer.play()
 
 func _on_boss_toggle_hazards(is_active: bool) -> void:
 	if is_active:

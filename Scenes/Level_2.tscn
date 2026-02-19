@@ -917,50 +917,6 @@ follow_target = NodePath("../../../Player")
 zoom = Vector2(3, 3)
 tween_resource = SubResource("Resource_n4ncl")
 
-[node name="Signpost2" parent="." instance=ExtResource("59_u5cqn")]
-z_index = 2
-position = Vector2(188, 711)
-metadata/_edit_lock_ = true
-
-[node name="CollisionShape2D" parent="Signpost2" index="0"]
-position = Vector2(-44, 1)
-shape = SubResource("RectangleShape2D_asqm0")
-
-[node name="Sprite2D" parent="Signpost2" index="1"]
-position = Vector2(-23.499998, -46)
-scale = Vector2(1.1419353, 1.26829)
-
-[node name="Label" parent="Signpost2" index="2"]
-offset_left = -104.0
-offset_top = -63.0
-offset_right = 86.76315
-offset_bottom = -27.0
-scale = Vector2(0.870189, 0.972294)
-text = "You collected a lost page!
-New ability unlocked: Endless Wall Jump"
-
-[node name="Signpost" parent="." instance=ExtResource("59_u5cqn")]
-z_index = 2
-position = Vector2(1226, 677)
-metadata/_edit_lock_ = true
-
-[node name="CollisionShape2D" parent="Signpost" index="0"]
-position = Vector2(-52, 3)
-shape = SubResource("RectangleShape2D_asqm0")
-
-[node name="Sprite2D" parent="Signpost" index="1"]
-position = Vector2(-91.5, -45)
-scale = Vector2(1.11613, 1)
-
-[node name="Label" parent="Signpost" index="2"]
-offset_left = -175.0
-offset_top = -63.0
-offset_right = -5.0
-offset_bottom = -27.0
-text = "Jump against walls
-like these to
-climb higher!"
-
 [node name="Live_Ups" type="Node2D" parent="."]
 metadata/_edit_lock_ = true
 
@@ -980,6 +936,52 @@ position = Vector2(6644, 1553)
 [node name="Live_Up" parent="Live_Ups" instance=ExtResource("28_go0cy")]
 position = Vector2(8038, 1742)
 
+[node name="Signpost" type="Node2D" parent="."]
+
+[node name="Signpost2" parent="Signpost" instance=ExtResource("59_u5cqn")]
+z_index = 2
+position = Vector2(188, 711)
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" parent="Signpost/Signpost2" index="0"]
+position = Vector2(-44, 1)
+shape = SubResource("RectangleShape2D_asqm0")
+
+[node name="Sprite2D" parent="Signpost/Signpost2" index="1"]
+position = Vector2(-23.499998, -46)
+scale = Vector2(1.1419353, 1.26829)
+
+[node name="Label" parent="Signpost/Signpost2" index="2"]
+offset_left = -104.0
+offset_top = -63.0
+offset_right = 86.76315
+offset_bottom = -27.0
+scale = Vector2(0.870189, 0.972294)
+text = "You collected a lost page!
+New ability unlocked: Endless Wall Jump"
+
+[node name="Signpost" parent="Signpost" instance=ExtResource("59_u5cqn")]
+z_index = 2
+position = Vector2(1226, 677)
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" parent="Signpost/Signpost" index="0"]
+position = Vector2(-52, 3)
+shape = SubResource("RectangleShape2D_asqm0")
+
+[node name="Sprite2D" parent="Signpost/Signpost" index="1"]
+position = Vector2(-91.5, -45)
+scale = Vector2(1.11613, 1)
+
+[node name="Label" parent="Signpost/Signpost" index="2"]
+offset_left = -175.0
+offset_top = -63.0
+offset_right = -5.0
+offset_bottom = -27.0
+text = "Jump against walls
+like these to
+climb higher!"
+
 [node name="Page_Comic" parent="." instance=ExtResource("54_v40af")]
 position = Vector2(8389, 1261)
 scale = Vector2(0.5, 0.5)
@@ -995,15 +997,15 @@ metadata/_edit_lock_ = true
 [node name="AudioStreamPlayer2D" parent="Page_Comic" index="2"]
 metadata/_edit_lock_ = true
 
+[node name="CheckPoint" parent="." instance=ExtResource("57_5toea")]
+position = Vector2(4870, 2476)
+
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("56_m2s7e")
 volume_db = -5.0
 autoplay = true
 mix_target = 2
 bus = &"Music"
-
-[node name="CheckPoint" parent="." instance=ExtResource("57_5toea")]
-position = Vector2(4870, 2476)
 
 [editable path="Dead_Areas/Dead_Area"]
 [editable path="Dead_Areas/Dead_Area2"]
@@ -1014,6 +1016,6 @@ position = Vector2(4870, 2476)
 [editable path="PhantomAreas/Phantom_Area"]
 [editable path="PhantomAreas/Phantom_Area2"]
 [editable path="PhantomAreas/Phantom_Area3"]
-[editable path="Signpost2"]
-[editable path="Signpost"]
+[editable path="Signpost/Signpost2"]
+[editable path="Signpost/Signpost"]
 [editable path="Page_Comic"]
