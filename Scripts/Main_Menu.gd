@@ -5,33 +5,27 @@ extends CanvasLayer
 @onready var Button_background = $ButtonsBackground
 @onready var Resume_Button = $ButtonsContainer/ResumeButton
 
-# --- Lista para cargar las imágenes de los niveles ---
 @export var level_backgrounds: Array[Texture2D]
 
 @onready var audio_click = $AudioStreamPlayer
 @onready var audio_entered = $AudioStreamPlayer2
 @onready var music_main = $AudioStream_MainMusic
 
-
-# --- Referencias a los Sliders ---
 @onready var master_slider: HSlider = $OthersMenu/Options/HBoxContainer/Volumen/General/MasterSlider
 @onready var music_slider: HSlider = $OthersMenu/Options/HBoxContainer/Volumen/Music/MusicSlider
 @onready var sfx_slider: HSlider = $OthersMenu/Options/HBoxContainer/Volumen/SFX/SFXSlider
-# Nombres de los buses (deben coincidir EXACTAMENTE con los que creaste)
+
 const MASTER_BUS_NAME = "Master"
 const MUSIC_BUS_NAME = "Music"
 const SFX_BUS_NAME = "SFX"
 
-# Ruta para guardar los ajustes
 const SAVE_PATH = "user://settings.cfg"
 
 var exist_file: SceneManager
 
 func _ready():
-	# Cargamos los ajustes guardados al iniciar el menú
 	load_settings()
 	
-	# Conectamos las señales de los sliders a nuestras funciones
 	master_slider.value_changed.connect(_on_master_volume_changed)
 	music_slider.value_changed.connect(_on_music_volume_changed)
 	sfx_slider.value_changed.connect(_on_sfx_volume_changed)
@@ -44,30 +38,22 @@ func _ready():
 		$ButtonsContainer.size.y = 480.0
 		$ButtonsContainer.position.y = 416.0
 		
-	
 	update_menu_background()
 	music_main.play()
 
-# --- NUEVO: Función para cambiar el fondo ---
 func update_menu_background() -> void:
-	# Obtenemos el nivel actual del SceneManager
 	var current_lvl = SceneManager.current_level
 	print("currentLevel: ", current_lvl)
-	# Si por algún motivo es 0 o menor (primera vez), forzamos que sea 1
+	
 	if current_lvl < 1:
 		current_lvl = 1
 	
-	# Los Arrays empiezan en 0, pero tus niveles en 1.
-	# Restamos 1 para obtener el índice correcto.
 	var bg_index = current_lvl - 1
 	
-	# Verificamos que tengamos una imagen cargada para ese nivel para evitar errores
 	if bg_index < level_backgrounds.size():
 		if level_backgrounds[bg_index] != null:
 			main_background.texture = level_backgrounds[bg_index]
 	else:
-		# Si estamos en el nivel 10 pero solo pusiste 5 imágenes,
-		# cargamos la última disponible o la del nivel 1 por defecto.
 		if level_backgrounds.size() > 0:
 			main_background.texture = level_backgrounds[0]
 
@@ -81,23 +67,13 @@ func _on_sfx_volume_changed(value: float) -> void:
 	set_bus_volume(SFX_BUS_NAME, value) 
 
 func set_bus_volume(bus_name: String, value: float) -> void:
-	# Los sliders nos dan un valor de 0 a 100 (lineal).
-	# El audio en Godot se controla en decibelios (logarítmico).
-	# Necesitamos convertir el valor.
-	
 	if value == 0:
-		# Si el slider está en 0, ponemos el volumen al mínimo (-80 dB es silencio).
 		AudioServer.set_bus_volume_db(AudioServer.get_bus_index(bus_name), -80)
 	else:
-		# Convertimos el valor lineal (0-100) a decibelios.
 		var db_volume = linear_to_db(value / 100.0)
 		AudioServer.set_bus_volume_db(AudioServer.get_bus_index(bus_name), db_volume)
 	
-	# Guardamos el cambio
 	save_settings()
-
-
-# --- Funciones para Guardar y Cargar ---
 
 func save_settings() -> void:
 	var config = ConfigFile.new()
@@ -106,14 +82,11 @@ func save_settings() -> void:
 	config.set_value("audio", "sfx_volume", sfx_slider.value)
 	config.save(SAVE_PATH)
 
-
 func load_settings() -> void:
 	var config = ConfigFile.new()
-	# Si el archivo de guardado no existe, no hacemos nada.
 	if config.load(SAVE_PATH) != OK:
 		return
 
-	# Cargamos cada valor y actualizamos los sliders Y el audio.
 	var master_vol = config.get_value("audio", "master_volume", 100)
 	master_slider.value = master_vol
 	set_bus_volume(MASTER_BUS_NAME, master_vol)
@@ -131,10 +104,8 @@ func _on_continue_pressed():
 	await audio_click.finished
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	
-	# REGLA: Si estoy en el menú, es porque salí (Check RAM borrado) o es una nueva sesión.
-	# Siempre cargamos desde el disco (Inicio del Nivel).
 	SceneManager.load_game_data()
-
+	
 	var tween = create_tween()
 	tween.tween_property(music_main, "volume_db", -80, 2)
 	

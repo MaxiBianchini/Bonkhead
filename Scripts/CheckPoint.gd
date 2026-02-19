@@ -9,7 +9,6 @@ var is_activated: bool = false
 func _ready() -> void:
 	animated_sprite.flip_h = flip
 	
-	# Verifica si este es el checkpoint activo en memoria
 	if SceneManager.has_active_checkpoint:
 		if global_position.distance_squared_to(SceneManager.active_checkpoint_pos) < 100:
 			is_activated = true
@@ -25,5 +24,4 @@ func activate_me():
 	is_activated = true
 	animated_sprite.play("default")
 	
-	# Llamamos al manager para guardar en RAM
 	SceneManager.activate_checkpoint(global_position, SceneManager.points)

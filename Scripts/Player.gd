@@ -54,7 +54,6 @@ signal player_died
 signal change_UI_lives(change_lives)
 signal ammo_changed(new_ammo_type)
 
-# Variable para controlar la velocidad del resbalón
 @export var slip_speed: float = 100.0
 
 var gravity: int = 2000
@@ -84,7 +83,7 @@ var ammo_scenes: Dictionary = {
 }
 var current_ammo_type: AmmoType = AmmoType.NORMAL
 
-@export var bullet_sprite: Texture2D # Aquí arrastras el asset específico de este enemigo
+@export var bullet_sprite: Texture2D
 var bullet_dir: Vector2 = Vector2.RIGHT
 var bullet_offset: Vector2 = Vector2(32, -9)
 var gun_type: String ="Small"
@@ -99,10 +98,9 @@ var can_dash = true
 
 var is_burst_mode_active: bool = false
 var burst_charges_left: int = 0
-const BURST_SHOT_COUNT: int = 3       # Balas por ráfaga
-const BURST_DELAY_SECONDS: float = 0.1  # Tiempo entre cada bala de la ráfaga
-const TOTAL_BURST_CHARGES: int = 6    # Cuántas ráfagas puede disparar
-
+const BURST_SHOT_COUNT: int = 3
+const BURST_DELAY_SECONDS: float = 0.1 
+const TOTAL_BURST_CHARGES: int = 6
 
 const OFFSET_IDLE_RIGHT: Vector2 = Vector2(40, -9)
 const OFFSET_RUN_RIGHT: Vector2 = Vector2(45, -9) 
@@ -111,7 +109,6 @@ const OFFSET_FALL_RIGHT: Vector2 = Vector2(40, -25)
 const OFFSET_UP_RIGHT: Vector2 = Vector2(13.5, -30)
 const OFFSET_RUNUP_RIGHT: Vector2 = Vector2(22, -30)
 
-# Creamos las versiones para la izquierda simplemente invirtiendo el valor X
 const OFFSET_IDLE_LEFT: Vector2 = Vector2(-20, OFFSET_IDLE_RIGHT.y)
 const OFFSET_RUN_LEFT: Vector2 = Vector2(-25, OFFSET_RUN_RIGHT.y)
 const OFFSET_JUMP_LEFT: Vector2 = Vector2(-20, OFFSET_JUMP_RIGHT.y)
@@ -121,48 +118,33 @@ const OFFSET_RUNUP_LEFT: Vector2 = Vector2(0, OFFSET_UP_RIGHT.y)
 
 func _ready() -> void:
 	current_level = SceneManager.current_level
-	# Según el GDD, los poderes se desbloquean AL INICIAR el nivel siguiente.
-	# Nivel 2: Se obtiene el Doble Salto
-	if current_level >= 2:#2
+	if current_level >= 2:
 		double_jump_power_activated = true
 	
-	# Nivel 3: Se obtiene el Dash
-	if current_level >= 3:#3
+	if current_level >= 3:
 		dash_power_activated = true
 	
-	# Nivel 4: Se obtiene el Agarre en Pared
-	if current_level >= 4:#4
+	if current_level >= 4:
 		wall_grab_power_activated = true
 		
 	animated_sprites = [animated_sprite, animated_sprite2, animated_sprite3]
 
 func update_visuals() -> void:
-	# --- BLOQUE 1: DETERMINAR LA DIRECCIÓN ---
 	if velocity.x < 0:
 		player_dir = "LEFT"
 	elif velocity.x > 0:
 		player_dir = "RIGHT"
 
-	# --- BLOQUE 2: CONFIGURACIÓN VISUAL ---
-	
-	# Variable ÚNICA para la posición X por defecto.
-	# Si es DERECHA, la posición es 10. Si es IZQUIERDA, es -10.
 	var final_pos_x: float = 10.0 if player_dir == "RIGHT" else -10.0
 	
 	var is_flipped: bool = (player_dir == "LEFT")
 	var sprite_offset_vector: Vector2 = Vector2(10, -7)
-
-	# --- BLOQUE 3: MANEJAR CASO ESPECIAL: WALL_GRAB ---
+	
 	if state == State.WALL_GRAB:
-		# En Wall Grab, FORZAMOS la posición final a 0
 		final_pos_x = 0
 		sprite_offset_vector = Vector2.ZERO
-		is_flipped = (player_dir == "RIGHT") # Lógica de flip opuesta para mirar hacia afuera
-
-	# --- BLOQUE 4: APLICAR TODAS LAS PROPIEDADES VISUALES ---
+		is_flipped = (player_dir == "RIGHT")
 	
-	# Usamos la misma variable 'final_pos_x' para TODO.
-	# Esto garantiza que siempre estarán sincronizados.
 	for s in animated_sprites:
 		s.flip_h = is_flipped
 		s.position.x = final_pos_x
@@ -175,9 +157,7 @@ func update_visuals() -> void:
 	area2D.position.x = 10
 	
 	raycast_wall.target_position.x = final_pos_x
-
-	# --- BLOQUE 5: REPRODUCIR LA ANIMACIÓN ---
-	# (El resto de la función para reproducir las animaciones no cambia)
+	
 	var anim_name = ""
 	var current_sprite_node = animated_sprite
 	
@@ -223,24 +203,21 @@ func _physics_process(delta) -> void:
 			was_in_air = false
 	else:
 		was_in_air = true
-
-	# --- CAPTURA DE ENTRADAS (INPUTS) ---
+		
 	var input_vector = Vector2.ZERO
 	var is_jump_pressed = false
 	var is_dash_pressed = false
 	var is_shoot_pressed = false
 
 	if is_cutscene:
-		# SI HAY CINEMÁTICA: Frenamos el movimiento horizontal automáticamente
 		velocity.x = move_toward(velocity.x, 0, movement_velocity)
-
-	# Solo leemos los controles si el jugador NO está aturdido
+	
 	if not is_stunned and not is_cutscene:
 		input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 		is_jump_pressed = Input.is_action_just_pressed("ui_jump")
 		is_dash_pressed = Input.is_action_just_pressed("Dash")
 		is_shoot_pressed = Input.is_action_just_pressed("Shoot")
-
+		
 	var on_wall = raycast_wall.is_colliding()
 	var is_moving_towards_wall = (player_dir == "RIGHT" and input_vector.x > 0) or (player_dir == "LEFT" and input_vector.x < 0)
 	
@@ -249,36 +226,19 @@ func _physics_process(delta) -> void:
 			velocity.y += gravity * delta
 			velocity.x = 0
 			
-			# --- LÓGICA DE RESBALAR (EDGE SLIP) ---
-			# Verificamos si debemos resbalar ANTES de poner velocity.x = 0
-			
 			var is_center_supported = raycast_floor.is_colliding()
 			var is_left_supported = raycast_edge_left.is_colliding()
 			var is_right_supported = raycast_edge_right.is_colliding()
 			
-			# Si estoy en el suelo (según move_and_slide) PERO mi centro está en el aire...
 			if is_on_floor() and not is_center_supported:
-				
 				if is_left_supported and not is_right_supported:
-					# Estoy colgado del lado DERECHO (pie izq apoyado, centro aire)
-					# Resbalamos hacia la derecha
 					velocity.x = slip_speed
-					# Opcional: Reproducir animación de desequilibrio si tienes una
-					# animated_sprite.play("Teeter") 
-					
 				elif is_right_supported and not is_left_supported:
-					# Estoy colgado del lado IZQUIERDO (pie der apoyado, centro aire)
-					# Resbalamos hacia la izquierda
 					velocity.x = -slip_speed
-					
 				else:
-					# Caso raro o apoyado en ambos extremos (puente), nos quedamos quietos
 					velocity.x = 0
 			else:
-				# Comportamiento normal de IDLE (frenado)
 				velocity.x = 0
-			
-			# --- FIN LÓGICA RESBALAR ---
 			
 			if Input.is_action_pressed("ui_down") and is_jump_pressed and raycast_floor.is_colliding() and raycast_floor.get_collider().is_in_group("Platform"):
 				ignore_platform_collision()
@@ -295,7 +255,7 @@ func _physics_process(delta) -> void:
 				audio_dash.play()
 				velocity.y = 0
 				dash_duration_timer.start()
-
+				
 		State.RUN:
 			velocity.y += gravity * delta
 			velocity.x = input_vector.x * movement_velocity
@@ -323,7 +283,7 @@ func _physics_process(delta) -> void:
 			if is_dash_pressed and dash_power_activated and can_dash:
 				state = State.DASH
 				audio_dash.play()
-				velocity.y = 0 # Mantiene el dash perfectamente horizontal en el aire
+				velocity.y = 0
 				dash_duration_timer.start()
 			
 			if is_jump_pressed and double_jump_enabled and first_jump_completed:
@@ -382,16 +342,12 @@ func _physics_process(delta) -> void:
 		velocity.y *= jump_cut_multiplier
 	
 	if is_shoot_pressed and can_shoot and not is_stunned and (state == State.IDLE or state == State.RUN or state == State.JUMP or state == State.FALL):
-
-	# Bloqueamos nuevos disparos hasta que el cooldown termine
 		can_shoot = false
 		
 		if current_ammo_type == AmmoType.BURST:
-			shoot_cooldown_timer.start() # Inicia el temporizador de 0.5s (o lo que configures)
-			# Llamamos a la función de ráfaga (que es asíncrona)
+			shoot_cooldown_timer.start()
 			start_burst_fire() 
 		else:
-		# Disparo normal (como antes)
 			audio_shoot.play()
 			shoot_bullet()
 			can_shoot = true
@@ -406,30 +362,23 @@ func _physics_process(delta) -> void:
 func update_sprite_direction() -> void:
 	var offset := 10
 	var dir_mult := 1 if player_dir == "RIGHT" else -1
-	
-	# --- CORRECCIÓN: Definimos offsets para los raycasts de borde ---
-	# Ajusta este valor (10) según qué tan separados del centro deban estar
 	var edge_offset_x = 10
 	
 	if state == State.WALL_GRAB:
-		# Flip en pared
 		animated_sprite.flip_h = (player_dir == "RIGHT")
 		for s in animated_sprites:
 			s.position.x = -offset * dir_mult
 		return
 	
-	# Determinar dirección según velocidad
 	if velocity.x < 0:
 		player_dir = "LEFT"
 	elif velocity.x > 0:
 		player_dir = "RIGHT"
-
-	# Actualizar flip
+		
 	var flip := (player_dir == "LEFT")
 	for s in animated_sprites:
 		s.flip_h = flip
-
-	# Direcciones auxiliares
+	
 	bullet_dir = Vector2.LEFT if player_dir == "LEFT" else Vector2.RIGHT
 	dir_mult = -1 if player_dir == "LEFT" else 1
 
@@ -441,18 +390,8 @@ func update_sprite_direction() -> void:
 	raycast_floor.position.x = offset
 	collision_shape.position.x = offset
 	area2D.position.x = offset
-	
-	# --- AQUÍ ESTABA EL ERROR: FALTABA ACTUALIZAR LOS BORDES ---
-	# Mantenemos su posición Y relativa, pero invertimos o desplazamos la X
-	# Asumiendo que en el editor los pusiste en posiciones simétricas o necesitas moverlos con el 'offset'
-	
-	# Opción A: Si son hijos directos y quieres que se muevan con el offset del cuerpo:
-	raycast_edge_left.position.x = offset - edge_offset_x # Borde izquierdo relativo al centro desplazado
-	raycast_edge_right.position.x = offset + edge_offset_x # Borde derecho relativo al centro desplazado
-	
-	# Si tus raycasts en el editor ya están configurados en posiciones fijas (ej: -10 y 10),
-	# entonces al mover todo el "cuerpo" visual con 'offset', estos deberían moverse también.
-	# Pero como estamos moviendo nodos individuales manualmente, debemos mover estos también.
+	raycast_edge_left.position.x = offset - edge_offset_x 
+	raycast_edge_right.position.x = offset + edge_offset_x
 	
 func update_animation() -> void:
 	match state:
@@ -478,7 +417,6 @@ func update_animation() -> void:
 				if animated_sprite.animation != anim_name:
 					animated_sprite.play(anim_name)
 				switch_animation(1)
-
 		State.RUN:
 			if Input.is_action_pressed("Shoot"):
 				if Input.is_action_pressed("ui_up"):
@@ -500,7 +438,6 @@ func update_animation() -> void:
 				if animated_sprite.animation != anim_name:
 					animated_sprite.play(anim_name)
 				switch_animation(1)
-
 		State.JUMP:
 			if just_double_jumped:
 				bullet_offset = OFFSET_JUMP_RIGHT if player_dir == "RIGHT" else OFFSET_JUMP_LEFT
@@ -513,31 +450,27 @@ func update_animation() -> void:
 				if animated_sprite.animation != "Double_Jump" and animated_sprite.animation != anim_name:
 					animated_sprite.play(anim_name)
 			switch_animation(1)
-
 		State.FALL:
 			bullet_offset = OFFSET_JUMP_RIGHT if player_dir == "RIGHT" else OFFSET_JUMP_LEFT
 			var anim_name = "SFall" if gun_type == "Small" else "BFall"
 			if animated_sprite.animation != anim_name:
 				animated_sprite.play(anim_name)
 			switch_animation(1)
-
 		State.WALL_GRAB:
 			if animated_sprite.animation != "GrabWall":
 				animated_sprite.play("GrabWall")
 			switch_animation(1)
-
 		State.DASH:
 			if animated_sprite.animation != "Dash":
 				animated_sprite.play("Dash")
 			switch_animation(1)
-
+			
 		State.DEAD:
 			if animated_sprite.animation != "Death":
 				animated_sprite.play("Death")
 				animated_sprite2.play("Death")
 				animated_sprite3.play("Death")
 				switch_animation(1)
-
 
 func switch_animation(animation_number: int) -> void:
 	hide_all_sprites()
@@ -549,57 +482,45 @@ func switch_animation(animation_number: int) -> void:
 		3:
 			animated_sprite3.visible = true
 
-
 func hide_all_sprites() -> void:
 	animated_sprite.visible = false
 	animated_sprite2.visible = false
 	animated_sprite3.visible = false
 
-
 func handle_double_jump() -> void:
-	# Si el poder no está activado, salimos.
 	if not double_jump_power_activated:
 		return
 	
-	# Si estamos en el suelo, reseteamos.
 	if is_on_floor():
 		double_jump_enabled = false
 		first_jump_completed = false
 		return
-
-	# Lógica de "Jumpeable Wall" corregida
+		
 	if raycast_wall.is_colliding():
 		var collider = raycast_wall.get_collider()
 		
 		if collider and collider.is_in_group("Jumpeable Wall"):
-			# Estamos tocando la pared: CONCEDEMOS permiso
 			double_jump_enabled = true
 			first_jump_completed = true
 		else:
-			# Chocamos con algo, pero NO es la pared especial: QUITAMOS permiso
 			double_jump_enabled = false
 			
 	else:
-		# No estamos chocando con nada (aire libre): QUITAMOS permiso
 		double_jump_enabled = false
 
-
 func shoot_bullet() -> void:
-	update_animation() # (Esto ya lo tenías, actualiza los offsets de bala)
+	update_animation()
 	
-	# 1. Determinamos qué tipo de bala instanciar
 	var ammo_type_to_spawn = current_ammo_type
 	if current_ammo_type == AmmoType.BURST:
-		# El modo Ráfaga dispara la bala Normal
 		ammo_type_to_spawn = AmmoType.NORMAL 
-
-	# 2. Obtenemos la escena de la bala a instanciar
+		
 	var bullet_scene_to_spawn = ammo_scenes[ammo_type_to_spawn]
 	var bullet = bullet_scene_to_spawn.instantiate() as Area2D
 	if (ammo_type_to_spawn == AmmoType.NORMAL or AmmoType.BURST):
 		if bullet.has_method("set_sprite"):
 			bullet.set_sprite(bullet_sprite)
-	# 3. El resto de tu función de configuración de la bala...
+	
 	if bullet.has_method("set_shooter"):
 		bullet.set_shooter(self)
 		
@@ -607,7 +528,6 @@ func shoot_bullet() -> void:
 		bullet.set_mask(3)
 	
 	if bullet.has_method("set_direction"):
-		# (Tu lógica de disparo de mortero hacia arriba sigue funcionando aquí)
 		if (current_ammo_type == AmmoType.MORTAR and bullet_dir == Vector2.UP and bullet.has_method("set_aim_state")):
 			bullet.set_aim_state(true)
 			bullet.set_direction(check_direction())
@@ -618,32 +538,24 @@ func shoot_bullet() -> void:
 	get_tree().current_scene.add_child(bullet)
 
 func set_ammo_type(new_type: AmmoType) -> void:
-	# Evitamos acciones redundantes si ya tenemos ese tipo
 	if current_ammo_type == new_type:
 		return
-
+		
 	current_ammo_type = new_type
-	
-	# Al cambiar de tipo, siempre desactivamos el modo ráfaga por seguridad
-	# (a menos que el nuevo tipo sea BURST, que lo reactivará abajo)
 	is_burst_mode_active = false 
-
-	# Usamos un 'match' para manejar la lógica de cada tipo
+	
 	match current_ammo_type:
 		AmmoType.NORMAL, AmmoType.MORTAR, AmmoType.PIERCING:
 			if gun_type == "Big":
 				gun_type = "Small"
 		
 		AmmoType.BURST:
-			# Activamos el modo ráfaga
-			is_burst_mode_active = true # Aseguramos la bandera
+			is_burst_mode_active = true
 			burst_charges_left = TOTAL_BURST_CHARGES
 			
-			# Cambiamos al arma "Big" si es necesario
 			if gun_type == "Small":
 				gun_type = "Big"
 	
-	# Emitimos la señal para que el SceneManager actualice la UI
 	ammo_changed.emit(current_ammo_type)
 
 func ignore_platform_collision() -> void:
@@ -652,7 +564,6 @@ func ignore_platform_collision() -> void:
 	velocity.y = jump_force * -1.5
 	await (get_tree().create_timer(fall_through_time).timeout)
 	collision_shape.disabled = false
-
 
 func change_weapon() -> void:
 	if gun_type == "Small":
@@ -664,7 +575,7 @@ func change_weapon() -> void:
 func take_damage(force_death: bool = false, damage: int = 1) -> void:
 	if (is_invincible and not force_death) or not is_alive:
 		return
-
+		
 	if force_death:
 		lives = 0
 	else:
@@ -673,7 +584,6 @@ func take_damage(force_death: bool = false, damage: int = 1) -> void:
 	
 	emit_signal("change_UI_lives", lives)
 	
-	# LÓGICA DE MUERTE VS HERIDA
 	if lives <= 0:
 		is_alive = false
 		state = State.DEAD
@@ -684,83 +594,56 @@ func take_damage(force_death: bool = false, damage: int = 1) -> void:
 		
 		if animation_player.has_animation("RESET"):
 			animation_player.play("RESET")
-		
 	else:
-		# 1. Activamos la invencibilidad LARGA (ej: 1.5 segundos)
 		is_invincible = true
 		hurt_timer.start(1) 
-		
-		# 2. Activamos el stun (bloqueo de movimiento)
 		is_stunned = true
 		velocity.y = hurt_jump_force
 		animation_player.play("Hurt")
 		
-		# 3. Esperamos un tiempo CORTO para el stun (ej: 0.4 segundos)
-		# Esto no detiene el juego, solo detiene esta función y el cambio de estado
 		await get_tree().create_timer(0.5).timeout
-		
-		# 4. Devolvemos el control al jugador, AUNQUE siga invencible
 		is_stunned = false
-		
-		
 
 func increase_life() -> bool:
 	if lives < 5:
 		lives += 1
-		#SceneManager.current_hp = lives # AGREGAR ESTO
 		emit_signal("change_UI_lives", lives)
 		return true
-	# 2. CASO PREMIO (NUEVO): Si ya tengo 5 vidas, verificamos los Packs.
 	else:
-		# Verificamos si faltan packs (asumiendo que 3 es el máximo)
 		if SceneManager.life_packs < 3:
 			
 			SceneManager.life_packs += 1
-			# IMPORTANTE: Guardamos el dato para que no se pierda el pack ganado
-			SceneManager.save_game_data() 
+			SceneManager.save_game_data()
 			
-			# Emitimos la señal de nuevo. 
-			# Como SceneManager.update_lives actualiza AMBOS (vidas y packs),
-			# esto refrescará visualmente el pack nuevo en la pantalla.
 			emit_signal("change_UI_lives", lives)
 			audio_packUp.play()
 			return true
 		else:
 			return false
 
-# --- FUNCIONES DEL MODO RÁFAGA ---
-
-# Esta es la función que debe llamar tu "AmmoPickup" especial
 func activate_burst_mode() -> void:
 	is_burst_mode_active = true
 	burst_charges_left = TOTAL_BURST_CHARGES
 	
-	# Cambiamos al arma grande si no la tenemos ya
 	if gun_type == "Small":
-		change_weapon() # Llama a tu función existente
+		change_weapon()
 
-# Esta función es asíncrona (async) para poder usar 'await'
-# Se encarga de disparar las 3 balas
 func start_burst_fire() -> void:
-	burst_charges_left -= 1 # Gastamos una carga de ráfaga
+	burst_charges_left -= 1
 	
 	for i in range(BURST_SHOT_COUNT):
 		audio_shoot.play()
-		shoot_bullet() # Llama a tu función de disparo existente
+		shoot_bullet()
 		
-		# Esperamos un breve momento antes de la siguiente bala
 		await get_tree().create_timer(BURST_DELAY_SECONDS).timeout
 	
-	# Comprobamos si se acabaron las cargas
 	if burst_charges_left <= 0:
 		deactivate_burst_mode()
 		can_shoot = true
 
-# Se llama para volver al estado normal
 func deactivate_burst_mode() -> void:
 	is_burst_mode_active = false
 	
-	# Volvemos al arma pequeña
 	if gun_type == "Big":
 		change_weapon()
 
@@ -768,7 +651,6 @@ func disable_player_collision() -> void:
 	area2D.set_collision_mask_value(3,false)
 	area2D.set_collision_mask_value(4,false)
 	area2D.set_collision_mask_value(5,false)
-
 
 func _on_body_entered(body) -> void:
 	if body.is_in_group("Enemy") and body.is_alive:
@@ -779,7 +661,6 @@ func check_direction()-> Vector2:
 		return Vector2.LEFT
 	else:
 		return Vector2.RIGHT
-
 
 func _on_dash_duration_timer_timeout() -> void:
 	dash_cool_down_timer.start()
@@ -802,7 +683,7 @@ func _on_area_entered(area: Area2D) -> void:
 
 func _on_hurt_timer_timeout() -> void:
 	is_invincible = false
-	is_stunned = false # Por seguridad
+	is_stunned = false
 
 func _on_shoot_cooldown_timer_timeout() -> void:
-	can_shoot = true # Permitimos que el jugador vuelva a disparar
+	can_shoot = true

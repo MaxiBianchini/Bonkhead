@@ -37,20 +37,15 @@ func blink_and_show_platforms() -> void:
 	platforms_container.visible = true
 	var tween = create_tween()
 	
-
 	for i in 6:
 		tween.tween_property(platforms_container, "modulate:a", 1.0, 0.1)
 		tween.tween_property(platforms_container, "modulate:a", 0.0, 0.1)
 	
-
 	tween.tween_property(platforms_container, "modulate:a", 1.0, 0.2)
 	
-
 	await tween.finished
 	_set_platform_collision(true)
 	await get_tree().create_timer(2.0).timeout
-
-
 
 func blink_and_hide_platforms() -> void:
 	var platforms_container = platforms_2

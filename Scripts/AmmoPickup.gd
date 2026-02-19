@@ -21,11 +21,6 @@ func _ready() -> void:
 			sprite.texture = tex_burst
 	
 func _on_body_entered(body: Node2D) -> void:
-	# Comprobamos si el cuerpo que entró en nuestra área es el jugador.
 	if body.is_in_group("Player"):
-		# Le pedimos al jugador que cambie su tipo de munición.
 		body.set_ammo_type(grants_ammo)
-		# (Opcional) Aquí podríamos reproducir un sonido de "ítem recogido".
-		
-		# El ítem se autodestruye después de ser recogido.
 		queue_free()
