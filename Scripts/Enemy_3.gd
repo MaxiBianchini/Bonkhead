@@ -10,14 +10,14 @@ extends CharacterBody2D
 @onready var walk_sound: AudioStreamPlayer2D = $AudioStream_Walk
 @onready var death_sound: AudioStreamPlayer2D = $AudioStream_Death
 
-@onready var player = get_tree().current_scene.get_node_or_null("%Player") # Encuentra al jugador en la escena
+var player: Node2D = null
 
-@export var bullet_sprite: Texture2D # Aquí arrastras el asset específico de este enemigo
+@export var bullet_sprite: Texture2D
 var bullet_scene: PackedScene = preload("res://Prefabs/Bullet.tscn")
 var bullet_offset: Vector2
 var bullet_dir: Vector2
 
-var can_shoot: bool = true          # Indica si el enemigo puede disparar
+var can_shoot: bool = true
 
 var horizontal_speed: float = 100.0
 var vertical_speed: float = 80.0
@@ -37,111 +37,132 @@ var is_alive: bool = true
 signal add_points
 var points = 30
 
+var damage_tween: Tween # Para evitar conflictos de parpadeo
+
 func _ready() -> void:
 	animated_sprite.material = animated_sprite.material.duplicate()
 	animated_sprite.play("Walk Scan")
-	walk_sound.play()
-	start_position = position
-	initial_height = position.y
+	if walk_sound: walk_sound.play()
+	
+	# OBLIGATORIO: Usar global_position para evitar problemas con jerarquías complejas
+	start_position = global_position
+	initial_height = global_position.y
+	
+	player = get_tree().current_scene.get_node_or_null("%Player")
 
 func _physics_process(delta: float) -> void:
 	if not is_alive:
-		apply_gravity()
+		apply_dead_physics(delta)
 		return
+		
+	# Validación segura: Evita crashear si el jugador fue eliminado
+	var player_valid = is_instance_valid(player) and "is_alive" in player and player.is_alive
 	
-	if follow_player and player.is_alive:
-		if raycast_wall.is_colliding() and raycast_wall.get_collider().is_in_group("Floor") or raycast_floor.is_colliding() and raycast_floor.get_collider().is_in_group("Floor"):
+	if follow_player and player_valid:
+		var hit_floor_wall = raycast_wall.is_colliding() and raycast_wall.get_collider().is_in_group("Floor")
+		var hit_floor_bottom = raycast_floor.is_colliding() and raycast_floor.get_collider().is_in_group("Floor")
+		
+		if hit_floor_wall or hit_floor_bottom:
 			follow_player = false
 		else:
-			chase_player(delta)
+			chase_player()
 	else:
-		return_to_height(delta)
-		patrol_horizontally(delta)
-
-func apply_gravity() -> void:
-	velocity.y += 15.0
+		follow_player = false # Reseteo seguro si el jugador desaparece
+		return_to_height()
+		patrol_horizontally()
+		
+	# Ejecución única de la función física del motor
 	move_and_slide()
 
-func chase_player(delta: float) -> void:
-	var dx = player.position.x - position.x
-	var desired_y = player.position.y - hover_offset_y
+func apply_dead_physics(delta: float) -> void:
+	# Gravedad estándar (reemplacé el 15.0 incorrecto por un cálculo real)
+	velocity.y += 2000 * delta
+	# Frena la inercia horizontal suavemente
+	velocity.x = move_toward(velocity.x, 0, horizontal_speed * delta * 5)
+	move_and_slide()
+
+func chase_player() -> void:
+	var dx = player.global_position.x - global_position.x
+	var desired_y = player.global_position.y - hover_offset_y
 	
+	# Lógica Horizontal (Movimiento asignado a velocity.x)
 	if abs(dx) > chase_stop_distance_x:
 		var horizontal_dir = sign(dx)
 		animated_sprite.flip_h = (horizontal_dir < 0.0)
 		velocity.x = horizontal_dir * horizontal_speed 
-		
 	else:
 		velocity.x = 0
 		animated_sprite.flip_h = (dx < 0.0)
-		bullet_offset = Vector2(-10,15) if (dx < 0.0) else Vector2(10,15)
+		bullet_offset = Vector2(-10, 15) if (dx < 0.0) else Vector2(10, 15)
 		if can_shoot:
 			shoot_bullet()
-			shoot_sound.play()
+			if shoot_sound: shoot_sound.play()
 			can_shoot = false
 			shoot_timer.start(1.0)  
-		
-	var vertical_dir = sign(desired_y - position.y)
-	if abs(position.y - desired_y) > 2.0:
-		position.y += vertical_dir * vertical_speed * delta
-		
-	move_and_slide()
+			
+	# Lógica Vertical (Movimiento asignado a velocity.y)
+	var vertical_dir = sign(desired_y - global_position.y)
+	if abs(global_position.y - desired_y) > 2.0:
+		velocity.y = vertical_dir * vertical_speed
+	else:
+		velocity.y = 0
 
-func return_to_height(delta: float) -> void:
-	if abs(position.y - initial_height) > 1.0:
-		var vertical_dir = sign(initial_height - position.y)
-		position.y += vertical_dir * (vertical_speed * delta)
+func return_to_height() -> void:
+	if abs(global_position.y - initial_height) > 2.0:
+		var vertical_dir = sign(initial_height - global_position.y)
+		velocity.y = vertical_dir * vertical_speed
+	else:
+		velocity.y = 0
 
-func patrol_horizontally(delta: float) -> void:
+func patrol_horizontally() -> void:
 	if raycast_wall.is_colliding() and raycast_wall.get_collider().is_in_group("Floor"):
-		patrol_direction *=  -1
-	elif position.x > start_position.x + patrol_range:
+		patrol_direction *= -1
+	elif global_position.x > start_position.x + patrol_range:
 		patrol_direction = -1
-	elif position.x < start_position.x - patrol_range:
+	elif global_position.x < start_position.x - patrol_range:
 		patrol_direction = 1
 	
-	raycast_wall.target_position = Vector2 (50 * patrol_direction,0)
-	position.x += patrol_direction * (horizontal_speed * delta)
+	raycast_wall.target_position = Vector2(50 * patrol_direction, 0)
+	velocity.x = patrol_direction * horizontal_speed
 	animated_sprite.flip_h = (patrol_direction < 0)
 
 func shoot_bullet() -> void:
 	animated_sprite.play("Attack")
-	
-	# Asegúrate de que el jugador todavía existe antes de disparar
 	if not is_instance_valid(player):
 		return
 
-	var bullet = bullet_scene.instantiate()
+	var bullet = bullet_scene.instantiate() as Area2D
 	
 	if bullet.has_method("set_sprite"):
 		bullet.set_sprite(bullet_sprite)
-	
-	# 1. Calculamos la dirección normalizada desde el enemigo hacia el jugador.
+		
 	var direction_to_player = (player.global_position - global_position).normalized()
 	
-	# 2. Configuramos la bala con la nueva dirección.
 	if bullet.has_method("set_shooter"):
 		bullet.set_shooter(self)
-		
 	if bullet.has_method("set_mask"):
 		bullet.set_mask(2)
-	
 	if bullet.has_method("set_direction"):
-		bullet.set_direction(direction_to_player) # Usamos la dirección calculada
-
-	# 3. Posicionamos la bala y la añadimos a la escena.
-	bullet.position = position + bullet_offset
-	get_tree().current_scene.add_child(bullet)
+		bullet.set_direction(direction_to_player)
+		
+	# CRÍTICO: global_position para evitar bugs de desplazamiento
+	bullet.global_position = global_position + bullet_offset
+	
+	var current_scene = get_tree().current_scene
+	if current_scene:
+		current_scene.add_child(bullet)
 
 func _on_body_entered(body: Node) -> void:
-	if body.is_in_group("Player") and body.is_alive and is_alive:
-		animated_sprite.play("Walk")
-		follow_player = true
+	if is_alive and is_instance_valid(body) and body.is_in_group("Player"):
+		if "is_alive" in body and body.is_alive:
+			animated_sprite.play("Walk") # O la animación que corresponda al descubrirlo
+			follow_player = true
 
 func _on_body_exited(body: Node) -> void:
-	if body.is_in_group("Player") and is_alive:
+	if is_alive and is_instance_valid(body) and body.is_in_group("Player"):
 		animated_sprite.play("Walk Scan")
-#		walk_sound.play()
+		if walk_sound and not walk_sound.playing:
+			walk_sound.play()
 		follow_player = false
 
 func take_damage() -> void:
@@ -149,31 +170,45 @@ func take_damage() -> void:
 		return
 	
 	lives -= 1
-	emit_signal("add_points", points)
 	
-	# EFECTO DE DAÑO POR CÓDIGO
-	var tween = create_tween()
-	animated_sprite.modulate = Color(1, 0, 0, 1) # Rojo puro
-	
-	# Volviendo a blanco en 0.2 segundos
-	# set_trans(Tween.TRANS_SINE) hace que se vea suave
-	tween.tween_property(animated_sprite, "modulate", Color(1, 1, 1, 1), 0.2).set_trans(Tween.TRANS_SINE)
+	# Control del parpadeo de daño
+	if damage_tween:
+		damage_tween.kill()
+		
+	damage_tween = create_tween()
+	animated_sprite.modulate = Color(1, 0, 0, 1)
+	damage_tween.tween_property(animated_sprite, "modulate", Color.WHITE, 0.2).set_trans(Tween.TRANS_SINE)
 	
 	if lives <= 0:
-		set_collision_layer_value(3,false)
-		is_alive = false
-		animated_sprite.play("Death")
-		collision_shape.position.y = 9
-		velocity.x = 0
-		death_sound.play()
-		await animated_sprite.animation_finished
-		queue_free()
-		
+		die()
+	else:
+		# Penalización de disparo al enemigo sin generar errores
 		can_shoot = false
 		if shoot_timer.time_left > 0:
 			shoot_timer.start(shoot_timer.time_left + 1.0)
 		else:
 			shoot_timer.start(1.0)
 
+func die() -> void:
+	is_alive = false
+	
+	emit_signal("add_points", points)
+	
+	if walk_sound: walk_sound.stop()
+	shoot_timer.stop()
+	can_shoot = false
+	
+	set_collision_layer_value(3, false)
+	collision_shape.position.y = 9 # Efecto visual de desplome
+	
+	animated_sprite.play("Death")
+	if death_sound: death_sound.play()
+	
+	await animated_sprite.animation_finished
+	queue_free()
+
 func _on_shoot_timer_timeout() -> void:
-	can_shoot = true
+	if is_alive:
+		can_shoot = true
+		if follow_player:
+			animated_sprite.play("Walk") # Vuelve a la pose neutral tras disparar

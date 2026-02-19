@@ -1,6 +1,5 @@
 extends Node
 
-# --- REFERENCIAS A NODOS ---
 var life_packs: int
 var enemies_node: Node = null
 var time_counter: HBoxContainer = null
@@ -13,44 +12,49 @@ var player: Node = null
 var gui: Node = null
 var boss_health_bar: TextureProgressBar = null
 var boss_health_container: Sprite2D = null
-var dash_bar_caontainer: Sprite2D = null
+var dash_bar_container: Sprite2D = null # Corregido typo
 var dash_bar: TextureProgressBar = null
 var pause_menu: Node = null
 var game_over_menu: Node = null
 
-# --- DATOS DE JUEGO ---
 var current_level: int
 var game_time: float
 var points: int
 var has_saved_game: bool = false
 
-# --- VARIABLES DE CHECKPOINT (SOLO MEMORIA RAM) ---
 var active_checkpoint_pos: Vector2 = Vector2.ZERO
 var checkpoint_points: int = 0
 var has_active_checkpoint: bool = false
 
-# --- CONTROL DE ESCENA ---
+var has_boss_checkpoint: bool = false
+var boss_checkpoint_state: int = 0
+var boss_checkpoint_health: int = 0
+
 var last_scene_id: int = 0
 var player_positioned: bool = false
 
 func _ready() -> void:
 	check_saved_game()
 	load_game_data()
-	get_tree().tree_changed.connect(_on_tree_changed)
-	call_deferred("initialize_scene")
+	# ELIMINADO: get_tree().tree_changed.connect(...) -> Soluciona el problema crítico de rendimiento
 
-func _on_tree_changed() -> void:
-	call_deferred("initialize_scene")
+func _process(delta):
+	# NUEVO ENFOQUE O(1): Verificamos cambio de escena eficientemente cada frame
+	var current_scene = get_tree().current_scene
+	if current_scene and current_scene.get_instance_id() != last_scene_id:
+		initialize_scene()
+		
+	if gui and gui.visible:
+		game_time += delta
+		update_ui()
 
 func initialize_scene() -> void:
 	var current_scene = get_tree().current_scene
 	if not current_scene: return
 	
-	if current_scene.get_instance_id() != last_scene_id:
-		last_scene_id = current_scene.get_instance_id()
-		player_positioned = false 
-
-	# --- 1. CARGA DE UI ---
+	last_scene_id = current_scene.get_instance_id()
+	player_positioned = false 
+		
 	if current_scene.has_node("GUI"):
 		gui = current_scene.get_node("GUI")
 		if gui.has_node("HBoxContainer/TimeLabel/TimeCounter"):
@@ -60,12 +64,12 @@ func initialize_scene() -> void:
 		if gui.has_node("HBoxContainer/DashBar/TextureProgressBar"):
 			dash_bar = gui.get_node("HBoxContainer/DashBar/TextureProgressBar")
 			if gui.has_node("HBoxContainer/DashBar"):
-				dash_bar_caontainer = gui.get_node("HBoxContainer/DashBar")
+				dash_bar_container = gui.get_node("HBoxContainer/DashBar")
 				
 			if current_level < 3: 
-				dash_bar_caontainer.visible = false
+				dash_bar_container.visible = false
 			else: 
-				dash_bar_caontainer.visible = true
+				dash_bar_container.visible = true
 			dash_bar.value = dash_bar.max_value
 		
 		var bullet_type_container = gui.get_node("HBoxContainer/BulletIcon")
@@ -80,52 +84,32 @@ func initialize_scene() -> void:
 			boss_health_container = gui.get_node("HBoxContainer/FinalBossContainer")
 			boss_health_bar = gui.get_node("HBoxContainer/FinalBossContainer/BossHealthBar")
 
-	# --- 2. LÓGICA DE ENEMIGOS Y CÓMIC ---
 	if current_scene.has_node("Enemies"):
 		enemies_node = current_scene.get_node("Enemies")
 		for enemy in enemies_node.get_children():
 			if enemy.has_signal("add_points") and not enemy.add_points.is_connected(add_new_points):
 				enemy.add_points.connect(add_new_points)
-
+				
 	if current_scene.has_node("Page_Comic"):
 		comic_page = current_scene.get_node("Page_Comic")
 		if comic_page.has_signal("winLevel") and not comic_page.winLevel.is_connected(pass_to_nextlevel):
 			comic_page.winLevel.connect(pass_to_nextlevel)
-
-	# --- 3. LÓGICA DEL JUGADOR ---
+			
 	if current_scene.has_node("Player"):
 		player = current_scene.get_node("Player")
 		
-		# --- BLOQUEO DE SEGURIDAD ---
-		# Asegura que la vida, posición y UI se inicialicen UNA SOLA VEZ al cargar el nivel.
 		if not player_positioned:
-			
 			if has_active_checkpoint:
-				# CASO A: RESPAWN EN CHECKPOINT (RAM)
 				player.global_position = active_checkpoint_pos
-				# Restauramos los puntos guardados en la RAM del checkpoint
 				points = checkpoint_points 
-				
 			else:
-				# CASO B: INICIO DE NIVEL (Spawn normal o Respawn sin check)
-				
-				# 1. Restauramos HP (Regla: siempre 5 al aparecer)
 				player.lives = 5
-				
-				# 2. CORRECCIÓN DE PUNTOS:
-				# Si morimos y volvimos al inicio, reseteamos puntos leyendo el disco.
 				points = get_saved_points_from_disk()
-
-			# --- CORRECCIÓN UI ---
 			update_lives(player.lives)
 			
-			# Forzamos la señal para asegurar sincronización
 			player.emit_signal("change_UI_lives", player.lives)
-			
-			# Cerramos el candado
 			player_positioned = true 
-
-		# B. CONEXIONES
+			
 		if not player.player_died.is_connected(on_player_died):
 			player.player_died.connect(on_player_died)
 		if not player.change_UI_lives.is_connected(update_lives):
@@ -133,14 +117,17 @@ func initialize_scene() -> void:
 		if not player.ammo_changed.is_connected(update_ammo_icon):
 			player.ammo_changed.connect(update_ammo_icon)
 		
-		# Actualizar ícono de arma
 		update_ammo_icon(player.current_ammo_type)
-
-	# --- 4. LÓGICA DEL BOSS ---
+		
 	var boss_found = false
 	if current_scene.has_node("Final_Boss"):
 		boss_found = true
 		var boss = current_scene.get_node("Final_Boss")
+		if boss.has_signal("phase_changed") and not boss.phase_changed.is_connected(_on_boss_phase_changed):
+			boss.phase_changed.connect(_on_boss_phase_changed)
+		if has_boss_checkpoint and current_level == 5:
+			if boss.has_method("load_phase_checkpoint"):
+				boss.load_phase_checkpoint(boss_checkpoint_state, boss_checkpoint_health)
 		if boss.has_signal("health_changed") and not boss.health_changed.is_connected(update_boss_health):
 			boss.health_changed.connect(update_boss_health)
 		if boss.has_signal("boss_die") and not boss.boss_die.is_connected(hide_boss_bar):
@@ -152,62 +139,42 @@ func initialize_scene() -> void:
 		boss_health_bar.visible = false
 		if boss_health_container: boss_health_container.visible = false
 
-func _process(delta):
-	if gui and gui.visible:
-		game_time += delta
-		update_ui()
-
 func _input(event):
 	if event.is_action_pressed("ui_cancel") and gui and gui.visible and !ScenesTransitions.is_transitioning:
 		gui.visible = false
 		show_pause_menu()
-
-# --- MUERTE Y RESPAWN ---
+		
 func on_player_died():
-	# REGLA: Al morir perdemos un paquete
 	life_packs -= 1
-	
 	if life_packs <= 0:
-		#if current_level == 5:
-			#life_packs = 3
-			## Guardamos inmediatamente en disco que tiene 3 vidas.
-			## Así, si cierra el juego o da a Restart, siempre carga con vidas llenas.
-			#save_game_data()
-		# --- GAME OVER ---
 		if gui: gui.visible = false
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		show_game_over_menu()
 	else:
-		# --- RESPAWN TÁCTICO ---
 		respawn_player()
 
 func respawn_player():
 	get_tree().paused = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-	# Recargamos escena
 	ScenesTransitions.change_scene(get_tree().current_scene.scene_file_path)
 
-# --- TRANSICIÓN DE NIVEL ---
 func pass_to_nextlevel():
 	if current_level == 5:
 		delete_saved_game()
 		current_level = 1
 		ScenesTransitions.change_scene("res://Scenes/FinalLoreScene.tscn")
 		return
-
-	# REGLA: Pasar de nivel elimina el checkpoint anterior
+		
 	has_active_checkpoint = false
 	active_checkpoint_pos = Vector2.ZERO
+	has_boss_checkpoint = false
+	boss_checkpoint_state = 0
 	
 	current_level += 1
 	game_time = 0.0
-	
-	# Guardamos el progreso (Nivel Nuevo, Packs Actuales, Puntos Actuales)
 	save_game_data()
-	
 	ScenesTransitions.change_scene("res://Scenes/Level_" + str(current_level) + ".tscn")
 
-# --- NUEVA PARTIDA ---
 func start_new_game():
 	points = 0
 	life_packs = 3
@@ -216,50 +183,43 @@ func start_new_game():
 	
 	has_active_checkpoint = false
 	active_checkpoint_pos = Vector2.ZERO
+	has_boss_checkpoint = false
+	boss_checkpoint_state = 0
 	
 	save_game_data()
 	ScenesTransitions.change_scene("res://Scenes/Level_1.tscn")
 
-# --- BOTÓN RESTART LEVEL (GAME OVER) ---
 func restart_gameplay() -> void:
 	get_tree().paused = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-
-	# REGLA: Resetear condiciones para reintento de nivel
+	
 	life_packs = 3
 	points = 0
 	game_time = 0.0
 	
 	has_active_checkpoint = false
 	active_checkpoint_pos = Vector2.ZERO
+	has_boss_checkpoint = false
+	boss_checkpoint_state = 0
 	
-	# Guardamos este estado de reinicio en el disco
 	save_game_data()
-	
 	ScenesTransitions.change_scene("res://Scenes/Level_" + str(current_level) + ".tscn")
 
-# --- IR AL MENÚ PRINCIPAL ---
 func go_to_mainmenu() -> void:
-	# REGLA: Salir al menú limpia el checkpoint de la sesión actual
 	has_active_checkpoint = false
 	active_checkpoint_pos = Vector2.ZERO
+	has_boss_checkpoint = false
+	boss_checkpoint_state = 0
 	
 	if life_packs <= 0:
-		# CASO: GAME OVER -> MAIN MENU
-		# Guardamos estado de reinicio para que "Resume" funcione como Restart Level
 		life_packs = 3
 		points = 0
 		save_game_data()
-	else:
-		# CASO: PAUSA -> MAIN MENU
-		# No guardamos nada. Se mantiene el guardado del inicio del nivel.
-		pass
-
+		
 	game_time = 0.0
 	get_tree().paused = false
 	ScenesTransitions.change_scene("res://Scenes/MainMenu.tscn")
 
-# --- SISTEMA DE GUARDADO/CARGA (DISCO) ---
 func save_game_data() -> void:
 	var data = {
 		"current_level": current_level,
@@ -271,7 +231,6 @@ func save_game_data() -> void:
 		file.store_string(JSON.stringify(data))
 		file.close()
 	has_saved_game = true
-	print("Guardado en disco. Nivel:", current_level, " Packs:", life_packs)
 
 func load_game_data():
 	if FileAccess.file_exists("user://save_data.json"):
@@ -283,7 +242,6 @@ func load_game_data():
 		current_level = data.get("current_level", 1)
 		points = data.get("points", 0)
 		life_packs = data.get("life_packs", 3)
-		
 		has_saved_game = true
 	else:
 		has_saved_game = false
@@ -293,14 +251,16 @@ func delete_saved_game() -> void:
 		DirAccess.remove_absolute("user://save_data.json")
 	has_saved_game = false
 
-# --- ACTIVAR CHECKPOINT (RAM) ---
 func activate_checkpoint(pos: Vector2, current_points: int) -> void:
 	active_checkpoint_pos = pos
 	checkpoint_points = current_points
 	has_active_checkpoint = true
-	print("Checkpoint RAM activado.")
 
-# --- UI Y UTILIDADES ---
+func _on_boss_phase_changed(state: int, health: int) -> void:
+	boss_checkpoint_state = state
+	boss_checkpoint_health = health
+	has_boss_checkpoint = true
+
 func add_new_points(value: int):
 	points += value
 	update_ui()
@@ -332,7 +292,6 @@ func update_ui():
 func update_lives(lives):
 	for i in range(len(lives_sprites)):
 		lives_sprites[i].visible = i < lives
-	
 	for i in range(len(packs_sprites)):
 		packs_sprites[i].visible = i < life_packs
 
@@ -375,7 +334,6 @@ func hide_boss_bar() -> void:
 		boss_health_bar.visible = false
 		boss_health_bar.modulate.a = 1.0
 
-# Función auxiliar para leer SOLO los puntos del archivo de guardado
 func get_saved_points_from_disk() -> int:
 	if FileAccess.file_exists("user://save_data.json"):
 		var file = FileAccess.open("user://save_data.json", FileAccess.READ)

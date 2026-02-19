@@ -5,18 +5,18 @@ extends CharacterBody2D
 @onready var area2d: Area2D = $Area2D
 
 @onready var shoot_sound: AudioStreamPlayer2D = $AudioStream_Shoot
-@onready var walk_sound: AudioStreamPlayer2D = $AudioStream_Idle
+# Cambiado el nombre de la variable para coincidir con tu nodo real
+@onready var idle_sound: AudioStreamPlayer2D = $AudioStream_Idle 
 @onready var death_sound: AudioStreamPlayer2D = $AudioStream_Death
 
-@onready var player = get_tree().current_scene.get_node_or_null("%Player")
+var player: Node2D = null
 
-@export var bullet_sprite: Texture2D # Aquí arrastras el asset específico de este enemigo
+@export var bullet_sprite: Texture2D
 var bullet_scene: PackedScene = preload("res://Prefabs/Bullet.tscn")
 var bullet_offset: Vector2
 var bullet_dir: Vector2 
 
 var detection_width: float = 10000.0
-var detection_height: float = 180.0
 var enemy_is_near: bool = false
 var can_shoot: bool = true
 
@@ -26,41 +26,52 @@ var is_alive: bool = true
 signal add_points
 var points = 25
 
+var damage_tween: Tween # Para el control seguro de la animación de daño
+
 func _ready() -> void:
 	animated_sprite.material = animated_sprite.material.duplicate()
 	animated_sprite.play("Idle")
-	walk_sound.play()
+	if idle_sound: idle_sound.play()
+	
+	# Obtención segura del jugador
+	player = get_tree().current_scene.get_node_or_null("%Player")
 
 func _physics_process(_delta: float) -> void:
-	if not (player and is_alive):
+	# Validación segura de vida propia y existencia del jugador
+	if not is_alive or not is_instance_valid(player):
+		return
+		
+	# Para evitar crashes si el jugador está en proceso de eliminación
+	var is_player_alive = "is_alive" in player and player.is_alive
+	if not is_player_alive:
 		return
 	
-	var detection_rect = Rect2(
-		position - Vector2(detection_width * 0.5, detection_height * 0.5),
-		Vector2(detection_width, detection_height)
-	)
+	# Detección y Orientación Optimizada (Evitamos instanciar Rect2 cada frame)
+	var distance_x = player.global_position.x - global_position.x
 	
-	if detection_rect.has_point(player.position):
-		if player.position.x < position.x:
+	# Rango visual muy amplio (según tu Rect2 original de 10000)
+	if abs(distance_x) < (detection_width * 0.5):
+		if distance_x < 0: # Jugador a la izquierda
 			animated_sprite.flip_h = true
-			animated_sprite.position = Vector2(-8, 0)
+			animated_sprite.position.x = -8
 			bullet_offset = Vector2(-25, 5)
 			bullet_dir = Vector2.LEFT
-		else:
+		else: # Jugador a la derecha
 			animated_sprite.flip_h = false
-			animated_sprite.position = Vector2(7, 0)
+			animated_sprite.position.x = 7
 			bullet_offset = Vector2(25, 5)
 			bullet_dir = Vector2.RIGHT
 	
-	if enemy_is_near and player.is_alive:
-		if can_shoot:
-			shoot_bullet()
-			can_shoot = false
-			shoot_timer.start(0.75)
+	# Lógica de Disparo
+	if enemy_is_near and can_shoot:
+		shoot_bullet()
+		can_shoot = false
+		shoot_timer.start(0.75)
 
 func shoot_bullet() -> void:
 	var bullet = bullet_scene.instantiate() as Area2D
-	shoot_sound.play()
+	if shoot_sound: shoot_sound.play()
+	
 	if bullet.has_method("set_sprite"):
 		bullet.set_sprite(bullet_sprite)
 		
@@ -71,53 +82,74 @@ func shoot_bullet() -> void:
 		bullet.set_mask(2) 
 	 
 	if bullet.has_method("set_direction"):
-		bullet.set_direction( bullet_dir)
-	bullet.position = position + bullet_offset
+		bullet.set_direction(bullet_dir)
+		
+	# CRÍTICO: Debe ser global_position, no position
+	bullet.global_position = global_position + bullet_offset
 	
-	get_tree().current_scene.add_child(bullet)
+	var current_scene = get_tree().current_scene
+	if current_scene:
+		current_scene.add_child(bullet)
 
 func take_damage() -> void:
 	if not is_alive:
 		return
 	
 	lives -= 1
-	emit_signal("add_points", points)
 	
-	# EFECTO DE DAÑO POR CÓDIGO
-	var tween = create_tween()
-	animated_sprite.modulate = Color(1, 0, 0, 1) # Rojo puro
-	
-	# Volviendo a blanco en 0.2 segundos
-	# set_trans(Tween.TRANS_SINE) hace que se vea suave
-	tween.tween_property(animated_sprite, "modulate", Color(1, 1, 1, 1), 0.2).set_trans(Tween.TRANS_SINE)
+	# Gestión segura del Tween visual (Previene glitch de solapamiento)
+	if damage_tween:
+		damage_tween.kill()
+		
+	damage_tween = create_tween()
+	animated_sprite.modulate = Color(1, 0, 0, 1)
+	damage_tween.tween_property(animated_sprite, "modulate", Color.WHITE, 0.2).set_trans(Tween.TRANS_SINE)
 	
 	if lives <= 0:
-		set_collision_layer_value(3,false)
-		is_alive = false
-		animated_sprite.play("Death")
-		death_sound.play()
-		await animated_sprite.animation_finished
-		
-		queue_free()
+		die()
 	else:
-		emit_signal("add_points", points)
-		
+		# Mecánica de aturdimiento/retraso de disparo al recibir daño
 		can_shoot = false
 		if shoot_timer.time_left > 0:
 			shoot_timer.start(shoot_timer.time_left + 1.0)
 		else:
 			shoot_timer.start(1.0)
 
+func die() -> void:
+	is_alive = false
+	
+	# Emitimos los puntos UNA SOLA VEZ al morir (Corrige exploit de economía)
+	emit_signal("add_points", points)
+	
+	# Silenciamos el motor de la torreta al morir
+	if idle_sound: idle_sound.stop()
+	
+	# Desactivamos interacciones físicas inmediatamente
+	set_collision_layer_value(3, false)
+	shoot_timer.stop()
+	can_shoot = false
+	
+	animated_sprite.play("Death")
+	if death_sound: death_sound.play()
+	
+	# Esperamos a la animación antes de limpiar
+	await animated_sprite.animation_finished
+	queue_free()
+
 func _on_body_entered(body: Node) -> void:
-	if body.is_in_group("Player") and body.is_alive and is_alive:
-		animated_sprite.play("Atack")
-		enemy_is_near = true
+	# Validación de seguridad absoluta antes de leer propiedades
+	if is_alive and is_instance_valid(body) and body.is_in_group("Player"):
+		if "is_alive" in body and body.is_alive:
+			animated_sprite.play("Atack") # NOTA: Asumo que en tu editor se llama "Atack" y no "Attack"
+			enemy_is_near = true
 
 func _on_body_exited(body: Node) -> void:
-	if body.is_in_group("Player") and is_alive:
+	if is_alive and is_instance_valid(body) and body.is_in_group("Player"):
 		animated_sprite.play("Idle")
-		#walk_sound.play()
+		if idle_sound and not idle_sound.playing: 
+			idle_sound.play()
 		enemy_is_near = false
 
 func _on_shoot_timer_timeout() -> void:
-	can_shoot = true
+	if is_alive:
+		can_shoot = true
