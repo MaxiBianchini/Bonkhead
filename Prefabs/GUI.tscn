@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dch15up2fk0ht"]
+[gd_scene load_steps=9 format=3 uid="uid://dch15up2fk0ht"]
 
 [ext_resource type="Texture2D" uid="uid://1y0p34ksxrjo" path="res://Graphics/GUI/Status/Contenedor Vidas.png" id="1_1r6vs"]
 [ext_resource type="Texture2D" uid="uid://beqnac4chs2lj" path="res://Graphics/GUI/Status/1-4.png" id="2_c22wm"]
@@ -7,12 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cthae01aake71" path="res://Graphics/GUI/Status/Timer.png" id="6_ajp3r"]
 [ext_resource type="PackedScene" uid="uid://ojwtewgtoefn" path="res://Scenes/Display Digital.tscn" id="7_avql4"]
 [ext_resource type="Texture2D" uid="uid://cg2qecn64y80y" path="res://Graphics/GUI/Logo/Logo3.png" id="8_7vwet"]
-[ext_resource type="Texture2D" uid="uid://durgtlyrl3rrf" path="res://Graphics/GUI/Frames/Frame_37.png" id="8_wlkr0"]
 [ext_resource type="Texture2D" uid="uid://sxj0tffmroxi" path="res://Graphics/1_14.png" id="9_c22wm"]
-[ext_resource type="Texture2D" uid="uid://cty5kt2sfp2jq" path="res://Graphics/GUI/Bullets Icon/1.png" id="9_wlkr0"]
-[ext_resource type="Texture2D" uid="uid://c72adf683r3c7" path="res://Graphics/GUI/Bullets Icon/2.png" id="10_srqre"]
-[ext_resource type="Texture2D" uid="uid://bafcnkyba50w3" path="res://Graphics/GUI/Bullets Icon/3.png" id="11_7vwet"]
-[ext_resource type="Texture2D" uid="uid://dwpprte3gaffv" path="res://Graphics/GUI/Bullets Icon/4.png" id="12_c22wm"]
 
 [node name="GUI" type="CanvasLayer"]
 process_mode = 1
@@ -148,29 +143,3 @@ max_value = 300.0
 value = 300.0
 nine_patch_stretch = true
 texture_progress = ExtResource("9_c22wm")
-
-[node name="BulletIcon" type="Sprite2D" parent="HBoxContainer"]
-visible = false
-position = Vector2(460, 68)
-scale = Vector2(4, 4)
-texture = ExtResource("8_wlkr0")
-
-[node name="1" type="Sprite2D" parent="HBoxContainer/BulletIcon"]
-texture_filter = 1
-position = Vector2(0, 1)
-texture = ExtResource("9_wlkr0")
-
-[node name="2" type="Sprite2D" parent="HBoxContainer/BulletIcon"]
-visible = false
-position = Vector2(0, 1)
-texture = ExtResource("10_srqre")
-
-[node name="3" type="Sprite2D" parent="HBoxContainer/BulletIcon"]
-visible = false
-position = Vector2(0, 1)
-texture = ExtResource("11_7vwet")
-
-[node name="4" type="Sprite2D" parent="HBoxContainer/BulletIcon"]
-visible = false
-position = Vector2(0, 1)
-texture = ExtResource("12_c22wm")
