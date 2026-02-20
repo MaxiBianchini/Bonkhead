@@ -150,6 +150,7 @@ nine_patch_stretch = true
 texture_progress = ExtResource("9_c22wm")
 
 [node name="BulletIcon" type="Sprite2D" parent="HBoxContainer"]
+visible = false
 position = Vector2(460, 68)
 scale = Vector2(4, 4)
 texture = ExtResource("8_wlkr0")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=126 format=3 uid="uid://cdqlmgh2vxout"]
+[gd_scene load_steps=82 format=3 uid="uid://cdqlmgh2vxout"]
 
 [ext_resource type="Script" uid="uid://bbt48srafskvx" path="res://Scripts/Player.gd" id="1_y8i6y"]
 [ext_resource type="Texture2D" uid="uid://c4fc75o86mwdi" path="res://Graphics/Character/Player Original Animations/Double Jump.png" id="2_3kxgr"]
@@ -6,16 +6,8 @@
 [ext_resource type="Shader" uid="uid://3eyyqpjc4awp" path="res://Shaders/Hurts_effect.tres" id="2_b3bx2"]
 [ext_resource type="Texture2D" uid="uid://cv85nnv8lf48y" path="res://Graphics/Guns & Bullets/Small Guns/Bullets/Bullets (4).png" id="2_fd4tb"]
 [ext_resource type="Texture2D" uid="uid://dv4ligaohgdx0" path="res://Graphics/Character/Player Original Animations/Death.png" id="3_jmmxa"]
-[ext_resource type="Texture2D" uid="uid://ccw8oq1fyrten" path="res://Graphics/Character/Player with Guns Animations/Big Gun/Idle/Idle Shooting Up.png" id="5_2wlbw"]
-[ext_resource type="Texture2D" uid="uid://ffqup17vhfhy" path="res://Graphics/Character/Player with Guns Animations/Big Gun/Fall/Fall with Gun.png" id="6_b2t0f"]
 [ext_resource type="Texture2D" uid="uid://cicx63sdf0cbg" path="res://Graphics/Character/Player with Guns Animations/Small Gun/Fall/Fall with Gun.png" id="6_n3efl"]
-[ext_resource type="Texture2D" uid="uid://bjh1lim0ynwko" path="res://Graphics/Character/Player with Guns Animations/Big Gun/Run/Run with Gun.png" id="7_2ywdf"]
-[ext_resource type="Texture2D" uid="uid://biugy4xo0k5ns" path="res://Graphics/Character/Player with Guns Animations/Big Gun/Jump/Jump with Gun.png" id="7_1801k"]
-[ext_resource type="Texture2D" uid="uid://daunvme7ity3s" path="res://Graphics/Character/Player with Guns Animations/Big Gun/Run/Run Shooting Rect.png" id="7_k7qm6"]
-[ext_resource type="Texture2D" uid="uid://c845r0n25uupx" path="res://Graphics/Character/Player with Guns Animations/Big Gun/Idle/Idle Shooting Rect.png" id="7_v8yjo"]
 [ext_resource type="Texture2D" uid="uid://6gy3rbdn7t1h" path="res://Graphics/Character/Player with Guns Animations/Small Gun/Idle/Idle Shooting Up.png" id="8_ctqys"]
-[ext_resource type="Texture2D" uid="uid://cc2lyd3lbrne4" path="res://Graphics/Character/Player with Guns Animations/Big Gun/Run/Run Shooting Up.png" id="8_k7qm6"]
-[ext_resource type="Texture2D" uid="uid://slhmnlrub18n" path="res://Graphics/Character/Player with Guns Animations/Big Gun/Idle/Idle with Gun.png" id="9_4i7n6"]
 [ext_resource type="Texture2D" uid="uid://cieqe3bmcbd3s" path="res://Graphics/Character/Player with Guns Animations/Small Gun/Idle/Idle with Gun.png" id="9_60w85"]
 [ext_resource type="Texture2D" uid="uid://cuehhwn7upk82" path="res://Graphics/Character/Player with Guns Animations/Small Gun/Jump/Jump with Gun.png" id="11_kd7ob"]
 [ext_resource type="Texture2D" uid="uid://c3ndsvmc2d64" path="res://Graphics/Character/Player without Arm Animations/Arma chica/GrabWall.png" id="13_fd4tb"]
@@ -34,150 +26,6 @@
 shader = ExtResource("2_b3bx2")
 shader_parameter/Enabled = false
 shader_parameter/Tint = Color(0.984314, 0.015686, 0.294118, 1)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3mn88"]
-atlas = ExtResource("6_b2t0f")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3gp5y"]
-atlas = ExtResource("6_b2t0f")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dukta"]
-atlas = ExtResource("7_v8yjo")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_y2t24"]
-atlas = ExtResource("7_v8yjo")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6q6xl"]
-atlas = ExtResource("7_v8yjo")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_o7fxh"]
-atlas = ExtResource("7_v8yjo")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_406my"]
-atlas = ExtResource("5_2wlbw")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fd4tb"]
-atlas = ExtResource("5_2wlbw")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2ywdf"]
-atlas = ExtResource("5_2wlbw")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xeol2"]
-atlas = ExtResource("5_2wlbw")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0jsdg"]
-atlas = ExtResource("9_4i7n6")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wrfab"]
-atlas = ExtResource("9_4i7n6")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_lql1k"]
-atlas = ExtResource("9_4i7n6")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4y14o"]
-atlas = ExtResource("9_4i7n6")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_xsf22"]
-atlas = ExtResource("7_1801k")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nvogs"]
-atlas = ExtResource("7_1801k")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m6ltm"]
-atlas = ExtResource("7_1801k")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1mju0"]
-atlas = ExtResource("7_1801k")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_605ro"]
-atlas = ExtResource("7_k7qm6")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mghi7"]
-atlas = ExtResource("7_k7qm6")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dik4f"]
-atlas = ExtResource("7_k7qm6")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fd7od"]
-atlas = ExtResource("7_k7qm6")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_76k07"]
-atlas = ExtResource("7_k7qm6")
-region = Rect2(192, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5sr42"]
-atlas = ExtResource("7_k7qm6")
-region = Rect2(240, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_k0ae8"]
-atlas = ExtResource("8_k7qm6")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qi4wu"]
-atlas = ExtResource("8_k7qm6")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jmx6g"]
-atlas = ExtResource("8_k7qm6")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_oayvl"]
-atlas = ExtResource("8_k7qm6")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pg5i1"]
-atlas = ExtResource("8_k7qm6")
-region = Rect2(192, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yubif"]
-atlas = ExtResource("8_k7qm6")
-region = Rect2(240, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3b1fg"]
-atlas = ExtResource("7_2ywdf")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fdj0h"]
-atlas = ExtResource("7_2ywdf")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_h3dj0"]
-atlas = ExtResource("7_2ywdf")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0yh01"]
-atlas = ExtResource("7_2ywdf")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ty6fx"]
-atlas = ExtResource("7_2ywdf")
-region = Rect2(192, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_700hf"]
-atlas = ExtResource("7_2ywdf")
-region = Rect2(240, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_isv8g"]
 atlas = ExtResource("2_a22uy")
@@ -393,154 +241,6 @@ region = Rect2(240, 0, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_l1tm1"]
 animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3mn88")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3gp5y")
-}],
-"loop": true,
-"name": &"BFall",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dukta")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_y2t24")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6q6xl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_o7fxh")
-}],
-"loop": true,
-"name": &"BIdle Shooting Rect",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_406my")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fd4tb")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2ywdf")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xeol2")
-}],
-"loop": true,
-"name": &"BIdle Shooting Up",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0jsdg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wrfab")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lql1k")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4y14o")
-}],
-"loop": true,
-"name": &"BIdle with Gun",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_xsf22")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nvogs")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m6ltm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1mju0")
-}],
-"loop": true,
-"name": &"BJump",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 0.5,
-"texture": SubResource("AtlasTexture_605ro")
-}, {
-"duration": 0.5,
-"texture": SubResource("AtlasTexture_mghi7")
-}, {
-"duration": 0.5,
-"texture": SubResource("AtlasTexture_dik4f")
-}, {
-"duration": 0.5,
-"texture": SubResource("AtlasTexture_fd7od")
-}, {
-"duration": 0.5,
-"texture": SubResource("AtlasTexture_76k07")
-}, {
-"duration": 0.5,
-"texture": SubResource("AtlasTexture_5sr42")
-}],
-"loop": true,
-"name": &"BRun Shooting Rect",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_k0ae8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qi4wu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jmx6g")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_oayvl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pg5i1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_yubif")
-}],
-"loop": true,
-"name": &"BRun Shooting UP",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3b1fg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fdj0h")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_h3dj0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0yh01")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ty6fx")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_700hf")
-}],
-"loop": true,
-"name": &"BRun with Gun",
-"speed": 5.0
-}, {
 "frames": [{
 "duration": 0.2,
 "texture": SubResource("AtlasTexture_isv8g")
@@ -829,7 +529,7 @@ process_mode = 1
 z_index = -1
 material = SubResource("ShaderMaterial_c5nj1")
 sprite_frames = SubResource("SpriteFrames_l1tm1")
-animation = &"SIdle with Gun"
+animation = &"Dash"
 offset = Vector2(10, -7)
 
 [node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
@@ -843,7 +543,7 @@ offset = Vector2(10, -7)
 z_index = -1
 material = SubResource("ShaderMaterial_c5nj1")
 sprite_frames = SubResource("SpriteFrames_l1tm1")
-animation = &"SIdle with Gun"
+animation = &"SRun with Gun"
 offset = Vector2(10, -7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -881,6 +581,7 @@ wait_time = 0.1
 one_shot = true
 
 [node name="ShootCooldownTimer" type="Timer" parent="."]
+wait_time = 0.2
 one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

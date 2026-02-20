@@ -2,27 +2,14 @@ class_name Player
 extends CharacterBody2D
 
 enum State {
-	IDLE,
-	RUN,
-	JUMP,
-	FALL,
-	DASH,
-	WALL_GRAB,
-	DEAD
-}
-
-enum AmmoType {
-	NORMAL,
-	MORTAR,
-	PIERCING,
-	BURST
+	IDLE, RUN, JUMP, FALL, DASH, WALL_GRAB, DEAD
 }
 
 var state: State = State.IDLE
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var animated_sprite2:AnimatedSprite2D = $AnimatedSprite2D2
-@onready var animated_sprite3:AnimatedSprite2D = $AnimatedSprite2D3
+@onready var animated_sprite2: AnimatedSprite2D = $AnimatedSprite2D2
+@onready var animated_sprite3: AnimatedSprite2D = $AnimatedSprite2D3
 var animated_sprites: Array[AnimatedSprite2D] = []
 
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
@@ -49,12 +36,10 @@ var animated_sprites: Array[AnimatedSprite2D] = []
 
 @export var wall_slide_speed: float = 12.5
 @export var wall_jump_force: Vector2 = Vector2(450, -550)
+@export var slip_speed: float = 100.0
 
 signal player_died
 signal change_UI_lives(change_lives)
-signal ammo_changed(new_ammo_type)
-
-@export var slip_speed: float = 100.0
 
 var gravity: int = 2000
 var jump_force: float = -550
@@ -75,19 +60,12 @@ var is_cutscene: bool = false
 var lives: int = 5
 var can_shoot: bool = true
 
-var ammo_scenes: Dictionary = {
-	AmmoType.NORMAL: preload("res://Prefabs/Bullet.tscn"),
-	AmmoType.MORTAR: preload("res://Prefabs/MortarBullet.tscn"),
-	AmmoType.PIERCING: preload("res://Prefabs/PiercingBullet.tscn"),
-	AmmoType.BURST: preload("res://Prefabs/Bullet.tscn"),
-}
-var current_ammo_type: AmmoType = AmmoType.NORMAL
-
+# --- SISTEMA DE ARMAS LIMPIO ---
+var bullet_scene: PackedScene = preload("res://Prefabs/Bullet.tscn")
 @export var bullet_sprite: Texture2D
+
 var bullet_dir: Vector2 = Vector2.RIGHT
 var bullet_offset: Vector2 = Vector2(32, -9)
-var gun_type: String ="Small"
-var change_gun_type: bool = false
 var hurt_jump_force: float = -200
 var current_level: int
 var wall_grab_power_activated: bool = false
@@ -95,12 +73,6 @@ var is_stunned: bool = false
 var just_double_jumped: bool = false
 var double_jump_enabled: bool = false
 var can_dash = true
-
-var is_burst_mode_active: bool = false
-var burst_charges_left: int = 0
-const BURST_SHOT_COUNT: int = 3
-const BURST_DELAY_SECONDS: float = 0.1 
-const TOTAL_BURST_CHARGES: int = 6
 
 const OFFSET_IDLE_RIGHT: Vector2 = Vector2(40, -9)
 const OFFSET_RUN_RIGHT: Vector2 = Vector2(45, -9) 
@@ -118,80 +90,11 @@ const OFFSET_RUNUP_LEFT: Vector2 = Vector2(0, OFFSET_UP_RIGHT.y)
 
 func _ready() -> void:
 	current_level = SceneManager.current_level
-	if current_level >= 2:
-		double_jump_power_activated = true
-	
-	if current_level >= 3:
-		dash_power_activated = true
-	
-	if current_level >= 4:
-		wall_grab_power_activated = true
+	if current_level >= 2: double_jump_power_activated = true
+	if current_level >= 3: dash_power_activated = true
+	if current_level >= 4: wall_grab_power_activated = true
 		
 	animated_sprites = [animated_sprite, animated_sprite2, animated_sprite3]
-
-func update_visuals() -> void:
-	if velocity.x < 0:
-		player_dir = "LEFT"
-	elif velocity.x > 0:
-		player_dir = "RIGHT"
-
-	var final_pos_x: float = 10.0 if player_dir == "RIGHT" else -10.0
-	
-	var is_flipped: bool = (player_dir == "LEFT")
-	var sprite_offset_vector: Vector2 = Vector2(10, -7)
-	
-	if state == State.WALL_GRAB:
-		final_pos_x = 0
-		sprite_offset_vector = Vector2.ZERO
-		is_flipped = (player_dir == "RIGHT")
-	
-	for s in animated_sprites:
-		s.flip_h = is_flipped
-		s.position.x = final_pos_x
-	
-	animated_sprite.offset = sprite_offset_vector
-	
-	collision_shape.position.x = 10
-	raycast_wall.position.x = 10
-	raycast_floor.position.x = 10
-	area2D.position.x = 10
-	
-	raycast_wall.target_position.x = final_pos_x
-	
-	var anim_name = ""
-	var current_sprite_node = animated_sprite
-	
-	match state:
-		State.IDLE:
-			anim_name = "SIdle with Gun"
-		State.RUN:
-			anim_name = "SRun with Gun"
-		State.JUMP:
-			anim_name = "Double_Jump" if just_double_jumped else "SJump"
-			if just_double_jumped: just_double_jumped = false
-		State.FALL:
-			anim_name = "SFall"
-		State.WALL_GRAB:
-			anim_name = "GrabWall"
-		State.DASH:
-			anim_name = "Dash"
-		State.DEAD:
-			anim_name = "Death"
-
-	if Input.is_action_pressed("Shoot") and (state == State.IDLE or state == State.RUN):
-		if Input.is_action_pressed("ui_up"):
-			anim_name = "SRun Shooting Up" if state == State.RUN else "SIdle Shooting Up"
-			current_sprite_node = animated_sprite3
-		else:
-			anim_name = "SRun Shooting Rect" if state == State.RUN else "SIdle Shooting Rect"
-			current_sprite_node = animated_sprite2
-	
-	if anim_name != "" and current_sprite_node.animation != anim_name:
-		current_sprite_node.play(anim_name)
-
-	if current_sprite_node == animated_sprite: switch_animation(1)
-	elif current_sprite_node == animated_sprite2: switch_animation(2)
-	elif current_sprite_node == animated_sprite3: switch_animation(3)
 
 func _physics_process(delta) -> void:
 	if not is_alive:
@@ -210,9 +113,9 @@ func _physics_process(delta) -> void:
 	var is_shoot_pressed = false
 
 	if is_cutscene:
-		velocity.x = move_toward(velocity.x, 0, movement_velocity)
-	
-	if not is_stunned and not is_cutscene:
+		# Solucionado: Fricción basada en tiempo delta para evitar comportamiento errático de frenado
+		velocity.x = move_toward(velocity.x, 0, movement_velocity * delta * 10)
+	elif not is_stunned:
 		input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 		is_jump_pressed = Input.is_action_just_pressed("ui_jump")
 		is_dash_pressed = Input.is_action_just_pressed("Dash")
@@ -231,14 +134,8 @@ func _physics_process(delta) -> void:
 			var is_right_supported = raycast_edge_right.is_colliding()
 			
 			if is_on_floor() and not is_center_supported:
-				if is_left_supported and not is_right_supported:
-					velocity.x = slip_speed
-				elif is_right_supported and not is_left_supported:
-					velocity.x = -slip_speed
-				else:
-					velocity.x = 0
-			else:
-				velocity.x = 0
+				if is_left_supported and not is_right_supported: velocity.x = slip_speed
+				elif is_right_supported and not is_left_supported: velocity.x = -slip_speed
 			
 			if Input.is_action_pressed("ui_down") and is_jump_pressed and raycast_floor.is_colliding() and raycast_floor.get_collider().is_in_group("Platform"):
 				ignore_platform_collision()
@@ -246,15 +143,10 @@ func _physics_process(delta) -> void:
 				audio_jump.play() 
 				state = State.JUMP
 				velocity.y = jump_force
-			elif not is_on_floor():
-				state = State.FALL
-			elif input_vector.x != 0:
-				state = State.RUN
+			elif not is_on_floor(): state = State.FALL
+			elif input_vector.x != 0: state = State.RUN
 			elif is_dash_pressed and dash_power_activated and can_dash:
-				state = State.DASH
-				audio_dash.play()
-				velocity.y = 0
-				dash_duration_timer.start()
+				_start_dash()
 				
 		State.RUN:
 			velocity.y += gravity * delta
@@ -266,25 +158,17 @@ func _physics_process(delta) -> void:
 				audio_jump.play()
 				state = State.JUMP
 				velocity.y = jump_force
-			elif not is_on_floor():
-				state = State.FALL
-			elif input_vector.x == 0:
-				state = State.IDLE
+			elif not is_on_floor(): state = State.FALL
+			elif input_vector.x == 0: state = State.IDLE
 			elif is_dash_pressed and dash_power_activated and can_dash:
-				state = State.DASH
-				audio_dash.play()
-				velocity.y = 0
-				dash_duration_timer.start()
+				_start_dash()
 
 		State.JUMP, State.FALL:
 			velocity.y += gravity * delta
 			velocity.x = input_vector.x * movement_velocity
 			
 			if is_dash_pressed and dash_power_activated and can_dash:
-				state = State.DASH
-				audio_dash.play()
-				velocity.y = 0
-				dash_duration_timer.start()
+				_start_dash()
 			
 			if is_jump_pressed and double_jump_enabled and first_jump_completed:
 				first_jump_completed = false
@@ -303,8 +187,9 @@ func _physics_process(delta) -> void:
 				state = State.IDLE if input_vector.x == 0 else State.RUN
 			else:
 				was_in_air = true 
+				
 			var collider = raycast_wall.get_collider()
-			if wall_grab_power_activated  and on_wall and collider.is_in_group("Grabbable Wall") and is_moving_towards_wall:
+			if wall_grab_power_activated  and on_wall and collider and collider.is_in_group("Grabbable Wall") and is_moving_towards_wall:
 				state = State.WALL_GRAB
 		
 		State.WALL_GRAB:
@@ -312,8 +197,10 @@ func _physics_process(delta) -> void:
 				state = State.IDLE
 				return 
 			
-			var is_still_on_grabbable_wall = on_wall and raycast_wall.get_collider().is_in_group("Grabbable Wall")
+			var collider = raycast_wall.get_collider()
+			var is_still_on_grabbable_wall = on_wall and collider and collider.is_in_group("Grabbable Wall")
 			var is_letting_go = input_vector.x != 0 and not is_moving_towards_wall
+			
 			if not is_still_on_grabbable_wall or is_letting_go:
 				state = State.FALL
 				return
@@ -326,9 +213,6 @@ func _physics_process(delta) -> void:
 				velocity.x = wall_jump_force.x * jump_direction
 				velocity.y = wall_jump_force.y
 				state = State.JUMP
-			
-			if not on_wall or (input_vector.x != 0 and not is_moving_towards_wall):
-				state = State.FALL
 		
 		State.DASH:
 			velocity.y = 0
@@ -338,19 +222,17 @@ func _physics_process(delta) -> void:
 			velocity.x = 0
 			velocity.y += gravity * delta
 
+	# Control de altura de salto (Jump Cut)
 	if state == State.JUMP and Input.is_action_just_released("ui_jump") and velocity.y < 0:
 		velocity.y *= jump_cut_multiplier
 	
-	if is_shoot_pressed and can_shoot and not is_stunned and (state == State.IDLE or state == State.RUN or state == State.JUMP or state == State.FALL):
-		can_shoot = false
-		
-		if current_ammo_type == AmmoType.BURST:
-			shoot_cooldown_timer.start()
-			start_burst_fire() 
-		else:
-			audio_shoot.play()
-			shoot_bullet()
-			can_shoot = true
+	# --- LÓGICA DE DISPARO OPTIMIZADA ---
+	var can_fire_state = (state == State.IDLE or state == State.RUN or state == State.JUMP or state == State.FALL)
+	if is_shoot_pressed and can_shoot and not is_stunned and can_fire_state:
+		can_shoot = false # Bloquea el disparo
+		audio_shoot.play()
+		shoot_bullet()
+		shoot_cooldown_timer.start() # Inicia el temporizador de forma segura
 	
 	move_and_slide()
 	
@@ -359,6 +241,12 @@ func _physics_process(delta) -> void:
 		handle_double_jump()
 	update_animation()
 
+func _start_dash() -> void:
+	state = State.DASH
+	audio_dash.play()
+	velocity.y = 0
+	dash_duration_timer.start()
+
 func update_sprite_direction() -> void:
 	var offset := 10
 	var dir_mult := 1 if player_dir == "RIGHT" else -1
@@ -366,24 +254,19 @@ func update_sprite_direction() -> void:
 	
 	if state == State.WALL_GRAB:
 		animated_sprite.flip_h = (player_dir == "RIGHT")
-		for s in animated_sprites:
-			s.position.x = -offset * dir_mult
+		for s in animated_sprites: s.position.x = -offset * dir_mult
 		return
 	
-	if velocity.x < 0:
-		player_dir = "LEFT"
-	elif velocity.x > 0:
-		player_dir = "RIGHT"
+	if velocity.x < 0: player_dir = "LEFT"
+	elif velocity.x > 0: player_dir = "RIGHT"
 		
 	var flip := (player_dir == "LEFT")
-	for s in animated_sprites:
-		s.flip_h = flip
+	for s in animated_sprites: s.flip_h = flip
 	
 	bullet_dir = Vector2.LEFT if player_dir == "LEFT" else Vector2.RIGHT
 	dir_mult = -1 if player_dir == "LEFT" else 1
 
-	for s in animated_sprites:
-		s.position.x = offset * dir_mult
+	for s in animated_sprites: s.position.x = offset * dir_mult
 	
 	raycast_wall.target_position.x = offset * dir_mult
 	raycast_wall.position.x = offset
@@ -400,44 +283,39 @@ func update_animation() -> void:
 				if Input.is_action_pressed("ui_up"):
 					bullet_dir = Vector2.UP
 					bullet_offset = OFFSET_UP_RIGHT if player_dir == "RIGHT" else OFFSET_UP_LEFT
-					var anim_name = "SIdle Shooting Up" if gun_type == "Small" else "BIdle Shooting Up"
-					if animated_sprite3.animation != anim_name:
-						animated_sprite3.play(anim_name)
+					if animated_sprite3.animation != "SIdle Shooting Up":
+						animated_sprite3.play("SIdle Shooting Up")
 					switch_animation(3)
 				else:
 					bullet_dir = check_direction()
 					bullet_offset = OFFSET_IDLE_RIGHT if player_dir == "RIGHT" else OFFSET_IDLE_LEFT
-					var anim_name = "SIdle Shooting Rect" if gun_type == "Small" else "BIdle Shooting Rect"
-					if animated_sprite2.animation != anim_name:
-						animated_sprite2.play(anim_name)
+					if animated_sprite2.animation != "SIdle Shooting Rect":
+						animated_sprite2.play("SIdle Shooting Rect")
 					switch_animation(2)
 			else:
-
-				var anim_name = "SIdle with Gun" if gun_type == "Small" else "BIdle with Gun"
-				if animated_sprite.animation != anim_name:
-					animated_sprite.play(anim_name)
+				if animated_sprite.animation != "SIdle with Gun":
+					animated_sprite.play("SIdle with Gun")
 				switch_animation(1)
+
 		State.RUN:
 			if Input.is_action_pressed("Shoot"):
 				if Input.is_action_pressed("ui_up"):
 					bullet_dir = Vector2.UP
 					bullet_offset = OFFSET_RUNUP_RIGHT if player_dir == "RIGHT" else OFFSET_RUNUP_LEFT
-					var anim_name = "SRun Shooting Up" if gun_type == "Small" else "BRun Shooting Up"
-					if animated_sprite3.animation != anim_name:
-						animated_sprite3.play(anim_name)
+					if animated_sprite3.animation != "SRun Shooting Up":
+						animated_sprite3.play("SRun Shooting Up")
 					switch_animation(3)
 				else:
 					bullet_dir = check_direction()
 					bullet_offset = OFFSET_RUN_RIGHT if player_dir == "RIGHT" else OFFSET_RUN_LEFT
-					var anim_name = "SRun Shooting Rect" if gun_type == "Small" else "BRun Shooting Rect"
-					if animated_sprite2.animation != anim_name:
-						animated_sprite2.play(anim_name)
+					if animated_sprite2.animation != "SRun Shooting Rect":
+						animated_sprite2.play("SRun Shooting Rect")
 					switch_animation(2)
 			else:
-				var anim_name = "SRun with Gun" if gun_type == "Small" else "BRun with Gun"
-				if animated_sprite.animation != anim_name:
-					animated_sprite.play(anim_name)
+				if animated_sprite.animation != "SRun with Gun":
+					animated_sprite.play("SRun with Gun")
 				switch_animation(1)
+
 		State.JUMP:
 			if just_double_jumped:
 				bullet_offset = OFFSET_JUMP_RIGHT if player_dir == "RIGHT" else OFFSET_JUMP_LEFT
@@ -446,20 +324,21 @@ func update_animation() -> void:
 				just_double_jumped = false
 			else:
 				bullet_offset = OFFSET_JUMP_RIGHT if player_dir == "RIGHT" else OFFSET_JUMP_LEFT
-				var anim_name = "SJump" if gun_type == "Small" else "BJump"
-				if animated_sprite.animation != "Double_Jump" and animated_sprite.animation != anim_name:
-					animated_sprite.play(anim_name)
+				if animated_sprite.animation != "Double_Jump" and animated_sprite.animation != "SJump":
+					animated_sprite.play("SJump")
 			switch_animation(1)
+
 		State.FALL:
 			bullet_offset = OFFSET_JUMP_RIGHT if player_dir == "RIGHT" else OFFSET_JUMP_LEFT
-			var anim_name = "SFall" if gun_type == "Small" else "BFall"
-			if animated_sprite.animation != anim_name:
-				animated_sprite.play(anim_name)
+			if animated_sprite.animation != "SFall":
+				animated_sprite.play("SFall")
 			switch_animation(1)
+
 		State.WALL_GRAB:
 			if animated_sprite.animation != "GrabWall":
 				animated_sprite.play("GrabWall")
 			switch_animation(1)
+
 		State.DASH:
 			if animated_sprite.animation != "Dash":
 				animated_sprite.play("Dash")
@@ -475,12 +354,9 @@ func update_animation() -> void:
 func switch_animation(animation_number: int) -> void:
 	hide_all_sprites()
 	match animation_number:
-		1:
-			animated_sprite.visible = true
-		2:
-			animated_sprite2.visible = true
-		3:
-			animated_sprite3.visible = true
+		1: animated_sprite.visible = true
+		2: animated_sprite2.visible = true
+		3: animated_sprite3.visible = true
 
 func hide_all_sprites() -> void:
 	animated_sprite.visible = false
@@ -488,8 +364,7 @@ func hide_all_sprites() -> void:
 	animated_sprite3.visible = false
 
 func handle_double_jump() -> void:
-	if not double_jump_power_activated:
-		return
+	if not double_jump_power_activated: return
 	
 	if is_on_floor():
 		double_jump_enabled = false
@@ -498,65 +373,31 @@ func handle_double_jump() -> void:
 		
 	if raycast_wall.is_colliding():
 		var collider = raycast_wall.get_collider()
-		
 		if collider and collider.is_in_group("Jumpeable Wall"):
 			double_jump_enabled = true
 			first_jump_completed = true
 		else:
 			double_jump_enabled = false
-			
 	else:
 		double_jump_enabled = false
 
 func shoot_bullet() -> void:
-	update_animation()
+	update_animation() # Fuerza la actualización de offsets de bala antes de instanciar
 	
-	var ammo_type_to_spawn = current_ammo_type
-	if current_ammo_type == AmmoType.BURST:
-		ammo_type_to_spawn = AmmoType.NORMAL 
-		
-	var bullet_scene_to_spawn = ammo_scenes[ammo_type_to_spawn]
-	var bullet = bullet_scene_to_spawn.instantiate() as Area2D
-	if (ammo_type_to_spawn == AmmoType.NORMAL or AmmoType.BURST):
-		if bullet.has_method("set_sprite"):
-			bullet.set_sprite(bullet_sprite)
-	
+	var bullet = bullet_scene.instantiate() as Area2D
+	if bullet.has_method("set_sprite"):
+		bullet.set_sprite(bullet_sprite)
 	if bullet.has_method("set_shooter"):
 		bullet.set_shooter(self)
-		
 	if bullet.has_method("set_mask"):
 		bullet.set_mask(3)
-	
 	if bullet.has_method("set_direction"):
-		if (current_ammo_type == AmmoType.MORTAR and bullet_dir == Vector2.UP and bullet.has_method("set_aim_state")):
-			bullet.set_aim_state(true)
-			bullet.set_direction(check_direction())
-		else:
-			bullet.set_direction(bullet_dir)
+		bullet.set_direction(bullet_dir)
 			
 	bullet.global_position = global_position + bullet_offset
-	get_tree().current_scene.add_child(bullet)
-
-func set_ammo_type(new_type: AmmoType) -> void:
-	if current_ammo_type == new_type:
-		return
-		
-	current_ammo_type = new_type
-	is_burst_mode_active = false 
 	
-	match current_ammo_type:
-		AmmoType.NORMAL, AmmoType.MORTAR, AmmoType.PIERCING:
-			if gun_type == "Big":
-				gun_type = "Small"
-		
-		AmmoType.BURST:
-			is_burst_mode_active = true
-			burst_charges_left = TOTAL_BURST_CHARGES
-			
-			if gun_type == "Small":
-				gun_type = "Big"
-	
-	ammo_changed.emit(current_ammo_type)
+	var current_scene = get_tree().current_scene
+	if current_scene: current_scene.add_child(bullet)
 
 func ignore_platform_collision() -> void:
 	state = State.FALL
@@ -565,19 +406,12 @@ func ignore_platform_collision() -> void:
 	await (get_tree().create_timer(fall_through_time).timeout)
 	collision_shape.disabled = false
 
-func change_weapon() -> void:
-	if gun_type == "Small":
-		gun_type = "Big"
-	else:
-		gun_type = "Small"
-		set_ammo_type(AmmoType.NORMAL)
-
 func take_damage(force_death: bool = false, damage: int = 1) -> void:
+	return
 	if (is_invincible and not force_death) or not is_alive:
 		return
 		
-	if force_death:
-		lives = 0
+	if force_death: lives = 0
 	else:
 		lives -= damage
 		audio_hurts.play()
@@ -589,7 +423,6 @@ func take_damage(force_death: bool = false, damage: int = 1) -> void:
 		state = State.DEAD
 		call_deferred("disable_player_collision")
 		dead_timer.start()
-		
 		animation_player.stop() 
 		
 		if animation_player.has_animation("RESET"):
@@ -611,65 +444,30 @@ func increase_life() -> bool:
 		return true
 	else:
 		if SceneManager.life_packs < 3:
-			
 			SceneManager.life_packs += 1
 			SceneManager.save_game_data()
-			
 			emit_signal("change_UI_lives", lives)
 			audio_packUp.play()
 			return true
 		else:
 			return false
 
-func activate_burst_mode() -> void:
-	is_burst_mode_active = true
-	burst_charges_left = TOTAL_BURST_CHARGES
-	
-	if gun_type == "Small":
-		change_weapon()
-
-func start_burst_fire() -> void:
-	burst_charges_left -= 1
-	
-	for i in range(BURST_SHOT_COUNT):
-		audio_shoot.play()
-		shoot_bullet()
-		
-		await get_tree().create_timer(BURST_DELAY_SECONDS).timeout
-	
-	if burst_charges_left <= 0:
-		deactivate_burst_mode()
-		can_shoot = true
-
-func deactivate_burst_mode() -> void:
-	is_burst_mode_active = false
-	
-	if gun_type == "Big":
-		change_weapon()
-
 func disable_player_collision() -> void:
-	area2D.set_collision_mask_value(3,false)
-	area2D.set_collision_mask_value(4,false)
-	area2D.set_collision_mask_value(5,false)
+	area2D.set_collision_mask_value(3, false)
+	area2D.set_collision_mask_value(4, false)
+	area2D.set_collision_mask_value(5, false)
 
 func _on_body_entered(body) -> void:
-	if body.is_in_group("Enemy") and body.is_alive:
+	if is_instance_valid(body) and body.is_in_group("Enemy") and body.is_alive:
 		take_damage()
 
 func check_direction()-> Vector2:
-	if (player_dir == "LEFT"):
-		return Vector2.LEFT
-	else:
-		return Vector2.RIGHT
+	return Vector2.LEFT if (player_dir == "LEFT") else Vector2.RIGHT
 
 func _on_dash_duration_timer_timeout() -> void:
 	dash_cool_down_timer.start()
 	can_dash = false
-	
-	if is_on_floor():
-		state = State.IDLE
-	else:
-		state = State.FALL
+	state = State.IDLE if is_on_floor() else State.FALL
 
 func _on_dash_cool_down_timeout() -> void:
 	can_dash = true
@@ -678,7 +476,7 @@ func _on_dead_timer_timeout() -> void:
 	player_died.emit()
 
 func _on_area_entered(area: Area2D) -> void:
-	if area.is_in_group("Dead"):
+	if is_instance_valid(area) and area.is_in_group("Dead"):
 		take_damage(true)
 
 func _on_hurt_timer_timeout() -> void:

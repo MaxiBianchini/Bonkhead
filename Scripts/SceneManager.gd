@@ -6,13 +6,12 @@ var time_counter: HBoxContainer = null
 var points_counter: HBoxContainer = null
 var lives_sprites: Array = []
 var packs_sprites: Array = []
-var bullet_type: Array = []
 var comic_page: Node = null
 var player: Node = null
 var gui: Node = null
 var boss_health_bar: TextureProgressBar = null
 var boss_health_container: Sprite2D = null
-var dash_bar_container: Sprite2D = null # Corregido typo
+var dash_bar_container: Sprite2D = null 
 var dash_bar: TextureProgressBar = null
 var pause_menu: Node = null
 var game_over_menu: Node = null
@@ -36,10 +35,8 @@ var player_positioned: bool = false
 func _ready() -> void:
 	check_saved_game()
 	load_game_data()
-	# ELIMINADO: get_tree().tree_changed.connect(...) -> Soluciona el problema crítico de rendimiento
 
 func _process(delta):
-	# NUEVO ENFOQUE O(1): Verificamos cambio de escena eficientemente cada frame
 	var current_scene = get_tree().current_scene
 	if current_scene and current_scene.get_instance_id() != last_scene_id:
 		initialize_scene()
@@ -71,9 +68,6 @@ func initialize_scene() -> void:
 			else: 
 				dash_bar_container.visible = true
 			dash_bar.value = dash_bar.max_value
-		
-		var bullet_type_container = gui.get_node("HBoxContainer/BulletIcon")
-		bullet_type = bullet_type_container.get_children()
 		
 		var lives_container = gui.get_node("HBoxContainer/LivesLabel/HBoxContainer")
 		lives_sprites = lives_container.get_children()
@@ -114,10 +108,6 @@ func initialize_scene() -> void:
 			player.player_died.connect(on_player_died)
 		if not player.change_UI_lives.is_connected(update_lives):
 			player.change_UI_lives.connect(update_lives)
-		if not player.ammo_changed.is_connected(update_ammo_icon):
-			player.ammo_changed.connect(update_ammo_icon)
-		
-		update_ammo_icon(player.current_ammo_type)
 		
 	var boss_found = false
 	if current_scene.has_node("Final_Boss"):
@@ -356,9 +346,3 @@ func show_boss_bar_animated() -> void:
 		var fill_tween = create_tween()
 		fill_tween.tween_property(boss_health_bar, "value", boss.current_health, 1.5)\
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-
-func update_ammo_icon(ammo_type_index: int) -> void:
-	for icon in bullet_type:
-		icon.visible = false
-	if ammo_type_index >= 0 and ammo_type_index < bullet_type.size():
-		bullet_type[ammo_type_index].visible = true
