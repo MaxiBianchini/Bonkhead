@@ -864,7 +864,7 @@ position = Vector2(4482, 1765)
 position = Vector2(151, 0)
 
 [node name="MovingPlatform3" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
-position = Vector2(4460, 2169)
+position = Vector2(4459, 2169)
 
 [node name="Marker2D" parent="MovingPlatforms/MovingPlatform3" index="4"]
 position = Vector2(128, 0)
@@ -890,133 +890,133 @@ position = Vector2(0, -87)
 [node name="MovingPlatform7" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(3277, 668)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform7"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform7" index="4"]
 position = Vector2(0, 140)
 
 [node name="MovingPlatform8" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(5218, 1772)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform8"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform8" index="4"]
 position = Vector2(0, 186)
 
 [node name="MovingPlatform9" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(5218, 2197)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform9"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform9" index="4"]
 position = Vector2(0, -186)
 
 [node name="MovingPlatform10" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(5025, 2793)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform10"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform10" index="4"]
 position = Vector2(0, 125)
 
 [node name="MovingPlatform11" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(7927, 2289)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform11"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform11" index="4"]
 position = Vector2(-252, 0)
 
 [node name="MovingPlatform12" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(7248, 2290)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform12"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform12" index="4"]
 position = Vector2(252, 0)
 
 [node name="MovingPlatform13" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(8895, 3136)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform13"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform13" index="4"]
 position = Vector2(0, -280)
 
 [node name="MovingPlatform14" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(8782, 2606)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform14"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform14" index="4"]
 position = Vector2(0, 280)
 
 [node name="MovingPlatform15" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(8881, 2480)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform15"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform15" index="4"]
 position = Vector2(0, 200)
 
 [node name="MovingPlatform16" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
-position = Vector2(8683, 2418)
+position = Vector2(8783, 2418)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform16"]
-position = Vector2(0, 150)
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform16" index="4"]
+position = Vector2(-96, 126)
 
 [node name="MovingPlatform21" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(7025, 2287)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform21"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform21" index="4"]
 position = Vector2(0, -159)
 
 [node name="MovingPlatform22" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(9729, 1733)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform22"]
-position = Vector2(1, -224)
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform22" index="4"]
+position = Vector2(0, -224)
 
 [node name="MovingPlatform23" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(9995, 1737)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform23"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform23" index="4"]
 position = Vector2(229, 0)
 
 [node name="MovingPlatform24" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(10141, 1363)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform24"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform24" index="4"]
 position = Vector2(-440, 0)
 
 [node name="MovingPlatform25" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(10532, 781)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform25"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform25" index="4"]
 position = Vector2(-130, 130)
 
 [node name="MovingPlatform26" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(10840, 1695)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform26"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform26" index="4"]
 position = Vector2(0, -150)
 
 [node name="MovingPlatform27" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(10745, 1424)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform27"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform27" index="4"]
 position = Vector2(-216, 0)
 
 [node name="MovingPlatform28" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
-position = Vector2(7626, 3176)
+position = Vector2(7621, 3177)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform28"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform28" index="4"]
 position = Vector2(221, 0)
 
 [node name="MovingPlatform29" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(7673, 1710)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform29"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform29" index="4"]
 position = Vector2(-100, 0)
 
 [node name="MovingPlatform19" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(7422, 1710)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform19"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform19" index="4"]
 position = Vector2(100, 0)
 
 [node name="MovingPlatform18" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(7812, 1548)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform18"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform18" index="4"]
 position = Vector2(0, 65)
 
 [node name="MovingPlatform20" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(6986, 1714)
 
-[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform20"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform20" index="4"]
 position = Vector2(0, -181)
 
 [node name="Spikes" type="Node2D" parent="."]
@@ -1325,6 +1325,28 @@ metadata/_edit_lock_ = true
 [editable path="MovingPlatforms/MovingPlatform4"]
 [editable path="MovingPlatforms/MovingPlatform5"]
 [editable path="MovingPlatforms/MovingPlatform6"]
+[editable path="MovingPlatforms/MovingPlatform7"]
+[editable path="MovingPlatforms/MovingPlatform8"]
+[editable path="MovingPlatforms/MovingPlatform9"]
+[editable path="MovingPlatforms/MovingPlatform10"]
+[editable path="MovingPlatforms/MovingPlatform11"]
+[editable path="MovingPlatforms/MovingPlatform12"]
+[editable path="MovingPlatforms/MovingPlatform13"]
+[editable path="MovingPlatforms/MovingPlatform14"]
+[editable path="MovingPlatforms/MovingPlatform15"]
+[editable path="MovingPlatforms/MovingPlatform16"]
+[editable path="MovingPlatforms/MovingPlatform21"]
+[editable path="MovingPlatforms/MovingPlatform22"]
+[editable path="MovingPlatforms/MovingPlatform23"]
+[editable path="MovingPlatforms/MovingPlatform24"]
+[editable path="MovingPlatforms/MovingPlatform25"]
+[editable path="MovingPlatforms/MovingPlatform26"]
+[editable path="MovingPlatforms/MovingPlatform27"]
+[editable path="MovingPlatforms/MovingPlatform28"]
+[editable path="MovingPlatforms/MovingPlatform29"]
+[editable path="MovingPlatforms/MovingPlatform19"]
+[editable path="MovingPlatforms/MovingPlatform18"]
+[editable path="MovingPlatforms/MovingPlatform20"]
 [editable path="PhantomAreas/Phantom_Area"]
 [editable path="PhantomAreas/Phantom_Area2"]
 [editable path="PhantomAreas/Phantom_Area3"]
