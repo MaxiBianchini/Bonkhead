@@ -79,7 +79,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_ojqif")
 }],
 "loop": true,
-"name": &"Atack",
+"name": &"Attack",
 "speed": 5.0
 }, {
 "frames": [{
