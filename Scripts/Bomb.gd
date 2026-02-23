@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var damage: int = 2
 
 @onready var explosion_area: Area2D = $ExplosionArea
-@onready var sprite = $AnimatedSprite2D # O AnimatedSprite2D
+@onready var sprite = $AnimatedSprite2D
 @onready var sound = $AudioStream_Exploit
 
 var gravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")

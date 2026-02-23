@@ -60,7 +60,6 @@ var is_cutscene: bool = false
 var lives: int = 5
 var can_shoot: bool = true
 
-# --- SISTEMA DE ARMAS LIMPIO ---
 var bullet_scene: PackedScene = preload("res://Prefabs/Bullet.tscn")
 @export var bullet_sprite: Texture2D
 
@@ -113,7 +112,6 @@ func _physics_process(delta) -> void:
 	var is_shoot_pressed = false
 
 	if is_cutscene:
-		# Solucionado: Fricción basada en tiempo delta para evitar comportamiento errático de frenado
 		velocity.x = move_toward(velocity.x, 0, movement_velocity * delta * 10)
 	elif not is_stunned:
 		input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
@@ -221,18 +219,16 @@ func _physics_process(delta) -> void:
 		State.DEAD:
 			velocity.x = 0
 			velocity.y += gravity * delta
-
-	# Control de altura de salto (Jump Cut)
+			
 	if state == State.JUMP and Input.is_action_just_released("ui_jump") and velocity.y < 0:
 		velocity.y *= jump_cut_multiplier
 	
-	# --- LÓGICA DE DISPARO OPTIMIZADA ---
 	var can_fire_state = (state == State.IDLE or state == State.RUN or state == State.JUMP or state == State.FALL)
 	if is_shoot_pressed and can_shoot and not is_stunned and can_fire_state:
-		can_shoot = false # Bloquea el disparo
+		can_shoot = false
 		audio_shoot.play()
 		shoot_bullet()
-		shoot_cooldown_timer.start() # Inicia el temporizador de forma segura
+		shoot_cooldown_timer.start()
 	
 	move_and_slide()
 	
@@ -382,7 +378,7 @@ func handle_double_jump() -> void:
 		double_jump_enabled = false
 
 func shoot_bullet() -> void:
-	update_animation() # Fuerza la actualización de offsets de bala antes de instanciar
+	update_animation()
 	
 	var bullet = bullet_scene.instantiate() as Area2D
 	if bullet.has_method("set_sprite"):

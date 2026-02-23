@@ -31,33 +31,29 @@ var bullet_scene: PackedScene = preload("res://Prefabs/Bullet.tscn")
 var initial_position: Vector2
 var patrol_direction: int = 1
 
-# CORRECCIÓN CRÍTICA DE TIPO: Float a Bool
 var is_alive: bool = true 
 var lives: int = 3
 
-var damage_tween: Tween # Para control de memoria visual
+var damage_tween: Tween
 
 func _ready() -> void:
 	animated_sprite.material = animated_sprite.material.duplicate()
-	initial_position = global_position # Usamos global para que funcione en cualquier nivel
+	initial_position = global_position
 	attack_timer.wait_time = attack_cooldown
 	
 	player = get_tree().current_scene.get_node_or_null("%Player")
 
 func _physics_process(_delta: float) -> void:
-	# Máquina de estados blindada contra bucles zombis
 	if state == State.DEAD:
 		return
 		
 	match state:
 		State.INACTIVE:
-			# Evita reiniciar la animación 60 veces por segundo
 			if animated_sprite.animation != "Idle":
 				animated_sprite.play("Idle")
 			velocity = Vector2.ZERO 
 		
 		State.ACTIVE:
-			# Chequeo vital: ¿El jugador sigue vivo mientras estamos activos?
 			var player_valid = is_instance_valid(player) and "is_alive" in player and player.is_alive
 			if not player_valid:
 				_deactivate_enemy()
@@ -66,7 +62,6 @@ func _physics_process(_delta: float) -> void:
 			if animated_sprite.animation != "Walk":
 				animated_sprite.play("Walk")
 			
-			# Lógica de patrulla vertical usando Global Position
 			if (patrol_direction == 1 and global_position.y >= initial_position.y + patrol_distance) or \
 			   (patrol_direction == -1 and global_position.y <= initial_position.y):
 				patrol_direction *= -1
@@ -84,7 +79,6 @@ func _physics_process(_delta: float) -> void:
 			
 	move_and_slide()
 
-# Función de apoyo para limpiar estados
 func _deactivate_enemy() -> void:
 	if state != State.DEAD:
 		state = State.INACTIVE
@@ -105,13 +99,11 @@ func take_damage() -> void:
 	if lives <= 0:
 		die()
 
-# Separamos la lógica de muerte fuera del _physics_process
 func die() -> void:
 	is_alive = false
 	state = State.DEAD
 	velocity = Vector2.ZERO
 	
-	# Economía segura
 	emit_signal("add_points", points)
 	
 	set_collision_layer_value(3, false)
@@ -132,7 +124,6 @@ func shoot() -> void:
 	if bullet.has_method("set_sprite"):
 		bullet.set_sprite(bullet_sprite)
 	
-	# La bala nace en la posición global exacta del marcador
 	bullet.global_position = projectile_spawn_point.global_position
 	
 	var calculated_bullet_dir = Vector2.RIGHT

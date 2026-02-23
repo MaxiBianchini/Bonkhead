@@ -5,7 +5,6 @@ extends CanvasLayer
 @onready var continue_button: TextureButton = $ContinueButton
 @onready var audio_click: AudioStreamPlayer2D = $AudioStreamPlayer
 
-# --- Textos de la Narración Final (en Inglés) ---
 var story_texts: Array[String] = [
 	"The ink of chaos has finally settled. \nThe nightmare within the pages is over.", 
 	"With the recovered cover, the artist's \nmasterpiece has reached its true conclusion.",

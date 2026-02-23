@@ -18,13 +18,12 @@ signal add_points
 const FLOOR_RAYCAST_RIGHT_POS: Vector2 = Vector2(50, 27.5)
 const FLOOR_RAYCAST_LEFT_POS: Vector2 = Vector2(-50, 27.5)
 
-# Físicas estandarizadas (1200 es aprox 20 * 60fps)
 var gravity_force: float = 1200.0 
 
 var lives: int = 5
 var is_alive: bool = true
 
-var damage_tween: Tween # Previene glitches de parpadeo
+var damage_tween: Tween
 
 func _ready() -> void:
 	animated_sprite.material = animated_sprite.material.duplicate()
@@ -34,7 +33,6 @@ func _ready() -> void:
 	raycast_floor.position = FLOOR_RAYCAST_RIGHT_POS
 
 func _physics_process(delta: float) -> void:
-	# 1. Aplicar Gravedad segura e independiente de los FPS
 	if not is_on_floor():
 		velocity.y += gravity_force * delta
 	
@@ -43,25 +41,18 @@ func _physics_process(delta: float) -> void:
 	else:
 		_process_dead_state(delta)
 	
-	# 2. move_and_slide se llama SIEMPRE al final
 	move_and_slide()
 
 func _process_alive_state() -> void:
 	if is_driving:
-		# 1. Evaluamos colisiones ANTES de definir la velocidad del frame
 		if is_on_wall() or not raycast_floor.is_colliding():
 			change_direction()
-			# CRÍTICO: Al cambiar de dirección movimos el raycast de suelo.
-			# Forzamos su actualización inmediata para evitar falsos positivos en el próximo frame.
 			raycast_floor.force_raycast_update()
 			
-		# 2. Ahora sí, aplicamos la velocidad con la dirección correcta
 		velocity.x = speed * direction
 	else:
-		# Estado Idle
 		velocity.x = 0
 		
-		# Verificamos detección del jugador
 		if raycast_detection.is_colliding():
 			var collider = raycast_detection.get_collider()
 			if is_instance_valid(collider) and collider.is_in_group("Player"):
@@ -77,7 +68,6 @@ func start_driving() -> void:
 		walk_sound.play()
 
 func _process_dead_state(delta: float) -> void:
-	# Fricción para que el cadáver no patine por el piso eternamente si venía en velocidad
 	velocity.x = move_toward(velocity.x, 0, speed * delta * 5)
 
 func change_direction() -> void:
@@ -94,7 +84,6 @@ func take_damage() -> void:
 	
 	lives -= 1
 	
-	# Reinicio seguro de Tween
 	if damage_tween:
 		damage_tween.kill()
 		
@@ -109,13 +98,10 @@ func die() -> void:
 	is_alive = false
 	is_driving = false
 	
-	# Economía segura: Se emite solo una vez
 	emit_signal("add_points", points)
 	
-	# Desactivar hitbox de daño
 	set_collision_layer_value(3, false)
 	
-	# Apagamos ambos sonidos preventivamente (por si murió antes de correr)
 	if idle_sound: idle_sound.stop()
 	if walk_sound: walk_sound.stop()
 	

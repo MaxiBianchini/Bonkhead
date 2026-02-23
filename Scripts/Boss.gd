@@ -9,10 +9,10 @@ signal phase_changed(new_state, current_health)
 
 @export_group("Stats")
 @export var max_health: int = 350
-var current_health: int
+var current_health: float
 
 @export_group("Daño Recibido por Fase")
-@export var dmg_phase_1: float = 1
+@export var dmg_phase_1: float = 15#1
 @export var dmg_phase_2: float = 1.5
 @export var dmg_phase_3: float = 3
 
@@ -94,7 +94,7 @@ var is_alive: bool = true
 var points: int = 20
 
 var current_tween: Tween
-var damage_tween: Tween # NUEVO: Previene conflictos de parpadeo rojo
+var damage_tween: Tween
 
 func _ready():
 	current_health = max_health
@@ -269,7 +269,6 @@ func shoot_bullet_at_player():
 	if bullet.has_method("set_direction"): bullet.set_direction(bullet_dir)
 	if bullet.has_method("set_mask"): bullet.set_mask(2)
 	
-	# NUEVO: Referencia segura en lugar de get_parent()
 	var current_scene = get_tree().current_scene
 	if current_scene: current_scene.add_child(bullet)
 	if bullet.has_meta("delete_mask"): bullet.delete_mask(1)
@@ -303,7 +302,6 @@ func fly_to_height(target_y: float):
 	current_tween.tween_property(self, "position", target_pos, 2.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	await current_tween.finished
 	
-	# NUEVO: Previene activación de físicas si el tween fue matado por un cambio de fase abrupto
 	if is_instance_valid(self) and current_health > 0:
 		set_physics_process(true)
 
@@ -432,7 +430,6 @@ func shoot_bullet_angle(angle_rad: float):
 	if bullet.has_method("set_direction"): bullet.set_direction(dir)
 	if bullet.has_method("set_mask"): bullet.set_mask(2)
 	
-	# NUEVO: Referencia segura
 	var current_scene = get_tree().current_scene
 	if current_scene: current_scene.add_child(bullet)
 	if bullet.has_meta("delete_mask"): bullet.delete_mask(1)
@@ -498,7 +495,7 @@ func fly_to_position(target: Vector2):
 func take_damage():
 	if not is_alive or is_invulnerable: return
 	
-	var damage_taken: int = 2
+	var damage_taken: float = 2
 	match current_state:
 		States.PHASE_1_GROUND: damage_taken = dmg_phase_1
 		States.PHASE_2_AIR: damage_taken = dmg_phase_2
@@ -509,7 +506,6 @@ func take_damage():
 	emit_signal("health_changed", current_health)
 	if audio_hurt: audio_hurt.play()
 	
-	# NUEVO: Control de Tweens superpuestos
 	if damage_tween: damage_tween.kill()
 	damage_tween = create_tween()
 	animated_sprite.modulate = Color(1, 0, 0, 1)
@@ -537,7 +533,7 @@ func die():
 	emit_signal("boss_die")
 	cleanup_timers()
 	if current_tween: current_tween.kill()
-	if damage_tween: damage_tween.kill() # Previene glitches post-mortem
+	if damage_tween: damage_tween.kill()
 	
 	set_physics_process(false)
 	$CollisionShape2D.set_deferred("disabled", true)

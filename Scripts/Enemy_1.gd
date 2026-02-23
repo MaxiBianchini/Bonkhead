@@ -31,21 +31,17 @@ var bullet_offset: Vector2
 var bullet_dir: Vector2
 
 var can_shoot: bool = true
-var damage_tween: Tween # Para evitar solapamiento de animaciones de daño
+var damage_tween: Tween
 
 func _ready() -> void:
-	# Duplicamos material para que el parpadeo de daño sea único a esta instancia
 	animated_sprite.material = animated_sprite.material.duplicate()
 	animated_sprite.play("Walk")
 	
-	# Obtenemos al jugador de forma segura usando tu método original
 	player = get_tree().current_scene.get_node_or_null("%Player")
 	
-	# Iniciamos sonido de caminata
 	if walk_sound: walk_sound.play()
 
 func _physics_process(delta) -> void:
-	# 1. APLICAMOS GRAVEDAD SIEMPRE (incluso si está muerto, para que el cadáver caiga)
 	if not is_on_floor():
 		velocity.y += gravity * delta
 		
@@ -54,22 +50,18 @@ func _physics_process(delta) -> void:
 	else:
 		_process_dead_state(delta)
 		
-	# 2. MOVER Y DESLIZAR SIEMPRE
 	move_and_slide()
 
 func _process_alive_state() -> void:
-	# Verificación vital: ¿El jugador existe y su propiedad is_alive es true?
 	var player_valid = is_instance_valid(player) and "is_alive" in player and player.is_alive
 	
-	# Si estábamos cerca pero el jugador murió o desapareció, cancelamos el estado
 	if enemy_is_near and not player_valid:
 		enemy_is_near = false
 	
 	if enemy_is_near:
 		update_sprite_direction(player.global_position.x < global_position.x)
-		velocity.x = 0 # Nos detenemos para disparar
+		velocity.x = 0
 		
-		# Evita reiniciar la animación en cada frame si ya está disparando
 		if animated_sprite.animation != "Shoot":
 			animated_sprite.play("Shoot")
 			
@@ -79,7 +71,6 @@ func _process_alive_state() -> void:
 			can_shoot = false
 			shoot_timer.start(0.75)
 	else:
-		# Lógica de patrulla normal
 		update_sprite_direction(velocity.x < 0)
 		
 		if is_on_wall() or not raycast_floor.is_colliding():
@@ -92,7 +83,6 @@ func _process_alive_state() -> void:
 			animated_sprite.play("Walk")
 
 func _process_dead_state(delta) -> void:
-	# Frena el cuerpo gradualmente si estaba caminando o es empujado por un impacto
 	velocity.x = move_toward(velocity.x, 0, movement_velocity * delta * 5)
 
 func update_sprite_direction(is_facing_left: bool) -> void:
@@ -122,7 +112,6 @@ func shoot_bullet() -> void:
 	if bullet.has_method("set_direction"):
 		bullet.set_direction(bullet_dir)
 		
-	# CRÍTICO: Usar global_position para no duplicar offsets en escenas anidadas
 	bullet.global_position = global_position + bullet_offset
 	
 	var current_scene = get_tree().current_scene
@@ -135,7 +124,6 @@ func take_damage() -> void:
 	
 	lives -= 1
 	
-	# Control de Tweens: Matar el anterior si existe para evitar glitches visuales
 	if damage_tween: 
 		damage_tween.kill()
 		
@@ -149,13 +137,10 @@ func take_damage() -> void:
 func die() -> void:
 	is_alive = false
 	
-	# Emitir puntos SOLAMENTE cuando muere
 	emit_signal("add_points", points)
 	
-	# Desactivamos colisión con balas (Capa 3) para que no sea un escudo de carne
 	set_collision_layer_value(3, false)
 	
-	# Detener sonidos y timers inmediatamente
 	if walk_sound: walk_sound.stop()
 	shoot_timer.stop()
 	can_shoot = false
@@ -163,14 +148,11 @@ func die() -> void:
 	animated_sprite.play("Death")
 	death_sound.play()
 	
-	# Esperar a que termine el sonido o la animación de muerte
 	await death_sound.finished
 	
-	# Destruir nodo limpiamente
 	queue_free()
 
 func _on_body_entered(body: Node2D) -> void:
-	# Validación segura: comprobamos grupo y la existencia de la propiedad "is_alive"
 	if is_instance_valid(body) and body.is_in_group("Player"):
 		if "is_alive" in body and body.is_alive:
 			enemy_is_near = true

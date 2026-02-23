@@ -37,14 +37,13 @@ var is_alive: bool = true
 signal add_points
 var points = 30
 
-var damage_tween: Tween # Para evitar conflictos de parpadeo
+var damage_tween: Tween
 
 func _ready() -> void:
 	animated_sprite.material = animated_sprite.material.duplicate()
 	animated_sprite.play("Walk Scan")
 	if walk_sound: walk_sound.play()
 	
-	# OBLIGATORIO: Usar global_position para evitar problemas con jerarquías complejas
 	start_position = global_position
 	initial_height = global_position.y
 	
@@ -55,7 +54,6 @@ func _physics_process(delta: float) -> void:
 		apply_dead_physics(delta)
 		return
 		
-	# Validación segura: Evita crashear si el jugador fue eliminado
 	var player_valid = is_instance_valid(player) and "is_alive" in player and player.is_alive
 	
 	if follow_player and player_valid:
@@ -67,17 +65,14 @@ func _physics_process(delta: float) -> void:
 		else:
 			chase_player()
 	else:
-		follow_player = false # Reseteo seguro si el jugador desaparece
+		follow_player = false
 		return_to_height()
 		patrol_horizontally()
 		
-	# Ejecución única de la función física del motor
 	move_and_slide()
 
 func apply_dead_physics(delta: float) -> void:
-	# Gravedad estándar (reemplacé el 15.0 incorrecto por un cálculo real)
 	velocity.y += 2000 * delta
-	# Frena la inercia horizontal suavemente
 	velocity.x = move_toward(velocity.x, 0, horizontal_speed * delta * 5)
 	move_and_slide()
 
@@ -85,7 +80,6 @@ func chase_player() -> void:
 	var dx = player.global_position.x - global_position.x
 	var desired_y = player.global_position.y - hover_offset_y
 	
-	# Lógica Horizontal (Movimiento asignado a velocity.x)
 	if abs(dx) > chase_stop_distance_x:
 		var horizontal_dir = sign(dx)
 		animated_sprite.flip_h = (horizontal_dir < 0.0)
@@ -100,7 +94,6 @@ func chase_player() -> void:
 			can_shoot = false
 			shoot_timer.start(1.0)  
 			
-	# Lógica Vertical (Movimiento asignado a velocity.y)
 	var vertical_dir = sign(desired_y - global_position.y)
 	if abs(global_position.y - desired_y) > 2.0:
 		velocity.y = vertical_dir * vertical_speed
@@ -145,7 +138,6 @@ func shoot_bullet() -> void:
 	if bullet.has_method("set_direction"):
 		bullet.set_direction(direction_to_player)
 		
-	# CRÍTICO: global_position para evitar bugs de desplazamiento
 	bullet.global_position = global_position + bullet_offset
 	
 	var current_scene = get_tree().current_scene
@@ -155,7 +147,7 @@ func shoot_bullet() -> void:
 func _on_body_entered(body: Node) -> void:
 	if is_alive and is_instance_valid(body) and body.is_in_group("Player"):
 		if "is_alive" in body and body.is_alive:
-			animated_sprite.play("Walk") # O la animación que corresponda al descubrirlo
+			animated_sprite.play("Walk")
 			follow_player = true
 
 func _on_body_exited(body: Node) -> void:
@@ -171,7 +163,6 @@ func take_damage() -> void:
 	
 	lives -= 1
 	
-	# Control del parpadeo de daño
 	if damage_tween:
 		damage_tween.kill()
 		
@@ -182,7 +173,6 @@ func take_damage() -> void:
 	if lives <= 0:
 		die()
 	else:
-		# Penalización de disparo al enemigo sin generar errores
 		can_shoot = false
 		if shoot_timer.time_left > 0:
 			shoot_timer.start(shoot_timer.time_left + 1.0)
@@ -199,7 +189,7 @@ func die() -> void:
 	can_shoot = false
 	
 	set_collision_layer_value(3, false)
-	collision_shape.position.y = 9 # Efecto visual de desplome
+	collision_shape.position.y = 9
 	
 	animated_sprite.play("Death")
 	if death_sound: death_sound.play()
@@ -211,4 +201,4 @@ func _on_shoot_timer_timeout() -> void:
 	if is_alive:
 		can_shoot = true
 		if follow_player:
-			animated_sprite.play("Walk") # Vuelve a la pose neutral tras disparar
+			animated_sprite.play("Walk")
