@@ -1,59 +1,59 @@
 [gd_scene load_steps=73 format=4 uid="uid://62rpf654fvo6"]
 
-[ext_resource type="Texture2D" uid="uid://vr4vltjsdl0o" path="res://Graphics/Zonas/Green-zone/2 Background/Day/1.png" id="1_xbslt"]
-[ext_resource type="Texture2D" uid="uid://okpnwlqcy00" path="res://Graphics/Zonas/Green-zone/2 Background/Day/2.png" id="2_q8wyw"]
-[ext_resource type="Texture2D" uid="uid://drm1n6nbur15p" path="res://Graphics/Zonas/Green-zone/2 Background/Day/3.png" id="3_rq6k0"]
-[ext_resource type="Texture2D" uid="uid://deyolcsyfas12" path="res://Graphics/Zonas/Green-zone/2 Background/Day/4.png" id="4_0ouaf"]
-[ext_resource type="Texture2D" uid="uid://cxqosmpwyqpk0" path="res://Graphics/Zonas/Green-zone/2 Background/Day/5.png" id="5_xd5wc"]
+[ext_resource type="Texture2D" uid="uid://vr4vltjsdl0o" path="res://Graphics/Zonas/2-Green-zone/2 Background/Day/1.png" id="1_xbslt"]
+[ext_resource type="Texture2D" uid="uid://okpnwlqcy00" path="res://Graphics/Zonas/2-Green-zone/2 Background/Day/2.png" id="2_q8wyw"]
+[ext_resource type="Texture2D" uid="uid://drm1n6nbur15p" path="res://Graphics/Zonas/2-Green-zone/2 Background/Day/3.png" id="3_rq6k0"]
+[ext_resource type="Texture2D" uid="uid://deyolcsyfas12" path="res://Graphics/Zonas/2-Green-zone/2 Background/Day/4.png" id="4_0ouaf"]
+[ext_resource type="Texture2D" uid="uid://cxqosmpwyqpk0" path="res://Graphics/Zonas/2-Green-zone/2 Background/Day/5.png" id="5_xd5wc"]
 [ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://TileSets/TileSets.tres" id="6_sucmb"]
-[ext_resource type="Texture2D" uid="uid://c4dthuj35awpq" path="res://Graphics/Zonas/Green-zone/3 Objects/Fountain/2.png" id="8_utet3"]
+[ext_resource type="Texture2D" uid="uid://c4dthuj35awpq" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Fountain/2.png" id="8_utet3"]
 [ext_resource type="PackedScene" uid="uid://cdqlmgh2vxout" path="res://Prefabs/Player.tscn" id="20_j1y0e"]
-[ext_resource type="Texture2D" uid="uid://c1nx38be1asuj" path="res://Graphics/Zonas/Green-zone/3 Objects/Bushes/2.png" id="21_86852"]
-[ext_resource type="Texture2D" uid="uid://bc48a5conehj7" path="res://Graphics/Zonas/Green-zone/3 Objects/Bushes/3.png" id="22_pd1gx"]
+[ext_resource type="Texture2D" uid="uid://c1nx38be1asuj" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Bushes/2.png" id="21_86852"]
+[ext_resource type="Texture2D" uid="uid://bc48a5conehj7" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Bushes/3.png" id="22_pd1gx"]
 [ext_resource type="PackedScene" uid="uid://d2fpq7nxaiblh" path="res://Prefabs/Dead_Area.tscn" id="24_q8wyw"]
 [ext_resource type="PackedScene" uid="uid://d0lv1t50yhwap" path="res://Prefabs/Enemy_1.tscn" id="25_xd5wc"]
 [ext_resource type="PackedScene" uid="uid://cp6k1o6rfgevf" path="res://Prefabs/Enemy_3.tscn" id="26_sucmb"]
 [ext_resource type="PackedScene" uid="uid://ce5qnuwutjn77" path="res://Prefabs/Enemy_2.tscn" id="27_go0cy"]
-[ext_resource type="Texture2D" uid="uid://b5kxsdt7uj14r" path="res://Graphics/Zonas/Green-zone/3 Objects/Bushes/16.png" id="27_jhwe0"]
+[ext_resource type="Texture2D" uid="uid://b5kxsdt7uj14r" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Bushes/16.png" id="27_jhwe0"]
 [ext_resource type="PackedScene" uid="uid://cscqxhrr4mwbx" path="res://Prefabs/Live_Up.tscn" id="28_go0cy"]
-[ext_resource type="Texture2D" uid="uid://vke8836ow8yb" path="res://Graphics/Zonas/Green-zone/3 Objects/Grass/3.png" id="28_tmh4y"]
+[ext_resource type="Texture2D" uid="uid://vke8836ow8yb" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Grass/3.png" id="28_tmh4y"]
 [ext_resource type="PackedScene" uid="uid://fxla73vs5hxe" path="res://Prefabs/Phantom_Area.tscn" id="29_7lt02"]
-[ext_resource type="Texture2D" uid="uid://cuv05a5lcssth" path="res://Graphics/Zonas/Green-zone/3 Objects/Grass/4.png" id="29_j1y6a"]
+[ext_resource type="Texture2D" uid="uid://cuv05a5lcssth" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Grass/4.png" id="29_j1y6a"]
 [ext_resource type="PackedScene" uid="uid://blucmwrqfrted" path="res://Prefabs/Moving_Platform.tscn" id="30_7lt02"]
-[ext_resource type="Texture2D" uid="uid://dkt3di7exskek" path="res://Graphics/Zonas/Green-zone/3 Objects/Grass/5.png" id="30_vofji"]
-[ext_resource type="Texture2D" uid="uid://cohxeamq50vxp" path="res://Graphics/Zonas/Green-zone/3 Objects/Grass/6.png" id="31_bp6cg"]
+[ext_resource type="Texture2D" uid="uid://dkt3di7exskek" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Grass/5.png" id="30_vofji"]
+[ext_resource type="Texture2D" uid="uid://cohxeamq50vxp" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Grass/6.png" id="31_bp6cg"]
 [ext_resource type="PackedScene" uid="uid://cfdnwh558m6i2" path="res://Prefabs/Falling_Platform.tscn" id="31_ssyor"]
-[ext_resource type="Texture2D" uid="uid://cxyfs8cl5rkgn" path="res://Graphics/Zonas/Green-zone/3 Objects/Grass/8.png" id="32_fhnqk"]
+[ext_resource type="Texture2D" uid="uid://cxyfs8cl5rkgn" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Grass/8.png" id="32_fhnqk"]
 [ext_resource type="PackedScene" uid="uid://cjs4t4cu2dreb" path="res://Prefabs/SpikesX1.tscn" id="33_bdg83"]
-[ext_resource type="Texture2D" uid="uid://cvg2b8ic6bh3x" path="res://Graphics/Zonas/Green-zone/3 Objects/Grass/9.png" id="33_sdqty"]
-[ext_resource type="Texture2D" uid="uid://bdci4k56j48e8" path="res://Graphics/Zonas/Green-zone/3 Objects/Grass/7.png" id="34_p8xpu"]
-[ext_resource type="Texture2D" uid="uid://bd0linctwu13j" path="res://Graphics/Zonas/Green-zone/3 Objects/Grass/10.png" id="35_26kna"]
-[ext_resource type="Texture2D" uid="uid://c16aucsep006b" path="res://Graphics/Zonas/Green-zone/3 Objects/Grass/11.png" id="36_72aot"]
-[ext_resource type="Texture2D" uid="uid://dj2tb38dv7s7p" path="res://Graphics/Zonas/Green-zone/3 Objects/Other/Skateboard1.png" id="37_e5pym"]
-[ext_resource type="Texture2D" uid="uid://crqxdh20cww32" path="res://Graphics/Zonas/Green-zone/3 Objects/Grass/12.png" id="37_wo6vw"]
-[ext_resource type="Texture2D" uid="uid://dppfitv3akvbk" path="res://Graphics/Zonas/Green-zone/3 Objects/Stones/5.png" id="38_44812"]
-[ext_resource type="Texture2D" uid="uid://281qsmtr6gvd" path="res://Graphics/Zonas/Green-zone/3 Objects/Benches/1.png" id="38_irpmg"]
-[ext_resource type="Texture2D" uid="uid://bq8lihronfcvu" path="res://Graphics/Zonas/Green-zone/3 Objects/Grass/15.png" id="39_33kqp"]
+[ext_resource type="Texture2D" uid="uid://cvg2b8ic6bh3x" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Grass/9.png" id="33_sdqty"]
+[ext_resource type="Texture2D" uid="uid://bdci4k56j48e8" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Grass/7.png" id="34_p8xpu"]
+[ext_resource type="Texture2D" uid="uid://bd0linctwu13j" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Grass/10.png" id="35_26kna"]
+[ext_resource type="Texture2D" uid="uid://c16aucsep006b" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Grass/11.png" id="36_72aot"]
+[ext_resource type="Texture2D" uid="uid://dj2tb38dv7s7p" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Other/Skateboard1.png" id="37_e5pym"]
+[ext_resource type="Texture2D" uid="uid://crqxdh20cww32" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Grass/12.png" id="37_wo6vw"]
+[ext_resource type="Texture2D" uid="uid://dppfitv3akvbk" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Stones/5.png" id="38_44812"]
+[ext_resource type="Texture2D" uid="uid://281qsmtr6gvd" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Benches/1.png" id="38_irpmg"]
+[ext_resource type="Texture2D" uid="uid://bq8lihronfcvu" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Grass/15.png" id="39_33kqp"]
 [ext_resource type="PackedScene" uid="uid://dch15up2fk0ht" path="res://Prefabs/GUI.tscn" id="39_281yw"]
-[ext_resource type="Texture2D" uid="uid://ccxwmso8me5uc" path="res://Graphics/Zonas/Green-zone/3 Objects/Benches/2.png" id="39_fkjh7"]
-[ext_resource type="Texture2D" uid="uid://b08biri5mudp8" path="res://Graphics/Zonas/Green-zone/3 Objects/Bushes/4.png" id="40_86852"]
-[ext_resource type="Texture2D" uid="uid://c02byxr0scup3" path="res://Graphics/Zonas/Green-zone/3 Objects/Other/Tree1.png" id="41_pd1gx"]
-[ext_resource type="Texture2D" uid="uid://dadg5l32ey1kn" path="res://Graphics/Zonas/Green-zone/3 Objects/Other/Tree2.png" id="42_281yw"]
-[ext_resource type="Texture2D" uid="uid://dgi34ae3ovwc3" path="res://Graphics/Zonas/Green-zone/3 Objects/Other/Rapm3.png" id="43_wbro8"]
-[ext_resource type="Texture2D" uid="uid://b6q2bgas68ha6" path="res://Graphics/Zonas/Green-zone/3 Objects/Other/Tree4.png" id="44_p2eoq"]
-[ext_resource type="Texture2D" uid="uid://c460kg45q3nxb" path="res://Graphics/Zonas/Green-zone/3 Objects/Bushes/15.png" id="44_uah6q"]
-[ext_resource type="Texture2D" uid="uid://dc2p6qorpdyd7" path="res://Graphics/Zonas/Green-zone/3 Objects/Bushes/20.png" id="45_e5pym"]
-[ext_resource type="Texture2D" uid="uid://bct032utr4klu" path="res://Graphics/Zonas/Green-zone/3 Objects/Stones/4.png" id="46_irpmg"]
-[ext_resource type="Texture2D" uid="uid://dxeyevpmec63j" path="res://Graphics/Zonas/Green-zone/3 Objects/Other/Tree3.png" id="47_fkjh7"]
-[ext_resource type="Texture2D" uid="uid://oct8cqkym0p0" path="res://Graphics/Zonas/Green-zone/3 Objects/Other/Ramp1.png" id="50_m2s7e"]
-[ext_resource type="Texture2D" uid="uid://j0axuy3i4ar8" path="res://Graphics/Zonas/Green-zone/3 Objects/Other/Ramp2.png" id="51_5toea"]
+[ext_resource type="Texture2D" uid="uid://ccxwmso8me5uc" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Benches/2.png" id="39_fkjh7"]
+[ext_resource type="Texture2D" uid="uid://b08biri5mudp8" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Bushes/4.png" id="40_86852"]
+[ext_resource type="Texture2D" uid="uid://c02byxr0scup3" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Other/Tree1.png" id="41_pd1gx"]
+[ext_resource type="Texture2D" uid="uid://dadg5l32ey1kn" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Other/Tree2.png" id="42_281yw"]
+[ext_resource type="Texture2D" uid="uid://dgi34ae3ovwc3" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Other/Rapm3.png" id="43_wbro8"]
+[ext_resource type="Texture2D" uid="uid://b6q2bgas68ha6" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Other/Tree4.png" id="44_p2eoq"]
+[ext_resource type="Texture2D" uid="uid://c460kg45q3nxb" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Bushes/15.png" id="44_uah6q"]
+[ext_resource type="Texture2D" uid="uid://dc2p6qorpdyd7" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Bushes/20.png" id="45_e5pym"]
+[ext_resource type="Texture2D" uid="uid://bct032utr4klu" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Stones/4.png" id="46_irpmg"]
+[ext_resource type="Texture2D" uid="uid://dxeyevpmec63j" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Other/Tree3.png" id="47_fkjh7"]
+[ext_resource type="Texture2D" uid="uid://oct8cqkym0p0" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Other/Ramp1.png" id="50_m2s7e"]
+[ext_resource type="Texture2D" uid="uid://j0axuy3i4ar8" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Other/Ramp2.png" id="51_5toea"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="52_jhwe0"]
-[ext_resource type="Texture2D" uid="uid://b7ffqlkivg71k" path="res://Graphics/Zonas/Green-zone/3 Objects/Fence/1.png" id="53_p2eoq"]
+[ext_resource type="Texture2D" uid="uid://b7ffqlkivg71k" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Fence/1.png" id="53_p2eoq"]
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="53_v40af"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="54_m2s7e"]
 [ext_resource type="PackedScene" uid="uid://d1i3yjdbq4dmk" path="res://Prefabs/Page_Comic.tscn" id="54_v40af"]
 [ext_resource type="Texture2D" uid="uid://cf2xm4pu4utul" path="res://Graphics/Comic Pages/ComicPage2.png" id="55_m2s7e"]
-[ext_resource type="Texture2D" uid="uid://fa75u2xkk2xt" path="res://Graphics/Zonas/Green-zone/3 Objects/Fence/5.png" id="55_w37ya"]
+[ext_resource type="Texture2D" uid="uid://fa75u2xkk2xt" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Fence/5.png" id="55_w37ya"]
 [ext_resource type="AudioStream" uid="uid://cphpe1giw4pxl" path="res://Music/Level_2.mp3" id="56_m2s7e"]
 [ext_resource type="PackedScene" uid="uid://cb8ivf7pn64iq" path="res://Prefabs/CheckPoint.tscn" id="57_5toea"]
 [ext_resource type="PackedScene" uid="uid://bh3h363wnt1mt" path="res://Prefabs/Signpost.tscn" id="59_u5cqn"]
@@ -740,109 +740,109 @@ metadata/_edit_lock_ = true
 z_index = 1
 position = Vector2(7192, 1740)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform" index="4"]
 position = Vector2(-1136, 0)
 
 [node name="MovingPlatform2" parent="MovingPlatforms" instance=ExtResource("30_7lt02")]
 position = Vector2(5935, 1480)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform2"]
-position = Vector2(0, 206)
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform2" index="4"]
+position = Vector2(0, 208)
 
 [node name="MovingPlatform3" parent="MovingPlatforms" instance=ExtResource("30_7lt02")]
 position = Vector2(1477.06, 2165)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform3"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform3" index="4"]
 position = Vector2(555, 0)
 
 [node name="MovingPlatform4" parent="MovingPlatforms" instance=ExtResource("30_7lt02")]
 position = Vector2(2542, 2164)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform4"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform4" index="4"]
 position = Vector2(0, -99)
 
 [node name="MovingPlatform5" parent="MovingPlatforms" instance=ExtResource("30_7lt02")]
 position = Vector2(7938, 2609)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform5"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform5" index="4"]
 position = Vector2(319, 0)
 
 [node name="MovingPlatform6" parent="MovingPlatforms" instance=ExtResource("30_7lt02")]
 position = Vector2(860, 1626)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform6"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform6" index="4"]
 position = Vector2(244, 0)
 
 [node name="MovingPlatform7" parent="MovingPlatforms" instance=ExtResource("30_7lt02")]
 position = Vector2(1400, 1626)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform7"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform7" index="4"]
 position = Vector2(-248, 0)
 
 [node name="MovingPlatform9" parent="MovingPlatforms" instance=ExtResource("30_7lt02")]
 position = Vector2(5965, 2391)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform9"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform9" index="4"]
 position = Vector2(262, 0)
 
 [node name="MovingPlatform10" parent="MovingPlatforms" instance=ExtResource("30_7lt02")]
 position = Vector2(6345, 2503)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform10"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform10" index="4"]
 position = Vector2(231, 0)
 
 [node name="MovingPlatform8" parent="MovingPlatforms" instance=ExtResource("30_7lt02")]
 position = Vector2(30, 2005)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform8"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform8" index="4"]
 position = Vector2(0, 210)
 
 [node name="MovingPlatform11" parent="MovingPlatforms" instance=ExtResource("30_7lt02")]
 position = Vector2(90, 2005)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform11"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform11" index="4"]
 position = Vector2(0, -210)
 
 [node name="MovingPlatform12" parent="MovingPlatforms" instance=ExtResource("30_7lt02")]
 position = Vector2(30, 1585)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform12"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform12" index="4"]
 position = Vector2(0, 210)
 
 [node name="MovingPlatform13" parent="MovingPlatforms" instance=ExtResource("30_7lt02")]
 position = Vector2(3830, 2157)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform13"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform13" index="4"]
 position = Vector2(0, 250)
 
 [node name="MovingPlatform14" parent="MovingPlatforms" instance=ExtResource("30_7lt02")]
 position = Vector2(3759, 2657)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform14"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform14" index="4"]
 position = Vector2(0, -250)
 
 [node name="MovingPlatform15" parent="MovingPlatforms" instance=ExtResource("30_7lt02")]
 position = Vector2(8577, 2585)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform15"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform15" index="4"]
 position = Vector2(0, -85)
 
 [node name="MovingPlatform16" parent="MovingPlatforms" instance=ExtResource("30_7lt02")]
 position = Vector2(8728, 2394)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform16"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform16" index="4"]
 position = Vector2(0, -100)
 
 [node name="MovingPlatform17" parent="MovingPlatforms" instance=ExtResource("30_7lt02")]
 position = Vector2(8654, 2211)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform17"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform17" index="4"]
 position = Vector2(0, 100)
 
 [node name="MovingPlatform18" parent="MovingPlatforms" instance=ExtResource("30_7lt02")]
 position = Vector2(7021, 1449)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform18"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform18" index="4"]
 position = Vector2(173, 0)
 
 [node name="Spikes" type="Node2D" parent="."]
@@ -1013,6 +1013,24 @@ bus = &"Music"
 [editable path="Dead_Areas/Dead_Area4"]
 [editable path="Dead_Areas/Dead_Area5"]
 [editable path="Enemies/Enemy_14"]
+[editable path="MovingPlatforms/MovingPlatform"]
+[editable path="MovingPlatforms/MovingPlatform2"]
+[editable path="MovingPlatforms/MovingPlatform3"]
+[editable path="MovingPlatforms/MovingPlatform4"]
+[editable path="MovingPlatforms/MovingPlatform5"]
+[editable path="MovingPlatforms/MovingPlatform6"]
+[editable path="MovingPlatforms/MovingPlatform7"]
+[editable path="MovingPlatforms/MovingPlatform9"]
+[editable path="MovingPlatforms/MovingPlatform10"]
+[editable path="MovingPlatforms/MovingPlatform8"]
+[editable path="MovingPlatforms/MovingPlatform11"]
+[editable path="MovingPlatforms/MovingPlatform12"]
+[editable path="MovingPlatforms/MovingPlatform13"]
+[editable path="MovingPlatforms/MovingPlatform14"]
+[editable path="MovingPlatforms/MovingPlatform15"]
+[editable path="MovingPlatforms/MovingPlatform16"]
+[editable path="MovingPlatforms/MovingPlatform17"]
+[editable path="MovingPlatforms/MovingPlatform18"]
 [editable path="PhantomAreas/Phantom_Area"]
 [editable path="PhantomAreas/Phantom_Area2"]
 [editable path="PhantomAreas/Phantom_Area3"]

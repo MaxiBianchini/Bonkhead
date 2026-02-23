@@ -1,7 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://blucmwrqfrted"]
+[gd_scene load_steps=18 format=3 uid="uid://blucmwrqfrted"]
 
 [ext_resource type="Script" uid="uid://drgmeyeyrlsik" path="res://Scripts/Moving_Platform.gd" id="1_6by3m"]
-[ext_resource type="Texture2D" uid="uid://bu0uy4gq21yja" path="res://Graphics/Zonas/Exclusion-zone/1 Tiles/MovingPlatform.png" id="2_1amcm"]
+[ext_resource type="Texture2D" uid="uid://clcih5uupai5o" path="res://Graphics/Zonas/1-Exclusion-zone/1 Tiles/Tile_23.png" id="2_8vj03"]
+[ext_resource type="Texture2D" uid="uid://dy01p5dougcye" path="res://Graphics/Zonas/2-Green-zone/1 Tiles/Tile_44.png" id="3_4wwao"]
+[ext_resource type="Texture2D" uid="uid://nth4cwdoaby5" path="res://Graphics/Zonas/1-Exclusion-zone/1 Tiles/Tile_24.png" id="3_o2lec"]
+[ext_resource type="Texture2D" uid="uid://djslnw61wntue" path="res://Graphics/Zonas/1-Exclusion-zone/1 Tiles/Tile_26.png" id="4_37wya"]
+[ext_resource type="Texture2D" uid="uid://dgapip3jffqs6" path="res://Graphics/Zonas/3-Industrial-zone/1 Tiles/IndustrialTile_58.png" id="4_v5igp"]
+[ext_resource type="Texture2D" uid="uid://c1c3tghqlrt0s" path="res://Graphics/Zonas/4-Station-zone/1 Tiles/Tile_25.png" id="5_wmtnn"]
+[ext_resource type="Texture2D" uid="uid://bh5wev0lupnxw" path="res://Graphics/Zonas/5-Basement-zone/1 Tiles/Tile_31.png" id="6_qo6qx"]
+[ext_resource type="Texture2D" uid="uid://12px43t458ce" path="res://Graphics/Zonas/2-Green-zone/1 Tiles/Tile_45.png" id="8_2sy5v"]
+[ext_resource type="Texture2D" uid="uid://5qqtf4htqc5e" path="res://Graphics/Zonas/3-Industrial-zone/1 Tiles/IndustrialTile_59.png" id="9_nc116"]
+[ext_resource type="Texture2D" uid="uid://da8n132hseabv" path="res://Graphics/Zonas/4-Station-zone/1 Tiles/Tile_26.png" id="10_fi63e"]
+[ext_resource type="Texture2D" uid="uid://d144knsxh1254" path="res://Graphics/Zonas/5-Basement-zone/1 Tiles/Tile_59.png" id="11_eraui"]
+[ext_resource type="Texture2D" uid="uid://duhqfqfcdia2e" path="res://Graphics/Zonas/2-Green-zone/1 Tiles/Tile_46.png" id="13_xvgfn"]
+[ext_resource type="Texture2D" uid="uid://dmelqcaf0ew53" path="res://Graphics/Zonas/3-Industrial-zone/1 Tiles/IndustrialTile_60.png" id="14_h0den"]
+[ext_resource type="Texture2D" uid="uid://bxbus3yq6q8le" path="res://Graphics/Zonas/4-Station-zone/1 Tiles/Tile_27.png" id="15_ssox6"]
+[ext_resource type="Texture2D" uid="uid://csxiv4fxsd1r" path="res://Graphics/Zonas/5-Basement-zone/1 Tiles/Tile_34.png" id="16_n1k80"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8vj03"]
 size = Vector2(48, 16)
@@ -9,11 +23,27 @@ size = Vector2(48, 16)
 [node name="MovingPlatform" type="AnimatableBody2D"]
 process_mode = 3
 script = ExtResource("1_6by3m")
+texturas_sprite_1 = Array[Texture2D]([ExtResource("2_8vj03"), ExtResource("3_4wwao"), ExtResource("4_v5igp"), ExtResource("5_wmtnn"), ExtResource("6_qo6qx")])
+texturas_sprite_2 = Array[Texture2D]([ExtResource("3_o2lec"), ExtResource("8_2sy5v"), ExtResource("9_nc116"), ExtResource("10_fi63e"), ExtResource("11_eraui")])
+texturas_sprite_3 = Array[Texture2D]([ExtResource("4_37wya"), ExtResource("13_xvgfn"), ExtResource("14_h0den"), ExtResource("15_ssox6"), ExtResource("16_n1k80")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_1amcm")
+offset = Vector2(-32, 0)
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+metadata/_edit_lock_ = true
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+offset = Vector2(32, 0)
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_8vj03")
 one_way_collision = true
+metadata/_edit_lock_ = true
+
+[node name="Marker2D" type="Marker2D" parent="."]

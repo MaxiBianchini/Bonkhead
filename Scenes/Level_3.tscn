@@ -1,61 +1,61 @@
 [gd_scene load_steps=85 format=4 uid="uid://cfha71cwde8ga"]
 
-[ext_resource type="Texture2D" uid="uid://bsocdq3axyxcs" path="res://Graphics/Zonas/Industrial-zone/2 Background/1.png" id="1_kclu0"]
-[ext_resource type="Texture2D" uid="uid://bjjt1xb6dtc6x" path="res://Graphics/Zonas/Industrial-zone/2 Background/2.png" id="2_m3o7n"]
-[ext_resource type="Texture2D" uid="uid://op4xomxgsoba" path="res://Graphics/Zonas/Industrial-zone/2 Background/3.png" id="3_fl2ps"]
-[ext_resource type="Texture2D" uid="uid://b6vi7xd58nlyf" path="res://Graphics/Zonas/Industrial-zone/2 Background/4.png" id="4_v7d8o"]
-[ext_resource type="Texture2D" uid="uid://cqttek67lrby4" path="res://Graphics/Zonas/Industrial-zone/2 Background/5.png" id="5_u6gia"]
+[ext_resource type="Texture2D" uid="uid://bsocdq3axyxcs" path="res://Graphics/Zonas/3-Industrial-zone/2 Background/1.png" id="1_kclu0"]
+[ext_resource type="Texture2D" uid="uid://bjjt1xb6dtc6x" path="res://Graphics/Zonas/3-Industrial-zone/2 Background/2.png" id="2_m3o7n"]
+[ext_resource type="Texture2D" uid="uid://op4xomxgsoba" path="res://Graphics/Zonas/3-Industrial-zone/2 Background/3.png" id="3_fl2ps"]
+[ext_resource type="Texture2D" uid="uid://b6vi7xd58nlyf" path="res://Graphics/Zonas/3-Industrial-zone/2 Background/4.png" id="4_v7d8o"]
+[ext_resource type="Texture2D" uid="uid://cqttek67lrby4" path="res://Graphics/Zonas/3-Industrial-zone/2 Background/5.png" id="5_u6gia"]
 [ext_resource type="TileSet" uid="uid://bwmrtff06jx5m" path="res://TileSets/TileSets.tres" id="6_03ijt"]
 [ext_resource type="PackedScene" uid="uid://bswo0jt5cdkqw" path="res://Prefabs/Enemy_4.tscn" id="7_a1204"]
 [ext_resource type="PackedScene" uid="uid://d0lv1t50yhwap" path="res://Prefabs/Enemy_1.tscn" id="8_qlmpr"]
 [ext_resource type="PackedScene" uid="uid://ce5qnuwutjn77" path="res://Prefabs/Enemy_2.tscn" id="9_vf011"]
 [ext_resource type="PackedScene" uid="uid://cp6k1o6rfgevf" path="res://Prefabs/Enemy_3.tscn" id="10_8e1fl"]
 [ext_resource type="PackedScene" uid="uid://cudsw1wye1kqc" path="res://Prefabs/SpikesX3.tscn" id="11_qlmpr"]
-[ext_resource type="PackedScene" uid="uid://cxn0xx167ddnv" path="res://Prefabs/Moving_Platform_2.tscn" id="12_vf011"]
-[ext_resource type="PackedScene" uid="uid://c3pq2krbegj4u" path="res://Prefabs/Falling_Platform_2.tscn" id="21_8e1fl"]
+[ext_resource type="PackedScene" uid="uid://blucmwrqfrted" path="res://Prefabs/Moving_Platform.tscn" id="12_vf011"]
 [ext_resource type="PackedScene" uid="uid://cjs4t4cu2dreb" path="res://Prefabs/SpikesX1.tscn" id="22_vt1oc"]
 [ext_resource type="PackedScene" uid="uid://d2fpq7nxaiblh" path="res://Prefabs/Dead_Area.tscn" id="23_ks2qj"]
 [ext_resource type="PackedScene" uid="uid://cscqxhrr4mwbx" path="res://Prefabs/Live_Up.tscn" id="25_dimxf"]
 [ext_resource type="Texture2D" uid="uid://bruxedh3i3ejq" path="res://Graphics/Comic Pages/ComicPage3.png" id="26_gxv86"]
 [ext_resource type="PackedScene" uid="uid://bh3h363wnt1mt" path="res://Prefabs/Signpost.tscn" id="26_is6g6"]
-[ext_resource type="Texture2D" uid="uid://dep0ftqd4qk0b" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Box1.png" id="27_4t4by"]
+[ext_resource type="Texture2D" uid="uid://dep0ftqd4qk0b" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Box1.png" id="27_4t4by"]
 [ext_resource type="PackedScene" uid="uid://fxla73vs5hxe" path="res://Prefabs/Phantom_Area.tscn" id="27_gxv86"]
-[ext_resource type="Texture2D" uid="uid://nfk1gvdu3n3o" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Box2.png" id="28_ck2vj"]
-[ext_resource type="Texture2D" uid="uid://d1dbhfhqk2o3g" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Board2.png" id="29_m0ax1"]
-[ext_resource type="Texture2D" uid="uid://c0x4ecwjuvktn" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Mop.png" id="30_8pyqv"]
-[ext_resource type="Texture2D" uid="uid://biu2p246k0bvr" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Bucket.png" id="31_kclu0"]
-[ext_resource type="Texture2D" uid="uid://1phy88at6tky" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Fire-extinguisher2.png" id="33_fl2ps"]
-[ext_resource type="Texture2D" uid="uid://drurre1dt14e3" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Flag.png" id="34_v7d8o"]
-[ext_resource type="Texture2D" uid="uid://b5j1qi823r7jm" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Box5.png" id="35_u6gia"]
-[ext_resource type="Texture2D" uid="uid://c5lkvx4bc7gy0" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Box6.png" id="36_03ijt"]
-[ext_resource type="Texture2D" uid="uid://c2kb3rrwpte1u" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Fire-extinguisher3.png" id="37_nnsc6"]
-[ext_resource type="Texture2D" uid="uid://xu8c3c8ebg24" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Locker3.png" id="38_547qm"]
+[ext_resource type="Texture2D" uid="uid://nfk1gvdu3n3o" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Box2.png" id="28_ck2vj"]
+[ext_resource type="Texture2D" uid="uid://d1dbhfhqk2o3g" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Board2.png" id="29_m0ax1"]
+[ext_resource type="Texture2D" uid="uid://c0x4ecwjuvktn" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Mop.png" id="30_8pyqv"]
+[ext_resource type="Texture2D" uid="uid://biu2p246k0bvr" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Bucket.png" id="31_kclu0"]
+[ext_resource type="Texture2D" uid="uid://1phy88at6tky" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Fire-extinguisher2.png" id="33_fl2ps"]
+[ext_resource type="Texture2D" uid="uid://drurre1dt14e3" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Flag.png" id="34_v7d8o"]
+[ext_resource type="Texture2D" uid="uid://b5j1qi823r7jm" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Box5.png" id="35_u6gia"]
+[ext_resource type="Texture2D" uid="uid://c5lkvx4bc7gy0" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Box6.png" id="36_03ijt"]
+[ext_resource type="Texture2D" uid="uid://c2kb3rrwpte1u" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Fire-extinguisher3.png" id="37_nnsc6"]
+[ext_resource type="Texture2D" uid="uid://xu8c3c8ebg24" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Locker3.png" id="38_547qm"]
 [ext_resource type="PackedScene" uid="uid://dch15up2fk0ht" path="res://Prefabs/GUI.tscn" id="39_4rjef"]
-[ext_resource type="Texture2D" uid="uid://d3xjvvbl3fafo" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Board1.png" id="39_gt3hu"]
+[ext_resource type="Texture2D" uid="uid://d3xjvvbl3fafo" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Board1.png" id="39_gt3hu"]
 [ext_resource type="PackedScene" uid="uid://cdqlmgh2vxout" path="res://Prefabs/Player.tscn" id="40_31dam"]
-[ext_resource type="Texture2D" uid="uid://ba212xdlpmiti" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Barrel1.png" id="40_s7kxy"]
+[ext_resource type="Texture2D" uid="uid://ba212xdlpmiti" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Barrel1.png" id="40_s7kxy"]
 [ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="41_slqqf"]
-[ext_resource type="Texture2D" uid="uid://dhv7yh5h4ed53" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Barrel2.png" id="41_y707i"]
+[ext_resource type="Texture2D" uid="uid://dhv7yh5h4ed53" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Barrel2.png" id="41_y707i"]
 [ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="42_ffm0v"]
-[ext_resource type="Texture2D" uid="uid://c0lua5m0ys85d" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Fence1.png" id="42_xuy6e"]
-[ext_resource type="Texture2D" uid="uid://pbugmrn78ljf" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Fence2.png" id="43_b63xq"]
+[ext_resource type="Texture2D" uid="uid://c0lua5m0ys85d" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Fence1.png" id="42_xuy6e"]
+[ext_resource type="Texture2D" uid="uid://pbugmrn78ljf" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Fence2.png" id="43_b63xq"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="43_qetgj"]
-[ext_resource type="Texture2D" uid="uid://bs24v4s1vw3gd" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Fence3.png" id="44_7kpxu"]
-[ext_resource type="Texture2D" uid="uid://h1ne4jhpdb5h" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Barrel3.png" id="45_3sr2a"]
-[ext_resource type="Texture2D" uid="uid://fa75u2xkk2xt" path="res://Graphics/Zonas/Green-zone/3 Objects/Fence/5.png" id="46_xkj5h"]
-[ext_resource type="Texture2D" uid="uid://b7ffqlkivg71k" path="res://Graphics/Zonas/Green-zone/3 Objects/Fence/1.png" id="47_7o5mi"]
-[ext_resource type="Texture2D" uid="uid://lj37d0d5ctu0" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Box3.png" id="48_o6jqb"]
-[ext_resource type="Texture2D" uid="uid://d141jpe7a1psq" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Box4.png" id="49_1pyoa"]
-[ext_resource type="Texture2D" uid="uid://clljavvv7rpop" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Ladder2.png" id="50_xwgeh"]
-[ext_resource type="Texture2D" uid="uid://fh40aq0xar0n" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Ladder1.png" id="51_wupq3"]
-[ext_resource type="Texture2D" uid="uid://cmgokg8ysn88s" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Locker1.png" id="52_kclu0"]
-[ext_resource type="Texture2D" uid="uid://1mw3o0wr6p22" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Ladder3.png" id="52_wlebf"]
-[ext_resource type="Texture2D" uid="uid://d4gf8t3oyy60u" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Locker2.png" id="53_m3o7n"]
+[ext_resource type="Texture2D" uid="uid://bs24v4s1vw3gd" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Fence3.png" id="44_7kpxu"]
+[ext_resource type="Texture2D" uid="uid://h1ne4jhpdb5h" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Barrel3.png" id="45_3sr2a"]
+[ext_resource type="Texture2D" uid="uid://fa75u2xkk2xt" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Fence/5.png" id="46_xkj5h"]
+[ext_resource type="Texture2D" uid="uid://b7ffqlkivg71k" path="res://Graphics/Zonas/2-Green-zone/3 Objects/Fence/1.png" id="47_7o5mi"]
+[ext_resource type="PackedScene" uid="uid://cfdnwh558m6i2" path="res://Prefabs/Falling_Platform.tscn" id="48_fl2ps"]
+[ext_resource type="Texture2D" uid="uid://lj37d0d5ctu0" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Box3.png" id="48_o6jqb"]
+[ext_resource type="Texture2D" uid="uid://d141jpe7a1psq" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Box4.png" id="49_1pyoa"]
+[ext_resource type="Texture2D" uid="uid://clljavvv7rpop" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Ladder2.png" id="50_xwgeh"]
+[ext_resource type="Texture2D" uid="uid://fh40aq0xar0n" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Ladder1.png" id="51_wupq3"]
+[ext_resource type="Texture2D" uid="uid://cmgokg8ysn88s" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Locker1.png" id="52_kclu0"]
+[ext_resource type="Texture2D" uid="uid://1mw3o0wr6p22" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Ladder3.png" id="52_wlebf"]
+[ext_resource type="Texture2D" uid="uid://d4gf8t3oyy60u" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Locker2.png" id="53_m3o7n"]
 [ext_resource type="PackedScene" uid="uid://d1i3yjdbq4dmk" path="res://Prefabs/Page_Comic.tscn" id="54_763rg"]
-[ext_resource type="Texture2D" uid="uid://bncitmopx44ji" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Barrel4.png" id="54_fl2ps"]
+[ext_resource type="Texture2D" uid="uid://bncitmopx44ji" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Barrel4.png" id="54_fl2ps"]
 [ext_resource type="AudioStream" uid="uid://uo8cg6k1mv6s" path="res://Music/Level_3.mp3" id="54_kclu0"]
-[ext_resource type="Texture2D" uid="uid://bmo2fmbnq5wqy" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Bench.png" id="55_v7d8o"]
-[ext_resource type="Texture2D" uid="uid://ddl6k1njkbk68" path="res://Graphics/Zonas/Industrial-zone/3 Objects/Pointer2.png" id="56_u6gia"]
+[ext_resource type="Texture2D" uid="uid://bmo2fmbnq5wqy" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Bench.png" id="55_v7d8o"]
+[ext_resource type="Texture2D" uid="uid://ddl6k1njkbk68" path="res://Graphics/Zonas/3-Industrial-zone/3 Objects/Pointer2.png" id="56_u6gia"]
 [ext_resource type="PackedScene" uid="uid://cb8ivf7pn64iq" path="res://Prefabs/CheckPoint.tscn" id="57_m3o7n"]
 
 [sub_resource type="Resource" id="Resource_5toea"]
@@ -758,95 +758,95 @@ shape = SubResource("RectangleShape2D_ksgeg")
 [node name="FallingPlatforms" type="Node2D" parent="."]
 process_mode = 3
 
-[node name="FallingPlatform" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(4722, 1782)
+[node name="FallingPlatform31" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(4722, 1774)
 
-[node name="FallingPlatform2" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(4132, 1196)
+[node name="FallingPlatform" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(4132, 1187)
 
-[node name="FallingPlatform5" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(4069, 937)
+[node name="FallingPlatform2" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(4069, 929)
 
-[node name="FallingPlatform4" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(3938, 939)
+[node name="FallingPlatform5" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(3938, 931)
 
-[node name="FallingPlatform6" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(3768, 938)
+[node name="FallingPlatform3" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(6232, 1855)
 
-[node name="FallingPlatform7" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(6232, 1863)
+[node name="FallingPlatform4" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(3768, 930)
 
-[node name="FallingPlatform8" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(6184, 1863)
+[node name="FallingPlatform6" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(6280, 1855)
 
-[node name="FallingPlatform9" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(6136, 1863)
+[node name="FallingPlatform7" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(6184, 1855)
 
-[node name="FallingPlatform10" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(6088, 1863)
+[node name="FallingPlatform8" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(6136, 1855)
 
-[node name="FallingPlatform11" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(6040, 1863)
+[node name="FallingPlatform9" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(6088, 1855)
 
-[node name="FallingPlatform12" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(5992, 1863)
+[node name="FallingPlatform10" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(6040, 1855)
 
-[node name="FallingPlatform13" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(5944, 1863)
+[node name="FallingPlatform11" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(5992, 1855)
 
-[node name="FallingPlatform14" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(5896, 1863)
+[node name="FallingPlatform12" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(5944, 1855)
 
-[node name="FallingPlatform15" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(5848, 1863)
+[node name="FallingPlatform13" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(5896, 1855)
 
-[node name="FallingPlatform16" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(5800, 1863)
+[node name="FallingPlatform14" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(5848, 1855)
 
-[node name="FallingPlatform3" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(6280, 1863)
+[node name="FallingPlatform15" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(5800, 1855)
 
-[node name="FallingPlatform17" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(7586, 1930)
+[node name="FallingPlatform16" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(7586, 1922)
 
-[node name="FallingPlatform18" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(7665, 1930)
+[node name="FallingPlatform17" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(7665, 1922)
 
-[node name="FallingPlatform19" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(7145, 1715)
+[node name="FallingPlatform18" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(7145, 1707)
 
-[node name="FallingPlatform20" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(7240, 1715)
+[node name="FallingPlatform32" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(7240, 1707)
 
-[node name="FallingPlatform21" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(7330, 1715)
+[node name="FallingPlatform33" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(7330, 1707)
 
-[node name="FallingPlatform22" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(9304, 1722)
+[node name="FallingPlatform19" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(9304, 1714)
 
-[node name="FallingPlatform23" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(9352, 1722)
+[node name="FallingPlatform20" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(9352, 1714)
 
-[node name="FallingPlatform24" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(9400, 1722)
+[node name="FallingPlatform21" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(9400, 1714)
 
-[node name="FallingPlatform25" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(9448, 1722)
+[node name="FallingPlatform34" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(9448, 1714)
 
-[node name="FallingPlatform26" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(10246, 1215)
+[node name="FallingPlatform22" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(10246, 1212)
 
-[node name="FallingPlatform27" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(10246, 1155)
+[node name="FallingPlatform23" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(10246, 1152)
 
-[node name="FallingPlatform28" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(9785, 755)
+[node name="FallingPlatform24" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(9785, 747)
 
-[node name="FallingPlatform29" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(10084, 755)
+[node name="FallingPlatform25" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(9937, 747)
 
-[node name="FallingPlatform30" parent="FallingPlatforms" instance=ExtResource("21_8e1fl")]
-position = Vector2(9937, 755)
+[node name="FallingPlatform26" parent="FallingPlatforms" instance=ExtResource("48_fl2ps")]
+position = Vector2(10084, 747)
 
 [node name="MovingPlatforms" type="Node2D" parent="."]
 process_mode = 3
@@ -854,169 +854,169 @@ process_mode = 3
 [node name="MovingPlatform" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(4721, 1906)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform" index="4"]
 position = Vector2(-189, 117)
 
 [node name="MovingPlatform2" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(4482, 1765)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform2"]
-position = Vector2(151, -2)
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform2" index="4"]
+position = Vector2(151, 0)
 
 [node name="MovingPlatform3" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(4460, 2169)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform3"]
-position = Vector2(112, 1)
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform3" index="4"]
+position = Vector2(128, 0)
 
 [node name="MovingPlatform4" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(4857, 2167)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform4"]
-position = Vector2(-115, 2)
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform4" index="4"]
+position = Vector2(-128, 0)
 
 [node name="MovingPlatform5" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(3704, 1093)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform5"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform5" index="4"]
 position = Vector2(198, -51)
 
 [node name="MovingPlatform6" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(4207, 1007)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform6"]
+[node name="Marker2D" parent="MovingPlatforms/MovingPlatform6" index="4"]
 position = Vector2(0, -87)
 
 [node name="MovingPlatform7" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(3277, 668)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform7"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform7"]
 position = Vector2(0, 140)
 
 [node name="MovingPlatform8" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(5218, 1772)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform8"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform8"]
 position = Vector2(0, 186)
 
 [node name="MovingPlatform9" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(5218, 2197)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform9"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform9"]
 position = Vector2(0, -186)
 
 [node name="MovingPlatform10" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(5025, 2793)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform10"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform10"]
 position = Vector2(0, 125)
 
 [node name="MovingPlatform11" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(7927, 2289)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform11"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform11"]
 position = Vector2(-252, 0)
 
 [node name="MovingPlatform12" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(7248, 2290)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform12"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform12"]
 position = Vector2(252, 0)
 
 [node name="MovingPlatform13" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(8895, 3136)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform13"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform13"]
 position = Vector2(0, -280)
 
 [node name="MovingPlatform14" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(8782, 2606)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform14"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform14"]
 position = Vector2(0, 280)
 
 [node name="MovingPlatform15" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(8881, 2480)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform15"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform15"]
 position = Vector2(0, 200)
 
 [node name="MovingPlatform16" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(8683, 2418)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform16"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform16"]
 position = Vector2(0, 150)
 
 [node name="MovingPlatform21" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(7025, 2287)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform21"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform21"]
 position = Vector2(0, -159)
 
 [node name="MovingPlatform22" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(9729, 1733)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform22"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform22"]
 position = Vector2(1, -224)
 
 [node name="MovingPlatform23" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(9995, 1737)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform23"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform23"]
 position = Vector2(229, 0)
 
 [node name="MovingPlatform24" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(10141, 1363)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform24"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform24"]
 position = Vector2(-440, 0)
 
 [node name="MovingPlatform25" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(10532, 781)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform25"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform25"]
 position = Vector2(-130, 130)
 
 [node name="MovingPlatform26" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(10840, 1695)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform26"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform26"]
 position = Vector2(0, -150)
 
 [node name="MovingPlatform27" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(10745, 1424)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform27"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform27"]
 position = Vector2(-216, 0)
 
 [node name="MovingPlatform28" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(7626, 3176)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform28"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform28"]
 position = Vector2(221, 0)
 
 [node name="MovingPlatform29" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(7673, 1710)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform29"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform29"]
 position = Vector2(-100, 0)
 
 [node name="MovingPlatform19" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(7422, 1710)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform19"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform19"]
 position = Vector2(100, 0)
 
 [node name="MovingPlatform18" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(7812, 1548)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform18"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform18"]
 position = Vector2(0, 65)
 
 [node name="MovingPlatform20" parent="MovingPlatforms" instance=ExtResource("12_vf011")]
 position = Vector2(6986, 1714)
 
-[node name="Marker2D" type="Marker2D" parent="MovingPlatforms/MovingPlatform20"]
+[node name="Marker2D2" type="Marker2D" parent="MovingPlatforms/MovingPlatform20"]
 position = Vector2(0, -181)
 
 [node name="Spikes" type="Node2D" parent="."]
@@ -1319,6 +1319,12 @@ metadata/_edit_lock_ = true
 [editable path="Enemies/Enemy_30"]
 [editable path="Enemies/Enemy_31"]
 [editable path="Enemies/Enemy_37"]
+[editable path="MovingPlatforms/MovingPlatform"]
+[editable path="MovingPlatforms/MovingPlatform2"]
+[editable path="MovingPlatforms/MovingPlatform3"]
+[editable path="MovingPlatforms/MovingPlatform4"]
+[editable path="MovingPlatforms/MovingPlatform5"]
+[editable path="MovingPlatforms/MovingPlatform6"]
 [editable path="PhantomAreas/Phantom_Area"]
 [editable path="PhantomAreas/Phantom_Area2"]
 [editable path="PhantomAreas/Phantom_Area3"]

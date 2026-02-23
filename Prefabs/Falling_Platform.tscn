@@ -1,26 +1,49 @@
-[gd_scene load_steps=5 format=3 uid="uid://cfdnwh558m6i2"]
+[gd_scene load_steps=19 format=3 uid="uid://cfdnwh558m6i2"]
 
 [ext_resource type="Script" uid="uid://b8qeh5rwsdqab" path="res://Scripts/Falling_Platform.gd" id="1_ocy05"]
-[ext_resource type="Texture2D" uid="uid://4ixht17trucf" path="res://Graphics/Zonas/Green-zone/1 Tiles/Bidirectional Platform.png" id="2_ocy05"]
+[ext_resource type="Texture2D" uid="uid://clcih5uupai5o" path="res://Graphics/Zonas/1-Exclusion-zone/1 Tiles/Tile_23.png" id="2_4aqxj"]
+[ext_resource type="Texture2D" uid="uid://c36xi2hnqytns" path="res://Graphics/Zonas/2-Green-zone/1 Tiles/Tile_21.png" id="3_qt2lk"]
+[ext_resource type="Texture2D" uid="uid://nth4cwdoaby5" path="res://Graphics/Zonas/1-Exclusion-zone/1 Tiles/Tile_24.png" id="3_yv2yt"]
+[ext_resource type="Texture2D" uid="uid://djslnw61wntue" path="res://Graphics/Zonas/1-Exclusion-zone/1 Tiles/Tile_26.png" id="4_qt2lk"]
+[ext_resource type="Texture2D" uid="uid://w7qkw4wara3x" path="res://Graphics/Zonas/3-Industrial-zone/1 Tiles/IndustrialTile_55.png" id="4_rnm8l"]
+[ext_resource type="Texture2D" uid="uid://c1c3tghqlrt0s" path="res://Graphics/Zonas/4-Station-zone/1 Tiles/Tile_25.png" id="5_pt0o8"]
+[ext_resource type="Texture2D" uid="uid://7loeikgvtnay" path="res://Graphics/Zonas/2-Green-zone/1 Tiles/Tile_22.png" id="5_wppv6"]
+[ext_resource type="Texture2D" uid="uid://bh5wev0lupnxw" path="res://Graphics/Zonas/5-Basement-zone/1 Tiles/Tile_31.png" id="6_6utck"]
+[ext_resource type="Texture2D" uid="uid://b2naju7ojd0r7" path="res://Graphics/Zonas/2-Green-zone/1 Tiles/Tile_23.png" id="7_jtqfa"]
+[ext_resource type="Texture2D" uid="uid://cgixawexqnl33" path="res://Graphics/Zonas/3-Industrial-zone/1 Tiles/IndustrialTile_56.png" id="7_k1mww"]
+[ext_resource type="Texture2D" uid="uid://bwdt6fgjuettc" path="res://Graphics/Zonas/3-Industrial-zone/1 Tiles/IndustrialTile_57.png" id="10_351if"]
+[ext_resource type="Texture2D" uid="uid://da8n132hseabv" path="res://Graphics/Zonas/4-Station-zone/1 Tiles/Tile_26.png" id="10_clvjr"]
+[ext_resource type="Texture2D" uid="uid://brya7iggrjwi7" path="res://Graphics/Zonas/5-Basement-zone/1 Tiles/Tile_33.png" id="11_4iuna"]
+[ext_resource type="Texture2D" uid="uid://bxbus3yq6q8le" path="res://Graphics/Zonas/4-Station-zone/1 Tiles/Tile_27.png" id="15_wdkbn"]
+[ext_resource type="Texture2D" uid="uid://csxiv4fxsd1r" path="res://Graphics/Zonas/5-Basement-zone/1 Tiles/Tile_34.png" id="16_88o0b"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ocy05"]
-size = Vector2(48, 14)
+size = Vector2(48, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x5u1c"]
 size = Vector2(48, 12)
 
 [node name="FallingPlatform" type="RigidBody2D" groups=["Floor"]]
-collision_mask = 0
+collision_layer = 32
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_ocy05")
+texturas_sprite_1 = Array[Texture2D]([ExtResource("2_4aqxj"), ExtResource("3_qt2lk"), ExtResource("4_rnm8l"), ExtResource("5_pt0o8"), ExtResource("6_6utck")])
+texturas_sprite_2 = Array[Texture2D]([ExtResource("3_yv2yt"), ExtResource("5_wppv6"), ExtResource("7_k1mww"), ExtResource("10_clvjr"), ExtResource("11_4iuna")])
+texturas_sprite_3 = Array[Texture2D]([ExtResource("4_qt2lk"), ExtResource("7_jtqfa"), ExtResource("10_351if"), ExtResource("15_wdkbn"), ExtResource("16_88o0b")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_ocy05")
+offset = Vector2(-32, 0)
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+offset = Vector2(32, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_ocy05")
 one_way_collision = true
 
