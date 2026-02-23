@@ -134,6 +134,21 @@ func _input(event):
 		gui.visible = false
 		show_pause_menu()
 		
+	# --- HACK DE DEBUG: Teletransporte a la página de cómic ---
+	# Verificamos si se presionó la tecla F9
+	if event is InputEventKey and event.pressed and event.keycode == KEY_F9:
+		# Verificamos que tanto el jugador como la página existan en esta escena
+		if is_instance_valid(player) and is_instance_valid(comic_page):
+			# Movemos al jugador a la posición del cómic, pero desfasado
+			# -50 en X para que aparezca a la izquierda, y -20 en Y para que no se hunda en el piso
+			player.global_position = comic_page.global_position + Vector2(-50, -20)
+			
+			# Opcional: Frenar cualquier inercia que trajera el jugador
+			player.velocity = Vector2.ZERO 
+			
+			print("HACK: Teletransportado al final del nivel.")
+			
+
 func on_player_died():
 	life_packs -= 1
 	if life_packs <= 0:
