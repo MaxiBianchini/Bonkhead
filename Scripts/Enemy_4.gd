@@ -10,7 +10,7 @@ extends CharacterBody2D
 
 var direction: int = 1
 var is_driving: bool = false
-var points: float = 35
+var points: float = 20
 var speed: float = 285
 
 signal add_points
@@ -84,6 +84,8 @@ func take_damage() -> void:
 	
 	lives -= 1
 	
+	emit_signal("add_points", points)
+	
 	if damage_tween:
 		damage_tween.kill()
 		
@@ -97,8 +99,6 @@ func take_damage() -> void:
 func die() -> void:
 	is_alive = false
 	is_driving = false
-	
-	emit_signal("add_points", points)
 	
 	set_collision_layer_value(3, false)
 	

@@ -163,6 +163,8 @@ func take_damage() -> void:
 	
 	lives -= 1
 	
+	emit_signal("add_points", points)
+	
 	if damage_tween:
 		damage_tween.kill()
 		
@@ -181,8 +183,6 @@ func take_damage() -> void:
 
 func die() -> void:
 	is_alive = false
-	
-	emit_signal("add_points", points)
 	
 	if walk_sound: walk_sound.stop()
 	shoot_timer.stop()

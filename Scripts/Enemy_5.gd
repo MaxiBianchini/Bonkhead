@@ -23,7 +23,7 @@ var state: State = State.INACTIVE
 
 var player: Node2D = null
 
-var points: int = 20
+var points: int = 30
 signal add_points
 
 @export var bullet_sprite: Texture2D
@@ -89,6 +89,8 @@ func take_damage() -> void:
 	
 	lives -= 1
 	
+	emit_signal("add_points", points)
+	
 	if damage_tween:
 		damage_tween.kill()
 		
@@ -103,8 +105,6 @@ func die() -> void:
 	is_alive = false
 	state = State.DEAD
 	velocity = Vector2.ZERO
-	
-	emit_signal("add_points", points)
 	
 	set_collision_layer_value(3, false)
 	attack_timer.stop()

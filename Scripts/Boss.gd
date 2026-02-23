@@ -91,7 +91,7 @@ var is_attacking: bool = false
 
 var moving_right: bool = true
 var is_alive: bool = true
-var points: int = 20
+var points: int = 1000
 
 var current_tween: Tween
 var damage_tween: Tween
@@ -502,7 +502,6 @@ func take_damage():
 		States.PHASE_3_CHAOS: damage_taken = dmg_phase_3
 			
 	current_health -= damage_taken
-	emit_signal("add_points", points)
 	emit_signal("health_changed", current_health)
 	if audio_hurt: audio_hurt.play()
 	
@@ -526,6 +525,9 @@ func check_for_phase_change():
 
 func die():
 	is_alive = false
+	
+	emit_signal("add_points", points)
+	
 	audio_death.play()
 	set_collision_mask_value(1, true)
 	animated_sprite.play("Death")
