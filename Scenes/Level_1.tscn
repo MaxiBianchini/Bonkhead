@@ -585,8 +585,7 @@ offset_left = -37.000008
 offset_top = -73.5
 offset_right = 142.0
 offset_bottom = -24.0
-text = "Use A and D to move left and right.
-Press S to go down when possible."
+text = "Use A and D to move left and right."
 
 [node name="Phantom_Areas" type="Node2D" parent="."]
 
