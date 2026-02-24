@@ -168,6 +168,8 @@ func take_damage() -> void:
 	
 	lives -= 1
 	
+	emit_signal("add_points", points)
+	
 	# Reinicia el tween si ya estaba en curso
 	if damage_tween: 
 		damage_tween.kill()
@@ -182,8 +184,6 @@ func take_damage() -> void:
 # Ejecuta la secuencia de muerte y limpieza
 func die() -> void:
 	is_alive = false
-	
-	emit_signal("add_points", points)
 	
 	# Desactiva la capa de colisión para no seguir recibiendo daño
 	set_collision_layer_value(3, false)

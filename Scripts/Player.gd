@@ -1,78 +1,16 @@
-class_name Player
 extends CharacterBody2D
 
-enum State {
-	IDLE, RUN, JUMP, FALL, DASH, WALL_GRAB, DEAD
-}
-
-var state: State = State.IDLE
-
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var animated_sprite2: AnimatedSprite2D = $AnimatedSprite2D2
-@onready var animated_sprite3: AnimatedSprite2D = $AnimatedSprite2D3
-var animated_sprites: Array[AnimatedSprite2D] = []
-
-@onready var collision_shape: CollisionShape2D = $CollisionShape2D
-@onready var raycast_edge_left: RayCast2D = $RayCast_Edge_Left
-@onready var raycast_edge_right: RayCast2D = $RayCast_Edge_Right
-@onready var raycast_floor: RayCast2D = $Raycast_floor
-@onready var raycast_wall: RayCast2D = $Raycast_wall
-@onready var area2D: Area2D = $Area2D
-
-@onready var audio_dash: AudioStreamPlayer2D = $AudioStream_Dash
-@onready var audio_jump: AudioStreamPlayer2D = $AudioStream_Jump
-@onready var audio_hurts: AudioStreamPlayer2D = $AudioStream_Hurts
-@onready var audio_shoot: AudioStreamPlayer2D = $AudioStream_Shoot
-@onready var audio_landing: AudioStreamPlayer2D = $AudioStream_Landing
-@onready var audio_packUp: AudioStreamPlayer2D = $AudioStream_PackUp
-
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
-
-@onready var dead_timer: Timer = $DeadTimer
-@onready var hurt_timer: Timer = $HurtTimer
-@onready var dash_duration_timer: Timer = $DashDurationTimer 
-@onready var dash_cool_down_timer: Timer = $DashCooldownTimer
-@onready var shoot_cooldown_timer: Timer = $ShootCooldownTimer
-
-@export var wall_slide_speed: float = 12.5
-@export var wall_jump_force: Vector2 = Vector2(450, -550)
-@export var slip_speed: float = 100.0
+# ==============================================================================
+# ENUMS Y SEÑALES
+# ==============================================================================
+enum State { IDLE, RUN, JUMP, FALL, DASH, WALL_GRAB, DEAD }
 
 signal player_died
 signal change_UI_lives(change_lives)
 
-var gravity: int = 2000
-var jump_force: float = -550
-var jump_cut_multiplier: float = 0.5
-var player_dir: String = "RIGHT"
-var dash_velocity: int = 400
-var movement_velocity: int = 250
-var fall_through_time: float = 0.05
-
-var was_in_air: bool = false
-var dash_power_activated: bool = false
-var double_jump_power_activated: bool = false
-var first_jump_completed: bool = false
-var is_alive: bool = true
-var is_invincible: bool = false
-var is_cutscene: bool = false
-
-var lives: int = 5
-var can_shoot: bool = true
-
-var bullet_scene: PackedScene = preload("res://Prefabs/Bullet.tscn")
-@export var bullet_sprite: Texture2D
-
-var bullet_dir: Vector2 = Vector2.RIGHT
-var bullet_offset: Vector2 = Vector2(32, -9)
-var hurt_jump_force: float = -200
-var current_level: int
-var wall_grab_power_activated: bool = false
-var is_stunned: bool = false
-var just_double_jumped: bool = false
-var double_jump_enabled: bool = false
-var can_dash = true
-
+# ==============================================================================
+# CONSTANTES (OFFSETS DE ANIMACIÓN Y BALAS)
+# ==============================================================================
 const OFFSET_IDLE_RIGHT: Vector2 = Vector2(40, -9)
 const OFFSET_RUN_RIGHT: Vector2 = Vector2(45, -9) 
 const OFFSET_JUMP_RIGHT: Vector2 = Vector2(40, -5)
@@ -87,18 +25,109 @@ const OFFSET_FALL_LEFT: Vector2 = Vector2(-20, OFFSET_JUMP_RIGHT.y)
 const OFFSET_UP_LEFT: Vector2 = Vector2(6.5, OFFSET_UP_RIGHT.y)
 const OFFSET_RUNUP_LEFT: Vector2 = Vector2(0, OFFSET_UP_RIGHT.y)
 
+
+# ==============================================================================
+# REFERENCIAS A NODOS (ONREADY)
+# ==============================================================================
+# --- Sprites ---
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var animated_sprite2: AnimatedSprite2D = $AnimatedSprite2D2
+@onready var animated_sprite3: AnimatedSprite2D = $AnimatedSprite2D3
+var animated_sprites: Array[AnimatedSprite2D] = []
+
+# --- Colisiones y Sensores (Raycasts) ---
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
+@onready var raycast_edge_left: RayCast2D = $RayCast_Edge_Left
+@onready var raycast_edge_right: RayCast2D = $RayCast_Edge_Right
+@onready var raycast_floor: RayCast2D = $Raycast_floor
+@onready var raycast_wall: RayCast2D = $Raycast_wall
+@onready var area2D: Area2D = $Area2D
+
+# --- Audio ---
+@onready var audio_dash: AudioStreamPlayer2D = $AudioStream_Dash
+@onready var audio_jump: AudioStreamPlayer2D = $AudioStream_Jump
+@onready var audio_hurts: AudioStreamPlayer2D = $AudioStream_Hurts
+@onready var audio_shoot: AudioStreamPlayer2D = $AudioStream_Shoot
+@onready var audio_landing: AudioStreamPlayer2D = $AudioStream_Landing
+@onready var audio_packUp: AudioStreamPlayer2D = $AudioStream_PackUp
+
+# --- Animadores y Temporizadores ---
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var dead_timer: Timer = $DeadTimer
+@onready var hurt_timer: Timer = $HurtTimer
+@onready var dash_duration_timer: Timer = $DashDurationTimer 
+@onready var dash_cool_down_timer: Timer = $DashCooldownTimer
+@onready var shoot_cooldown_timer: Timer = $ShootCooldownTimer
+
+
+# ==============================================================================
+# CONFIGURACIÓN Y VARIABLES DE ESTADO
+# ==============================================================================
+
+# --- Propiedades Exportadas ---
+@export var wall_slide_speed: float = 12.5
+@export var wall_jump_force: Vector2 = Vector2(450, -550)
+@export var slip_speed: float = 100.0
+@export var bullet_sprite: Texture2D
+
+# --- Físicas y Movimiento ---
+var state: State = State.IDLE
+var gravity: int = 2000
+var jump_force: float = -550
+var jump_cut_multiplier: float = 0.5
+var dash_velocity: int = 400
+var movement_velocity: int = 250
+var fall_through_time: float = 0.05
+var hurt_jump_force: float = -200
+
+# --- Estado del Jugador ---
+var player_dir: String = "RIGHT"
+var was_in_air: bool = false
+var is_alive: bool = true
+var is_invincible: bool = false
+var is_cutscene: bool = false
+var is_stunned: bool = false
+var lives: int = 5
+
+# --- Habilidades Desbloqueables ---
+var current_level: int
+var dash_power_activated: bool = false
+var double_jump_power_activated: bool = false
+var wall_grab_power_activated: bool = false
+
+# --- Flags de Combate y Habilidades ---
+var double_jump_enabled: bool = false
+var just_double_jumped: bool = false
+var first_jump_completed: bool = false
+var can_dash = true
+var can_shoot: bool = true
+
+# --- Referencias de Proyectiles ---
+var bullet_scene: PackedScene = preload("res://Prefabs/Bullet.tscn")
+var bullet_dir: Vector2 = Vector2.RIGHT
+var bullet_offset: Vector2 = Vector2(32, -9)
+
+
+# ==============================================================================
+# FUNCIONES DEL CICLO DE VIDA DE GODOT
+# ==============================================================================
+
 func _ready() -> void:
 	current_level = SceneManager.current_level
+	
+	# Desbloqueo progresivo de habilidades según el nivel
 	if current_level >= 2: double_jump_power_activated = true
 	if current_level >= 3: dash_power_activated = true
 	if current_level >= 4: wall_grab_power_activated = true
 		
+	# Agrupación de sprites para manejarlos conjuntamente
 	animated_sprites = [animated_sprite, animated_sprite2, animated_sprite3]
 
 func _physics_process(delta) -> void:
 	if not is_alive:
 		state = State.DEAD
 	
+	# Detección de aterrizaje para audio
 	if is_on_floor():
 		if was_in_air:
 			audio_landing.play()
@@ -106,6 +135,7 @@ func _physics_process(delta) -> void:
 	else:
 		was_in_air = true
 		
+	# Captura de Inputs
 	var input_vector = Vector2.ZERO
 	var is_jump_pressed = false
 	var is_dash_pressed = false
@@ -119,9 +149,11 @@ func _physics_process(delta) -> void:
 		is_dash_pressed = Input.is_action_just_pressed("Dash")
 		is_shoot_pressed = Input.is_action_just_pressed("Shoot")
 		
+	# Variables de entorno y colisión con pared
 	var on_wall = raycast_wall.is_colliding()
 	var is_moving_towards_wall = (player_dir == "RIGHT" and input_vector.x > 0) or (player_dir == "LEFT" and input_vector.x < 0)
 	
+	# MÁQUINA DE ESTADOS PRINCIPAL
 	match state:
 		State.IDLE:
 			velocity.y += gravity * delta
@@ -131,6 +163,7 @@ func _physics_process(delta) -> void:
 			var is_left_supported = raycast_edge_left.is_colliding()
 			var is_right_supported = raycast_edge_right.is_colliding()
 			
+			# Lógica de deslizamiento en bordes
 			if is_on_floor() and not is_center_supported:
 				if is_left_supported and not is_right_supported: velocity.x = slip_speed
 				elif is_right_supported and not is_left_supported: velocity.x = -slip_speed
@@ -168,6 +201,7 @@ func _physics_process(delta) -> void:
 			if is_dash_pressed and dash_power_activated and can_dash:
 				_start_dash()
 			
+			# Doble Salto en pared
 			if is_jump_pressed and double_jump_enabled and first_jump_completed:
 				first_jump_completed = false
 				double_jump_enabled = false 
@@ -220,9 +254,11 @@ func _physics_process(delta) -> void:
 			velocity.x = 0
 			velocity.y += gravity * delta
 			
+	# Control de altura de salto variable (si suelta el botón antes de tiempo)
 	if state == State.JUMP and Input.is_action_just_released("ui_jump") and velocity.y < 0:
 		velocity.y *= jump_cut_multiplier
 	
+	# Lógica de Disparo (Compartida en múltiples estados)
 	var can_fire_state = (state == State.IDLE or state == State.RUN or state == State.JUMP or state == State.FALL)
 	if is_shoot_pressed and can_shoot and not is_stunned and can_fire_state:
 		can_shoot = false
@@ -235,13 +271,126 @@ func _physics_process(delta) -> void:
 	if is_alive:
 		update_sprite_direction()
 		handle_double_jump()
+		
 	update_animation()
+
+
+# ==============================================================================
+# LÓGICA DE MOVIMIENTO EXTRA Y HABILIDADES
+# ==============================================================================
 
 func _start_dash() -> void:
 	state = State.DASH
 	audio_dash.play()
 	velocity.y = 0
 	dash_duration_timer.start()
+
+func handle_double_jump() -> void:
+	if not double_jump_power_activated: return
+	
+	if is_on_floor():
+		double_jump_enabled = false
+		first_jump_completed = false
+		return
+		
+	if raycast_wall.is_colliding():
+		var collider = raycast_wall.get_collider()
+		if collider and collider.is_in_group("Jumpeable Wall"):
+			double_jump_enabled = true
+			first_jump_completed = true
+		else:
+			double_jump_enabled = false
+	else:
+		double_jump_enabled = false
+
+func ignore_platform_collision() -> void:
+	# Atraviesa plataformas semi-sólidas hacia abajo
+	state = State.FALL
+	collision_shape.disabled = true
+	velocity.y = jump_force * -1.5
+	await (get_tree().create_timer(fall_through_time).timeout)
+	collision_shape.disabled = false
+
+
+# ==============================================================================
+# LÓGICA DE COMBATE (DISPARO, DAÑO Y VIDA)
+# ==============================================================================
+
+func shoot_bullet() -> void:
+	update_animation()
+	
+	var bullet = bullet_scene.instantiate() as Area2D
+	if bullet.has_method("set_sprite"):
+		bullet.set_sprite(bullet_sprite)
+	if bullet.has_method("set_shooter"):
+		bullet.set_shooter(self)
+	if bullet.has_method("set_mask"):
+		bullet.set_mask(3)
+	if bullet.has_method("set_direction"):
+		bullet.set_direction(bullet_dir)
+			
+	bullet.global_position = global_position + bullet_offset
+	
+	var current_scene = get_tree().current_scene
+	if current_scene: current_scene.add_child(bullet)
+
+func check_direction()-> Vector2:
+	return Vector2.LEFT if (player_dir == "LEFT") else Vector2.RIGHT
+
+func take_damage(force_death: bool = false, damage: int = 1) -> void:
+	if (is_invincible and not force_death) or not is_alive:
+		return
+		
+	if force_death: lives = 0
+	else:
+		lives -= damage
+		audio_hurts.play()
+	
+	emit_signal("change_UI_lives", lives)
+	
+	if lives <= 0:
+		is_alive = false
+		state = State.DEAD
+		call_deferred("disable_player_collision")
+		dead_timer.start()
+		animation_player.stop() 
+		
+		if animation_player.has_animation("RESET"):
+			animation_player.play("RESET")
+	else:
+		is_invincible = true
+		hurt_timer.start(1) 
+		is_stunned = true
+		velocity.y = hurt_jump_force
+		animation_player.play("Hurt")
+		
+		await get_tree().create_timer(0.5).timeout
+		is_stunned = false
+
+func increase_life() -> bool:
+	if lives < 5:
+		lives += 1
+		emit_signal("change_UI_lives", lives)
+		return true
+	else:
+		if SceneManager.life_packs < 3:
+			SceneManager.life_packs += 1
+			SceneManager.save_game_data()
+			emit_signal("change_UI_lives", lives)
+			audio_packUp.play()
+			return true
+		else:
+			return false
+
+func disable_player_collision() -> void:
+	area2D.set_collision_mask_value(3, false)
+	area2D.set_collision_mask_value(4, false)
+	area2D.set_collision_mask_value(5, false)
+
+
+# ==============================================================================
+# GESTIÓN VISUAL Y ANIMACIONES
+# ==============================================================================
 
 func update_sprite_direction() -> void:
 	var offset := 10
@@ -359,106 +508,18 @@ func hide_all_sprites() -> void:
 	animated_sprite2.visible = false
 	animated_sprite3.visible = false
 
-func handle_double_jump() -> void:
-	if not double_jump_power_activated: return
-	
-	if is_on_floor():
-		double_jump_enabled = false
-		first_jump_completed = false
-		return
-		
-	if raycast_wall.is_colliding():
-		var collider = raycast_wall.get_collider()
-		if collider and collider.is_in_group("Jumpeable Wall"):
-			double_jump_enabled = true
-			first_jump_completed = true
-		else:
-			double_jump_enabled = false
-	else:
-		double_jump_enabled = false
 
-func shoot_bullet() -> void:
-	update_animation()
-	
-	var bullet = bullet_scene.instantiate() as Area2D
-	if bullet.has_method("set_sprite"):
-		bullet.set_sprite(bullet_sprite)
-	if bullet.has_method("set_shooter"):
-		bullet.set_shooter(self)
-	if bullet.has_method("set_mask"):
-		bullet.set_mask(3)
-	if bullet.has_method("set_direction"):
-		bullet.set_direction(bullet_dir)
-			
-	bullet.global_position = global_position + bullet_offset
-	
-	var current_scene = get_tree().current_scene
-	if current_scene: current_scene.add_child(bullet)
-
-func ignore_platform_collision() -> void:
-	state = State.FALL
-	collision_shape.disabled = true
-	velocity.y = jump_force * -1.5
-	await (get_tree().create_timer(fall_through_time).timeout)
-	collision_shape.disabled = false
-
-func take_damage(force_death: bool = false, damage: int = 1) -> void:
-	return
-	if (is_invincible and not force_death) or not is_alive:
-		return
-		
-	if force_death: lives = 0
-	else:
-		lives -= damage
-		audio_hurts.play()
-	
-	emit_signal("change_UI_lives", lives)
-	
-	if lives <= 0:
-		is_alive = false
-		state = State.DEAD
-		call_deferred("disable_player_collision")
-		dead_timer.start()
-		animation_player.stop() 
-		
-		if animation_player.has_animation("RESET"):
-			animation_player.play("RESET")
-	else:
-		is_invincible = true
-		hurt_timer.start(1) 
-		is_stunned = true
-		velocity.y = hurt_jump_force
-		animation_player.play("Hurt")
-		
-		await get_tree().create_timer(0.5).timeout
-		is_stunned = false
-
-func increase_life() -> bool:
-	if lives < 5:
-		lives += 1
-		emit_signal("change_UI_lives", lives)
-		return true
-	else:
-		if SceneManager.life_packs < 3:
-			SceneManager.life_packs += 1
-			SceneManager.save_game_data()
-			emit_signal("change_UI_lives", lives)
-			audio_packUp.play()
-			return true
-		else:
-			return false
-
-func disable_player_collision() -> void:
-	area2D.set_collision_mask_value(3, false)
-	area2D.set_collision_mask_value(4, false)
-	area2D.set_collision_mask_value(5, false)
+# ==============================================================================
+# GESTIÓN DE SEÑALES (ÁREAS Y TEMPORIZADORES)
+# ==============================================================================
 
 func _on_body_entered(body) -> void:
 	if is_instance_valid(body) and body.is_in_group("Enemy") and body.is_alive:
 		take_damage()
 
-func check_direction()-> Vector2:
-	return Vector2.LEFT if (player_dir == "LEFT") else Vector2.RIGHT
+func _on_area_entered(area: Area2D) -> void:
+	if is_instance_valid(area) and area.is_in_group("Dead"):
+		take_damage(true)
 
 func _on_dash_duration_timer_timeout() -> void:
 	dash_cool_down_timer.start()
@@ -470,10 +531,6 @@ func _on_dash_cool_down_timeout() -> void:
 
 func _on_dead_timer_timeout() -> void:
 	player_died.emit()
-
-func _on_area_entered(area: Area2D) -> void:
-	if is_instance_valid(area) and area.is_in_group("Dead"):
-		take_damage(true)
 
 func _on_hurt_timer_timeout() -> void:
 	is_invincible = false
