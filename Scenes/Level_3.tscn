@@ -1237,13 +1237,13 @@ position = Vector2(-14.5, -9.75)
 shape = SubResource("RectangleShape2D_m3o7n")
 
 [node name="Sprite2D" parent="Signpost/Signpost4" index="1"]
-position = Vector2(-1.9999654, -69.75)
+position = Vector2(-65.99996, -69.75)
 scale = Vector2(1.4322581, 1.2560976)
 
 [node name="Label" parent="Signpost/Signpost4" index="2"]
-offset_left = -106.0
+offset_left = -170.0
 offset_top = -90.5
-offset_right = 105.0
+offset_right = 41.0
 offset_bottom = -48.0
 text = "This red bar represents your Dash energy and  refills after each use"
 

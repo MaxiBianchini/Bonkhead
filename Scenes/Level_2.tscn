@@ -1,4 +1,4 @@
-[gd_scene load_steps=73 format=4 uid="uid://62rpf654fvo6"]
+[gd_scene load_steps=74 format=4 uid="uid://62rpf654fvo6"]
 
 [ext_resource type="Texture2D" uid="uid://vr4vltjsdl0o" path="res://Graphics/Zonas/2-Green-zone/2 Background/Day/1.png" id="1_xbslt"]
 [ext_resource type="Texture2D" uid="uid://okpnwlqcy00" path="res://Graphics/Zonas/2-Green-zone/2 Background/Day/2.png" id="2_q8wyw"]
@@ -112,6 +112,10 @@ size = Vector2(260, 35)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m2s7e"]
 resource_local_to_scene = true
 size = Vector2(40, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5toea"]
+resource_local_to_scene = true
+size = Vector2(270, 35)
 
 [node name="Level_2" type="Node2D"]
 metadata/_edit_horizontal_guides_ = [1795.0]
@@ -777,7 +781,7 @@ position = Vector2(244, 0)
 position = Vector2(1400, 1626)
 
 [node name="Marker2D" parent="MovingPlatforms/MovingPlatform7" index="4"]
-position = Vector2(-248, 0)
+position = Vector2(-244, 0)
 
 [node name="MovingPlatform9" parent="MovingPlatforms" instance=ExtResource("30_7lt02")]
 position = Vector2(5965, 2391)
@@ -1007,6 +1011,24 @@ autoplay = true
 mix_target = 2
 bus = &"Music"
 
+[node name="Signpost3" parent="." instance=ExtResource("59_u5cqn")]
+position = Vector2(1877, 915)
+
+[node name="CollisionShape2D" parent="Signpost3" index="0"]
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_5toea")
+
+[node name="Sprite2D" parent="Signpost3" index="1"]
+position = Vector2(4.25, -44.75)
+scale = Vector2(1.0548387, 1.0609756)
+
+[node name="Label" parent="Signpost3" index="2"]
+offset_left = -74.0
+offset_top = -60.0
+offset_right = 83.0
+offset_bottom = -26.0
+text = "You can Jump Down to drop through platforms"
+
 [editable path="Dead_Areas/Dead_Area"]
 [editable path="Dead_Areas/Dead_Area2"]
 [editable path="Dead_Areas/Dead_Area3"]
@@ -1037,3 +1059,4 @@ bus = &"Music"
 [editable path="Signpost/Signpost2"]
 [editable path="Signpost/Signpost"]
 [editable path="Page_Comic"]
+[editable path="Signpost3"]
