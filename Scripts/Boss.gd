@@ -19,7 +19,7 @@ signal phase_changed(new_state, current_health)
 var current_health: float
 
 @export_group("Daño Recibido por Fase")
-@export var dmg_phase_1: float = 1
+@export var dmg_phase_1: float = 1.5
 @export var dmg_phase_2: float = 1.5
 @export var dmg_phase_3: float = 3
 
@@ -46,7 +46,7 @@ var current_health: float
 @export var min_attack_cooldown: float = 1.0
 @export var max_attack_cooldown: float = 2.0
 @export var min_mode_duration: float = 15.0
-@export var max_mode_duration: float = 35.0
+@export var max_mode_duration: float = 25.0
 
 
 # ==============================================================================

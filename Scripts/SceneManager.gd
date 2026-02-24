@@ -212,7 +212,7 @@ func _input(event):
 			if is_instance_valid(player):
 				# Forzamos la vida del jugador al límite establecido (5)
 				player.lives = 5
-				
+				life_packs = 3
 				# Forzamos la actualización visual de los corazones/sprites en la UI
 				update_lives(player.lives)
 				
