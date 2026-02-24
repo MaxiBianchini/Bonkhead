@@ -170,6 +170,10 @@ func _on_body_entered(body: Node) -> void:
 			enemy_is_near = true
 
 func _on_body_exited(body: Node) -> void:
+	# 1. Cláusula de seguridad: Si la escena se está cerrando, abortamos.
+	if not is_inside_tree():
+		return
+	
 	if is_alive and is_instance_valid(body) and body.is_in_group("Player"):
 		animated_sprite.play("Idle")
 		if idle_sound and not idle_sound.playing: 
