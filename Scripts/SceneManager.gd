@@ -196,19 +196,30 @@ func _input(event):
 		gui.visible = false
 		show_pause_menu()
 		
-	# --- HACK DE DEBUG: Teletransporte a la página de cómic ---
-	# Verificamos si se presionó la tecla F9
-	if event is InputEventKey and event.pressed and event.keycode == KEY_F9:
-		# Verificamos que tanto el jugador como la página existan en esta escena
-		if is_instance_valid(player) and is_instance_valid(comic_page):
-			# Movemos al jugador a la posición del cómic, pero desfasado
-			# -50 en X para que aparezca a la izquierda, y -20 en Y para que no se hunda en el piso
-			player.global_position = comic_page.global_position + Vector2(-50, -20)
-			
-			# Opcional: Frenar cualquier inercia que trajera el jugador
-			player.velocity = Vector2.ZERO 
-			
-			print("HACK: Teletransportado al final del nivel.")
+	# --- HACKS DE DEBUG (TRUCOS) ---
+	if event is InputEventKey and event.pressed:
+		
+		# HACK F9: Teletransporte a la página de cómic
+		if event.keycode == KEY_F9:
+			if is_instance_valid(player) and is_instance_valid(comic_page):
+				# Movemos al jugador a la posición del cómic con un desfase seguro
+				player.global_position = comic_page.global_position + Vector2(-50, -20)
+				player.velocity = Vector2.ZERO 
+				print("HACK: Teletransportado al final del nivel.")
+				
+		# HACK F10: Restaurar salud al máximo
+		elif event.keycode == KEY_F10:
+			if is_instance_valid(player):
+				# Forzamos la vida del jugador al límite establecido (5)
+				player.lives = 5
+				
+				# Forzamos la actualización visual de los corazones/sprites en la UI
+				update_lives(player.lives)
+				
+				# Emitimos la señal para asegurarnos de que todo el sistema lo registre
+				player.emit_signal("change_UI_lives", player.lives)
+				
+				print("HACK: Salud restaurada al máximo (5 vidas).")
 
 
 # ==============================================================================
