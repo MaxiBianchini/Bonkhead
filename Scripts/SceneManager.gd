@@ -27,6 +27,9 @@ var boss_checkpoint_health: int = 0
 var last_scene_id: int = 0
 var player_positioned: bool = false
 
+# --- Notificaciones ---
+var show_save_popup: bool = false
+var save_popup_scene: PackedScene = preload("res://Prefabs/SaveNotification.tscn") # Ajusta la ruta a donde guardes tu prefab
 
 # ==============================================================================
 # REFERENCIAS A NODOS (DINÁMICAS)
@@ -184,6 +187,16 @@ func initialize_scene() -> void:
 	if not boss_found and boss_health_bar:
 		boss_health_bar.visible = false
 		if boss_health_container: boss_health_container.visible = false
+		
+	
+	if show_save_popup and current_level > 1:
+		show_save_popup = false # Bajamos la bandera para que no vuelva a salir si muere
+		var popup = save_popup_scene.instantiate()
+		
+		# Lo agregamos a la pantalla
+		var current_scene_root = get_tree().current_scene
+		if current_scene_root:
+			current_scene_root.add_child(popup)
 
 
 # ==============================================================================
@@ -258,6 +271,7 @@ func pass_to_nextlevel():
 	last_rendered_second = -1
 	
 	save_game_data()
+	show_save_popup = true
 	ScenesTransitions.change_scene("res://Scenes/Level_" + str(current_level) + ".tscn")
 
 func on_player_died():
