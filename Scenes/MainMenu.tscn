@@ -514,61 +514,72 @@ text = "K "
 
 [node name="Credits" type="VBoxContainer" parent="OthersMenu"]
 visible = false
-anchors_preset = 13
+anchors_preset = 8
 anchor_left = 0.5
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -656.0
-offset_top = 70.0
-offset_right = 656.0
-offset_bottom = -70.0
+anchor_bottom = 0.5
+offset_left = -700.0
+offset_top = -445.0
+offset_right = 700.0
+offset_bottom = 380.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
 
 [node name="Label" type="Label" parent="OthersMenu/Credits"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 50
-text = "
-Credits"
+text = "Credits"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="OthersMenu/Credits"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_7v4os")
+theme_override_font_sizes/font_size = 25
+text = "FICH - UNL"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Label3" type="Label" parent="OthersMenu/Credits"]
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 25
 text = "
-                     FICH - UNL
-       
-                Maximiliano Bianchini  
-             Responsible for everything:  
 
-        - Art  
-        - Programming  
-        - Music  
-        - Animation  
-        - Design  
-        - Testing"
-vertical_alignment = 1
+
+Game Director & Lead Developer
+Maximiliano Bianchini
+(Programming, Design & Testing)
+
+Art & Visuals
+Custom Animations: Maximiliano Bianchini
+Assets & Sprites: CraftPix.net
+
+Audio & Sound Design
+Audio Mix: Maximiliano Bianchini
+Music: Suno.com (AI)
+SFX: ElevenLabs.io (AI)
+
+"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="OthersMenu/Credits"]
 layout_mode = 2
 size_flags_horizontal = 4
+theme_override_constants/separation = 7
+alignment = 1
 
-[node name="Label2" type="Label" parent="OthersMenu/Credits/HBoxContainer"]
+[node name="Label4" type="Label" parent="OthersMenu/Credits/HBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_7v4os")
 theme_override_font_sizes/font_size = 25
 text = "
-
-
-
-
-
-
-Developed with Godot Engine
-
+Powered by Godot Engine
 "
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -576,11 +587,11 @@ vertical_alignment = 1
 [node name="TextureRect" type="TextureRect" parent="OthersMenu/Credits/HBoxContainer"]
 texture_filter = 1
 layout_mode = 2
-size_flags_horizontal = 8
+size_flags_horizontal = 4
 size_flags_vertical = 8
 texture = ExtResource("14_bxv1r")
 
-[node name="Label2" type="Label" parent="OthersMenu/Credits"]
+[node name="Label5" type="Label" parent="OthersMenu/Credits"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_7v4os")
 text = "
