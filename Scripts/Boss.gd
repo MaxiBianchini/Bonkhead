@@ -93,6 +93,7 @@ var current_bullet_pattern: BulletPatterns = BulletPatterns.SPIRAL
 
 # --- Variables de control general ---
 var is_invulnerable: bool = false
+var pending_high_hazard: bool = false
 var can_attack: bool = true
 var is_dashing: bool = false
 var is_hovering: bool = false
@@ -215,7 +216,7 @@ func start_dash_attack():
 	velocity = Vector2.ZERO
 	
 	animated_sprite.modulate = Color(0.9, 0.9, 0.171, 1.0)
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(1.0, false).timeout
 	if current_state != States.PHASE_1_GROUND: return
 	
 	animated_sprite.modulate = Color.WHITE
@@ -225,12 +226,12 @@ func start_dash_attack():
 	var dir = 1 if player.global_position.x > global_position.x else -1
 	velocity = Vector2(dir * dash_speed, 0)
 	
-	await get_tree().create_timer(0.8).timeout
+	await get_tree().create_timer(0.8, false).timeout
 	if current_state != States.PHASE_1_GROUND: return
 	
 	is_dashing = false
 	velocity = Vector2.ZERO
-	await get_tree().create_timer(2.0).timeout
+	await get_tree().create_timer(2.0, false).timeout
 	can_attack = true
 
 
@@ -256,11 +257,14 @@ func _process_phase_2(_delta):
 func start_low_attack_sequence():
 	p2_sub_state = Phase2SubState.LOW_ATTACK
 	is_invulnerable = false
+	pending_high_hazard = false # Reseteamos la bandera por seguridad
 	await fly_to_height(hover_height)
 	if current_state != States.PHASE_2_AIR: return
 	
 	var duration = randf_range(min_mode_duration, max_mode_duration)
-	get_tree().create_timer(duration).timeout.connect(start_high_hazard_sequence)
+	var lava_timer = get_tree().create_timer(duration, false)
+	# Conectamos el timer a la nueva función que levanta la bandera
+	lava_timer.timeout.connect(_on_lava_timer_timeout) 
 	start_attack_loop()
 
 func start_high_hazard_sequence():
@@ -274,7 +278,7 @@ func start_high_hazard_sequence():
 	
 	p2_sub_state = Phase2SubState.HIGH_SHOOTING
 	start_shooting_loop()
-	await get_tree().create_timer(8.0).timeout
+	await get_tree().create_timer(8.0, false).timeout
 	end_high_hazard_sequence()
 
 func end_high_hazard_sequence():
@@ -289,19 +293,24 @@ func end_high_hazard_sequence():
 func start_attack_loop():
 	# Maneja el ciclo ininterrumpido de ataques bajos
 	if p2_sub_state != Phase2SubState.LOW_ATTACK or current_state != States.PHASE_2_AIR: return
-		
+	
+	if pending_high_hazard:
+		pending_high_hazard = false
+		start_high_hazard_sequence()
+		return # Cortamos la función para que no tire más bombas ni pisotones
+	
 	if next_low_attack_mode == AttackModes.STOMP_MODE: perform_stomp_attack() 
 	else: perform_bomb_attack() 
 	
 	if next_low_attack_mode == AttackModes.BOMB_MODE:
 		var cooldown = randf_range(min_attack_cooldown, max_attack_cooldown)
-		await get_tree().create_timer(cooldown).timeout
+		await get_tree().create_timer(cooldown, false).timeout
 		if p2_sub_state == Phase2SubState.LOW_ATTACK: start_attack_loop()
 
 func start_shooting_loop():
 	if p2_sub_state != Phase2SubState.HIGH_SHOOTING or current_state != States.PHASE_2_AIR: return
 	shoot_bullet_at_player()
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(1.0, false).timeout
 	start_shooting_loop() 
 
 func shoot_bullet_at_player():
@@ -321,6 +330,9 @@ func shoot_bullet_at_player():
 	var current_scene = get_tree().current_scene
 	if current_scene: current_scene.add_child(bullet)
 	if bullet.has_meta("delete_mask"): bullet.delete_mask(1)
+
+func _on_lava_timer_timeout():
+	pending_high_hazard = true # ¡Levantamos la mano para avisar que toca lava!
 
 func _handle_patrol_movement():
 	# Patrullaje horizontal delimitado
@@ -344,7 +356,7 @@ func perform_stomp_attack():
 	is_attacking = true
 	velocity = Vector2.ZERO
 	animated_sprite.play("Attack")
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0.5, false).timeout
 	if current_state != States.PHASE_2_AIR: return
 	p2_sub_state = Phase2SubState.STOMP_FALLING
 
@@ -352,7 +364,7 @@ func _on_stomp_impact():
 	p2_sub_state = Phase2SubState.STOMP_RECOVERING 
 	velocity = Vector2.ZERO
 	if audio_slam: audio_slam.play()
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(1.0, false).timeout
 	if current_state != States.PHASE_2_AIR: return
 	fly_to_hover_position()
 
@@ -360,7 +372,7 @@ func perform_bomb_attack():
 	is_attacking = true
 	velocity = Vector2.ZERO
 	animated_sprite.play("Attack 2")
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0.5, false).timeout
 	
 	if bomb_scene:
 		var bomb = bomb_scene.instantiate()
@@ -368,7 +380,7 @@ func perform_bomb_attack():
 		var current_scene = get_tree().current_scene
 		if current_scene: current_scene.add_child(bomb)
 	
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(0.5, false).timeout
 	is_attacking = false
 	if p2_sub_state == Phase2SubState.LOW_ATTACK: animated_sprite.play("Idle") 
 
@@ -382,7 +394,7 @@ func fly_to_hover_position():
 	p2_sub_state = Phase2SubState.LOW_ATTACK 
 	
 	var cooldown = randf_range(min_attack_cooldown, max_attack_cooldown)
-	await get_tree().create_timer(cooldown).timeout
+	await get_tree().create_timer(cooldown, false).timeout
 	if current_state != States.PHASE_2_AIR: return
 	start_attack_loop()
 
@@ -434,7 +446,7 @@ func _wait_and_reposition():
 	velocity = Vector2.ZERO 
 	animated_sprite.play("Still") 
 	
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(1.0, false).timeout
 	if current_state != States.PHASE_3_CHAOS or p3_sub_state != Phase3SubState.ERRATIC_CHASE: return
 		
 	pick_random_erratic_point()
@@ -609,5 +621,5 @@ func die():
 	set_physics_process(false)
 	$CollisionShape2D.set_deferred("disabled", true)
 	
-	await get_tree().create_timer(2.0).timeout
+	await get_tree().create_timer(2.0, false).timeout
 	queue_free()

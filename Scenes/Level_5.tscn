@@ -65,65 +65,64 @@ scroll_ignore_camera_zoom = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="Background/ParallaxBackground"]
 motion_scale = Vector2(0.3, 0.1)
-motion_offset = Vector2(0, -100)
-motion_mirroring = Vector2(1728, 0)
+motion_offset = Vector2(0, -35)
+motion_mirroring = Vector2(2304, 0)
 metadata/_edit_lock_ = true
 
 [node name="Background1" type="Sprite2D" parent="Background/ParallaxBackground/ParallaxLayer"]
 texture_filter = 1
-scale = Vector2(3, 3.5)
+scale = Vector2(4, 4)
 texture = ExtResource("1_kp6x5")
 centered = false
 metadata/_edit_lock_ = true
 
 [node name="ParallaxLayer2" type="ParallaxLayer" parent="Background/ParallaxBackground"]
 motion_scale = Vector2(0.6, 0.2)
-motion_offset = Vector2(0, -100)
-motion_mirroring = Vector2(1728, 0)
+motion_offset = Vector2(0, -70)
+motion_mirroring = Vector2(2304, 0)
 metadata/_edit_lock_ = true
 
 [node name="Background2" type="Sprite2D" parent="Background/ParallaxBackground/ParallaxLayer2"]
 texture_filter = 1
-scale = Vector2(3, 3.5)
+scale = Vector2(4, 4)
 texture = ExtResource("2_7gvow")
 centered = false
 metadata/_edit_lock_ = true
 
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="Background/ParallaxBackground"]
 motion_scale = Vector2(0.9, 0.3)
-motion_offset = Vector2(0, -100)
-motion_mirroring = Vector2(1728, 0)
+motion_offset = Vector2(0, -110)
+motion_mirroring = Vector2(2304, 0)
 metadata/_edit_lock_ = true
 
 [node name="Background3" type="Sprite2D" parent="Background/ParallaxBackground/ParallaxLayer3"]
 texture_filter = 1
-scale = Vector2(3, 3.5)
+scale = Vector2(4, 4)
 texture = ExtResource("3_lpe2j")
 centered = false
 metadata/_edit_lock_ = true
 
 [node name="ParallaxLayer4" type="ParallaxLayer" parent="Background/ParallaxBackground"]
 motion_scale = Vector2(1.2, 0.4)
-motion_offset = Vector2(0, -100)
-motion_mirroring = Vector2(1728, 0)
+motion_mirroring = Vector2(2304, 0)
 metadata/_edit_lock_ = true
 
 [node name="Background4" type="Sprite2D" parent="Background/ParallaxBackground/ParallaxLayer4"]
 texture_filter = 1
-scale = Vector2(3, 3.5)
+scale = Vector2(4, 4)
 texture = ExtResource("4_8rwkh")
 centered = false
 metadata/_edit_lock_ = true
 
 [node name="ParallaxLayer5" type="ParallaxLayer" parent="Background/ParallaxBackground"]
 motion_scale = Vector2(1.5, 0.5)
-motion_offset = Vector2(0, -100)
-motion_mirroring = Vector2(1728, 0)
+motion_offset = Vector2(0, -190)
+motion_mirroring = Vector2(2304, 0)
 metadata/_edit_lock_ = true
 
 [node name="Background5" type="Sprite2D" parent="Background/ParallaxBackground/ParallaxLayer5"]
 texture_filter = 1
-scale = Vector2(3, 3.5)
+scale = Vector2(4, 4)
 texture = ExtResource("5_43geq")
 centered = false
 metadata/_edit_lock_ = true
