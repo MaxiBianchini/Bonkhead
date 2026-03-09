@@ -210,29 +210,29 @@ func _input(event):
 		show_pause_menu()
 		
 	# --- HACKS DE DEBUG (TRUCOS) ---
-	if event is InputEventKey and event.pressed:
-		
-		# HACK F9: Teletransporte a la página de cómic
-		if event.keycode == KEY_F9:
-			if is_instance_valid(player) and is_instance_valid(comic_page):
-				# Movemos al jugador a la posición del cómic con un desfase seguro
-				player.global_position = comic_page.global_position + Vector2(-50, -20)
-				player.velocity = Vector2.ZERO 
-				print("HACK: Teletransportado al final del nivel.")
-				
-		# HACK F10: Restaurar salud al máximo
-		elif event.keycode == KEY_F10:
-			if is_instance_valid(player):
-				# Forzamos la vida del jugador al límite establecido (5)
-				player.lives = 5
-				life_packs = 3
-				# Forzamos la actualización visual de los corazones/sprites en la UI
-				update_lives(player.lives)
-				
-				# Emitimos la señal para asegurarnos de que todo el sistema lo registre
-				player.emit_signal("change_UI_lives", player.lives)
-				
-				print("HACK: Salud restaurada al máximo (5 vidas).")
+	#if event is InputEventKey and event.pressed:
+		#
+		## HACK F9: Teletransporte a la página de cómic
+		#if event.keycode == KEY_F9:
+			#if is_instance_valid(player) and is_instance_valid(comic_page):
+				## Movemos al jugador a la posición del cómic con un desfase seguro
+				#player.global_position = comic_page.global_position + Vector2(-50, -20)
+				#player.velocity = Vector2.ZERO 
+				#print("HACK: Teletransportado al final del nivel.")
+				#
+		## HACK F10: Restaurar salud al máximo
+		#elif event.keycode == KEY_F10:
+			#if is_instance_valid(player):
+				## Forzamos la vida del jugador al límite establecido (5)
+				#player.lives = 5
+				#life_packs = 3
+				## Forzamos la actualización visual de los corazones/sprites en la UI
+				#update_lives(player.lives)
+				#
+				## Emitimos la señal para asegurarnos de que todo el sistema lo registre
+				#player.emit_signal("change_UI_lives", player.lives)
+				#
+				#print("HACK: Salud restaurada al máximo (5 vidas).")
 
 
 # ==============================================================================
